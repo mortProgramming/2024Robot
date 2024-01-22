@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import static frc.robot.util.Constants.Drivetrain.*;
-import static frc.robot.util.Constants.RobotSpecs.*;
+import static frc.robot.Util.Constants.Drivetrain.*;
+import static frc.robot.Util.Constants.RobotSpecs.*;
 import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;

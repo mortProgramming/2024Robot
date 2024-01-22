@@ -1,4 +1,4 @@
-package frc.robot.util;
+package frc.robot.Util;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import edu.wpi.first.math.util.Units;
@@ -71,4 +71,40 @@ public final class Constants {
     public final static class Intake{
 
 	}
+
+	public final static class Vision {
+		public static enum Pipeline {
+			DEFAULT(0), APRIL_TAG(1), TAPE(9);
+
+			int id;
+
+			Pipeline(int id) {
+				this.id = id;
+			}
+
+			public int getId() {
+				return id;
+			}
+
+			/**
+			 * Gets id of pipeline for a specific April Tag ID, id 1 at pipeline 3, etc.
+			 */
+			public int getId(int ATID) {
+				if (this.id == 1) {
+					return ATID;
+				}
+				return id;
+			}
+
+			public static Pipeline getPipeline(int id) {
+				for (Pipeline p : values()) {
+					if (p.getId() == id) {
+						return p;
+					}
+				}
+				return DEFAULT;
+			}
+		}
+	}
+
 }

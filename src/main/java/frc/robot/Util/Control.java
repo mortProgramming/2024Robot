@@ -1,12 +1,11 @@
-package frc.robot.util;
+package frc.robot.Util;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import frc.robot.subsystems.Drivetrain;
-import static frc.robot.util.Constants.PeripheralPorts.*;
-import static frc.robot.util.Constants.RobotSpecs.*;
+import static frc.robot.Util.Constants.PeripheralPorts.*;
+import static frc.robot.Util.Constants.RobotSpecs.*;
 
 
 public class Control {
