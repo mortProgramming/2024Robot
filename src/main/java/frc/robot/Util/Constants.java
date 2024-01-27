@@ -69,7 +69,8 @@ public final class Constants {
 	}
 
     public final static class Intake{
-
+		public static final int FOLLOW_INTAKE_MOTOR = 0;
+		public static final int MASTER_INTAKE_MOTOR = 0;
 	}
 
 	public final static class Vision {
@@ -105,6 +106,9 @@ public final class Constants {
 				return DEFAULT;
 			}
 		}
+
+		//TODO find camera height
+		public static final double CAMERA_HEIGHT = 0;
 	}
 
 }

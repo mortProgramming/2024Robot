@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import static frc.robot.Util.Constants.Vision.*;
 import frc.robot.Util.Constants.Vision.Pipeline;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -192,6 +193,10 @@ public class Vision extends SubsystemBase {
 	 */
 	public int getAprilTagId() {
 		return (int) llTable.getEntry("tid").getInteger(0);
+	}
+
+	public double getDistanceToTag(double tagHeight) {
+		return (tagHeight - CAMERA_HEIGHT) / (Math.tan(Math.toRadians(getY())));
 	}
 
 	/**
