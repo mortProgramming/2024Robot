@@ -1,7 +1,8 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Util.Constants.Drivetrain.*;
-import static frc.robot.Util.Constants.RobotSpecs.*;
+import static frc.robot.util.Constants.Drivetrain.*;
+import static frc.robot.util.Constants.RobotSpecs.*;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
@@ -34,6 +35,10 @@ public class Drivetrain extends SubsystemBase {
 	private final SwerveModule backRightModule;
 
 	private ChassisSpeeds chassisSpeeds;
+
+	private PIDController aprilXController;
+	private PIDController aprilYController;
+	private PIDController aprilOmegaController;
 	//Declarations of PID controllers for drivetrain motors
 	private PIDController xController;
 	private PIDController yController;
@@ -118,6 +123,13 @@ public class Drivetrain extends SubsystemBase {
 		rotateToAngleController = new PIDController(0.07, 0, 0.001);
 		rotateToAngleController.setTolerance(0.5);
 		rotateToAngleController.enableContinuousInput(-180, 180);
+
+		aprilXController = new PIDController(XVALUE_KP , XVALUE_KI, XVALUE_KD);
+		aprilXController.setTolerance(XVALUE_TOLERANCE);
+		aprilYController = new PIDController(YVALUE_KP, YVALUE_KI, YVALUE_KD);
+		aprilYController.setTolerance(YVALUE_TOLERANCE);
+		aprilOmegaController = new PIDController(OMEGAVALUE_KP, OMEGAVALUE_KI , OMEGAVALUE_KD);
+		aprilOmegaController.setTolerance(OMEGAVALUE_TOLERANCE);
 	}
 
 	/** Sets the gyroscope angle to zero. */
@@ -255,6 +267,18 @@ public class Drivetrain extends SubsystemBase {
 	 */
 	public PIDController getRotateToAngleController() {
 		return rotateToAngleController;
+	}
+
+	public PIDController getAprilTagXController() {
+		return aprilXController;
+	}
+
+	public PIDController getAprilTagYController() {
+		return aprilYController;
+	}
+
+	public PIDController getAprilTagOmegaController() {
+		return aprilOmegaController;
 	}
 
 	/**

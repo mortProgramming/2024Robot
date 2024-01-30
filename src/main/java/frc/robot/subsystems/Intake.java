@@ -1,8 +1,9 @@
 package frc.robot.subsystems;
 
+import static frc.robot.util.Constants.Intake.*;
+
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import static frc.robot.Util.Constants.Intake.*;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -47,22 +48,22 @@ public class Intake extends SubsystemBase {
     /**
      * 
      */
-    public void intake(){
-        //Motor.setpercentOutput(speed);
+    public void setIntakeVelocity(double intakeSpeed){
+        this.intakeSpeed = intakeSpeed;
     }
 
     /**
      * 
      */
-    public void outtake(){
-        //Motor.setpercentOutput(-speed);
+    public void setOuttakeVelocity(double intakeSpeed){
+        this.intakeSpeed = -intakeSpeed;
     }
 
     /**
      * 
      * @return
      */
-    public Intake getInstance(){
+    public static Intake getInstance(){
         if (intake==null){
             intake = new Intake();
         }

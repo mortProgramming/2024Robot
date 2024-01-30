@@ -1,11 +1,14 @@
 package frc.robot.subsystems;
-import static frc.robot.Util.Constants.Vision.*;
-import frc.robot.Util.Constants.Vision.Pipeline;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.Constants;
+import frc.robot.util.Constants.Vision.Pipeline;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
+import static frc.robot.util.Constants.Vision.*;
+
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,8 +18,19 @@ public class Vision extends SubsystemBase {
     public static Vision vision;
 
     	private NetworkTable llTable;
-
-
+		private double totalOutlier;
+		private double newValue;
+		private double position;
+		private double totalPosition;
+		private int valuePosition;
+		private double averageOutlier;
+		private double averagePosition;
+		private double outlierCounter;
+		private double noOutlierCounter;
+		private double nonOutlierCounter;
+		private double[] values = new double[AMOUNT_TEST_FRAMES];
+		private double[] outliers = new double[MAX_OUTLIERS];
+		
     public Vision() {
         llTable = NetworkTableInstance.getDefault().getTable("limelight");
     }
@@ -95,10 +109,6 @@ public class Vision extends SubsystemBase {
 		return llTable.getEntry("ty").getDouble(0);
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public double getCamTranslationX() {
 		if (getCamTranslation().length < 1) {
 			return 0;
@@ -107,10 +117,6 @@ public class Vision extends SubsystemBase {
 		return (double) getCamTranslation()[0];
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public double getCamTranslationY() {
 		if (getCamTranslation().length < 1) {
 			return 0;
@@ -118,10 +124,6 @@ public class Vision extends SubsystemBase {
 		return (double) getCamTranslation()[1];
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public double getCamTranslationZ() {
 		if (getCamTranslation().length < 1) {
 			return 0;
@@ -196,12 +198,61 @@ public class Vision extends SubsystemBase {
 	}
 
 	public double getDistanceToTag(double tagHeight) {
-		return (tagHeight - CAMERA_HEIGHT) / (Math.tan(Math.toRadians(getY())));
+		if(llTable.getEntry("tv").getDouble(0) == 1){
+			return (tagHeight - CAMERA_HEIGHT) / (Math.tan(Math.toRadians(getY())));
+		}
+		return -1;
+		
 	}
+
+	/**
+     * 
+     */
+    @Override
+    public void periodic() {
+		totalOutlier = 0; 
+		newValue = position;
+		totalPosition = 0;
+		valuePosition++;
+
+		if(valuePosition == AMOUNT_TEST_FRAMES){
+			valuePosition = 0;
+		}
+		
+		for(int counter = 0; counter < MAX_OUTLIERS; counter++){
+			totalPosition += totalPosition + values[counter];
+		}
+
+		averagePosition = totalPosition/AMOUNT_TEST_FRAMES;
+		
+		if(outlierCounter > MAX_OUTLIERS){
+			for(int counter = 0; counter < MAX_OUTLIERS; counter++){
+				totalOutlier += outliers[counter];
+			}
+			averageOutlier = totalOutlier/AMOUNT_TEST_FRAMES;
+			for(int counter = 0; counter < MAX_OUTLIERS; counter++){
+				values[counter] = averageOutlier;
+			}
+			outlierCounter = 0;
+			noOutlierCounter = 0;
+		}else if(newValue < averagePosition + MAX_ERROR && newValue > (averagePosition - MAX_ERROR)){
+			values[valuePosition] = newValue;
+			nonOutlierCounter++;
+			if(nonOutlierCounter > MAX_NON_OUTLIERS){
+				nonOutlierCounter = 0;
+				outlierCounter = 0;
+			}
+		}else{
+			nonOutlierCounter = 0;
+			outliers[(int) outlierCounter] = newValue;
+			outlierCounter++;
+		}
+    }
 
 	/**
 	 * 
 	 */
+	
 	public static Vision getInstance() {
 		if (vision == null) {
 			vision = new Vision();

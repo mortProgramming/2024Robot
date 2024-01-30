@@ -1,11 +1,18 @@
-package frc.robot.Util;
+package frc.robot.util;
+
+import static frc.robot.util.Constants.Intake.INTAKE_SPEED;
+import static frc.robot.util.Constants.PeripheralPorts.*;
+import static frc.robot.util.Constants.RobotSpecs.*;
 
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import frc.robot.subsystems.Drivetrain;
-import static frc.robot.Util.Constants.PeripheralPorts.*;
-import static frc.robot.Util.Constants.RobotSpecs.*;
+import frc.robot.util.Constants.Climber;
+import frc.robot.util.Constants.Intake;
+import frc.robot.subsystems.Arm;
+
 
 
 public class Control {
@@ -14,6 +21,9 @@ public class Control {
 	private static CommandXboxController xboxController;
 
 	private static Drivetrain drivetrain;
+    private static Arm arm;
+    private static Intake intake;
+    private static Climber climber;
 
     /**
      * 
@@ -24,7 +34,6 @@ public class Control {
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
 
 		drivetrain = Drivetrain.getInstance();
-
         
 	}
 
@@ -35,6 +44,13 @@ public class Control {
 		drivetrain.setDefaultCommand(
 			new DrivetrainCommand(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true)
         );
+
+
+        xboxController.rightBumper().toggleOnTrue(new IntakeToVelocity(INTAKE_SPEED));
+        xboxController.rightTrigger().onTrue(new IntakeToVelocity(-INTAKE_SPEED));
+        
+        
+
     }
 
     //where the axis doesn't take in values near 0, and starts past 0

@@ -1,4 +1,4 @@
-package frc.robot.Util;
+package frc.robot.util;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import edu.wpi.first.math.util.Units;
@@ -35,6 +35,21 @@ public final class Constants {
 		public final static int BACK_RIGHT_STEER = 0;
 		public final static int BACK_RIGHT_STEER_ENCODER = 0;
 		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(0);
+
+		public final static double XVALUE_KP = 1.1;
+		public final static double XVALUE_KI = 0;
+		public final static double XVALUE_KD = 0;
+		public final static double XVALUE_TOLERANCE = 0.01;
+
+		public final static double YVALUE_KP = 1.1;
+		public final static double YVALUE_KI = 0;
+		public final static double YVALUE_KD = 0;
+		public final static double YVALUE_TOLERANCE = 0.05;
+
+		public final static double OMEGAVALUE_KP = 0.02;
+		public final static double OMEGAVALUE_KI = 0;
+		public final static double OMEGAVALUE_KD = 0;
+		public final static double OMEGAVALUE_TOLERANCE = 0;
     }
 
     public final static class RobotSpecs {
@@ -65,12 +80,73 @@ public final class Constants {
 	}
 
 	public final static class Climber{
+		public static final int FOLLOW_CLIMBER_MOTOR = 0;
+		public static final int MASTER_CLIMBER_MOTOR = 0;
 
+		public static final double POSITION_PID_P = 0;
+		public static final double POSITION_PID_I = 0;
+		public static final double POSITION_PID_D = 0;
+		public static final double POSITION_PID_V = 0;
+		public static final double POSITION_PID_A = 0;
+
+		public static final double POSITION_FF_S = 0;
+		public static final double POSITION_FF_G = 0;
+		public static final double POSITION_FF_V = 0;
+		public static final double POSITION_FF_A = 0;
+
+		public static final double CLIMBER_REST_POSITION = 0;
+
+		public static final double CLIMBER_NEAR_SETPOINT_ERROR = 0;
 	}
 
     public final static class Intake{
 		public static final int FOLLOW_INTAKE_MOTOR = 0;
 		public static final int MASTER_INTAKE_MOTOR = 0;
+
+		public static final double INTAKE_SPEED = 0;
+	}
+	
+	public final static class Wrist{
+		public static final int WRIST_MOTOR = 0;
+
+		public static final double POSITION_PID_P = 0;
+		public static final double POSITION_PID_I = 0;
+		public static final double POSITION_PID_D = 0;
+		public static final double POSITION_PID_V = 0;
+		public static final double POSITION_PID_A = 0;
+
+		public static final double POSITION_FF_S = 0;
+		public static final double POSITION_FF_G = 0;
+		public static final double POSITION_FF_V = 0;
+		public static final double POSITION_FF_A = 0;
+
+		public static final double WRIST_REST_POSITION = 0;
+		public static final double WRIST_SCORE_POSITION = 0;
+		public static final double WRIST_INTAKE_POSITION = 0;
+
+		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
+	}
+
+	public final static class Arm{
+		public static final int FOLLOW_ARM_MOTOR = 0;
+		public static final int MASTER_ARM_MOTOR = 0;
+
+		public static final double POSITION_PID_P = 0;
+		public static final double POSITION_PID_I = 0;
+		public static final double POSITION_PID_D = 0;
+		public static final double POSITION_PID_V = 0;
+		public static final double POSITION_PID_A = 0;
+
+		public static final double POSITION_FF_S = 0;
+		public static final double POSITION_FF_G = 0;
+		public static final double POSITION_FF_V = 0;
+		public static final double POSITION_FF_A = 0;
+
+		public static final double ARM_REST_POSITION = 0;
+		public static final double ARM_AMP_POSITION = 0;
+		public static final double ARM_INTAKE_POSITION = 0;
+
+		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 	}
 
 	public final static class Vision {
@@ -109,6 +185,65 @@ public final class Constants {
 
 		//TODO find camera height
 		public static final double CAMERA_HEIGHT = 0;
+
+		public static final int AMOUNT_TEST_FRAMES = 0;
+		public static final int MAX_OUTLIERS = 0;
+		public static final int MAX_NON_OUTLIERS = 0;
+		public static final double MAX_ERROR = 0;
 	}
 
-}
+	public static final class AprilTagData{
+
+		public static final class Red{
+
+			public static final class Amp{
+						
+				public static final int ID = 5;
+				public static final double height = 48.125;
+					
+
+			public static final class Speaker{
+				public static final int IDCenter = 4;
+				public static final int IDOffset = 3;
+				public static final double height = 48.625;
+			}
+			public static final class Source{
+				public static final int IDfar = 9;
+				public static final int IDclose = 10;
+				public static final double height = 48.125;
+			}
+			public static final class Stage{
+				public static final int IDclose = 13;
+				public static final int IDleftClose = 11;
+				public static final int IDrightClose = 12;
+				public static final double height = 47.5;
+			}		
+		}
+		public static class Blue{
+
+			public static final class Amp{
+
+				public static final int ID = 6;
+				public static final double height = 48.125;
+			}
+			public static final class Speaker{
+				public static final int IDCenter = 7;
+				public static final int IDOffset = 8;
+				public static final double centerHeight = 48.625;
+				public static final double offsetHeight = 48.625;
+			}
+			public static final class Source{
+				public static final int IDfar = 2;
+				public static final int IDclose = 1;
+				public static final double height = 48.125;
+			}
+			public static final class Stage{
+				public static final int IDfar = 14;
+				public static final int IDleftClose = 15;
+				public static final int IDrightClose = 16;
+				public static final double height = 47.5;
+			}
+		}
+	}
+
+}}
