@@ -82,7 +82,6 @@ public final class Constants {
 	public final static class Climber{
 		public static final int FOLLOW_CLIMBER_MOTOR = 0;
 		public static final int MASTER_CLIMBER_MOTOR = 0;
-
 		public static final double POSITION_PID_P = 0;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
@@ -95,6 +94,8 @@ public final class Constants {
 		public static final double POSITION_FF_A = 0;
 
 		public static final double CLIMBER_REST_POSITION = 0;
+		public static final double CLIMBER_RETRACT_POSITION = 0;
+		public static final double CLIMBER_MAX_POSITION = 0;
 
 		public static final double CLIMBER_NEAR_SETPOINT_ERROR = 0;
 	}
@@ -123,8 +124,11 @@ public final class Constants {
 		public static final double WRIST_REST_POSITION = 0;
 		public static final double WRIST_SCORE_POSITION = 0;
 		public static final double WRIST_INTAKE_POSITION = 0;
+		public static final double WRIST_TRAP_POSITION = 0;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
+
+		public static final double WRIST_SPEED = 0;
 	}
 
 	public final static class Arm{
@@ -145,6 +149,7 @@ public final class Constants {
 		public static final double ARM_REST_POSITION = 0;
 		public static final double ARM_AMP_POSITION = 0;
 		public static final double ARM_INTAKE_POSITION = 0;
+		public static final double ARM_TRAP_POSITION = 0;
 
 		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 	}
@@ -190,6 +195,8 @@ public final class Constants {
 		public static final int MAX_OUTLIERS = 0;
 		public static final int MAX_NON_OUTLIERS = 0;
 		public static final double MAX_ERROR = 0;
+
+		public static final double CAMERA_MOUNT_ANGLE = 0;
 	}
 
 	public static final class AprilTagData{
@@ -201,7 +208,7 @@ public final class Constants {
 				public static final int ID = 5;
 				public static final double height = 48.125;
 					
-
+			}
 			public static final class Speaker{
 				public static final int IDCenter = 4;
 				public static final int IDOffset = 3;
@@ -246,4 +253,4 @@ public final class Constants {
 		}
 	}
 
-}}
+}

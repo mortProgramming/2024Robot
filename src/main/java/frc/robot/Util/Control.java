@@ -1,18 +1,26 @@
 package frc.robot.util;
 
-import static frc.robot.util.Constants.Intake.INTAKE_SPEED;
+import static frc.robot.util.Constants.Intake.*;
 import static frc.robot.util.Constants.PeripheralPorts.*;
 import static frc.robot.util.Constants.RobotSpecs.*;
+import static frc.robot.util.Constants.Wrist.*;
+import static frc.robot.util.Constants.Climber.*;
+import static frc.robot.util.Constants.Arm.*;
 
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
+import frc.robot.commands.Actions.EndEffector.WristToVelocity;
+import frc.robot.commands.Actions.EndEffector.WristToPosition;
+import frc.robot.commands.Actions.EndEffector.ArmToPosition;
+import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
+import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
 import frc.robot.commands.Teleop.DrivetrainCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.Constants.Climber;
 import frc.robot.util.Constants.Intake;
 import frc.robot.subsystems.Arm;
-
 
 
 public class Control {
@@ -45,9 +53,25 @@ public class Control {
 			new DrivetrainCommand(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true)
         );
 
+                            //skill issue
+        // xboxController.rightBumper().toggleOnTrue(new IntakeToVelocity(INTAKE_SPEED));
 
-        xboxController.rightBumper().toggleOnTrue(new IntakeToVelocity(INTAKE_SPEED));
+
+        xboxController.rightBumper().toggleOnTrue(
+            Commands.startEnd(() -> new IntakeToVelocity(INTAKE_SPEED), () -> new IntakeToVelocity(0)));
+            
         xboxController.rightTrigger().onTrue(new IntakeToVelocity(-INTAKE_SPEED));
+
+        xboxController.leftTrigger().onTrue(new WristToVelocity(WRIST_SPEED));
+
+        if(xboxController.getLeftTriggerAxis() > 0.2 && xboxController.getRightTriggerAxis() > 0.2){
+            Commands.startEnd(() -> new ClimberToPosition(CLIMBER_MAX_POSITION), 
+            () -> new ClimberToPosition(CLIMBER_REST_POSITION));
+        }
+
+        xboxController.y().toggleOnTrue(new SetArmAndWristPos(ARM_TRAP_POSITION, WRIST_TRAP_POSITION));
+
+
         
         
 
