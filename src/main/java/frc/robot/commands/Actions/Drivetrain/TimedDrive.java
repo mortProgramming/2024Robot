@@ -13,7 +13,17 @@ public class TimedDrive extends Command{
   private double x;
   private double y;
   private double omega;
-
+  /**
+   * Moves the drivetrain a certain amount of time given movement parameters.
+   * @param time
+   * The amount of time to drive for
+   * @param x
+   * The velocity in the x direction
+   * @param y
+   * The velocity in the y direction
+   * @param omega
+   * The angular velocity
+   */
   public TimedDrive(double time, double x, double y, double omega) {
     drivetrain = Drivetrain.getInstance();
     

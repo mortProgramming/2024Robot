@@ -138,7 +138,9 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	/**
+	 * Gets the current rotation of the robot from its gyroscope
 	 * @return Rotation2d
+	 * Rotation of the robot as a Rotation2d
 	 */
 	public Rotation2d getGyroscopeRotation() {
 		if (navX.isMagnetometerCalibrated()) {
@@ -190,8 +192,9 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Gets the position of each swerve module
+	 * @return 
+	 * Each position in a SwerveModulePosition array. In order of FrontLeft, FrontRight, BackLeft, BackRight.
 	 */
 	public SwerveModulePosition[] getModulePositions() {
 		return new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
@@ -231,7 +234,9 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	/**
+	 * Set the ChassisSpeed of the swerve drive
 	 * @param chassisSpeeds
+	 * The Speed to set the swerve to
 	 */
 	public void drive(ChassisSpeeds chassisSpeeds) {
 		this.chassisSpeeds = chassisSpeeds;
@@ -295,8 +300,8 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Returns an instance of drivetrain. Use this method when creating a drivetrain object anywhere in the code, do NOT use constructor
+	 * @return A Drivetrain instance. If one doesn't exist already, it creates one.
 	 */
 	public static Drivetrain getInstance() {
 		if (drivetrain == null) {

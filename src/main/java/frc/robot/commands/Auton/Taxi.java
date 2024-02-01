@@ -11,7 +11,7 @@ import frc.robot.commands.Actions.Drivetrain.TimedDrive;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Taxi extends SequentialCommandGroup {
-  /** Creates a new Taxi. */
+  /** Move the robot forward, far enough to gain taxi points. */
   public Taxi() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());

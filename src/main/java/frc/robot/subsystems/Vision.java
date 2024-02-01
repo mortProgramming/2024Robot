@@ -60,7 +60,7 @@ public class Vision extends SubsystemBase {
 
 	/**
 	 * 
-	 * @return
+	 * @return True if the limelight has a target, false if no target
 	 */
     public boolean hasTarget() {
 		return llTable.getEntry("tv").getInteger(0) == 1;
@@ -68,40 +68,48 @@ public class Vision extends SubsystemBase {
 
 	/**
 	 * 
-	 * @return
+	 * @return The area of the target, if any. -1 if no target found
 	 */
     public double getTargetArea() {
-		return llTable.getEntry("ta").getDouble(0);
+		if(hasTarget()){
+			return llTable.getEntry("ta").getDouble(0);
+		}
+		return -1;
+		
 	}
 
 	/**
-	 * 
+	 * Switch limelight pipeline based on a given number to switch to
 	 * @param id
+	 * The pipeline ID to switch to
 	 */
 	public void setPipeline(int id) {
 		llTable.getEntry("pipeline").setNumber(id);
 	}
 
 	/**
-	 * 
+	 * Set the current pipeline based on the entered Pipeline object
 	 * @param pipe
+	 * A pipeline object to put in. The ID to switch to is obtained from this object
 	 */
 	public void setPipeline(Pipeline pipe) {
 		setPipeline(pipe.getId());
 	}
 
 	/**
-	 * 
+	 * Switch the pipeline to whatever tracks the target apriltag
 	 * @param pipe
+	 * The pipeline class
 	 * @param AprilTagID
+	 * The apriltag you are looking for
 	 */
 	public void setPipeline(Pipeline pipe, int AprilTagID) {
 		setPipeline(pipe.getId(AprilTagID));
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Gets the currently used pipeline
+	 * @return the Pipeline object currently being used
 	 */
 	public Pipeline getPipelineID() {
 		return Pipeline.getPipeline((int) llTable.getEntry("pipeline").getInteger(0));
@@ -123,19 +131,25 @@ public class Vision extends SubsystemBase {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Get the X value of the target in degrees
+	 * @return The X value of the target in degrees, -1 if no target found.
 	 */
 	public double getX() {
-		return llTable.getEntry("tx").getDouble(0);
+		if(hasTarget()){
+			return llTable.getEntry("tx").getDouble(0);
+		}
+		return -1;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Get the Y value of the target in degrees
+	 * @return The Y value of the target in degrees, -1 if no target found
 	 */
 	public double getY() {
-		return llTable.getEntry("ty").getDouble(0);
+		if(hasTarget()){
+			return llTable.getEntry("ty").getDouble(0);
+		}
+		return -1;
 	}
 
 	public double getCamTranslationX() {
@@ -219,13 +233,22 @@ public class Vision extends SubsystemBase {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Get the ID of any currently targeted AprilTag
+	 * @return ID of targeted apriltag as an int, -1 if no target found
 	 */
 	public int getAprilTagId() {
-		return (int) llTable.getEntry("tid").getInteger(0);
+		if(hasTarget()){
+			return (int) llTable.getEntry("tid").getInteger(0);
+		}
+		return -1;
+		
 	}
-
+	/**
+	 * Gets the distance to the target AprilTag in inches
+	 * @param tagHeight 
+	 * The Height of the tag. All tag heights are in constants
+	 * @return The Height of the tag in inches. If no target, return -1
+	 */
 	public double getDistanceToTag(double tagHeight) {
 		if(llTable.getEntry("tv").getDouble(0) == 1){
 			return (tagHeight - CAMERA_HEIGHT) / (Math.tan(Math.toRadians(getY())));

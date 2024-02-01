@@ -56,7 +56,9 @@ public class Wrist extends SubsystemBase {
     }
 
     /**
-     * 
+     * Sets the velocity of the wrist as it rotates
+     * @param wristSpeed
+     * The desired wrist velocity as a double
      */
     public void setWristVelocity(double wristSpeed){
         this.wristSpeed = wristSpeed;
@@ -65,7 +67,10 @@ public class Wrist extends SubsystemBase {
     public void setSetPoint(double setpoint){
         this.setpoint = setpoint;
     }
-
+    /**
+     * Get the current setpoint of the wrist
+     * @return the setpoint of the wrist as a double
+     */
     public double getSetpoint(){
         return setpoint;
     }
@@ -77,7 +82,10 @@ public class Wrist extends SubsystemBase {
     public double getPosition(){
         return wristMotor.getPosition().getValueAsDouble();
     }
-
+/**
+ * Determines if we are within the wrist setpoint allowed error.
+ * @return True if yes, false if no
+ */
     public boolean nearSetpoint(){
          return (Math.abs((wristPostionFeedForward.calculate(getPosition(), getVelocity()) + 
          wristPositionController.calculate(getPosition(),setpoint))) / MAX_VOLTAGE) < WRIST_NEAR_SETPOINT_ERROR;
