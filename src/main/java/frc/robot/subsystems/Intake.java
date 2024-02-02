@@ -46,14 +46,16 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * 
+     * Set the intake to the desired intakeSpeed
+     * @param intakeSpeed
+     * The speed to set the intake to
      */
     public void setIntakeVelocity(double intakeSpeed){
         this.intakeSpeed = intakeSpeed;
     }
 
     /**
-     * 
+     * Not sure why this exists, The intake and outtake are one subsystem that can do both, but only one at a time. Just -1 the intakevelocity method.
      */
     public void setOuttakeVelocity(double intakeSpeed){
         this.intakeSpeed = -intakeSpeed;

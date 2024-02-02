@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class OnePiece extends SequentialCommandGroup {
-  /** Creates a new ScoreInAmp. */
+  /** Creates a new OnePiece. */
   public OnePiece() {
     Alliance team = DriverStation.getAlliance().get();
     MoveToAprilTag command;

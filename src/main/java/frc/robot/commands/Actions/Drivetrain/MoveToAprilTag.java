@@ -11,7 +11,11 @@ public class MoveToAprilTag extends Command{
     private Vision vision;
 
     private int id;
-
+	/**
+	 * Moves the robot to an Apriltag on the field.
+	 * @param id
+	 * The Apriltag ID to move to
+	 */
     public MoveToAprilTag(int id){
         drivetrain = Drivetrain.getInstance();
         vision = Vision.getInstance();
