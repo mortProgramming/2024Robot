@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import static frc.robot.util.Constants.Intake.*;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -14,6 +16,7 @@ public class Intake extends SubsystemBase {
     //left is main motor
     private TalonFX followIntakeMotor;
     private TalonFX masterIntakeMotor;
+    private DigitalInput input;
 
     private double intakeSpeed;
 
@@ -22,6 +25,8 @@ public class Intake extends SubsystemBase {
         followIntakeMotor = new TalonFX(FOLLOW_INTAKE_MOTOR);
 
         followIntakeMotor.setControl(new Follower(MASTER_INTAKE_MOTOR, false));
+
+        input = new DigitalInput(INTAKE_SENSOR);
     }
 
     public void init() {
@@ -35,6 +40,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
       // This method will be called once per scheduler run
         masterIntakeMotor.set(intakeSpeed);
+        Shuffleboard.getTab("Intake Sensor").add("Piece In", input.get());
     }
 
     /**
