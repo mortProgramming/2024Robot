@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
     //left is main motor
     private TalonFX followIntakeMotor;
     private TalonFX masterIntakeMotor;
-    private DigitalInput input;
+    private static DigitalInput input;
 
     private double intakeSpeed;
 
@@ -24,7 +24,7 @@ public class Intake extends SubsystemBase {
         masterIntakeMotor = new TalonFX(MASTER_INTAKE_MOTOR);
         followIntakeMotor = new TalonFX(FOLLOW_INTAKE_MOTOR);
 
-        followIntakeMotor.setControl(new Follower(MASTER_INTAKE_MOTOR, false));
+        followIntakeMotor.setControl(new Follower(MASTER_INTAKE_MOTOR, true));
 
         input = new DigitalInput(INTAKE_SENSOR);
     }
@@ -40,7 +40,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
       // This method will be called once per scheduler run
         masterIntakeMotor.set(intakeSpeed);
-        Shuffleboard.getTab("Intake Sensor").add("Piece In", input.get());
+        Shuffleboard.update();
     }
 
     /**
@@ -74,6 +74,7 @@ public class Intake extends SubsystemBase {
     public static Intake getInstance(){
         if (intake==null){
             intake = new Intake();
+            Shuffleboard.getTab("Intake Sensor").add("Piece In", input.get());
         }
         return intake;
     }

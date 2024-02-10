@@ -16,25 +16,25 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 3;
 		public final static int FRONT_LEFT_STEER = 4;
 		public final static int FRONT_LEFT_STEER_ENCODER = 35;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(0);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(144.1);
 
 		/* Port and Declaration for Front Right swerve motors & offset */
 		public final static int FRONT_RIGHT_DRIVE = 1;
 		public final static int FRONT_RIGHT_STEER = 2;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 34;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(0);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(269.0);
 
 		/* Port and Declaration for Back left swerve motors & offset */
 		public final static int BACK_LEFT_DRIVE = 5;
 		public final static int BACK_LEFT_STEER = 6;
 		public final static int BACK_LEFT_STEER_ENCODER = 36;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(0);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(115.7);
 
 		/* Port and Declaration for Back Right swerve motors & offset */
 		public final static int BACK_RIGHT_DRIVE = 7;
 		public final static int BACK_RIGHT_STEER = 8;
 		public final static int BACK_RIGHT_STEER_ENCODER = 37;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(0);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(39.0);
 
 		public final static double XVALUE_KP = 1.1;
 		public final static double XVALUE_KI = 0;
@@ -55,10 +55,10 @@ public final class Constants {
     public final static class RobotSpecs {
 		// The left-to-right distance between the drivetrain wheels measured from center
 		// to center.
-		public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(23.75);
+		public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(19);
 		// The front-to-back distance between the drivetrain wheels measured from center
 		// to center.
-		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(23.75);
+		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(19);
 		//	Maximum voltage that will be used by subsystem it is called to
 		public static final double MAX_VOLTAGE = 12.0;	
 
@@ -123,9 +123,9 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double WRIST_REST_POSITION = 0;
-		public static final double WRIST_SCORE_POSITION = 0;
-		public static final double WRIST_INTAKE_POSITION = 0;
+		public static final double WRIST_REST_POSITION = 0.2;
+		public static final double WRIST_SCORE_POSITION = 1.3;
+		public static final double WRIST_INTAKE_POSITION = 7.9;
 		public static final double WRIST_TRAP_POSITION = 0;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
@@ -148,10 +148,12 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double ARM_REST_POSITION = 0;
-		public static final double ARM_AMP_POSITION = 0;
-		public static final double ARM_INTAKE_POSITION = 0;
+		public static final double ARM_REST_POSITION = 0.7;
+		public static final double ARM_AMP_POSITION = -25;
+		public static final double ARM_INTAKE_POSITION = -2.5;
 		public static final double ARM_TRAP_POSITION = 0;
+		public static final double ARM_SPEAKER_POSITION = 0;
+		
 
 		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 	}
@@ -199,6 +201,8 @@ public final class Constants {
 		public static final double MAX_ERROR = 0;
 
 		public static final double CAMERA_MOUNT_ANGLE = 0;
+
+		public static final double MAX_POSE_ERROR_METERS = 1;
 	}
 
 	public static final class AprilTagData{

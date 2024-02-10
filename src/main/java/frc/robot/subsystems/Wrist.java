@@ -10,6 +10,7 @@ import frc.robot.Robot;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Wrist extends SubsystemBase {
     
@@ -45,6 +46,7 @@ public class Wrist extends SubsystemBase {
     public void periodic() {
       // This method will be called once per scheduler run
         wristMotor.set(wristSpeed);
+        SmartDashboard.putNumber("Wrist Position", getPosition());
     }
 
     /**

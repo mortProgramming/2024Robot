@@ -3,13 +3,15 @@ package frc.robot.commands.Actions.EndEffector;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Wrist;
 
+import java.util.function.DoubleSupplier;
+
 public class WristToVelocity extends Command{
     private Wrist wrist;
-    private double velocity;
+    private DoubleSupplier velocity;
 
-    public WristToVelocity(double velocity){
+    public WristToVelocity(DoubleSupplier velocity){
         this.velocity = velocity;
-        wrist = wrist.getInstance();
+        wrist = Wrist.getInstance();
         addRequirements(wrist);
     }
 
@@ -21,7 +23,7 @@ public class WristToVelocity extends Command{
 
     @Override
     public void execute() {
-        wrist.setWristVelocity(velocity);
+        wrist.setWristVelocity(velocity.getAsDouble());
     }
 
     @Override

@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -18,8 +19,8 @@ public class Arm extends SubsystemBase {
     private static Arm arm;
 
     //left is main motor
-    private TalonFX masterArmMotor;
-    private TalonFX followArmMotor;
+    private static TalonFX masterArmMotor;
+    private static TalonFX followArmMotor;
 
     private double armSpeed;
     private double setpoint;
@@ -31,7 +32,7 @@ public class Arm extends SubsystemBase {
         masterArmMotor = new TalonFX(MASTER_ARM_MOTOR);
         followArmMotor = new TalonFX(FOLLOW_ARM_MOTOR);
 
-        followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, false));
+        followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, true));
 
         armPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
@@ -50,6 +51,7 @@ public class Arm extends SubsystemBase {
     public void periodic() {
       // This method will be called once per scheduler run
         masterArmMotor.set(armSpeed);
+        SmartDashboard.putNumber("Arm Postion", getPosition());
     }
 
     /**
@@ -69,6 +71,10 @@ public class Arm extends SubsystemBase {
 
     public void setSetPoint(double setpoint){
         this.setpoint = setpoint;
+    }
+
+    public void setVoltage(double voltage){
+        masterArmMotor.setVoltage(voltage);
     }
 
     public double getSetpoint(){
@@ -99,7 +105,12 @@ public class Arm extends SubsystemBase {
     public static Arm getInstance(){
         if (arm==null){
             arm = new Arm();
+
         }
         return arm;
+    }
+
+    public static TalonFX getArmMaster(){
+        return masterArmMotor;
     }
 }

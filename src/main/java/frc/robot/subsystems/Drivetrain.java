@@ -21,10 +21,11 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
-	private final AHRS navX;
+	private AHRS navX;
 	//Declarations of necessary componenets to create drivetrain & its functions
 	public final SwerveDriveKinematics driveKinematics;
 	private SwerveDriveOdometry driveOdometry;
@@ -50,6 +51,7 @@ public class Drivetrain extends SubsystemBase {
 
 	public Drivetrain() {
 		navX = new AHRS(SerialPort.Port.kMXP);
+		
 		driveKinematics = new SwerveDriveKinematics(
 				// Front left
 				new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
@@ -216,13 +218,13 @@ public class Drivetrain extends SubsystemBase {
 		SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
 		frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[0].angle.getRadians());
+				states[0].angle.getRadians()+Math.toRadians(180));
 		frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[1].angle.getRadians());
+				states[1].angle.getRadians()+Math.toRadians(180));
 		backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[2].angle.getRadians());
+				states[2].angle.getRadians()+Math.toRadians(180));
 		backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[3].angle.getRadians());
+				states[3].angle.getRadians()+Math.toRadians(180));
 	}
 
 	/**
@@ -296,7 +298,8 @@ public class Drivetrain extends SubsystemBase {
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 
-		Shuffleboard.getTab("dt").add(drivetrain);
+		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
+
 	}
 
 	/**
@@ -306,8 +309,19 @@ public class Drivetrain extends SubsystemBase {
 	public static Drivetrain getInstance() {
 		if (drivetrain == null) {
 			drivetrain = new Drivetrain();
+			Shuffleboard.getTab("dt").add(drivetrain);
+
 		}
 		return drivetrain;
 	}
+
+	public double getPitch(){
+		return navX.getPitch() - 0.3;
+	}
+
+	public double getRoll(){
+		return navX.getRoll() + 1;
+	}
+
 }
 

@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import static frc.robot.util.Constants.Climber.*;
 import static frc.robot.util.Constants.RobotSpecs.*;
 
-import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -16,8 +16,8 @@ public class Climber extends SubsystemBase {
     private static Climber climber;
 
     //left is main motor
-    private TalonFX masterClimberMotor;
-    private TalonFX followClimberMotor;
+    private CANSparkMax masterClimberMotor;
+    private CANSparkMax followClimberMotor;
 
     private double climberSpeed;
     private double setpoint;
@@ -26,10 +26,10 @@ public class Climber extends SubsystemBase {
     private ArmFeedforward climberPostionFeedForward;
 
     public Climber() {
-        masterClimberMotor = new TalonFX(MASTER_CLIMBER_MOTOR);
-        followClimberMotor = new TalonFX(FOLLOW_CLIMBER_MOTOR);
+        masterClimberMotor = new CANSparkMax(MASTER_CLIMBER_MOTOR, MotorType.kBrushless);
+        followClimberMotor = new CANSparkMax(FOLLOW_CLIMBER_MOTOR, MotorType.kBrushless);
 
-        followClimberMotor.setControl(new Follower(MASTER_CLIMBER_MOTOR, false));
+        followClimberMotor.follow(masterClimberMotor, true);
 
         climberPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
@@ -74,11 +74,11 @@ public class Climber extends SubsystemBase {
     }
 
     public double getVelocity() {
-        return masterClimberMotor.getVelocity().getValueAsDouble();
+        return masterClimberMotor.getEncoder().getVelocity();
     }
 
     public double getPosition() {
-		return masterClimberMotor.getPosition().getValueAsDouble();
+        return masterClimberMotor.getEncoder().getPosition();
 	}
 
     public boolean nearSetpoint(){

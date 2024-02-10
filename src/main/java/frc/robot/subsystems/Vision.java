@@ -30,33 +30,10 @@ public class Vision extends SubsystemBase {
 		private double nonOutlierCounter;
 		private double[] values = new double[AMOUNT_TEST_FRAMES];
 		private double[] outliers = new double[MAX_OUTLIERS];
-
-		private double[][] rotationYZMatrix = 
-		{{1, 0, 0}, 
-		{0, Math.cos(CAMERA_MOUNT_ANGLE), Math.sin(CAMERA_MOUNT_ANGLE)}, 
-		{0, -Math.sin(CAMERA_MOUNT_ANGLE), Math.cos(CAMERA_MOUNT_ANGLE)}};
 		
     public Vision() {
         llTable = NetworkTableInstance.getDefault().getTable("limelight");
     }
-
-	// public Number[][] getRotated(Number[][] inputVector) {
-	// 	int rows1 = inputVector.length;
-    //     int cols1 = inputVector[0].length;
-    //     int cols2 = rotationYZMatrix[0].length;
-
-    //     Number[][] result = new Number[rows1][cols2];
-
-    //     for (int i = 0; i < rows1; i++) {
-    //         for (int j = 0; j < cols2; j++) {
-    //             for (int k = 0; k < cols1; k++) {
-    //                 result[i][j] += inputVector[i][k] * inputVector[k][j];
-    //             }
-    //         }
-    //     }
-
-    //     return result;
-	// }
 
 	/**
 	 * 
@@ -121,12 +98,6 @@ public class Vision extends SubsystemBase {
 	 * @return
 	 */
 	public Number[] getCamTranslation() {
-		// Number[] startArray = llTable.getEntry("targetpose_robotspace").getNumberArray(new Number[0]);
-		// Number[][] xyzStartArray = {{startArray[0], startArray[1], startArray[2]}};
-		// Number[][] xyzNewArray = getRotated(xyzStartArray);
-		// Number[] newArray = {xyzNewArray[1][1], xyzNewArray[2][1], xyzNewArray[3][1], 
-		// startArray[3], startArray[4], startArray[5]};
-		// return newArray;
 		return llTable.getEntry("targetpose_robotspace").getNumberArray(new Number[0]);
 	}
 
@@ -243,18 +214,33 @@ public class Vision extends SubsystemBase {
 		return -1;
 		
 	}
+
+
+	// old, prior to 3d vision
 	/**
 	 * Gets the distance to the target AprilTag in inches
 	 * @param tagHeight 
 	 * The Height of the tag. All tag heights are in constants
 	 * @return The Height of the tag in inches. If no target, return -1
 	 */
-	public double getDistanceToTag(double tagHeight) {
-		if(llTable.getEntry("tv").getDouble(0) == 1){
-			return (tagHeight - CAMERA_HEIGHT) / (Math.tan(Math.toRadians(getY())));
-		}
-		return -1;
+	// public double getDistanceToTag(double tagHeight) {
+	// 	if(llTable.getEntry("tv").getDouble(0) == 1){
+	// 		return (tagHeight - CAMERA_HEIGHT) / (Math.tan(Math.toRadians(getY())));
+	// 	}
+	// 	return -1;
 		
+	// }
+
+	public Pose2d getFieldPose() {
+		double[] poseNum = new double[6];
+		
+		if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+			poseNum = llTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
+		} else {
+			poseNum = llTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+		}
+
+		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));
 	}
 
 	/**

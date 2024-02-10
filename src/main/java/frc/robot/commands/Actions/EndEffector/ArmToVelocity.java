@@ -3,11 +3,14 @@ package frc.robot.commands.Actions.EndEffector;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 
+import java.util.function.DoubleSupplier;
+
+
 public class ArmToVelocity extends Command{
     private Arm arm;
-    private double velocity;
+    private DoubleSupplier velocity;
 
-    public ArmToVelocity(double velocity){
+    public ArmToVelocity(DoubleSupplier velocity){
         this.velocity = velocity;
         arm = Arm.getInstance();
         addRequirements(arm);
@@ -21,7 +24,7 @@ public class ArmToVelocity extends Command{
 
     @Override
     public void execute() {
-        arm.setArmVelocity(velocity);
+        arm.setArmVelocity(velocity.getAsDouble());
     }
 
     @Override

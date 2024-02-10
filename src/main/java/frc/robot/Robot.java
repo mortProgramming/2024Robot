@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.util.Odometer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -21,6 +22,8 @@ public class Robot extends TimedRobot {
 
 	private RobotContainer robotContainer;
 
+	//private Odometer odometer;
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -28,6 +31,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		robotContainer = new RobotContainer();
+
+		//odometer = Odometer.getInstance();
 	}
 
 	/**
@@ -42,6 +47,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
+		//odometer.updateOdometry();
+		
 	}
 
 	/** This function is called once each time the robot enters Disabled mode. */
