@@ -24,7 +24,8 @@ public class ArmToVelocity extends Command{
 
     @Override
     public void execute() {
-        arm.setArmVelocity(velocity.getAsDouble());
+        // arm.setArmVelocity(velocity.getAsDouble());
+        arm.setArmVelocityArmFeed(velocity.getAsDouble());
     }
 
     @Override

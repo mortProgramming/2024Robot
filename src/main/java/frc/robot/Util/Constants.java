@@ -137,25 +137,35 @@ public final class Constants {
 		public static final int FOLLOW_ARM_MOTOR = 13;
 		public static final int MASTER_ARM_MOTOR = 14;
 
-		public static final double POSITION_PID_P = 0;
+		public static final double POSITION_PID_P = 0.5;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 0;
 		public static final double POSITION_PID_A = 0;
 
-		public static final double POSITION_FF_S = 0;
-		public static final double POSITION_FF_G = 0;
-		public static final double POSITION_FF_V = 0;
-		public static final double POSITION_FF_A = 0;
+
+		// simple feed forward plus guess
+		// public static final double POSITION_FF_S = 0.52771;
+		// public static final double POSITION_FF_G = 0.04;
+		// public static final double POSITION_FF_V = 13.199;
+		// public static final double POSITION_FF_A = 0.99537;
+
+		public static final double POSITION_FF_S = 0.52771;
+		public static final double POSITION_FF_G = 0.38738;
+		public static final double POSITION_FF_V = 14.112;
+		public static final double POSITION_FF_A = 0.81092;
 
 		public static final double ARM_REST_POSITION = 0.7;
-		public static final double ARM_AMP_POSITION = -25;
+		// public static final double ARM_AMP_POSITION = -25;
+		public static final double ARM_AMP_POSITION = -90;
 		public static final double ARM_INTAKE_POSITION = -2.5;
 		public static final double ARM_TRAP_POSITION = 0;
 		public static final double ARM_SPEAKER_POSITION = 0;
 		
+		public static final double ARM_NEAR_SETPOINT_ERROR = 5;
 
-		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
+		public static final double ARM_DEGREES_TO_0 = -12;
+		public static final double ARM_GEAR_RATIO = 0.25;
 	}
 
 	public final static class Vision {

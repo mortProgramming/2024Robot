@@ -6,7 +6,7 @@ import static frc.robot.util.Constants.Arm.*;
 import static frc.robot.util.Constants.RobotSpecs.*;
 import static frc.robot.util.Constants.RobotSpecs;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
@@ -26,7 +26,7 @@ public class Arm extends SubsystemBase {
     private double setpoint;
 
     private ProfiledPIDController armPositionController;
-    private ArmFeedforward armPostionFeedForward;
+    private SimpleMotorFeedforward armPostionFeedForward;
 
     public Arm() {
         masterArmMotor = new TalonFX(MASTER_ARM_MOTOR);
@@ -37,7 +37,7 @@ public class Arm extends SubsystemBase {
         armPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
 
-        armPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
+        armPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
     }
 
     public void init() {
@@ -52,6 +52,7 @@ public class Arm extends SubsystemBase {
       // This method will be called once per scheduler run
         masterArmMotor.set(armSpeed);
         SmartDashboard.putNumber("Arm Postion", getPosition());
+        SmartDashboard.putNumber("Arm Position Degrees", posToDegrees());
     }
 
     /**
@@ -67,6 +68,14 @@ public class Arm extends SubsystemBase {
      */
     public void setArmVelocity(double armSpeed){
         this.armSpeed = armSpeed;
+    }
+
+    public void setArmVelocityG(double armSpeed){
+        this.armSpeed = armSpeed + POSITION_FF_G * Math.sin(Math.toRadians(posToDegrees()));
+    }
+
+    public void setArmVelocityArmFeed(double armSpeed){
+        this.armSpeed = armSpeed + 0.000005 * armPostionFeedForward.calculate(getPosition(), getVelocity());
     }
 
     public void setSetPoint(double setpoint){
@@ -89,13 +98,20 @@ public class Arm extends SubsystemBase {
 		return masterArmMotor.getPosition().getValueAsDouble();
 	}
 
+    // public boolean nearSetpoint(){
+    //     return (Math.abs(armPostionFeedForward.calculate(getPosition(), getVelocity()) + 
+    //      armPositionController.calculate(getPosition(),setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
+    // }
     public boolean nearSetpoint(){
-        return (Math.abs(armPostionFeedForward.calculate(getPosition(), getVelocity()) + 
-         armPositionController.calculate(getPosition(),setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
+        return (Math.abs(armPositionController.calculate(posToDegrees(), setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
     }
 
     public boolean isClear(){
         return true;
+    }
+
+    public double posToDegrees(){
+        return getPosition() / ARM_GEAR_RATIO  - ARM_DEGREES_TO_0;
     }
 
     /**
@@ -110,7 +126,12 @@ public class Arm extends SubsystemBase {
         return arm;
     }
 
-    public static TalonFX getArmMaster(){
+    public TalonFX getArmMaster(){
         return masterArmMotor;
+    }
+
+    public double getVoltage() {
+        // TODO Auto-generated method stub
+        return getArmMaster().getMotorVoltage().getValueAsDouble();
     }
 }

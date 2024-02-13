@@ -7,7 +7,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,7 +23,7 @@ public class Wrist extends SubsystemBase {
     private double setpoint;
 
     private ProfiledPIDController wristPositionController;
-    private ArmFeedforward wristPostionFeedForward;
+    private SimpleMotorFeedforward wristPostionFeedForward;
 
 
     public Wrist() {
@@ -32,7 +32,7 @@ public class Wrist extends SubsystemBase {
         wristPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
 
-        wristPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
+        wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
     }
 
     public void init() {
@@ -69,6 +69,10 @@ public class Wrist extends SubsystemBase {
     public void setSetPoint(double setpoint){
         this.setpoint = setpoint;
     }
+
+    public void setVoltage(double voltage){
+        wristMotor.setVoltage(voltage);
+    }
     /**
      * Get the current setpoint of the wrist
      * @return the setpoint of the wrist as a double
@@ -84,6 +88,16 @@ public class Wrist extends SubsystemBase {
     public double getPosition(){
         return wristMotor.getPosition().getValueAsDouble();
     }
+
+    public TalonFX getWristMotor(){
+        return wristMotor;
+    }
+    
+    public double getVoltage() {
+        // TODO Auto-generated method stub
+        return getWristMotor().getMotorVoltage().getValueAsDouble();
+    }
+
 /**
  * Determines if we are within the wrist setpoint allowed error.
  * @return True if yes, false if no
