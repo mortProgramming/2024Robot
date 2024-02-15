@@ -2,7 +2,6 @@ package frc.robot.commands.Actions.EndEffector;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Wrist;
-import frc.robot.util.Constants;
 
 public class WristToPosition extends Command {
     private Wrist wrist;

@@ -1,16 +1,9 @@
 package frc.robot.util;
 
-import static frc.robot.util.Constants.Intake.*;
 import static frc.robot.util.Constants.PeripheralPorts.*;
 import static frc.robot.util.Constants.RobotSpecs.*;
-import static frc.robot.util.Constants.Wrist.*;
 
-import java.util.function.DoubleSupplier;
-
-import static frc.robot.util.Constants.Climber.*;
 import static frc.robot.util.Constants.Arm.*;
-import frc.robot.util.Constants.Wrist.*;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 
@@ -19,24 +12,16 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Actions.EndEffector.WristToVelocity;
-import frc.robot.commands.Actions.EndEffector.WristToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmToVelocity;
-import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
-import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import edu.wpi.first.units.Angle;
-import edu.wpi.first.units.BaseUnits;
-import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
-import edu.wpi.first.units.Time;
-import edu.wpi.first.units.Unit;
 import edu.wpi.first.units.Voltage;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
@@ -44,7 +29,6 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.Velocity;
-import edu.wpi.first.units.Angle;
 
 import static edu.wpi.first.units.MutableMeasure.mutable;
 
@@ -93,31 +77,20 @@ public class Control {
         intake = Intake.getInstance();
 
 
-        // armRoutine = new SysIdRoutine(
-        //     new SysIdRoutine.Config(Volts.of(.5).per(Seconds.of(1)),Volts.of(7),Seconds.of(10)),
-        //     new SysIdRoutine.Mechanism(
-        //         (Measure<Voltage> volts) -> {arm.setVoltage(volts.in(Volts));},
-
-        //     log -> {
-        //         log.motor("armMotor")
-        //             .voltage(appliedVoltage.mut_replace(arm.getVoltage(), Volts))
-        //             .linearPosition(distance.mut_replace(arm.getArmMaster().getPosition().getValueAsDouble(), Meters))
-        //             .linearVelocity(velocity.mut_replace(arm.getVelocity(), MetersPerSecond));
-        //     },
-        //     arm));
-
-            wristRoutine = new SysIdRoutine(
-            new SysIdRoutine.Config(Volts.of(.25).per(Seconds.of(1)),Volts.of(3.5),Seconds.of(10)),
+        armRoutine = new SysIdRoutine(
+            new SysIdRoutine.Config(Volts.of(.5).per(Seconds.of(1)),Volts.of(7),Seconds.of(10)),
             new SysIdRoutine.Mechanism(
-                (Measure<Voltage> volts) -> {wrist.setVoltage(volts.in(Volts));},
+                (Measure<Voltage> volts) -> {arm.setVoltage(volts.in(Volts));},
 
             log -> {
-                log.motor("wristMotor")
-                    .voltage(appliedVoltage.mut_replace(wrist.getVoltage(), Volts))
-                    .angularPosition(distance.mut_replace(wrist.getPosition(), Rotations))
-                    .angularVelocity(velocity.mut_replace(wrist.getVelocity(), RotationsPerSecond));
+                log.motor("armMotor")
+                    .voltage(appliedVoltage.mut_replace(arm.getVoltage(), Volts))
+                    .angularPosition(distance.mut_replace(arm.getArmMaster().getPosition().getValueAsDouble(), Rotations))
+                    .angularVelocity(velocity.mut_replace(arm.getVelocity(), RotationsPerSecond));
             },
-            wrist));
+            arm));
+
+           
         
 	}
 
@@ -128,6 +101,8 @@ public class Control {
 		drivetrain.setDefaultCommand(
 			new DrivetrainCommand(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true)
         );
+
+        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope()));
 
                             //Competition controls
         // xboxController.rightBumper().toggleOnTrue(
@@ -150,8 +125,7 @@ public class Control {
         xboxController.x().onTrue(new IntakeToVelocity(-1));
         xboxController.x().onFalse(new IntakeToVelocity(0));
 
-        arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
-
+         arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
         wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
         
         xboxController.a().onTrue(new ClimberToVelocity(0.25));
@@ -159,8 +133,8 @@ public class Control {
         xboxController.b().onTrue(new ClimberToVelocity(-0.25));
         xboxController.b().onFalse(new ClimberToVelocity(0));
 
-        xboxController.povDown().onTrue(new ArmToPosition(ARM_AMP_POSITION));
-        xboxController.povDown().onFalse(new ArmToVelocity(Control::getLeftJoystickY));
+        xboxController.povDown().whileTrue(new ArmToPosition(ARM_AMP_POSITION));
+        xboxController.povDown().whileFalse(new ArmToVelocity(Control::getLeftJoystickY));
 
         joystick.button(9).whileTrue(getQuasistaticDirectionalTest(Direction.kForward));
         joystick.button(10).whileTrue(getQuasistaticDirectionalTest(Direction.kReverse));
@@ -224,48 +198,48 @@ public class Control {
     public static double modifyAxis(double value, double throttleValue) {
         value = deadband(value, DEAD_BAND);
 
-        throttleValue = (throttleValue + 1) / 2;
+        value = Math.copySign(value * value, value);
 
-        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
+        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE));
     }
 
     /**
      * 
      * @return
      */
-    // public static double getJoystickX() {
-	// 	return -(modifyAxis(joystick.getX(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
-	// }
+    public static double getJoystickX() {
+		return -(modifyAxis(joystick.getX(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
+	}
 
-    public static double getJoystickX(){
-        return joystick.getX() * (throttle.getZ() + 1) / 2;
-    }
+    // public static double getJoystickX(){
+    //     return joystick.getX() * (throttle.getZ());
+    // }
 
-
-    /**
-     * 
-     * @return
-     */
-	// public static double getJoystickY() {
-	// 	return -(modifyAxis(joystick.getY(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
-	// }
-
-    public static double getJoystickY(){
-        return joystick.getY() * (throttle.getZ() + 1) / 2;
-    }
 
     /**
      * 
      * @return
      */
-	// public static double getJoystickTwist() {
-	// 	return -(modifyAxis(joystick.getTwist(), throttle.getRawAxis(2))
-	// 			* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
-	// }
+	public static double getJoystickY() {
+		return -(modifyAxis(joystick.getY(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
+	}
 
-    public static double getJoystickTwist(){
-        return joystick.getTwist() * (throttle.getZ() + 1) / 2;
-    }
+    // public static double getJoystickY(){
+    //     return joystick.getY() * (throttle.getZ());
+    // }
+
+    /**
+     * 
+     * @return
+     */
+	public static double getJoystickTwist() {
+		return -(modifyAxis(joystick.getTwist(), throttle.getRawAxis(2))
+				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+	}
+
+    // public static double getJoystickTwist(){
+    //     return joystick.getTwist() * (throttle.getZ());
+    // }
 
     public static double getLeftJoystickY() {
         return xboxController.getLeftY() * 0.25;
@@ -275,10 +249,10 @@ public class Control {
         return xboxController.getRightY() * 0.25;
     }
     public static Command getQuasistaticDirectionalTest(SysIdRoutine.Direction direction){
-        return wristRoutine.quasistatic(direction);
+        return armRoutine.quasistatic(direction);
     }
     public static Command getDynamicDirectionalTest(SysIdRoutine.Direction direction){
-        return wristRoutine.dynamic(direction);
+        return armRoutine.dynamic(direction);
     }
 
     //FINISHTHIS

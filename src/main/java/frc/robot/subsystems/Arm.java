@@ -4,11 +4,12 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import static frc.robot.util.Constants.Arm.*;
 import static frc.robot.util.Constants.RobotSpecs.*;
-import static frc.robot.util.Constants.RobotSpecs;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.Constants.RobotSpecs;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,7 +27,9 @@ public class Arm extends SubsystemBase {
     private double setpoint;
 
     private ProfiledPIDController armPositionController;
-    private SimpleMotorFeedforward armPostionFeedForward;
+    // private SimpleMotorFeedforward armPostionFeedForward;
+        private ArmFeedforward armPostionFeedForward;
+
 
     public Arm() {
         masterArmMotor = new TalonFX(MASTER_ARM_MOTOR);
@@ -37,7 +40,9 @@ public class Arm extends SubsystemBase {
         armPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
 
-        armPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
+        // armPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
+        armPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
+
     }
 
     public void init() {
@@ -53,7 +58,11 @@ public class Arm extends SubsystemBase {
         masterArmMotor.set(armSpeed);
         SmartDashboard.putNumber("Arm Postion", getPosition());
         SmartDashboard.putNumber("Arm Position Degrees", posToDegrees());
+        SmartDashboard.putNumber("Arm Setpoint", setpoint);
+
+        setPosition(setpoint);
     }
+
 
     /**
      * 
@@ -71,12 +80,16 @@ public class Arm extends SubsystemBase {
     }
 
     public void setArmVelocityG(double armSpeed){
-        this.armSpeed = armSpeed + POSITION_FF_G * Math.sin(Math.toRadians(posToDegrees()));
+        this.armSpeed = armSpeed + POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees()));
     }
 
-    public void setArmVelocityArmFeed(double armSpeed){
-        this.armSpeed = armSpeed + 0.000005 * armPostionFeedForward.calculate(getPosition(), getVelocity());
-    }
+    // public void setArmVelocityArmFeed(double armSpeed){
+    //     this.armSpeed = armSpeed + POSITION_FF_G * Math.sin(Math.toRadians(posToDegrees())) + armPostionFeedForward.calculate(getPosition(), getVelocity());
+    // }
+
+    // public void setArmVelocityArmFeed(double armSpeed){
+    //     this.armSpeed = armSpeed + armPostionFeedForward.calculate(getPosition(), getVelocity());
+    // }
 
     public void setSetPoint(double setpoint){
         this.setpoint = setpoint;
@@ -103,7 +116,7 @@ public class Arm extends SubsystemBase {
     //      armPositionController.calculate(getPosition(),setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
     // }
     public boolean nearSetpoint(){
-        return (Math.abs(armPositionController.calculate(posToDegrees(), setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
+        return (Math.abs(armPositionController.calculate(posToDegrees(), setpoint) + POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees())) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR);
     }
 
     public boolean isClear(){
@@ -111,7 +124,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double posToDegrees(){
-        return getPosition() / ARM_GEAR_RATIO  - ARM_DEGREES_TO_0;
+        return (getPosition() * ARM_GEAR_RATIO)  + ARM_DEGREES_TO_0;
     }
 
     /**
@@ -134,4 +147,21 @@ public class Arm extends SubsystemBase {
         // TODO Auto-generated method stub
         return getArmMaster().getMotorVoltage().getValueAsDouble();
     }
+
+    private void setPosition(double setpoint) {
+		double output = ( POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees()) 
+        + armPositionController.calculate(posToDegrees(), setpoint))
+				/ RobotSpecs.MAX_VOLTAGE); // INVERTED
+		if (output >= 1){
+			output = 0.1;
+		} else if (output <= -1) {
+			output = -0.1;
+		}
+		// double output = 0.1 * sin(getPositionDegrees()) +
+		// armController.calculate(getPosition(), setpoint);
+		masterArmMotor.set(output);
+
+		SmartDashboard.putNumber("arm output", output);
+        SmartDashboard.putNumber("ActualMotorOutput", masterArmMotor.get());
+	}
 }

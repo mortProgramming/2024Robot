@@ -1,7 +1,5 @@
 package frc.robot.commands.Actions.EndEffector;
 
-import static frc.robot.util.Constants.Intake.*;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;   
 

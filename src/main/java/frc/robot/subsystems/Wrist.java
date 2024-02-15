@@ -6,7 +6,6 @@ import static frc.robot.util.Constants.Wrist.*;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
@@ -64,6 +63,10 @@ public class Wrist extends SubsystemBase {
      */
     public void setWristVelocity(double wristSpeed){
         this.wristSpeed = wristSpeed;
+    }
+
+    public void setWristVelocityWristFeed(double wristSpeed){
+        this.wristSpeed = wristSpeed + wristPostionFeedForward.calculate(getPosition(), getVelocity());
     }
 
     public void setSetPoint(double setpoint){

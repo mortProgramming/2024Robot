@@ -23,7 +23,8 @@ public class WristToVelocity extends Command{
 
     @Override
     public void execute() {
-        wrist.setWristVelocity(velocity.getAsDouble());
+        // wrist.setWristVelocity(velocity.getAsDouble());
+        wrist.setWristVelocityWristFeed(velocity.getAsDouble());
     }
 
     @Override
