@@ -203,12 +203,30 @@ public class Control {
         return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE));
     }
 
+     public static double modifyAxis1(double value, double throttleValue) {
+        value = deadband(value, DEAD_BAND);
+
+        throttleValue = (throttleValue + 1) / 2;
+
+        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
+    }
+
+    public static double modifyAxis2(double value, double throttleValue) {
+        value = deadband(value, DEAD_BAND);
+
+        value = Math.copySign(value * value, value);
+
+        throttleValue = (throttleValue + 1) / 2;
+
+        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
+    }
+
     /**
      * 
      * @return
      */
     public static double getJoystickX() {
-		return -(modifyAxis(joystick.getX(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
+		return -(modifyAxis2(joystick.getX(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
 	}
 
     // public static double getJoystickX(){
@@ -221,7 +239,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickY() {
-		return -(modifyAxis(joystick.getY(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
+		return -(modifyAxis2(joystick.getY(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
 	}
 
     // public static double getJoystickY(){
@@ -233,7 +251,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickTwist() {
-		return -(modifyAxis(joystick.getTwist(), throttle.getRawAxis(2))
+		return -(modifyAxis2(joystick.getTwist(), throttle.getRawAxis(2))
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 	}
 
