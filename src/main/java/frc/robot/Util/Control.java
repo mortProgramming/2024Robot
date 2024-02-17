@@ -2,8 +2,10 @@ package frc.robot.util;
 
 import static frc.robot.util.Constants.PeripheralPorts.*;
 import static frc.robot.util.Constants.RobotSpecs.*;
-
 import static frc.robot.util.Constants.Arm.*;
+import static frc.robot.util.Constants.Wrist.*;
+import static frc.robot.util.Constants.Climber.*;
+import static frc.robot.util.Constants.Intake.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
+import frc.robot.commands.Actions.EndEffector.WristToPosition;
 import frc.robot.commands.Actions.EndEffector.WristToVelocity;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmToVelocity;
@@ -20,7 +23,10 @@ import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
 import edu.wpi.first.units.Voltage;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Arm;
@@ -32,12 +38,16 @@ import edu.wpi.first.units.Velocity;
 
 import static edu.wpi.first.units.MutableMeasure.mutable;
 
-
-
 public class Control {
     private static CommandJoystick joystick;
 	private static CommandJoystick throttle;
 	private static CommandXboxController xboxController;
+
+    private static Joystick joystickN;
+	private static Joystick throttleN;
+	private static XboxController xboxControllerN;
+
+    // private syta
 
 	private static Drivetrain drivetrain;
     private static Arm arm;
@@ -46,6 +56,10 @@ public class Control {
     private static Wrist wrist;
     private static SysIdRoutine armRoutine;
     private static SysIdRoutine wristRoutine;
+
+    private static int counter1;
+    private static int counter2;
+
     
     private final static MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0));
     private final static MutableMeasure<Angle> distance = mutable(Rotations.of(0));
@@ -67,6 +81,9 @@ public class Control {
 		joystick = new CommandJoystick(JOYSTICK);
 		throttle = new CommandJoystick(THROTTLE);
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
+
+        counter1 = 0;
+        counter1 = 0;
 
         
 
@@ -105,27 +122,12 @@ public class Control {
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope()));
 
                             //Competition controls
-        // xboxController.rightBumper().toggleOnTrue(
-        //     Commands.startEnd(() -> new IntakeToVelocity(INTAKE_SPEED), () -> new IntakeToVelocity(0)));
-            
-        // xboxController.rightTrigger().onTrue(new IntakeToVelocity(-INTAKE_SPEED));
+        xboxController.rightBumper().onTrue(new IntakeToVelocity(0.25));
+        xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
+        xboxController.rightTrigger().onTrue(new IntakeToVelocity(-0.5));
+        xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
 
-        // xboxController.leftTrigger().onTrue(new WristToVelocity(WRIST_SPEED));
-
-        // if(xboxController.getLeftTriggerAxis() > 0.2 && xboxController.getRightTriggerAxis() > 0.2){
-        //     Commands.startEnd(() -> new ClimberToPosition(CLIMBER_MAX_POSITION), 
-        //     () -> new ClimberToPosition(CLIMBER_REST_POSITION));
-        // }
-
-        // xboxController.y().toggleOnTrue(new SetArmAndWristPos(ARM_TRAP_POSITION, WRIST_TRAP_POSITION));
-
-
-        xboxController.y().onTrue(new IntakeToVelocity(0.25));
-        xboxController.y().onFalse(new IntakeToVelocity(0));
-        xboxController.x().onTrue(new IntakeToVelocity(-1));
-        xboxController.x().onFalse(new IntakeToVelocity(0));
-
-         arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
+        arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
         wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
         
         xboxController.a().onTrue(new ClimberToVelocity(0.25));
@@ -133,13 +135,66 @@ public class Control {
         xboxController.b().onTrue(new ClimberToVelocity(-0.25));
         xboxController.b().onFalse(new ClimberToVelocity(0));
 
-        xboxController.povDown().whileTrue(new ArmToPosition(ARM_AMP_POSITION));
-        xboxController.povDown().whileFalse(new ArmToVelocity(Control::getLeftJoystickY));
+        xboxController.x().onTrue(new ArmToPosition(ARM_AMP_POSITION));
+        xboxController.y().onTrue(new ArmToPosition(ARM_REST_POSITION));
 
-        joystick.button(9).whileTrue(getQuasistaticDirectionalTest(Direction.kForward));
-        joystick.button(10).whileTrue(getQuasistaticDirectionalTest(Direction.kReverse));
-        joystick.button(11).whileTrue(getDynamicDirectionalTest(Direction.kForward));
-        joystick.button(12).whileTrue(getDynamicDirectionalTest(Direction.kReverse));
+        // xboxController.povUp().toggleOnTrue(Commands.startEnd(
+        //     () -> new WristToPosition(WRIST_REST_POSITION), () -> new WristToVelocity(Control::getRightJoystickY), 
+        //     wrist));
+
+        // if(xboxControllerN.getLeftBumperPressed() == true) {
+        //     counter1++;
+        // }
+
+        xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
+        xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
+
+        // if(xboxController.getLeftTriggerAxis() > 0.2 && xboxController.getRightTriggerAxis() > 0.2){
+        //     Commands.startEnd(() -> new ClimberToPosition(CLIMBER_MAX_POSITION), 
+        //     () -> new ClimberToPosition(CLIMBER_REST_POSITION));
+        // }
+
+
+
+        // xboxController.y().toggleOnTrue(new SetArmAndWristPos(ARM_TRAP_POSITION, WRIST_TRAP_POSITION));
+
+        // TESTING COMMANDS
+
+        // xboxController.rightBumper().onTrue(new IntakeToVelocity(0.25));
+        // xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
+        // xboxController.rightTrigger().onTrue(new IntakeToVelocity(-0.5));
+        // xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
+
+        // arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
+        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
+        
+        // xboxController.a().onTrue(new ClimberToVelocity(0.25));
+        // xboxController.a().onFalse(new ClimberToVelocity(0));
+        // xboxController.b().onTrue(new ClimberToVelocity(-0.25));
+        // xboxController.b().onFalse(new ClimberToVelocity(0));
+
+        // xboxController.x().whileTrue(new ArmToPosition(ARM_AMP_POSITION));
+        // xboxController.y().whileTrue(new ArmToPosition(ARM_REST_POSITION));
+
+        // // xboxController.povUp().toggleOnTrue(Commands.startEnd(
+        // //     () -> new WristToPosition(WRIST_REST_POSITION), () -> new WristToVelocity(Control::getRightJoystickY), 
+        // //     wrist));
+        // xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
+        // xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
+
+        // if(xboxControllerN.getLeftBumperPressed() == true) {
+        //     counter1++;
+        // }
+
+
+        
+
+        
+
+        // joystick.button(9).whileTrue(getQuasistaticDirectionalTest(Direction.kForward));
+        // joystick.button(10).whileTrue(getQuasistaticDirectionalTest(Direction.kReverse));
+        // joystick.button(11).whileTrue(getDynamicDirectionalTest(Direction.kForward));
+        // joystick.button(12).whileTrue(getDynamicDirectionalTest(Direction.kReverse));
         
     }
 
@@ -182,31 +237,15 @@ public class Control {
         if (Math.abs(value) > deadband) {
             return (value);
         }
-
         else {
             return 0.0;
         }
     }
 
-    //deadband with a custom max and min value
-    /**
-     * 
-     * @param value
-     * @param throttleValue
-     * @return
-     */
-    public static double modifyAxis(double value, double throttleValue) {
-        value = deadband(value, DEAD_BAND);
-
-        value = Math.copySign(value * value, value);
-
-        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE));
-    }
-
      public static double modifyAxis1(double value, double throttleValue) {
         value = deadband(value, DEAD_BAND);
 
-        throttleValue = (throttleValue + 1) / 2;
+        throttleValue = (-throttleValue + 1) / 2;
 
         return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
     }
@@ -216,9 +255,35 @@ public class Control {
 
         value = Math.copySign(value * value, value);
 
-        throttleValue = (throttleValue + 1) / 2;
+        throttleValue = (-throttleValue + 1) / 2;
 
         return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
+        // return value * throttleValue;
+    }
+    public static double modifyAxis4(double value, double throttleValue) {
+        value = deadband(value, DEAD_BAND);
+
+        value = Math.copySign(value * value * value * value, value);
+
+        throttleValue = (-throttleValue + 1) / 2;
+
+        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
+        // return value * throttleValue;
+    }
+
+    public static double modifyAxis5(double value, double throttleValue) {
+        value = deadband(value, DEAD_BAND);
+
+        value = Math.copySign(value * value * value * value * value, value);
+
+        throttleValue = (-throttleValue + 1) / 2;
+
+        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
+        // return value * throttleValue;
+    }
+
+    public static double getThrottle() {
+        return throttle.getRawAxis(2);
     }
 
     /**
@@ -226,7 +291,7 @@ public class Control {
      * @return
      */
     public static double getJoystickX() {
-		return -(modifyAxis2(joystick.getX(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
+		return (modifyAxis1(joystick.getX(), throttle.getZ()) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
 	}
 
     // public static double getJoystickX(){
@@ -239,7 +304,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickY() {
-		return -(modifyAxis2(joystick.getY(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
+		return (modifyAxis1(joystick.getY(), throttle.getZ()) * MAX_VELOCITY_METERS_PER_SECOND);
 	}
 
     // public static double getJoystickY(){
@@ -251,12 +316,12 @@ public class Control {
      * @return
      */
 	public static double getJoystickTwist() {
-		return -(modifyAxis2(joystick.getTwist(), throttle.getRawAxis(2))
+		return 0.3 * (modifyAxis1(joystick.getTwist(), throttle.getZ())
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 	}
 
     // public static double getJoystickTwist(){
-    //     return joystick.getTwist() * (throttle.getZ());
+    //     return (joystick.getTwist() * (throttle.getZ() + 1) / 2) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
     // }
 
     public static double getLeftJoystickY() {

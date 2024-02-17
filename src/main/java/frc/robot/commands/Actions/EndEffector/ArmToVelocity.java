@@ -20,6 +20,7 @@ public class ArmToVelocity extends Command{
     public void initialize() {
         // TODO Auto-generated method stub
         super.initialize();
+        arm.setPIDorVelocity(true);
     }
 
     @Override
@@ -30,7 +31,6 @@ public class ArmToVelocity extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        
     }
 
     @Override

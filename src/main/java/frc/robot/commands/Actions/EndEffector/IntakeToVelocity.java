@@ -21,7 +21,11 @@ public class IntakeToVelocity extends Command {
 
     @Override
     public void execute() {
-        intake.setIntakeVelocity(speed);
+        if(speed > 0)
+            intake.setIntakeVelocity(speed);
+        else
+            intake.setOuttakeVelocity(-speed);
+        
     }
 
     @Override

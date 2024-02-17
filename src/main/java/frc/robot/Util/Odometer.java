@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
-
 import edu.wpi.first.wpilibj.Timer;
 
 public class Odometer{

@@ -16,25 +16,25 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 3;
 		public final static int FRONT_LEFT_STEER = 4;
 		public final static int FRONT_LEFT_STEER_ENCODER = 35;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(232.55);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(321);
 
 		/* Port and Declaration for Front Right swerve motors & offset */
 		public final static int FRONT_RIGHT_DRIVE = 1;
 		public final static int FRONT_RIGHT_STEER = 2;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 34;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(179.1);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(88.5);
 
 		/* Port and Declaration for Back left swerve motors & offset */
 		public final static int BACK_LEFT_DRIVE = 5;
 		public final static int BACK_LEFT_STEER = 6;
 		public final static int BACK_LEFT_STEER_ENCODER = 36;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(209.7);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(313.8);
 
 		/* Port and Declaration for Back Right swerve motors & offset */
 		public final static int BACK_RIGHT_DRIVE = 7;
 		public final static int BACK_RIGHT_STEER = 8;
 		public final static int BACK_RIGHT_STEER_ENCODER = 37;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(310.3);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(99.9);
 
 		public final static double XVALUE_KP = 1.1;
 		public final static double XVALUE_KI = 0;
@@ -74,9 +74,9 @@ public final class Constants {
 		public static final double MAX_ACCELERATION_AUTO = 4;
 
 		//Max and minimum throttle ports & declarations
-        public static final double MAX_THROTTLE = -0.4;
-        public static final double MIN_THROTTLE = 0.6;
-        public static final double DEAD_BAND = 0.1;
+        public static final double MAX_THROTTLE = 1;
+        public static final double MIN_THROTTLE = 0.2;
+        public static final double DEAD_BAND = 0.2;
 	}
 
 	public final static class Climber{
@@ -104,7 +104,9 @@ public final class Constants {
 		public static final int FOLLOW_INTAKE_MOTOR = 11;
 		public static final int MASTER_INTAKE_MOTOR = 12;
 
-		public static final double INTAKE_SPEED = 0;
+		public static final double INTAKE_SPEED = 0.25;
+		public static final double SHOOT_SPEED = -0.50;
+
 
 		public static final int INTAKE_SENSOR = 0;
 	}
@@ -112,40 +114,49 @@ public final class Constants {
 	public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
 
-		public static final double POSITION_PID_P = 0;
+		public static final double POSITION_PID_P = 0.002;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
-		public static final double POSITION_PID_V = 0;
-		public static final double POSITION_PID_A = 0;
+		public static final double POSITION_PID_V = 3000;
+		public static final double POSITION_PID_A = 3000;
 
 		public static final double POSITION_FF_S = 0.0003;
 		public static final double POSITION_FF_G = 0;
 		public static final double POSITION_FF_V = 0;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double WRIST_REST_POSITION = 0.2;
-		public static final double WRIST_SCORE_POSITION = 1.3;
-		public static final double WRIST_INTAKE_POSITION = 7.9;
+		//rotation for positions
+		// public static final double WRIST_REST_POSITION = 0.2;
+		// public static final double WRIST_SCORE_POSITION = 1.3;
+		// public static final double WRIST_INTAKE_POSITION = 7.9;
+		// public static final double WRIST_TRAP_POSITION = 0;
+		public static final double WRIST_REST_POSITION = -5;
+		public static final double WRIST_SCORE_POSITION = 0;
+		public static final double WRIST_INTAKE_POSITION = 115;
 		public static final double WRIST_TRAP_POSITION = 0;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
 
 		public static final double WRIST_SPEED = 0;
+
+		public static final double WRIST_DEGREES_TO_0 = 0;
+		public static final double WRIST_GEAR_RATIO = -25;
 	}
 
 	public final static class Arm{
 		public static final int FOLLOW_ARM_MOTOR = 13;
 		public static final int MASTER_ARM_MOTOR = 14;
 
-		public static final double POSITION_PID_P = 0.001;
+		// public static final double POSITION_PID_P = 0.01;
+		public static final double POSITION_PID_P = 0.005;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
-		public static final double POSITION_PID_V = 0;
-		public static final double POSITION_PID_A = 0;
+		public static final double POSITION_PID_V = 3000;
+		public static final double POSITION_PID_A = 3000;
 
 		// simple feed forward plus guess
 		// public static final double POSITION_FF_S = 0.47 / 12;
-		public static final double POSITION_FF_G = -0.035;
+		public static final double POSITION_FF_G = -0.015;
 		// public static final double POSITION_FF_V = 0.07 / 12;
 		// public static final double POSITION_FF_A = 0.0182 / 12;
 
@@ -154,17 +165,17 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0.00;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double ARM_REST_POSITION = 0.7;
+		public static final double ARM_REST_POSITION = -25;
 		// public static final double ARM_AMP_POSITION = -25;
-		public static final double ARM_AMP_POSITION = 90;
+		public static final double ARM_AMP_POSITION = 140;
 		public static final double ARM_INTAKE_POSITION = -2.5;
 		public static final double ARM_TRAP_POSITION = 0;
 		public static final double ARM_SPEAKER_POSITION = 0;
 		
-		public static final double ARM_NEAR_SETPOINT_ERROR = 5;
+		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 
 		public static final double ARM_DEGREES_TO_0 = -32;
-		public static final double ARM_GEAR_RATIO = -5;
+		public static final double ARM_GEAR_RATIO = 5;
 	}
 
 	public final static class Vision {

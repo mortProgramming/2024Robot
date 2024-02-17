@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.Control;
 
 public class Drivetrain extends SubsystemBase {
 	private AHRS navX;
@@ -218,13 +219,13 @@ public class Drivetrain extends SubsystemBase {
 		SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
 		frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[3].angle.getRadians() + Math.toRadians(270));
-		frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
 				states[2].angle.getRadians() + Math.toRadians(90));
-		backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[1].angle.getRadians() + Math.toRadians(270));
-		backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+		frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
 				states[0].angle.getRadians() + Math.toRadians(90));
+		backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+				states[3].angle.getRadians() + Math.toRadians(90));
+		backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+				states[1].angle.getRadians() + Math.toRadians(90));
 	}
 
 	/**
@@ -299,6 +300,7 @@ public class Drivetrain extends SubsystemBase {
 		setModuleStates(states);
 
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
+		SmartDashboard.putNumber("ThrottleThing", Control.getThrottle());
 
 	}
 

@@ -21,12 +21,12 @@ public class WristToPosition extends Command {
 
     @Override
     public void execute() {
-        
+        wrist.setPIDorVelocity(false);
     }
 
     @Override
     public void end(boolean interrupted) {
-        
+        wrist.setPIDorVelocity(true);;
     }
 
     @Override

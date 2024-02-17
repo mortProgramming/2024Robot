@@ -21,11 +21,13 @@ public class Wrist extends SubsystemBase {
 
     private double setpoint;
 
+    private boolean PIDorVelocity;
+
     private ProfiledPIDController wristPositionController;
     private SimpleMotorFeedforward wristPostionFeedForward;
 
-
     public Wrist() {
+        PIDorVelocity = true;
         wristMotor = new TalonFX(WRIST_MOTOR);
     
         wristPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
@@ -46,6 +48,18 @@ public class Wrist extends SubsystemBase {
       // This method will be called once per scheduler run
         wristMotor.set(wristSpeed);
         SmartDashboard.putNumber("Wrist Position", getPosition());
+        SmartDashboard.putNumber("Wrist Position Degrees", posToDegrees());
+        SmartDashboard.putNumber("Wrist Setpoint", setpoint);
+        SmartDashboard.putNumber("Wrist output", setPosition(setpoint));
+        SmartDashboard.putNumber("ActualWristMotorOutput", wristMotor.get());
+        SmartDashboard.putBoolean("isPIDorVelocityWrist", PIDorVelocity);
+
+        if(PIDorVelocity == true) {
+            wristMotor.set(wristSpeed);
+        }
+        else {
+            wristMotor.set(setPosition(setpoint));
+        }
     }
 
     /**
@@ -76,6 +90,29 @@ public class Wrist extends SubsystemBase {
     public void setVoltage(double voltage){
         wristMotor.setVoltage(voltage);
     }
+
+    public void setPIDorVelocity(boolean isPIDorVelocity){
+        PIDorVelocity = isPIDorVelocity;
+    }
+
+    private double setPosition(double setpoint) {
+		double output = (wristPostionFeedForward.calculate(getPosition(), getVelocity()))
+        - wristPositionController.calculate(posToDegrees(), setpoint);
+		// if (output >= 1){
+		// 	output = 0.1;
+		// } else if (output <= -1) {
+		// 	output = -0.1;
+		// }
+		// double output = 0.1 * sin(getPositionDegrees()) +
+		// armController.calculate(getPosition(), setpoint);
+		// masterArmMotor.set(output);
+
+		SmartDashboard.putNumber("wrist output", output);
+        SmartDashboard.putNumber("WristMotorOutput", wristMotor.get());
+
+        return output;
+	}
+
     /**
      * Get the current setpoint of the wrist
      * @return the setpoint of the wrist as a double
@@ -112,6 +149,10 @@ public class Wrist extends SubsystemBase {
 
     public boolean isClear(){
         return true;
+    }
+
+    public double posToDegrees(){
+        return (getPosition() * WRIST_GEAR_RATIO)  + WRIST_DEGREES_TO_0;
     }
 
     /**

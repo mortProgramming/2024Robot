@@ -19,17 +19,18 @@ public class WristToVelocity extends Command{
     public void initialize() {
         // TODO Auto-generated method stub
         super.initialize();
+        wrist.setPIDorVelocity(true);
     }
 
     @Override
     public void execute() {
         // wrist.setWristVelocity(velocity.getAsDouble());
         wrist.setWristVelocityWristFeed(velocity.getAsDouble());
+        
     }
 
     @Override
     public void end(boolean interrupted) {
-        
     }
 
     @Override
