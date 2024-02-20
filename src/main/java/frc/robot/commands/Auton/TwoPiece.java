@@ -11,7 +11,7 @@ import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
 import frc.robot.commands.Actions.Drivetrain.TimedDrive;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
-import frc.robot.util.Constants;
+import frc.robot.utility.Constants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

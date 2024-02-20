@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import static frc.robot.util.Constants.RobotSpecs.*;
-import static frc.robot.util.Constants.Wrist.*;
+import static frc.robot.utility.Constants.RobotSpecs.*;
+import static frc.robot.utility.Constants.Wrist.*;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 

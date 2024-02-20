@@ -1,11 +1,11 @@
-package frc.robot.util;
+package frc.robot.utility;
 
-import static frc.robot.util.Constants.PeripheralPorts.*;
-import static frc.robot.util.Constants.RobotSpecs.*;
-import static frc.robot.util.Constants.Arm.*;
-import static frc.robot.util.Constants.Wrist.*;
-import static frc.robot.util.Constants.Climber.*;
-import static frc.robot.util.Constants.Intake.*;
+import static frc.robot.utility.Constants.PeripheralPorts.*;
+import static frc.robot.utility.Constants.RobotSpecs.*;
+import static frc.robot.utility.Constants.Arm.*;
+import static frc.robot.utility.Constants.Wrist.*;
+import static frc.robot.utility.Constants.Climber.*;
+import static frc.robot.utility.Constants.Intake.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 
@@ -316,7 +316,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickTwist() {
-		return 0.3 * (modifyAxis1(joystick.getTwist(), throttle.getZ())
+		return -0.3 * (modifyAxis1(joystick.getTwist(), throttle.getZ())
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 	}
 

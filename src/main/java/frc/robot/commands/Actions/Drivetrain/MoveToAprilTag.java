@@ -3,7 +3,7 @@ package frc.robot.commands.Actions.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
-import frc.robot.util.Constants.Vision.Pipeline;
+import frc.robot.utility.Constants.Vision.Pipeline;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class MoveToAprilTag extends Command{

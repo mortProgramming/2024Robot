@@ -2,15 +2,15 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import static frc.robot.util.Constants.Arm.*;
-import static frc.robot.util.Constants.RobotSpecs.*;
+import static frc.robot.utility.Constants.Arm.*;
+import static frc.robot.utility.Constants.RobotSpecs.*;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.util.Constants.RobotSpecs;
+import frc.robot.utility.Constants.RobotSpecs;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

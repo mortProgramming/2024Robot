@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import static frc.robot.util.Constants.Intake.*;
+import static frc.robot.utility.Constants.Intake.*;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 

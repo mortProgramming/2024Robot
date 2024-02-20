@@ -1,4 +1,4 @@
-package frc.robot.util;
+package frc.robot.utility;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;

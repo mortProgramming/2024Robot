@@ -1,7 +1,7 @@
 package frc.robot.commands.Actions.EndEffector;
 
-import static frc.robot.util.Constants.Arm.*;
-import static frc.robot.util.Constants.Wrist.*;
+import static frc.robot.utility.Constants.Arm.*;
+import static frc.robot.utility.Constants.Wrist.*;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 

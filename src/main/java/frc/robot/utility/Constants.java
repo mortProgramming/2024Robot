@@ -1,4 +1,4 @@
-package frc.robot.util;
+package frc.robot.utility;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import edu.wpi.first.math.util.Units;
@@ -16,25 +16,25 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 3;
 		public final static int FRONT_LEFT_STEER = 4;
 		public final static int FRONT_LEFT_STEER_ENCODER = 35;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(321);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(285);
 
 		/* Port and Declaration for Front Right swerve motors & offset */
 		public final static int FRONT_RIGHT_DRIVE = 1;
 		public final static int FRONT_RIGHT_STEER = 2;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 34;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(88.5);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(2);
 
 		/* Port and Declaration for Back left swerve motors & offset */
 		public final static int BACK_LEFT_DRIVE = 5;
 		public final static int BACK_LEFT_STEER = 6;
-		public final static int BACK_LEFT_STEER_ENCODER = 36;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(313.8);
+		public final static int BACK_LEFT_STEER_ENCODER = 36; 
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(194);
 
 		/* Port and Declaration for Back Right swerve motors & offset */
 		public final static int BACK_RIGHT_DRIVE = 7;
 		public final static int BACK_RIGHT_STEER = 8;
 		public final static int BACK_RIGHT_STEER_ENCODER = 37;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(99.9);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(319);
 
 		public final static double XVALUE_KP = 1.1;
 		public final static double XVALUE_KI = 0;

@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import static frc.robot.util.Constants.Climber.*;
-import static frc.robot.util.Constants.RobotSpecs.*;
+import static frc.robot.utility.Constants.Climber.*;
+import static frc.robot.utility.Constants.RobotSpecs.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;

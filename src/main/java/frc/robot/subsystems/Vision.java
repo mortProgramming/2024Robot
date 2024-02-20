@@ -2,10 +2,10 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.util.Constants.Vision.Pipeline;
+import frc.robot.utility.Constants.Vision.Pipeline;
 import edu.wpi.first.wpilibj.DriverStation;
 
-import static frc.robot.util.Constants.Vision.*;
+import static frc.robot.utility.Constants.Vision.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;

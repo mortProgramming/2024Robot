@@ -2,8 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.util.Auto;
-import frc.robot.util.Control;
+import frc.robot.utility.Auto;
+import frc.robot.utility.Control;
 
 public class RobotContainer {
 	private Drivetrain drivetrain;
