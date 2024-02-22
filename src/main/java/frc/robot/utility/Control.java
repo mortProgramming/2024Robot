@@ -138,9 +138,9 @@ public class Control {
         xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(true)));
         xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(false)));
 
-        xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setRightSolenoid(1)));
+        xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setRightSolenoid(0.1)));
         xboxController.povDown().whileFalse(new InstantCommand(() -> climber.setRightSolenoid(0)));
-        xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setLeftSolenoid(1)));
+        xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setLeftSolenoid(0.1)));
         xboxController.povDown().whileFalse(new InstantCommand(() -> climber.setLeftSolenoid(0)));
 
         // climber.setDefaultCommand(new ClimberToVelocity(Control::getRightJoystickY, true));
