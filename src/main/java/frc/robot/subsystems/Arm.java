@@ -12,13 +12,14 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utility.Constants.RobotSpecs;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
 public class Arm extends SubsystemBase {
     
-    private static boolean PIDorVelocity;
+    private static boolean velocityMode;
 
     private static Arm arm;
 
@@ -35,9 +36,11 @@ public class Arm extends SubsystemBase {
     // private SimpleMotorFeedforward armPostionFeedForward;
         private ArmFeedforward armPostionFeedForward;
 
+        private DutyCycleEncoder encoder;
+
 
     public Arm() {
-        PIDorVelocity = true;
+        velocityMode = true;
 
         masterArmMotor = new TalonFX(MASTER_ARM_MOTOR);
         followArmMotor = new TalonFX(FOLLOW_ARM_MOTOR);
@@ -54,6 +57,8 @@ public class Arm extends SubsystemBase {
         // armPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
         armPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
 
+        encoder = new DutyCycleEncoder(ENCODER_PORT);
+
     }
 
     public void init() {
@@ -69,21 +74,23 @@ public class Arm extends SubsystemBase {
         masterArmMotor.set(armSpeed);
         SmartDashboard.putNumber("Arm Postion", getPosition());
         SmartDashboard.putNumber("Arm Position Degrees", posToDegrees());
+        SmartDashboard.putNumber("Encoder Arm Postion", getEncoder().getAbsolutePosition());
+        SmartDashboard.putNumber("Encoder Arm Position Degrees", getEncoder().getAbsolutePosition() * 360);
         SmartDashboard.putNumber("Arm Setpoint", setpoint);
         SmartDashboard.putNumber("arm output", setPosition(setpoint));
         SmartDashboard.putNumber("ActualArmMotorOutput", masterArmMotor.get());
-        SmartDashboard.putBoolean("isPIDorVelocity", PIDorVelocity);
+        SmartDashboard.putBoolean("isvelocityMode", velocityMode);
 
-        if(PIDorVelocity == true) {
+        if(velocityMode == true) {
             masterArmMotor.set(-armSpeed);
         }
         else {
             masterArmMotor.set(-setPosition(setpoint));
+            // masterArmMotor.set(0);
         }
 
         // setPosition(setpoint);
     }
-
 
     /**
      * 
@@ -132,16 +139,32 @@ public class Arm extends SubsystemBase {
 		return masterArmMotor.getPosition().getValueAsDouble();
 	}
 
+    // encoder
+    public double getEncoderPosition() {
+		return encoder.getAbsolutePosition();
+	}
+
+    public double posToDegrees(){
+        return (getPosition() * ARM_GEAR_RATIO)  + ARM_DEGREES_TO_0;
+    }
+
+    //encoder
+    public double encoderToDegrees() {
+        if(getEncoderPosition() < 0) {
+            return ((1 - getEncoderPosition()) * 360) + ARM_ENCODER_DEGREES_TO_0;
+        }
+        else {
+            return(getEncoderPosition() * 360) + ARM_ENCODER_DEGREES_TO_0;
+
+        }    
+    }
+
     // public boolean nearSetpoint(){
     //     return (Math.abs(armPostionFeedForward.calculate(getPosition(), getVelocity()) + 
     //      armPositionController.calculate(getPosition(),setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
     // }
     public boolean nearSetpoint(){
         return Math.abs(armPositionController.calculate(posToDegrees(), setpoint) + POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees()))) < ARM_NEAR_SETPOINT_ERROR;
-    }
-
-    public double posToDegrees(){
-        return (getPosition() * ARM_GEAR_RATIO)  + ARM_DEGREES_TO_0;
     }
 
     /**
@@ -160,13 +183,17 @@ public class Arm extends SubsystemBase {
         return masterArmMotor;
     }
 
-    public void setPIDorVelocity(boolean isPIDorVelocity){
-        PIDorVelocity = isPIDorVelocity;
+    public void setVelocityMode(boolean isVelocityMode){
+        velocityMode = isVelocityMode;
     }
 
     public double getVoltage() {
         // TODO Auto-generated method stub
         return getArmMaster().getMotorVoltage().getValueAsDouble();
+    }
+
+    public DutyCycleEncoder getEncoder() {
+        return encoder;
     }
 
     private double setPosition(double setpoint) {

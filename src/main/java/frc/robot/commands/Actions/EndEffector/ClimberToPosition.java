@@ -6,8 +6,9 @@ import frc.robot.subsystems.Climber;
 public class ClimberToPosition extends Command{
     private Climber climber;
     private double target;
+    private boolean leftOrRightClimber;
 
-    public ClimberToPosition(double target){
+    public ClimberToPosition(double target, boolean leftOrRightClimber){
         this.target = target;
         climber = Climber.getInstance();
         addRequirements(climber);
@@ -15,7 +16,13 @@ public class ClimberToPosition extends Command{
 
     @Override
     public void initialize() {
-        climber.setSetPoint(target);
+        if(leftOrRightClimber) {
+            climber.setRightSetPoint(target);
+
+        }
+        else {
+            climber.setLeftSetPoint(target);
+        }
     }
 
     @Override
@@ -30,6 +37,12 @@ public class ClimberToPosition extends Command{
 
     @Override
     public boolean isFinished() {
-        return climber.nearSetpoint();
+        if(leftOrRightClimber) {
+            return climber.nearRightSetpoint();
+
+        }
+        else {
+            return climber.nearLeftSetpoint();
+        }
     }
 }

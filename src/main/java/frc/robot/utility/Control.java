@@ -4,6 +4,9 @@ import static frc.robot.utility.Constants.PeripheralPorts.*;
 import static frc.robot.utility.Constants.RobotSpecs.*;
 import static frc.robot.utility.Constants.Arm.*;
 import static frc.robot.utility.Constants.Wrist.*;
+
+import java.util.function.DoubleSupplier;
+
 import static frc.robot.utility.Constants.Climber.*;
 import static frc.robot.utility.Constants.Intake.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -56,10 +59,6 @@ public class Control {
     private static Wrist wrist;
     private static SysIdRoutine armRoutine;
     private static SysIdRoutine wristRoutine;
-
-    private static int counter1;
-    private static int counter2;
-
     
     private final static MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0));
     private final static MutableMeasure<Angle> distance = mutable(Rotations.of(0));
@@ -82,8 +81,8 @@ public class Control {
 		throttle = new CommandJoystick(THROTTLE);
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
 
-        counter1 = 0;
-        counter1 = 0;
+        // counter1 = 0;
+        // counter1 = 0;
 
         
 
@@ -106,10 +105,9 @@ public class Control {
                     .angularVelocity(velocity.mut_replace(arm.getVelocity(), RotationsPerSecond));
             },
             arm));
-
-           
         
-	}
+        
+    }
 
     /**
      * 
@@ -122,21 +120,36 @@ public class Control {
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope()));
 
                             //Competition controls
-        xboxController.rightBumper().onTrue(new IntakeToVelocity(0.25));
+        xboxController.rightBumper().onTrue(new IntakeToVelocity(INTAKE_SPEED));
         xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
-        xboxController.rightTrigger().onTrue(new IntakeToVelocity(-0.5));
+        xboxController.rightTrigger().onTrue(new IntakeToVelocity(SHOOT_SPEED));
         xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
 
         arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
-        wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
-        
-        xboxController.a().onTrue(new ClimberToVelocity(0.25));
-        xboxController.a().onFalse(new ClimberToVelocity(0));
-        xboxController.b().onTrue(new ClimberToVelocity(-0.25));
-        xboxController.b().onFalse(new ClimberToVelocity(0));
 
         xboxController.x().onTrue(new ArmToPosition(ARM_AMP_POSITION));
         xboxController.y().onTrue(new ArmToPosition(ARM_REST_POSITION));
+
+        wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
+
+        xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(false)));
+        xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(true)));
+
+        xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(true)));
+        xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(false)));
+
+        xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setRightSolenoid(1)));
+        xboxController.povDown().whileFalse(new InstantCommand(() -> climber.setRightSolenoid(0)));
+        xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setLeftSolenoid(1)));
+        xboxController.povDown().whileFalse(new InstantCommand(() -> climber.setLeftSolenoid(0)));
+
+        // climber.setDefaultCommand(new ClimberToVelocity(Control::getRightJoystickY, true));
+        // climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, false));
+        
+        // xboxController.a().onTrue(new ClimberToVelocity(() -> 0.25, true));
+        // xboxController.a().onFalse(new ClimberToVelocity(() -> 0, true));
+        // xboxController.b().onTrue(new ClimberToVelocity(() -> -0.25, true));
+        // xboxController.b().onFalse(new ClimberToVelocity(0));
 
         // xboxController.povUp().toggleOnTrue(Commands.startEnd(
         //     () -> new WristToPosition(WRIST_REST_POSITION), () -> new WristToVelocity(Control::getRightJoystickY), 

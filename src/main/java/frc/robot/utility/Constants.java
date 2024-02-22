@@ -82,6 +82,10 @@ public final class Constants {
 	public final static class Climber{
 		public static final int FOLLOW_CLIMBER_MOTOR = 16;
 		public static final int MASTER_CLIMBER_MOTOR = 15;
+
+		public static final int LEFT_CLIMBER_SOLENOID = 18;
+		public static final int RIGHT_CLIMBER_SOLENOID = 19;
+
 		public static final double POSITION_PID_P = 0;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
@@ -98,15 +102,19 @@ public final class Constants {
 		public static final double CLIMBER_MAX_POSITION = 0;
 
 		public static final double CLIMBER_NEAR_SETPOINT_ERROR = 0;
+
+		public static final double CLIMBER_UP_SPEED = 0.5;
+		public static final double CLIMBER_DOWN_SPEED = -0.5;
 	}
 
     public final static class Intake{
 		public static final int FOLLOW_INTAKE_MOTOR = 11;
 		public static final int MASTER_INTAKE_MOTOR = 12;
 
-		public static final double INTAKE_SPEED = 0.25;
-		public static final double SHOOT_SPEED = -0.50;
-
+		// public static final double INTAKE_SPEED = 0.25;
+		// public static final double SHOOT_SPEED = -0.50;
+		public static final double INTAKE_SPEED = 1;
+		public static final double SHOOT_SPEED = -1;
 
 		public static final int INTAKE_SENSOR = 0;
 	}
@@ -132,7 +140,7 @@ public final class Constants {
 		// public static final double WRIST_TRAP_POSITION = 0;
 		public static final double WRIST_REST_POSITION = -5;
 		public static final double WRIST_SCORE_POSITION = 0;
-		public static final double WRIST_INTAKE_POSITION = 115;
+		public static final double WRIST_INTAKE_POSITION = -160;
 		public static final double WRIST_TRAP_POSITION = 0;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
@@ -146,6 +154,7 @@ public final class Constants {
 	public final static class Arm{
 		public static final int FOLLOW_ARM_MOTOR = 13;
 		public static final int MASTER_ARM_MOTOR = 14;
+		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
 		public static final double POSITION_PID_P = 0.005;
@@ -156,7 +165,8 @@ public final class Constants {
 
 		// simple feed forward plus guess
 		// public static final double POSITION_FF_S = 0.47 / 12;
-		public static final double POSITION_FF_G = -0.015;
+		// public static final double POSITION_FF_G = -0.015;
+		public static final double POSITION_FF_G = -0.001;
 		// public static final double POSITION_FF_V = 0.07 / 12;
 		// public static final double POSITION_FF_A = 0.0182 / 12;
 
@@ -167,15 +177,17 @@ public final class Constants {
 
 		public static final double ARM_REST_POSITION = -25;
 		// public static final double ARM_AMP_POSITION = -25;
-		public static final double ARM_AMP_POSITION = 140;
-		public static final double ARM_INTAKE_POSITION = -2.5;
+		public static final double ARM_AMP_POSITION = 97;
+		public static final double ARM_INTAKE_POSITION = -25;
 		public static final double ARM_TRAP_POSITION = 0;
 		public static final double ARM_SPEAKER_POSITION = 0;
 		
 		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 
-		public static final double ARM_DEGREES_TO_0 = -32;
+		public static final double ARM_DEGREES_TO_0 = -33;
 		public static final double ARM_GEAR_RATIO = 5;
+
+		public static final double ARM_ENCODER_DEGREES_TO_0 = 0;
 	}
 
 	public final static class Vision {

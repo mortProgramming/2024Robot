@@ -14,7 +14,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 public class Vision extends SubsystemBase {
     public static Vision vision;
 
-    	private NetworkTable llTable;
+    	private NetworkTable tagTable;
+		private NetworkTable intakeTable;
+	
 		private double totalOutlier;
 		private double newValue;
 		private double position;
@@ -29,7 +31,11 @@ public class Vision extends SubsystemBase {
 		private double[] outliers = new double[MAX_OUTLIERS];
 		
     public Vision() {
-        llTable = NetworkTableInstance.getDefault().getTable("limelight");
+        // tagTable = NetworkTableInstance.getDefault().getTable("limelight");
+		tagTable = NetworkTableInstance.getDefault().getTable("TagLight");
+		intakeTable = NetworkTableInstance.getDefault().getTable("intakeLight");
+
+
     }
 
 	/**
@@ -37,7 +43,7 @@ public class Vision extends SubsystemBase {
 	 * @return True if the limelight has a target, false if no target
 	 */
     public boolean hasTarget() {
-		return llTable.getEntry("tv").getInteger(0) == 1;
+		return tagTable.getEntry("tv").getInteger(0) == 1;
 	}
 
 	/**
@@ -46,7 +52,7 @@ public class Vision extends SubsystemBase {
 	 */
     public double getTargetArea() {
 		if(hasTarget()){
-			return llTable.getEntry("ta").getDouble(0);
+			return tagTable.getEntry("ta").getDouble(0);
 		}
 		return -1;
 		
@@ -58,7 +64,7 @@ public class Vision extends SubsystemBase {
 	 * The pipeline ID to switch to
 	 */
 	public void setPipeline(int id) {
-		llTable.getEntry("pipeline").setNumber(id);
+		tagTable.getEntry("pipeline").setNumber(id);
 	}
 
 	/**
@@ -86,7 +92,7 @@ public class Vision extends SubsystemBase {
 	 * @return the Pipeline object currently being used
 	 */
 	public Pipeline getPipelineID() {
-		return Pipeline.getPipeline((int) llTable.getEntry("pipeline").getInteger(0));
+		return Pipeline.getPipeline((int) tagTable.getEntry("pipeline").getInteger(0));
 	}
 
 	// Translation (x, y, z) Rotation(pitch, yaw, roll)
@@ -95,7 +101,7 @@ public class Vision extends SubsystemBase {
 	 * @return
 	 */
 	public Number[] getCamTranslation() {
-		return llTable.getEntry("targetpose_robotspace").getNumberArray(new Number[0]);
+		return tagTable.getEntry("targetpose_robotspace").getNumberArray(new Number[0]);
 	}
 
 	/**
@@ -104,7 +110,7 @@ public class Vision extends SubsystemBase {
 	 */
 	public double getX() {
 		if(hasTarget()){
-			return llTable.getEntry("tx").getDouble(0);
+			return tagTable.getEntry("tx").getDouble(0);
 		}
 		return -1;
 	}
@@ -115,7 +121,7 @@ public class Vision extends SubsystemBase {
 	 */
 	public double getY() {
 		if(hasTarget()){
-			return llTable.getEntry("ty").getDouble(0);
+			return tagTable.getEntry("ty").getDouble(0);
 		}
 		return -1;
 	}
@@ -183,9 +189,9 @@ public class Vision extends SubsystemBase {
 		double[] poseNum = new double[6];
 
 		// if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-		// 	poseNum = llTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
+		// 	poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
 		// } else {
-		// 	poseNum = llTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+		// 	poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
 		// }
 
 		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));
@@ -197,7 +203,7 @@ public class Vision extends SubsystemBase {
 	 * @return
 	 */
 	public double getLatency() {
-		return llTable.getEntry("botpose").getDoubleArray(new double[6])[6];
+		return tagTable.getEntry("botpose").getDoubleArray(new double[6])[6];
 	}
 
 	/**
@@ -206,7 +212,7 @@ public class Vision extends SubsystemBase {
 	 */
 	public int getAprilTagId() {
 		if(hasTarget()){
-			return (int) llTable.getEntry("tid").getInteger(0);
+			return (int) tagTable.getEntry("tid").getInteger(0);
 		}
 		return -1;
 		
@@ -221,7 +227,7 @@ public class Vision extends SubsystemBase {
 	 * @return The Height of the tag in inches. If no target, return -1
 	 */
 	// public double getDistanceToTag(double tagHeight) {
-	// 	if(llTable.getEntry("tv").getDouble(0) == 1){
+	// 	if(tagTable.getEntry("tv").getDouble(0) == 1){
 	// 		return (tagHeight - CAMERA_HEIGHT) / (Math.tan(Math.toRadians(getY())));
 	// 	}
 	// 	return -1;
@@ -232,9 +238,9 @@ public class Vision extends SubsystemBase {
 		double[] poseNum = new double[6];
 		
 		if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-			poseNum = llTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
+			poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
 		} else {
-			poseNum = llTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+			poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
 		}
 
 		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));

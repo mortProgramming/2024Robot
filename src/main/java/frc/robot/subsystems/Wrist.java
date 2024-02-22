@@ -21,13 +21,13 @@ public class Wrist extends SubsystemBase {
 
     private double setpoint;
 
-    private boolean PIDorVelocity;
+    private boolean velocityMode;
 
     private ProfiledPIDController wristPositionController;
     private SimpleMotorFeedforward wristPostionFeedForward;
 
     public Wrist() {
-        PIDorVelocity = true;
+        velocityMode = true;
         wristMotor = new TalonFX(WRIST_MOTOR);
     
         wristPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
@@ -52,9 +52,9 @@ public class Wrist extends SubsystemBase {
         SmartDashboard.putNumber("Wrist Setpoint", setpoint);
         SmartDashboard.putNumber("Wrist output", setPosition(setpoint));
         SmartDashboard.putNumber("ActualWristMotorOutput", wristMotor.get());
-        SmartDashboard.putBoolean("isPIDorVelocityWrist", PIDorVelocity);
+        SmartDashboard.putBoolean("isvelocityModeWrist", velocityMode);
 
-        if(PIDorVelocity == true) {
+        if(velocityMode == true) {
             wristMotor.set(wristSpeed);
         }
         else {
@@ -91,8 +91,8 @@ public class Wrist extends SubsystemBase {
         wristMotor.setVoltage(voltage);
     }
 
-    public void setPIDorVelocity(boolean isPIDorVelocity){
-        PIDorVelocity = isPIDorVelocity;
+    public void setVelocityMode(boolean isVelocityMode){
+        velocityMode = isVelocityMode;
     }
 
     private double setPosition(double setpoint) {

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static frc.robot.utility.Constants.Intake.*;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -40,6 +41,11 @@ public class Intake extends SubsystemBase {
     public void periodic() {
       // This method will be called once per scheduler run
         masterIntakeMotor.set(intakeSpeed);
+
+        SmartDashboard.putNumber("intake master voltage", masterIntakeMotor.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("intake follower voltage", followIntakeMotor.getMotorVoltage().getValueAsDouble());
+
+
         Shuffleboard.update();
     }
 
