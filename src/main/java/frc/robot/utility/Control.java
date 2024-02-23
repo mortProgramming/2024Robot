@@ -119,11 +119,15 @@ public class Control {
 
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope()));
 
-                            //Competition controls
+        //Competition controls
         xboxController.rightBumper().onTrue(new IntakeToVelocity(INTAKE_SPEED));
         xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
-        xboxController.rightTrigger().onTrue(new IntakeToVelocity(SHOOT_SPEED));
+
+        xboxController.rightTrigger().onTrue(new IntakeToVelocity(AMP_SHOOT_SPEED));
         xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
+
+        xboxController.a().onTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
+        xboxController.a().onFalse(new IntakeToVelocity(0));
 
         arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
 
@@ -132,11 +136,11 @@ public class Control {
 
         wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
-        xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(false)));
-        xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(true)));
+        // xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(false)));
+        // xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(true)));
 
-        xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(true)));
-        xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(false)));
+        // xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(true)));
+        // xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(false)));
 
         xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setRightSolenoid(0.1)));
         xboxController.povDown().whileFalse(new InstantCommand(() -> climber.setRightSolenoid(0)));

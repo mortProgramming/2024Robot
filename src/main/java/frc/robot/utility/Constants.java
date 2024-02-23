@@ -113,8 +113,9 @@ public final class Constants {
 
 		// public static final double INTAKE_SPEED = 0.25;
 		// public static final double SHOOT_SPEED = -0.50;
-		public static final double INTAKE_SPEED = 1;
-		public static final double SHOOT_SPEED = -1;
+		public static final double INTAKE_SPEED = 0.4;
+		public static final double AMP_SHOOT_SPEED = -0.6;
+		public static final double SHOOTER_SHOOT_SPEED = -1;
 
 		public static final int INTAKE_SENSOR = 0;
 	}
@@ -175,9 +176,9 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0.00;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double ARM_REST_POSITION = -25;
+		public static final double ARM_REST_POSITION = -30;
 		// public static final double ARM_AMP_POSITION = -25;
-		public static final double ARM_AMP_POSITION = 97;
+		public static final double ARM_AMP_POSITION = 107.5;
 		public static final double ARM_INTAKE_POSITION = -25;
 		public static final double ARM_TRAP_POSITION = 0;
 		public static final double ARM_SPEAKER_POSITION = 0;
