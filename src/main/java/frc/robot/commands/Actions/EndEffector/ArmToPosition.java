@@ -23,12 +23,11 @@ public class ArmToPosition extends Command{
     public void execute() {
         arm.setSetPoint(target);
         arm.setVelocityMode(false);
-
     }
 
     @Override
     public void end(boolean interrupted) {
-        arm.setVelocityMode(true);
+        // arm.setVelocityMode(true);
     }
 
 
