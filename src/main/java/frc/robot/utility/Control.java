@@ -142,6 +142,7 @@ public class Control {
         // xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(true)));
         // xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(false)));
 
+
         xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightSolenoid(1)));
         xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightSolenoid(0)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightSolenoid(0)));
@@ -151,6 +152,7 @@ public class Control {
 
 
         climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
+
 
         // xboxController.a().onTrue(new ClimberToVelocity(() -> 0.25, true));
         // xboxController.a().onFalse(new ClimberToVelocity(() -> 0, true));
