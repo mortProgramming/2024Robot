@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
     
@@ -79,6 +80,13 @@ public class Climber extends SubsystemBase {
 
       rightClimberSolenoid.set(rightSolenoidSpeed);
       leftClimberSolenoid.set(leftSolenoidSpeed);
+
+      if (rightSolenoidSpeed == 1) {
+        SmartDashboard.putBoolean("Solenoid Position", true);
+      }
+      else {
+        SmartDashboard.putBoolean("Solenoid Position", false);
+      }
     }
 
     /**

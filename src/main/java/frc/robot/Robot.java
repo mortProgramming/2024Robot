@@ -5,9 +5,11 @@
 package frc.robot;
 
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.utility.Odometer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,7 +23,7 @@ public class Robot extends TimedRobot {
 
 	private RobotContainer robotContainer;
 
-	//private Odometer odometer;
+	// private Odometer odometer;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -31,7 +33,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		robotContainer = new RobotContainer();
 
-		//odometer = Odometer.getInstance();
+		// odometer = Odometer.getInstance();
 	}
 
 	/**
@@ -46,7 +48,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		//odometer.updateOdometry();
+		// odometer.updateOdometry();
 		
 	}
 
@@ -71,7 +73,6 @@ public class Robot extends TimedRobot {
 			autonomousCommand.schedule();
 		}
 
-		Drivetrain.getInstance().zeroGyroscope();
 	}
 
 	/** This function is called periodically during autonomous. */

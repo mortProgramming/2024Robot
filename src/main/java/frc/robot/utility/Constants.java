@@ -16,25 +16,25 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 3;
 		public final static int FRONT_LEFT_STEER = 4;
 		public final static int FRONT_LEFT_STEER_ENCODER = 35;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(285);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(287-180+180);
 
 		/* Port and Declaration for Front Right swerve motors & offset */
 		public final static int FRONT_RIGHT_DRIVE = 1;
 		public final static int FRONT_RIGHT_STEER = 2;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 34;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(2);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(109+180);
 
 		/* Port and Declaration for Back left swerve motors & offset */
 		public final static int BACK_LEFT_DRIVE = 5;
 		public final static int BACK_LEFT_STEER = 6;
 		public final static int BACK_LEFT_STEER_ENCODER = 36; 
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(194);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(100-90+180);
 
 		/* Port and Declaration for Back Right swerve motors & offset */
 		public final static int BACK_RIGHT_DRIVE = 7;
 		public final static int BACK_RIGHT_STEER = 8;
 		public final static int BACK_RIGHT_STEER_ENCODER = 37;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(319);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(321-180+180);
 
 		public final static double XVALUE_KP = 1.1;
 		public final static double XVALUE_KI = 0;
@@ -114,7 +114,7 @@ public final class Constants {
 		// public static final double INTAKE_SPEED = 0.25;
 		// public static final double SHOOT_SPEED = -0.50;
 		public static final double INTAKE_SPEED = 0.4;
-		public static final double AMP_SHOOT_SPEED = -0.6;
+		public static final double AMP_SHOOT_SPEED = -0.3;
 		public static final double SHOOTER_SHOOT_SPEED = -1;
 
 		public static final int INTAKE_SENSOR = 0;
@@ -177,8 +177,7 @@ public final class Constants {
 		public static final double POSITION_FF_A = 0;
 
 		public static final double ARM_REST_POSITION = -30;
-		// public static final double ARM_AMP_POSITION = -25;
-		public static final double ARM_AMP_POSITION = 107.5;
+		public static final double ARM_AMP_POSITION = 135;
 		public static final double ARM_INTAKE_POSITION = -25;
 		public static final double ARM_TRAP_POSITION = 0;
 		public static final double ARM_SPEAKER_POSITION = 0;
@@ -189,6 +188,7 @@ public final class Constants {
 		public static final double ARM_GEAR_RATIO = 5;
 
 		public static final double ARM_ENCODER_DEGREES_TO_0 = 0;
+		public static final double ARM_WRIST_TIMEOUT = 2.0 ;
 	}
 
 	public final static class Vision {

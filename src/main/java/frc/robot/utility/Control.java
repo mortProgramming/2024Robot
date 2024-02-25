@@ -117,7 +117,7 @@ public class Control {
 			new DrivetrainCommand(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true)
         );
 
-        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope()));
+        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
 
         //Competition controls
         xboxController.rightBumper().onTrue(new IntakeToVelocity(INTAKE_SPEED));
@@ -129,27 +129,31 @@ public class Control {
         xboxController.a().onTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
         xboxController.a().onFalse(new IntakeToVelocity(0));
 
-        arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
+        // arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
 
         xboxController.x().onTrue(new ArmToPosition(ARM_AMP_POSITION));
         xboxController.y().onTrue(new ArmToPosition(ARM_REST_POSITION));
 
-        wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
+        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
-        // xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(false)));
-        // xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(true)));
+        xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(false)));
+        xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(true)));
 
         // xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(true)));
         // xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(false)));
 
-        xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setRightSolenoid(0.1)));
-        xboxController.povDown().whileFalse(new InstantCommand(() -> climber.setRightSolenoid(0)));
-        xboxController.povDown().whileTrue(new InstantCommand(() -> climber.setLeftSolenoid(0.1)));
-        xboxController.povDown().whileFalse(new InstantCommand(() -> climber.setLeftSolenoid(0)));
 
-        // climber.setDefaultCommand(new ClimberToVelocity(Control::getRightJoystickY, true));
-        // climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, false));
-        
+        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightSolenoid(1)));
+        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightSolenoid(0)));
+        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightSolenoid(0)));
+        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftSolenoid(1)));
+        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftSolenoid(0)));
+        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftSolenoid(0)));
+
+
+        climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
+
+
         // xboxController.a().onTrue(new ClimberToVelocity(() -> 0.25, true));
         // xboxController.a().onFalse(new ClimberToVelocity(() -> 0, true));
         // xboxController.b().onTrue(new ClimberToVelocity(() -> -0.25, true));
@@ -342,7 +346,7 @@ public class Control {
     // }
 
     public static double getLeftJoystickY() {
-        return xboxController.getLeftY() * 0.25;
+        return xboxController.getLeftY() * -0.25;
     }
 
     public static double getRightJoystickY(){

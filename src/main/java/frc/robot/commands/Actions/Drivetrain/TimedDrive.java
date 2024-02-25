@@ -13,6 +13,7 @@ public class TimedDrive extends Command{
   private double x;
   private double y;
   private double omega;
+  private boolean fieldOriented;
   /**
    * Moves the drivetrain a certain amount of time given movement parameters.
    * @param time
@@ -33,7 +34,19 @@ public class TimedDrive extends Command{
     this.x = x;
     this.y = y;
     this.omega = omega;
+    this.fieldOriented = true;
+    addRequirements(drivetrain);
+  }
+  public TimedDrive(double time, double x, double y, double omega, boolean fieldOriented) {
+    drivetrain = Drivetrain.getInstance();
     
+    timer  = new Timer();
+    this.time = time;
+
+    this.x = x;
+    this.y = y;
+    this.omega = omega;
+    this.fieldOriented= fieldOriented;
     addRequirements(drivetrain);
   }
 
@@ -52,9 +65,24 @@ public class TimedDrive extends Command{
    */
   @Override
   public void execute() {
-    drivetrain.drive(new ChassisSpeeds(x, y, omega));
-  }
-
+    if (fieldOriented) {
+			drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+        x, y, omega,
+					drivetrain.getGyroscopeRotation()));
+		} else {
+			drivetrain.drive(new ChassisSpeeds(
+        x, y, omega));
+		}
+    
+    // if (fieldOriented) {
+		// 	drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+    //     y, -x, omega,
+		// 			drivetrain.getGyroscopeRotation()));
+		// } else {
+		// 	drivetrain.drive(new ChassisSpeeds(
+    //     y, -x, omega));
+		// }
+	}
   /**
    * Called once the command ends or is interrupted.
    */

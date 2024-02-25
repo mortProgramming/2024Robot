@@ -7,12 +7,13 @@ import frc.robot.subsystems.Climber;
 
 public class ClimberToVelocity extends Command{
     private Climber climber;
-    private DoubleSupplier velocity;
-    private boolean leftOrRightClimber;
+    private DoubleSupplier leftVelocity;
+    private DoubleSupplier rightVelocity; 
 
-    public ClimberToVelocity(DoubleSupplier velocity, boolean leftOrRightClimber){
-        this.velocity = velocity;
-        this.leftOrRightClimber = leftOrRightClimber;
+
+    public ClimberToVelocity(DoubleSupplier leftVelocity, DoubleSupplier rightVelocity){
+        this.leftVelocity = leftVelocity;
+        this.rightVelocity = rightVelocity;
         climber = Climber.getInstance();
         addRequirements(climber);
     }
@@ -25,19 +26,14 @@ public class ClimberToVelocity extends Command{
 
     @Override
     public void execute() {
-        if(leftOrRightClimber) {
-            climber.setRightClimberVelocity(velocity.getAsDouble());
-        }
-        else {
-            climber.setLeftClimberVelocity(velocity.getAsDouble());
-
-        }
+        climber.setRightClimberVelocity(rightVelocity.getAsDouble());
+        climber.setLeftClimberVelocity(leftVelocity.getAsDouble());
     }
 
     @Override
     public void end(boolean interrupted) {
-        climber.setLeftClimberVelocity(0);
         climber.setRightClimberVelocity(0);
+        climber.setLeftClimberVelocity(0);
 
     }
 
