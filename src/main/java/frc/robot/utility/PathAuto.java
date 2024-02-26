@@ -7,6 +7,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -71,6 +72,7 @@ public class PathAuto extends SubsystemBase {
       new IntakeToVelocity(0),
       new WristToPosition(WRIST_REST_POSITION)
       ));
+    NamedCommands.registerCommand("AutoActive", new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");}));
 
   }
   
