@@ -42,58 +42,42 @@ public class Vision extends SubsystemBase {
 	 * 
 	 * @return True if the limelight has a target, false if no target
 	 */
-    public boolean hasTarget() {
+    public boolean hasTag() {
 		return tagTable.getEntry("tv").getInteger(0) == 1;
+	}
+	/**
+	 * 
+	 * @return True if the limelight has a target, false if no target
+	 */
+    public boolean hasNote() {
+		return intakeTable.getEntry("tv").getInteger(0) == 1;
 	}
 
 	/**
 	 * 
-	 * @return The area of the target, if any. -1 if no target found
+	 * @return The area of the targeted apriltag, if any. -1 if no target found
 	 */
-    public double getTargetArea() {
-		if(hasTarget()){
+    public double getTagArea() {
+		if(hasTag()){
+			return tagTable.getEntry("ta").getDouble(0);
+		}
+		return -1;
+		
+	}
+	/**
+	 * 
+	 * @return The area of the targeted note piece, if any. -1 if no target found
+	 */
+	public double getNoteArea() {
+		if(hasNote()){
 			return tagTable.getEntry("ta").getDouble(0);
 		}
 		return -1;
 		
 	}
 
-	/**
-	 * Switch limelight pipeline based on a given number to switch to
-	 * @param id
-	 * The pipeline ID to switch to
-	 */
-	public void setPipeline(int id) {
-		tagTable.getEntry("pipeline").setNumber(id);
-	}
 
-	/**
-	 * Set the current pipeline based on the entered Pipeline object
-	 * @param pipe
-	 * A pipeline object to put in. The ID to switch to is obtained from this object
-	 */
-	public void setPipeline(Pipeline pipe) {
-		setPipeline(pipe.getId());
-	}
 
-	/**
-	 * Switch the pipeline to whatever tracks the target apriltag
-	 * @param pipe
-	 * The pipeline class
-	 * @param AprilTagID
-	 * The apriltag you are looking for
-	 */
-	public void setPipeline(Pipeline pipe, int AprilTagID) {
-		setPipeline(pipe.getId(AprilTagID));
-	}
-
-	/**
-	 * Gets the currently used pipeline
-	 * @return the Pipeline object currently being used
-	 */
-	public Pipeline getPipelineID() {
-		return Pipeline.getPipeline((int) tagTable.getEntry("pipeline").getInteger(0));
-	}
 
 	// Translation (x, y, z) Rotation(pitch, yaw, roll)
 	/**
@@ -109,7 +93,7 @@ public class Vision extends SubsystemBase {
 	 * @return The X value of the target in degrees, -1 if no target found.
 	 */
 	public double getX() {
-		if(hasTarget()){
+		if(hasTag()){
 			return tagTable.getEntry("tx").getDouble(0);
 		}
 		return -1;
@@ -120,7 +104,7 @@ public class Vision extends SubsystemBase {
 	 * @return The Y value of the target in degrees, -1 if no target found
 	 */
 	public double getY() {
-		if(hasTarget()){
+		if(hasTag()){
 			return tagTable.getEntry("ty").getDouble(0);
 		}
 		return -1;
@@ -148,10 +132,7 @@ public class Vision extends SubsystemBase {
 		return (double) getCamTranslation()[2];
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
+
 	public double getCamTranslationPitch() {
 		if (getCamTranslation().length < 1) {
 			return 0;
@@ -159,10 +140,7 @@ public class Vision extends SubsystemBase {
 		return (double) getCamTranslation()[3];
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
+	
 	public double getCamTranslationYaw() {
 		if (getCamTranslation().length < 1) {
 			return 0;
@@ -170,10 +148,7 @@ public class Vision extends SubsystemBase {
 		return (double) getCamTranslation()[4];
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
+	
 	public double getCamTranslationRoll() {
 		if (getCamTranslation().length < 1) {
 			return 0;
@@ -211,7 +186,7 @@ public class Vision extends SubsystemBase {
 	 * @return ID of targeted apriltag as an int, -1 if no target found
 	 */
 	public int getAprilTagId() {
-		if(hasTarget()){
+		if(hasTag()){
 			return (int) tagTable.getEntry("tid").getInteger(0);
 		}
 		return -1;
@@ -233,7 +208,9 @@ public class Vision extends SubsystemBase {
 	// 	return -1;
 		
 	// }
-
+	/*
+	 * Gets the robots pose on the field relative to the driverstation.
+	 */
 	public Pose2d getFieldPose() {
 		double[] poseNum = new double[6];
 		
@@ -251,7 +228,43 @@ public class Vision extends SubsystemBase {
      */
     @Override
     public void periodic() {
+		totalOutlier = 0; 
+		newValue = position;
+		totalPosition = 0;
+		valuePosition++;
+
+		if(valuePosition == AMOUNT_TEST_FRAMES){
+			valuePosition = 0;
+		}
 		
+		for(int counter = 0; counter < MAX_OUTLIERS; counter++){
+			totalPosition += totalPosition + values[counter];
+		}
+
+		averagePosition = totalPosition/AMOUNT_TEST_FRAMES;
+		
+		if(outlierCounter > MAX_OUTLIERS){
+			for(int counter = 0; counter < MAX_OUTLIERS; counter++){
+				totalOutlier += outliers[counter];
+			}
+			averageOutlier = totalOutlier/AMOUNT_TEST_FRAMES;
+			for(int counter = 0; counter < MAX_OUTLIERS; counter++){
+				values[counter] = averageOutlier;
+			}
+			outlierCounter = 0;
+			noOutlierCounter = 0;
+		}else if(newValue < averagePosition + MAX_ERROR && newValue > (averagePosition - MAX_ERROR)){
+			values[valuePosition] = newValue;
+			nonOutlierCounter++;
+			if(nonOutlierCounter > MAX_NON_OUTLIERS){
+				nonOutlierCounter = 0;
+				outlierCounter = 0;
+			}
+		}else{
+			nonOutlierCounter = 0;
+			outliers[(int) outlierCounter] = newValue;
+			outlierCounter++;
+		}
     }
 
 	/**

@@ -28,7 +28,7 @@ public class MoveToAprilTag extends Command{
 
 	@Override
 	public void initialize() {
-		vision.setPipeline(Pipeline.APRIL_TAG, id);
+		
 		drivetrain.getAprilTagXController().reset();
 		drivetrain.getAprilTagYController().reset();
 		drivetrain.getAprilTagOmegaController().reset();
@@ -51,7 +51,7 @@ public class MoveToAprilTag extends Command{
 
 	@Override
 	public boolean isFinished() {
-		return !vision.hasTarget()
+		return !vision.hasTag()
 				|| (drivetrain.getAprilTagXController().atSetpoint() && drivetrain.getAprilTagYController().atSetpoint()
 						&& drivetrain.getAprilTagOmegaController().atSetpoint());
 	}

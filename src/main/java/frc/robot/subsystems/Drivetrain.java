@@ -139,10 +139,10 @@ public class Drivetrain extends SubsystemBase {
 		aprilOmegaController.setTolerance(OMEGAVALUE_TOLERANCE);
 	}
 
-	/** Sets the gyroscope angle to zero. */
-	// public void zeroGyroscope() {
-	// 	navX.zeroYaw();
-	// }
+	/** Sets the gyroscope angle to zero. 
+	 * @param angle
+	 * 
+	*/
 	public void zeroGyroscope(double angle) {
 		fieldOrientationOffset = navX.getAngle()+angle;
 	}
@@ -179,27 +179,7 @@ public class Drivetrain extends SubsystemBase {
 		return driveKinematics;
 	}
 
-	/**
-	 * @return Pose2d
-	 */
-	// public Pose2d getPose() {
-	// 	return driveOdometry.getPoseMeters();
-	// }
-
-	// /**
-	//  * @param pose
-	//  */
-	// public void resetPose(Pose2d pose) {
-	// 	// driveOdometry.resetPosition(Rotation2d.fromDegrees(navX.getFusedHeading()),
-	// 	// getModulePositions(),
-	// 	// pose);
-
-	// 	// //todo: try this
-	// 	// /*
-	// 	driveOdometry.resetPosition(getGyroscopeRotation(), getModulePositions(), pose);
-
-	// 	// */
-	// }
+	
 
 	/**
 	 * Gets the position of each swerve module
@@ -331,6 +311,11 @@ public class Drivetrain extends SubsystemBase {
 	public double getRoll(){
 		return navX.getRoll() + 1;
 	}
+
+    public ChassisSpeeds getChassisSpeeds() {
+        // TODO Auto-generated method stub
+        return chassisSpeeds;
+    }
 
 }
 

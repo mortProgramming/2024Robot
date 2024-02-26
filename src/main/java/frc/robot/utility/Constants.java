@@ -50,7 +50,22 @@ public final class Constants {
 		public final static double OMEGAVALUE_KI = 0;
 		public final static double OMEGAVALUE_KD = 0;
 		public final static double OMEGAVALUE_TOLERANCE = 0;
-    }
+		public static final class AutonConstants{
+			public static final double AUTON_POSITION_KP = 0.0001;
+			public static final double AUTON_POSITION_KI = 0;
+			public static final double AUTON_POSITION_KD = 0;
+	
+	
+			public static final double AUTON_ROTATION_KP = 0.0001;
+			public static final double AUTON_ROTATION_KI = 0;
+			public static final double AUTON_ROTATION_KD = 0;
+
+			public static final double MAX_AUTON_VELOCITY = 0;
+		}
+
+
+
+	}
 
     public final static class RobotSpecs {
 		// The left-to-right distance between the drivetrain wheels measured from center
@@ -68,15 +83,13 @@ public final class Constants {
 				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI) * 0.99; // 100% ~4.97 m/s
 		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
-		
-		//	Maximum velocity and acceleration during auton period
-		public static final double MAX_VELOCITY_AUTO = 4.3;
-		public static final double MAX_ACCELERATION_AUTO = 4;
 
 		//Max and minimum throttle ports & declarations
         public static final double MAX_THROTTLE = 1;
         public static final double MIN_THROTTLE = 0.2;
         public static final double DEAD_BAND = 0.2;
+
+		public static final double DRIVEBASE_RADIUS_IN_METERS = 0.341;
 	}
 
 	public final static class Climber{
@@ -291,5 +304,6 @@ public final class Constants {
 			}
 		}
 	}
+	
 
 }
