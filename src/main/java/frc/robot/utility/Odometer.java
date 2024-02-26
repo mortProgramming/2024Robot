@@ -12,7 +12,7 @@ import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Odometer{
-
+    private static Odometer odometer;
     private static Drivetrain drivetrain;
     private static Vision vision;
 
@@ -85,6 +85,9 @@ public class Odometer{
     }
 
     public static Odometer getInstance(){
-        return new Odometer();
+        if(odometer == null){
+            odometer = new Odometer();
+        }
+        return odometer;
     }
 }
