@@ -251,43 +251,7 @@ public class Vision extends SubsystemBase {
      */
     @Override
     public void periodic() {
-		totalOutlier = 0; 
-		newValue = position;
-		totalPosition = 0;
-		valuePosition++;
-
-		if(valuePosition == AMOUNT_TEST_FRAMES){
-			valuePosition = 0;
-		}
 		
-		for(int counter = 0; counter < MAX_OUTLIERS; counter++){
-			totalPosition += totalPosition + values[counter];
-		}
-
-		averagePosition = totalPosition/AMOUNT_TEST_FRAMES;
-		
-		if(outlierCounter > MAX_OUTLIERS){
-			for(int counter = 0; counter < MAX_OUTLIERS; counter++){
-				totalOutlier += outliers[counter];
-			}
-			averageOutlier = totalOutlier/AMOUNT_TEST_FRAMES;
-			for(int counter = 0; counter < MAX_OUTLIERS; counter++){
-				values[counter] = averageOutlier;
-			}
-			outlierCounter = 0;
-			noOutlierCounter = 0;
-		}else if(newValue < averagePosition + MAX_ERROR && newValue > (averagePosition - MAX_ERROR)){
-			values[valuePosition] = newValue;
-			nonOutlierCounter++;
-			if(nonOutlierCounter > MAX_NON_OUTLIERS){
-				nonOutlierCounter = 0;
-				outlierCounter = 0;
-			}
-		}else{
-			nonOutlierCounter = 0;
-			outliers[(int) outlierCounter] = newValue;
-			outlierCounter++;
-		}
     }
 
 	/**

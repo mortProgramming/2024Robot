@@ -36,6 +36,8 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Vision;
+
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.Velocity;
 
@@ -57,6 +59,8 @@ public class Control {
     private static Intake intake;
     private static Climber climber;
     private static Wrist wrist;
+    private static Odometer odometer;
+    private static Vision vision;
     private static SysIdRoutine armRoutine;
     private static SysIdRoutine wristRoutine;
     
@@ -91,6 +95,8 @@ public class Control {
         wrist = Wrist.getInstance();
         climber = Climber.getInstance();
         intake = Intake.getInstance();
+        odometer = Odometer.getInstance();
+        vision = Vision.getInstance();
 
 
         armRoutine = new SysIdRoutine(
@@ -118,6 +124,7 @@ public class Control {
         );
 
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
+        joystick.button(7).whileTrue(new InstantCommand(() -> odometer.resetOdometry(vision.getFieldPose())));
 
         //Competition controls
         xboxController.rightBumper().onTrue(new IntakeToVelocity(INTAKE_SPEED));

@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
 
 	private RobotContainer robotContainer;
 
-	// private Odometer odometer;
+	private Odometer odometer;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		robotContainer = new RobotContainer();
 
-		// odometer = Odometer.getInstance();
+		odometer = Odometer.getInstance();
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		// odometer.updateOdometry();
+		odometer.updateOdometry();
 		
 	}
 
