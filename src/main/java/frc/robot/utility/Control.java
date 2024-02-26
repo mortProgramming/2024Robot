@@ -97,6 +97,7 @@ public class Control {
         intake = Intake.getInstance();
         odometer = Odometer.getInstance();
         vision = Vision.getInstance();
+        PathAuto.init();//Drivetrain methods must properly exist for the PathPlanner swerve configuration to work.
 
 
         armRoutine = new SysIdRoutine(

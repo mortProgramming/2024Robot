@@ -17,7 +17,6 @@ public class Auto {
 	 * Create autonomous commands and chooser
 	 */
 	public static void init() {
-		PathAuto.init();
 		autoChooser = new SendableChooser<Command>();
 		isBlue = new SendableChooser<Boolean>();
 		addAutoOptions();

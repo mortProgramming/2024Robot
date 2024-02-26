@@ -42,11 +42,12 @@ public class PathAuto extends SubsystemBase {
   private AutoBuilder autoBuilder;
   private static Drivetrain drivetrain;
   private static Odometer odometry = Odometer.getInstance();
+  private static PathPlannerAuto twoPiece;
 
   public static void init() {
     drivetrain = Drivetrain.getInstance();
 
-    //GET NUMBERS
+    //Configure path to use swerve settings
     AutoBuilder.configureHolonomic(
     () -> {return odometry.getOdometry().getEstimatedPosition();},  //get current robot position on the field
     (Pose2d startPose) -> {odometry.resetOdometry(startPose);}, //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. Need to compare the Choreo coordinate system to the limelight one
@@ -57,27 +58,30 @@ public class PathAuto extends SubsystemBase {
         AutonConstants.MAX_AUTON_VELOCITY, //max Module Speed in M/s
         RobotSpecs.DRIVEBASE_RADIUS_IN_METERS, //todo: Find this number
        new ReplanningConfig()), 
-       () ->{return DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == Alliance.Red : false;}, 
+       () ->{return DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == Alliance.Red : false;}, //method for checking current alliance. Path flips if alliance is red
     drivetrain);
-    NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(
+    NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
       new SetArmAndWristPos(Arm.ARM_AMP_POSITION, WRIST_SCORE_POSITION).withTimeout(ARM_WRIST_TIMEOUT),
       new IntakeToVelocity(Intake.AMP_SHOOT_SPEED).withTimeout(.5),
       new SetArmAndWristPos(Arm.ARM_REST_POSITION, WRIST_REST_POSITION)
     ));
-    NamedCommands.registerCommand("Intake", new ParallelCommandGroup(
+    NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
       new IntakeToVelocity(INTAKE_SPEED),
       new WristToPosition(WRIST_INTAKE_POSITION)
     ));
-    NamedCommands.registerCommand("StopIntake", new ParallelCommandGroup(
+    NamedCommands.registerCommand("StopIntake", new ParallelCommandGroup(//Disable intake and bring wrist in
       new IntakeToVelocity(0),
       new WristToPosition(WRIST_REST_POSITION)
       ));
-    NamedCommands.registerCommand("AutoActive", new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");}));
+    NamedCommands.registerCommand("AutoActive", new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");}));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
 
+
+    //build all path-based autons
+    twoPiece = new PathPlannerAuto("PathPlanner 2Piece");
   }
   
   public static Command getTwoPiece(){
-    return new PathPlannerAuto("PathPlanner 2Piece");
+    return twoPiece;
   }
 
   @Override

@@ -15,7 +15,6 @@ public class RobotContainer {
     	Control.init();
     	Control.configure();
 
-		PathAuto.init();
 		Auto.init();
 	}
 
