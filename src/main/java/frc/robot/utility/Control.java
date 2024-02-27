@@ -135,6 +135,7 @@ public class Control {
 
 //.withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
         //Competition controls
+
         xboxController.rightBumper().onTrue(new IntakeToVelocity(INTAKE_SPEED));
         xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
 
@@ -151,7 +152,6 @@ public class Control {
 
         wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
-
         //arm and wrist switching with 
         xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(true)));
         xboxController.start().whileTrue(new InstantCommand(() -> wrist.setVelocityMode(true)));
@@ -159,12 +159,12 @@ public class Control {
         xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(false)));
         xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(true)));
 
-        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightSolenoid(1)));
-        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightSolenoid(0)));
-        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightSolenoid(0)));
-        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftSolenoid(1)));
-        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftSolenoid(0)));
-        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftSolenoid(0)));
+        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(1)));
+        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(0)));
+        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightServo(0)));
+        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(1)));
+        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(0)));
+        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
 
         climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));

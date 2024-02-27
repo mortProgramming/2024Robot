@@ -72,6 +72,11 @@ public class Odometer{
    public void resetOdometry(Pose2d inputPose){
     odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), inputPose);
    }
+
+   public void resetOdometry(){
+    odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), 
+    new Pose2d(0,0, new Rotation2d()));
+   }
    
 
    public void updateOdometry () {
@@ -84,6 +89,13 @@ public class Odometer{
                 odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp());
             }
         }    
+        
+        SmartDashboard.putNumber("SwervePoseX", getPoseX());
+	    SmartDashboard.putNumber("swervePoseY", getPoseY());
+        // SmartDashboard.putNumber("swerveTimed", MathSharedStore.getTimestamp());
+    }
+    public void updateOdometryIgnoreLimelight() {
+        odometry.update(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions());    
         
         SmartDashboard.putNumber("SwervePoseX", getPoseX());
 	    SmartDashboard.putNumber("swervePoseY", getPoseY());

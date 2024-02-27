@@ -150,13 +150,25 @@ public class Arm extends SubsystemBase {
 
     //encoder
     public double encoderToDegrees() {
-        if(getEncoderPosition() < 0) {
-            return ((1 - getEncoderPosition()) * 360) + ARM_ENCODER_DEGREES_TO_0;
+        double degrees = encoderToDegrees() * 360 - ARM_ENCODER_DEGREES_TO_0;
+        if (degrees < 0) {
+            degrees += 360;
         }
-        else {
-            return(getEncoderPosition() * 360) + ARM_ENCODER_DEGREES_TO_0;
 
-        }    
+        if (degrees > ARM_NEVER_POSITION) {
+            degrees -= 360;
+        }
+
+        degrees = - degrees;
+
+        return degrees;
+        // if(getEncoderPosition() < 0) {
+        //     return ((1 - getEncoderPosition()) * 360) + ARM_ENCODER_DEGREES_TO_0;
+        // }
+        // else {
+        //     return(getEncoderPosition() * 360) + ARM_ENCODER_DEGREES_TO_0;
+
+        // }    
     }
 
     // public boolean nearSetpoint(){

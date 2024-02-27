@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		odometer.updateOdometry();
+		
 		
 	}
 	
@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during autonomous. */
 	@Override
 	public void autonomousPeriodic() {
+		odometer.updateOdometryIgnoreLimelight();
 	}
 
 	@Override
@@ -90,6 +91,7 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during operator control. */
 	@Override
 	public void teleopPeriodic() {
+		odometer.updateOdometry();
 	}
 
 	@Override

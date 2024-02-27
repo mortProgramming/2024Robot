@@ -50,17 +50,22 @@ public final class Constants {
 		public final static double OMEGAVALUE_KI = 0;
 		public final static double OMEGAVALUE_KD = 0;
 		public final static double OMEGAVALUE_TOLERANCE = 0;
-		public static final class AutonConstants{
-			public static final double AUTON_POSITION_KP = 0.0000001;
-			public static final double AUTON_POSITION_KI = 0;
-			public static final double AUTON_POSITION_KD = 0;
-	
-	
-			public static final double AUTON_ROTATION_KP = 0.0001;
-			public static final double AUTON_ROTATION_KI = 0;
-			public static final double AUTON_ROTATION_KD = 0.0001;
 
-			public static final double MAX_AUTON_VELOCITY = 1;
+		public final static double TO_POSITION_KP = 0.01;
+		public final static double TO_POSITION_KI = 0;
+		public final static double TO_POSITION_KD = 0;
+
+		public static final class AutonConstants{
+			public static final double AUTON_POSITION_KP = 0.000001;
+			public static final double AUTON_POSITION_KI = 0;
+			public static final double AUTON_POSITION_KD = 0.0001;
+	
+	
+			public static final double AUTON_ROTATION_KP = 0;
+			public static final double AUTON_ROTATION_KI = 0;
+			public static final double AUTON_ROTATION_KD = 0;
+
+			public static final double MAX_AUTON_VELOCITY = 4.17;
 		}
 
 	}
@@ -87,15 +92,15 @@ public final class Constants {
         public static final double MIN_THROTTLE = 0.2;
         public static final double DEAD_BAND = 0.2;
 
-		public static final double DRIVEBASE_RADIUS_IN_METERS = 0.341;
+		public static final double DRIVEBASE_RADIUS_IN_METERS = Units.inchesToMeters(14);
 	}
 
 	public final static class Climber{
 		public static final int FOLLOW_CLIMBER_MOTOR = 16;
 		public static final int MASTER_CLIMBER_MOTOR = 15;
 
-		public static final int LEFT_CLIMBER_SOLENOID = 18;
-		public static final int RIGHT_CLIMBER_SOLENOID = 19;
+		public static final int LEFT_CLIMBER_SERVO = 18;
+		public static final int RIGHT_CLIMBER_SERVO = 19;
 
 		public static final double POSITION_PID_P = 0;
 		public static final double POSITION_PID_I = 0;
@@ -198,7 +203,9 @@ public final class Constants {
 		public static final double ARM_DEGREES_TO_0 = -33;
 		public static final double ARM_GEAR_RATIO = 5;
 
-		public static final double ARM_ENCODER_DEGREES_TO_0 = 180;
+		public static final double ARM_ENCODER_DEGREES_TO_0 = 20;
+		public static final double ARM_NEVER_POSITION = 90;
+
 		public static final double ARM_WRIST_TIMEOUT = 2.0 ;
 	}
 

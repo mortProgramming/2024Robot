@@ -48,6 +48,8 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController yController;
 	private PIDController thetaController;
 
+	private PIDController xToPositioController;
+	private PIDController yToPositioController;
 	private PIDController rotateToAngleController;
 	//Declaration of drivetrain variable
 	private static Drivetrain drivetrain;
@@ -123,6 +125,13 @@ public class Drivetrain extends SubsystemBase {
 		thetaController = new PIDController(0.04, 0, 0);
 		thetaController.setSetpoint(0);
 		thetaController.setTolerance(0.5);
+
+		xToPositioController = new PIDController(0.1, 0, 0);
+		xToPositioController.setTolerance(0.05);
+
+		yToPositioController = new PIDController(0.1, 0, 0);
+		yToPositioController.setTolerance(0.05);
+
 
 		//	Initialization of PID controller rotateToAngle
 		rotateToAngleController = new PIDController(0.07, 0, 0.001);
@@ -264,6 +273,14 @@ public class Drivetrain extends SubsystemBase {
 		return rotateToAngleController;
 	}
 
+	public PIDController getXToPositiController() {
+		return xToPositioController;
+	}
+
+	public PIDController getYToPositiController() {
+		return yToPositioController;
+	}
+
 	public PIDController getAprilTagXController() {
 		return aprilXController;
 	}
@@ -285,7 +302,6 @@ public class Drivetrain extends SubsystemBase {
 
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
-
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
 		SmartDashboard.putNumber("ThrottleThing", Control.getThrottle());
 

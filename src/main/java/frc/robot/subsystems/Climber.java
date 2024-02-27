@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
@@ -20,14 +21,17 @@ public class Climber extends SubsystemBase {
     private CANSparkMax rightClimberMotor;
     private CANSparkMax leftClimberMotor;
 
-    private CANSparkMax rightClimberSolenoid;
-    private CANSparkMax leftClimberSolenoid;
+    // private CANSparkMax rightClimberServo;
+    // private CANSparkMax leftClimberServo;
+    private Servo leftServo;
+    private Servo rightServo;
+
 
     private double rightClimberSpeed;
     private double leftClimberSpeed;
 
-    private double rightSolenoidSpeed;
-    private double leftSolenoidSpeed;
+    private double rightServoAngle;
+    private double leftServoAngle;
 
 
     private double rightSetpoint;
@@ -45,8 +49,12 @@ public class Climber extends SubsystemBase {
         rightClimberMotor = new CANSparkMax(MASTER_CLIMBER_MOTOR, MotorType.kBrushless);
         leftClimberMotor = new CANSparkMax(FOLLOW_CLIMBER_MOTOR, MotorType.kBrushless);
 
-        rightClimberSolenoid = new CANSparkMax(RIGHT_CLIMBER_SOLENOID, MotorType.kBrushed);
-        leftClimberSolenoid = new CANSparkMax(LEFT_CLIMBER_SOLENOID, MotorType.kBrushed);
+        // rightClimberServo = new CANSparkMax(RIGHT_CLIMBER_Servo, MotorType.kBrushed);
+        // leftClimberServo = new CANSparkMax(LEFT_CLIMBER_Servo, MotorType.kBrushed);
+
+        leftServo = new Servo(LEFT_CLIMBER_SERVO);
+        rightServo = new Servo(RIGHT_CLIMBER_SERVO);
+
 
         rightClimberPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
@@ -78,15 +86,19 @@ public class Climber extends SubsystemBase {
         leftClimberMotor.set(0);
       }
 
-      rightClimberSolenoid.set(rightSolenoidSpeed);
-      leftClimberSolenoid.set(leftSolenoidSpeed);
+    //   rightClimberServo.set(rightServoSpeed);
+    //   leftClimberServo.set(leftServoSpeed);
 
-      if (rightSolenoidSpeed == 1) {
-        SmartDashboard.putBoolean("Solenoid Position", true);
-      }
-      else {
-        SmartDashboard.putBoolean("Solenoid Position", false);
-      }
+        rightServo.setAngle(rightServoAngle);
+        leftServo.setAngle(leftServoAngle);
+
+
+    //   if (rightServoSpeed == 1) {
+    //     SmartDashboard.putBoolean("Servo Position", true);
+    //   }
+    //   else {
+    //     SmartDashboard.putBoolean("Servo Position", false);
+    //   }
     }
 
     /**
@@ -121,14 +133,15 @@ public class Climber extends SubsystemBase {
         this.leftSetpoint = leftSetpoint;
     }
 
-
-    public void setRightSolenoid(double rightSolenoidSpeed) {
-        this.rightSolenoidSpeed = rightSolenoidSpeed;
+    public void setRightServo(double rightServoAngle) {
+        this.rightServoAngle = rightServoAngle;
     }
 
-    public void setLeftSolenoid(double leftSolenoidSpeed) {
-        this.leftSolenoidSpeed = leftSolenoidSpeed;
+    public void setLeftServo(double leftServoAngle) {
+        this.leftServoAngle = leftServoAngle;
     }
+
+    
 
     public double getRightSetpoint(){
         return rightSetpoint;

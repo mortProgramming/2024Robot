@@ -51,7 +51,7 @@ public class PathAuto extends SubsystemBase {
     //Configure path to use swerve settings
     AutoBuilder.configureHolonomic(
     () -> {return odometry.getOdometry().getEstimatedPosition();},  //get current robot position on the field
-    (Pose2d startPose) -> {odometry.resetOdometry(startPose);}, //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. Need to compare the Choreo coordinate system to the limelight one
+    (Pose2d startPose) -> {odometry.resetOdometry(startPose);}, //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
     () -> {return drivetrain.getChassisSpeeds();}, //get the current ROBOT RELATIVE SPEEDS
     (ChassisSpeeds robotRelativeOutput) -> {drivetrain.drive(robotRelativeOutput);}, //makes the robot move given ROBOT RELATIVE CHASSISSPEEDS
     new HolonomicPathFollowerConfig(new PIDConstants(AutonConstants.AUTON_POSITION_KP, AutonConstants.AUTON_POSITION_KI, AutonConstants.AUTON_POSITION_KD), //position PID
