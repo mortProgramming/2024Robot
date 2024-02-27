@@ -26,7 +26,7 @@ public class WristToPosition extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        // wrist.setVelocityMode(true);;
+        // wrist.setVelocityMode(true);
     }
 
     @Override

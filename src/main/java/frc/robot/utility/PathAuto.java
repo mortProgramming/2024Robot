@@ -46,6 +46,7 @@ public class PathAuto extends SubsystemBase {
 
   public static void init() {
     drivetrain = Drivetrain.getInstance();
+    new InstantCommand(() -> drivetrain.zeroGyroscope(0));
 
     //Configure path to use swerve settings
     AutoBuilder.configureHolonomic(
@@ -60,21 +61,27 @@ public class PathAuto extends SubsystemBase {
        new ReplanningConfig()), 
        () ->{return DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == Alliance.Red : false;}, //method for checking current alliance. Path flips if alliance is red
     drivetrain);
-    NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
-      new SetArmAndWristPos(Arm.ARM_AMP_POSITION, WRIST_SCORE_POSITION).withTimeout(ARM_WRIST_TIMEOUT),
-      new IntakeToVelocity(Intake.AMP_SHOOT_SPEED).withTimeout(.5),
-      new SetArmAndWristPos(Arm.ARM_REST_POSITION, WRIST_REST_POSITION)
-    ));
-    NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
-      new IntakeToVelocity(INTAKE_SPEED),
-      new WristToPosition(WRIST_INTAKE_POSITION)
-    ));
-    NamedCommands.registerCommand("StopIntake", new ParallelCommandGroup(//Disable intake and bring wrist in
-      new IntakeToVelocity(0),
-      new WristToPosition(WRIST_REST_POSITION)
-      ));
-    NamedCommands.registerCommand("AutoActive", new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");}));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
 
+
+
+
+    NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
+      SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
+     // new IntakeToVelocity(Intake.AMP_SHOOT_SPEED).withTimeout(.5),
+      SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
+    ));
+
+    NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
+      //new IntakeToVelocity(INTAKE_SPEED).withTimeout(0.5),
+      new WristToPosition(WRIST_INTAKE_POSITION).withTimeout(0.5)
+    ));
+
+    NamedCommands.registerCommand("StopIntake", new ParallelCommandGroup(//Disable intake and bring wrist in
+     // new IntakeToVelocity(0).withTimeout(0.1),
+      new WristToPosition(WRIST_REST_POSITION).withTimeout(0.5)
+      ));
+
+    NamedCommands.registerCommand("AutoActive", new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");}));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
 
     //build all path-based autons
     twoPiece = new PathPlannerAuto("PathPlanner 2Piece");

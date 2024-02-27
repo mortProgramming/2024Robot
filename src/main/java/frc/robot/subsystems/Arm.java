@@ -75,7 +75,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Arm Postion", getPosition());
         SmartDashboard.putNumber("Arm Position Degrees", posToDegrees());
         SmartDashboard.putNumber("Encoder Arm Postion", getEncoder().getAbsolutePosition());
-        SmartDashboard.putNumber("Encoder Arm Position Degrees", getEncoder().getAbsolutePosition() * 360);
+        SmartDashboard.putNumber("Encoder Arm Position Degrees", encoderToDegrees());
         SmartDashboard.putNumber("Arm Setpoint", setpoint);
         SmartDashboard.putNumber("arm output", setPosition(setpoint));
         SmartDashboard.putNumber("ActualArmMotorOutput", masterArmMotor.get());

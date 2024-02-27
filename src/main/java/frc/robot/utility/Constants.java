@@ -51,19 +51,17 @@ public final class Constants {
 		public final static double OMEGAVALUE_KD = 0;
 		public final static double OMEGAVALUE_TOLERANCE = 0;
 		public static final class AutonConstants{
-			public static final double AUTON_POSITION_KP = 0.0001;
+			public static final double AUTON_POSITION_KP = 0.0000001;
 			public static final double AUTON_POSITION_KI = 0;
 			public static final double AUTON_POSITION_KD = 0;
 	
 	
 			public static final double AUTON_ROTATION_KP = 0.0001;
 			public static final double AUTON_ROTATION_KI = 0;
-			public static final double AUTON_ROTATION_KD = 0;
+			public static final double AUTON_ROTATION_KD = 0.0001;
 
-			public static final double MAX_AUTON_VELOCITY = 0;
+			public static final double MAX_AUTON_VELOCITY = 1;
 		}
-
-
 
 	}
 
@@ -200,7 +198,7 @@ public final class Constants {
 		public static final double ARM_DEGREES_TO_0 = -33;
 		public static final double ARM_GEAR_RATIO = 5;
 
-		public static final double ARM_ENCODER_DEGREES_TO_0 = 0;
+		public static final double ARM_ENCODER_DEGREES_TO_0 = 180;
 		public static final double ARM_WRIST_TIMEOUT = 2.0 ;
 	}
 
