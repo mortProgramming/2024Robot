@@ -11,6 +11,7 @@
         "bumperLength": 0.7365996022362148,
         "bumperWidth": 0.7365996022362148,
         "wheelRadius": 0.04444997599701296
+
     },
     "paths": {
         "NewPath": {
@@ -32,6 +33,7 @@
                     "translationConstrained": true,
                     "headingConstrained": false,
                     "controlIntervalCount": 13
+
                 },
                 {
                     "x": 2.6455748081207275,
@@ -45,6 +47,7 @@
                 {
                     "x": 1.8877214193344116,
                     "y": 7.890092372894287,
+
                     "heading": -1.5707963267948966,
                     "isInitialGuess": false,
                     "translationConstrained": true,
@@ -259,6 +262,7 @@
                     "velocityX": 0.31583076902320817,
                     "velocityY": -0.2927266644862049,
                     "timestamp": 2.0968945283005107
+
                 },
                 {
                     "x": 2.6455748081207275,
@@ -385,6 +389,7 @@
                     "velocityX": -1.2584279725583252e-18,
                     "velocityY": 1.912404821589666e-18,
                     "timestamp": 3.603962528945769
+
                 }
             ],
             "constraints": [
@@ -405,6 +410,7 @@
                         1
                     ],
                     "type": "StopPoint"
+
                 },
                 {
                     "scope": [
@@ -412,6 +418,7 @@
                         1
                     ],
                     "type": "ZeroAngularVelocity"
+
                 }
             ],
             "usesControlIntervalGuessing": true,
