@@ -63,7 +63,7 @@ public class TimedDrive extends Command{
     this.y = y;
     this.omega = omega;
     this.fieldOriented = false;
-    this.isAngleKept = false;
+    this.isAngleKept = isAngleKept;
 
     addRequirements(drivetrain);
   }
@@ -83,11 +83,13 @@ public class TimedDrive extends Command{
    */
   @Override
   public void execute() {
+    drivetrain.setIsAngle(isAngleKept);
     if (isAngleKept) {
       drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-        -y, x, 
-        drivetrain.getRotateToAngleController().calculate(drivetrain.getGyroscopeRotation().getDegrees() + 180, omega),
-		drivetrain.getGyroscopeRotation()));
+        -y, x, 0,
+        drivetrain.getGyroscopeRotation()
+        ));
+        drivetrain.setAngle(omega);
     }
     else if (fieldOriented) {
 			drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(

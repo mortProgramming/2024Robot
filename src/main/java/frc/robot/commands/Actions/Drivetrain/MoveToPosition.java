@@ -46,10 +46,11 @@ public class MoveToPosition extends Command {
    */
   @Override
   public void execute() {
+    drivetrain.setIsAngle(true);
 	drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
         drivetrain.getXToPositiController().calculate(odometer.getPoseX(), wantedX), 
         drivetrain.getYToPositiController().calculate(odometer.getPoseY(), wantedY), 
-        drivetrain.getRotateToAngleController().calculate(drivetrain.getGyroscopeRotation().getDegrees() + 180, wantedAngle),
+        wantedAngle,
 		drivetrain.getGyroscopeRotation()));
 	}
   

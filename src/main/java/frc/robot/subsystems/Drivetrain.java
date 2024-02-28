@@ -39,6 +39,8 @@ public class Drivetrain extends SubsystemBase {
 	private double fieldOrientationOffset;
 
 	private ChassisSpeeds chassisSpeeds;
+	private boolean isAngleSet;
+	private double setAngle;
 
 	private PIDController aprilXController;
 	private PIDController aprilYController;
@@ -75,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
 		//	Builds Front left swerve module with motors and encoders
 		frontLeftModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, FRONT_LEFT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, FRONT_LEFT_STEER)
 				.withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER).withSteerOffset(FRONT_LEFT_STEER_OFFSET)
@@ -84,7 +86,7 @@ public class Drivetrain extends SubsystemBase {
 		//	Builds Front Right swerve module with motors and encoders
 		frontRightModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, FRONT_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, FRONT_RIGHT_STEER)
 				.withSteerEncoderPort(FRONT_RIGHT_STEER_ENCODER).withSteerOffset(FRONT_RIGHT_STEER_OFFSET)
@@ -93,7 +95,7 @@ public class Drivetrain extends SubsystemBase {
 		//	Builds Back left swerve module with motors and encoders
 		backLeftModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, BACK_LEFT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, BACK_LEFT_STEER)
 				.withSteerEncoderPort(BACK_LEFT_STEER_ENCODER).withSteerOffset(BACK_LEFT_STEER_OFFSET)
@@ -102,7 +104,7 @@ public class Drivetrain extends SubsystemBase {
 		//	Builds Back Right swerve module with motors and encoders
 		backRightModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, BACK_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, BACK_RIGHT_STEER)
 				.withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER).withSteerOffset(BACK_RIGHT_STEER_OFFSET)
@@ -239,6 +241,15 @@ public class Drivetrain extends SubsystemBase {
 	 */
 	public void drive(ChassisSpeeds chassisSpeeds) {
 		this.chassisSpeeds = chassisSpeeds;
+		isAngleSet = false;
+	}
+
+	public void setAngle(double setAngle) {
+		this.setAngle = toCircle(setAngle);
+	}
+
+	public void setIsAngle(boolean isAngleSet) {
+		this.isAngleSet = isAngleSet;
 	}
 
 	/**
@@ -300,11 +311,21 @@ public class Drivetrain extends SubsystemBase {
 	public void periodic() {
 		// driveOdometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
 
+		
+
+		if(isAngleSet) {
+			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds.vxMetersPerSecond,
+			chassisSpeeds.vyMetersPerSecond, 
+			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
+	        setAngle), 
+			drivetrain.getGyroscopeRotation());
+		//hypothetically speaking, NULL 
+		}
+
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
 		SmartDashboard.putNumber("ThrottleThing", Control.getThrottle());
-
 	}
 
 	/**
