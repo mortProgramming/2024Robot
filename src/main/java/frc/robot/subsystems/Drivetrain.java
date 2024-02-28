@@ -39,8 +39,8 @@ public class Drivetrain extends SubsystemBase {
 	private double fieldOrientationOffset;
 
 	private ChassisSpeeds chassisSpeeds;
-	private boolean isAngleSet;
-	private double setAngle;
+	private boolean isAngleKept;
+	private double setKeptAngle;
 
 	private PIDController aprilXController;
 	private PIDController aprilYController;
@@ -241,15 +241,15 @@ public class Drivetrain extends SubsystemBase {
 	 */
 	public void drive(ChassisSpeeds chassisSpeeds) {
 		this.chassisSpeeds = chassisSpeeds;
-		isAngleSet = false;
+		isAngleKept = false;
 	}
 
-	public void setAngle(double setAngle) {
-		this.setAngle = toCircle(setAngle);
+	public void setKeptAngle(double setKeptAngle) {
+		this.setKeptAngle = toCircle(setKeptAngle);
 	}
 
-	public void setIsAngle(boolean isAngleSet) {
-		this.isAngleSet = isAngleSet;
+	public void setIsAngleKept(boolean isAngleKept) {
+		this.isAngleKept = isAngleKept;
 	}
 
 	/**
@@ -313,11 +313,11 @@ public class Drivetrain extends SubsystemBase {
 
 		
 
-		if(isAngleSet) {
+		if(isAngleKept) {
 			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds.vxMetersPerSecond,
 			chassisSpeeds.vyMetersPerSecond, 
 			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
-	        setAngle), 
+	        setKeptAngle), 
 			drivetrain.getGyroscopeRotation());
 		//hypothetically speaking, NULL 
 		}

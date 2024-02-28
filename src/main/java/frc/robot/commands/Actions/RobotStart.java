@@ -4,6 +4,8 @@
 
 package frc.robot.commands.Actions;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
@@ -25,6 +27,19 @@ public class RobotStart extends SequentialCommandGroup {
       new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
       SetArmAndWristPos.rest().withTimeout(0.05),
       new InstantCommand(() -> odometer.resetOdometry())
+
+    );
+  }
+
+  public RobotStart(double x, double y, double angle) {
+    drivetrain = Drivetrain.getInstance();
+    odometer = Odometer.getInstance();
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
+    addCommands(
+      new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
+      SetArmAndWristPos.rest().withTimeout(0.05),
+      new InstantCommand(() -> odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle))))
 
     );
   }

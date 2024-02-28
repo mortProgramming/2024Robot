@@ -44,7 +44,7 @@ public class Climber extends SubsystemBase {
     private ArmFeedforward rightClimberPostionFeedForward;
     private ArmFeedforward leftClimberPostionFeedForward;
 
-    private double tolerance = 5;
+    private double tolerance = 7.5;
 
     private static boolean velocityMode;
 
@@ -90,6 +90,12 @@ public class Climber extends SubsystemBase {
     public ProfiledPIDController getRightController(){
         return rightClimberPositionController;
     }
+    public Servo getLeftServo(){
+        return leftServo;
+    }
+    public Servo getRightServo(){
+        return rightServo;
+    }
 
     /**
      * 
@@ -112,6 +118,7 @@ public class Climber extends SubsystemBase {
 
     rightServo.setAngle(rightServoAngle);
     leftServo.setAngle(leftServoAngle);
+    SmartDashboard.putNumber("LeftServoAngle", leftServo.getAngle());
     
 
     

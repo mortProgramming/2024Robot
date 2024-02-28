@@ -129,8 +129,8 @@ public class Control {
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
         joystick.button(7).whileTrue(new InstantCommand(() -> odometer.resetOdometry(vision.getFieldPose())));
 
-        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngle(true)));
-        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setAngle(270)));
+        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(270)));
 
 //.withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
         //Competition controls
@@ -154,6 +154,8 @@ public class Control {
         //arm and wrist switching with 
         xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(true)));
         xboxController.start().whileTrue(new InstantCommand(() -> wrist.setVelocityMode(true)));
+        xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(false)));
+        xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
 
         xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(false)));
         xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(true)));
@@ -165,11 +167,11 @@ public class Control {
         xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
-       // xboxController.povLeft().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-       // xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+       xboxController.povLeft().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
+       xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
 
 
-        climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
+        // climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
 
         // xboxController.a().onTrue(new ClimberToVelocity(() -> 0.25, true));
         // xboxController.a().onFalse(new ClimberToVelocity(() -> 0, true));
