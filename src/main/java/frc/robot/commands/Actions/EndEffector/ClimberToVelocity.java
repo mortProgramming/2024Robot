@@ -26,6 +26,7 @@ public class ClimberToVelocity extends Command{
 
     @Override
     public void execute() {
+        climber.setVelocityMode(true);
         climber.setRightClimberVelocity(rightVelocity.getAsDouble());
         climber.setLeftClimberVelocity(leftVelocity.getAsDouble());
     }

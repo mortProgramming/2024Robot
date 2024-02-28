@@ -48,10 +48,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		odometer.updateOdometry();
+		
 		
 	}
-
+	
 	/** This function is called once each time the robot enters Disabled mode. */
 	@Override
 	public void disabledInit() {
@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during autonomous. */
 	@Override
 	public void autonomousPeriodic() {
+		odometer.updateOdometryIgnoreLimelight();
 	}
 
 	@Override
@@ -90,6 +91,7 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during operator control. */
 	@Override
 	public void teleopPeriodic() {
+		odometer.updateOdometry();
 	}
 
 	@Override

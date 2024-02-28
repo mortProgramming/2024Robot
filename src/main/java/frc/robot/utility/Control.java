@@ -20,6 +20,7 @@ import frc.robot.commands.Actions.EndEffector.WristToPosition;
 import frc.robot.commands.Actions.EndEffector.WristToVelocity;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmToVelocity;
+import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import edu.wpi.first.units.Angle;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
@@ -97,6 +99,7 @@ public class Control {
         intake = Intake.getInstance();
         odometer = Odometer.getInstance();
         vision = Vision.getInstance();
+        PathAuto.init();//Drivetrain methods must properly exist for the PathPlanner swerve configuration to work.
 
 
         armRoutine = new SysIdRoutine(
@@ -126,7 +129,12 @@ public class Control {
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
         joystick.button(7).whileTrue(new InstantCommand(() -> odometer.resetOdometry(vision.getFieldPose())));
 
+        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(270)));
+
+//.withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
         //Competition controls
+
         xboxController.rightBumper().onTrue(new IntakeToVelocity(INTAKE_SPEED));
         xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
 
@@ -143,23 +151,27 @@ public class Control {
 
         // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
-        xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(false)));
-        xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(true)));
+        //arm and wrist switching with 
+        xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(true)));
+        xboxController.start().whileTrue(new InstantCommand(() -> wrist.setVelocityMode(true)));
+        xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(false)));
+        xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
 
-        // xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(true)));
-        // xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(false)));
+        xboxController.start().whileTrue(new InstantCommand(() -> climber.setVelocityMode(false)));
+        xboxController.start().whileFalse(new InstantCommand(() -> climber.setVelocityMode(true)));
+
+        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(90)));
+        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(45)));
+        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightServo(0)));
+        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(90)));
+        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
+        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
+
+       xboxController.povLeft().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
+       xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
 
 
-        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightSolenoid(1)));
-        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightSolenoid(0)));
-        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightSolenoid(0)));
-        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftSolenoid(1)));
-        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftSolenoid(0)));
-        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftSolenoid(0)));
-
-
-        climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
-
+        // climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
 
         // xboxController.a().onTrue(new ClimberToVelocity(() -> 0.25, true));
         // xboxController.a().onFalse(new ClimberToVelocity(() -> 0, true));

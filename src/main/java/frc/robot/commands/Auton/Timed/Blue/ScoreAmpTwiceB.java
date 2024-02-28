@@ -27,7 +27,7 @@ public class ScoreAmpTwiceB extends SequentialCommandGroup {
     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(    new ScoreAmpB(),
+    addCommands(new ScoreAmpB(),
     new TimedDrive(1,0,1.3, 0),
     SetArmAndWristPos.intake().withTimeout(.5),
       new ParallelCommandGroup(
@@ -35,11 +35,25 @@ public class ScoreAmpTwiceB extends SequentialCommandGroup {
       new IntakeToVelocity(Constants.Intake.INTAKE_SPEED).withTimeout(0.7)
     ),
     SetArmAndWristPos.rest().withTimeout(.5),
-    new TimedDrive(1,0,-1, 0),
+    new TimedDrive(1,0,-1.3, 0),
     new TimedDrive(0.75,-1.1,0,0),
-    SetArmAndWristPos.score().withTimeout(1.5),
-    new IntakeToVelocity(Constants.Intake.AMP_SHOOT_SPEED).withTimeout(0.75),
+    SetArmAndWristPos.score().withTimeout(1.75),
+    new IntakeToVelocity(-0.5).withTimeout(0.75),
     SetArmAndWristPos.rest().withTimeout(.5)
     );
+    // addCommands(    new ScoreAmpB(),
+    // new TimedDrive(true, 1,0,1.3, 0),
+    // SetArmAndWristPos.intake().withTimeout(.5),
+    //   new ParallelCommandGroup(
+    //   new TimedDrive(true, 0.65,1,0,0),
+    //   new IntakeToVelocity(Constants.Intake.INTAKE_SPEED).withTimeout(0.7)
+    // ),
+    // SetArmAndWristPos.rest().withTimeout(.5),
+    // new TimedDrive(true, 1,0,-1.3, 0),
+    // new TimedDrive(true, 0.75,-1.1,0,0),
+    // SetArmAndWristPos.score().withTimeout(1.75),
+    // new IntakeToVelocity(-0.5).withTimeout(0.75),
+    // SetArmAndWristPos.rest().withTimeout(.5)
+    // );
   }
 }

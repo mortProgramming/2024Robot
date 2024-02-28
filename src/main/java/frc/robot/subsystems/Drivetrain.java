@@ -39,6 +39,8 @@ public class Drivetrain extends SubsystemBase {
 	private double fieldOrientationOffset;
 
 	private ChassisSpeeds chassisSpeeds;
+	private boolean isAngleKept;
+	private double setKeptAngle;
 
 	private PIDController aprilXController;
 	private PIDController aprilYController;
@@ -48,6 +50,8 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController yController;
 	private PIDController thetaController;
 
+	private PIDController xToPositioController;
+	private PIDController yToPositioController;
 	private PIDController rotateToAngleController;
 	//Declaration of drivetrain variable
 	private static Drivetrain drivetrain;
@@ -73,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
 		//	Builds Front left swerve module with motors and encoders
 		frontLeftModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, FRONT_LEFT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, FRONT_LEFT_STEER)
 				.withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER).withSteerOffset(FRONT_LEFT_STEER_OFFSET)
@@ -82,7 +86,7 @@ public class Drivetrain extends SubsystemBase {
 		//	Builds Front Right swerve module with motors and encoders
 		frontRightModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, FRONT_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, FRONT_RIGHT_STEER)
 				.withSteerEncoderPort(FRONT_RIGHT_STEER_ENCODER).withSteerOffset(FRONT_RIGHT_STEER_OFFSET)
@@ -91,7 +95,7 @@ public class Drivetrain extends SubsystemBase {
 		//	Builds Back left swerve module with motors and encoders
 		backLeftModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, BACK_LEFT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, BACK_LEFT_STEER)
 				.withSteerEncoderPort(BACK_LEFT_STEER_ENCODER).withSteerOffset(BACK_LEFT_STEER_OFFSET)
@@ -100,7 +104,7 @@ public class Drivetrain extends SubsystemBase {
 		//	Builds Back Right swerve module with motors and encoders
 		backRightModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, BACK_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, BACK_RIGHT_STEER)
 				.withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER).withSteerOffset(BACK_RIGHT_STEER_OFFSET)
@@ -124,6 +128,13 @@ public class Drivetrain extends SubsystemBase {
 		thetaController.setSetpoint(0);
 		thetaController.setTolerance(0.5);
 
+		xToPositioController = new PIDController(0.1, 0, 0);
+		xToPositioController.setTolerance(0.05);
+
+		yToPositioController = new PIDController(0.1, 0, 0);
+		yToPositioController.setTolerance(0.05);
+
+
 		//	Initialization of PID controller rotateToAngle
 		rotateToAngleController = new PIDController(0.07, 0, 0.001);
 		rotateToAngleController.setTolerance(0.5);
@@ -139,10 +150,10 @@ public class Drivetrain extends SubsystemBase {
 		aprilOmegaController.setTolerance(OMEGAVALUE_TOLERANCE);
 	}
 
-	/** Sets the gyroscope angle to zero. */
-	// public void zeroGyroscope() {
-	// 	navX.zeroYaw();
-	// }
+	/** Sets the gyroscope angle to zero. 
+	 * @param angle
+	 * 
+	*/
 	public void zeroGyroscope(double angle) {
 		fieldOrientationOffset = navX.getAngle()+angle;
 	}
@@ -179,27 +190,7 @@ public class Drivetrain extends SubsystemBase {
 		return driveKinematics;
 	}
 
-	/**
-	 * @return Pose2d
-	 */
-	// public Pose2d getPose() {
-	// 	return driveOdometry.getPoseMeters();
-	// }
-
-	// /**
-	//  * @param pose
-	//  */
-	// public void resetPose(Pose2d pose) {
-	// 	// driveOdometry.resetPosition(Rotation2d.fromDegrees(navX.getFusedHeading()),
-	// 	// getModulePositions(),
-	// 	// pose);
-
-	// 	// //todo: try this
-	// 	// /*
-	// 	driveOdometry.resetPosition(getGyroscopeRotation(), getModulePositions(), pose);
-
-	// 	// */
-	// }
+	
 
 	/**
 	 * Gets the position of each swerve module
@@ -250,6 +241,15 @@ public class Drivetrain extends SubsystemBase {
 	 */
 	public void drive(ChassisSpeeds chassisSpeeds) {
 		this.chassisSpeeds = chassisSpeeds;
+		isAngleKept = false;
+	}
+
+	public void setKeptAngle(double setKeptAngle) {
+		this.setKeptAngle = toCircle(setKeptAngle);
+	}
+
+	public void setIsAngleKept(boolean isAngleKept) {
+		this.isAngleKept = isAngleKept;
 	}
 
 	/**
@@ -284,6 +284,14 @@ public class Drivetrain extends SubsystemBase {
 		return rotateToAngleController;
 	}
 
+	public PIDController getXToPositiController() {
+		return xToPositioController;
+	}
+
+	public PIDController getYToPositiController() {
+		return yToPositioController;
+	}
+
 	public PIDController getAprilTagXController() {
 		return aprilXController;
 	}
@@ -303,12 +311,21 @@ public class Drivetrain extends SubsystemBase {
 	public void periodic() {
 		// driveOdometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
 
+		
+
+		if(isAngleKept) {
+			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds.vxMetersPerSecond,
+			chassisSpeeds.vyMetersPerSecond, 
+			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
+	        setKeptAngle), 
+			drivetrain.getGyroscopeRotation());
+		//hypothetically speaking, NULL 
+		}
+
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
-
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
 		SmartDashboard.putNumber("ThrottleThing", Control.getThrottle());
-
 	}
 
 	/**
@@ -331,6 +348,11 @@ public class Drivetrain extends SubsystemBase {
 	public double getRoll(){
 		return navX.getRoll() + 1;
 	}
+
+    public ChassisSpeeds getChassisSpeeds() {
+        // TODO Auto-generated method stub
+        return chassisSpeeds;
+    }
 
 }
 

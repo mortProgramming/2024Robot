@@ -75,7 +75,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Arm Postion", getPosition());
         SmartDashboard.putNumber("Arm Position Degrees", posToDegrees());
         SmartDashboard.putNumber("Encoder Arm Postion", getEncoder().getAbsolutePosition());
-        SmartDashboard.putNumber("Encoder Arm Position Degrees", getEncoder().getAbsolutePosition() * 360);
+        SmartDashboard.putNumber("Encoder Arm Position Degrees", encoderToDegrees());
         SmartDashboard.putNumber("Arm Setpoint", setpoint);
         SmartDashboard.putNumber("arm output", setPosition(setpoint));
         SmartDashboard.putNumber("ActualArmMotorOutput", masterArmMotor.get());
@@ -150,13 +150,25 @@ public class Arm extends SubsystemBase {
 
     //encoder
     public double encoderToDegrees() {
-        if(getEncoderPosition() < 0) {
-            return ((1 - getEncoderPosition()) * 360) + ARM_ENCODER_DEGREES_TO_0;
+        double degrees = getEncoderPosition() * 360 - ARM_ENCODER_DEGREES_TO_0;
+        if (degrees < 0) {
+            degrees += 360;
         }
-        else {
-            return(getEncoderPosition() * 360) + ARM_ENCODER_DEGREES_TO_0;
 
-        }    
+        if (degrees > ARM_NEVER_POSITION) {
+            degrees -= 360;
+        }
+
+        degrees = - degrees;
+
+        return degrees;
+        // if(getEncoderPosition() < 0) {
+        //     return ((1 - getEncoderPosition()) * 360) + ARM_ENCODER_DEGREES_TO_0;
+        // }
+        // else {
+        //     return(getEncoderPosition() * 360) + ARM_ENCODER_DEGREES_TO_0;
+
+        // }    
     }
 
     // public boolean nearSetpoint(){

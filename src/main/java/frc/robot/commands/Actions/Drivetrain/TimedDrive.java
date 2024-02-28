@@ -14,6 +14,7 @@ public class TimedDrive extends Command{
   private double y;
   private double omega;
   private boolean fieldOriented;
+  private boolean isAngleKept;
   /**
    * Moves the drivetrain a certain amount of time given movement parameters.
    * @param time
@@ -35,6 +36,7 @@ public class TimedDrive extends Command{
     this.y = y;
     this.omega = omega;
     this.fieldOriented = true;
+    this.isAngleKept = false;
     addRequirements(drivetrain);
   }
   public TimedDrive(double time, double x, double y, double omega, boolean fieldOriented) {
@@ -46,7 +48,23 @@ public class TimedDrive extends Command{
     this.x = x;
     this.y = y;
     this.omega = omega;
-    this.fieldOriented= fieldOriented;
+    this.fieldOriented = fieldOriented;
+    this.isAngleKept = false;
+    addRequirements(drivetrain);
+  }
+
+  public TimedDrive(boolean isAngleKept, double time, double x, double y, double omega) {
+    drivetrain = Drivetrain.getInstance();
+    
+    timer  = new Timer();
+    this.time = time;
+
+    this.x = x;
+    this.y = y;
+    this.omega = omega;
+    this.fieldOriented = false;
+    this.isAngleKept = isAngleKept;
+
     addRequirements(drivetrain);
   }
 
@@ -65,22 +83,31 @@ public class TimedDrive extends Command{
    */
   @Override
   public void execute() {
-    if (fieldOriented) {
+    drivetrain.setIsAngleKept(isAngleKept);
+    if (isAngleKept) {
+      drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+        -y, x, 0,
+        drivetrain.getGyroscopeRotation()
+        ));
+        drivetrain.setKeptAngle(omega);
+    }
+    else if (fieldOriented) {
 			drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-        x, y, omega,
+        -y, x, omega,
 					drivetrain.getGyroscopeRotation()));
 		} else {
-			drivetrain.drive(new ChassisSpeeds(
-        x, y, omega));
+			  drivetrain.drive(new ChassisSpeeds(
+        -y, x, omega));
 		}
+    
     
     // if (fieldOriented) {
 		// 	drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-    //     y, -x, omega,
+    //     -y, x, omega,
 		// 			drivetrain.getGyroscopeRotation()));
 		// } else {
 		// 	drivetrain.drive(new ChassisSpeeds(
-    //     y, -x, omega));
+    //     -y, x, omega));
 		// }
 	}
   /**
@@ -88,6 +115,7 @@ public class TimedDrive extends Command{
    */
   @Override
   public void end(boolean interrupted) {
+    drivetrain.setIsAngleKept(false);
     drivetrain.drive(new ChassisSpeeds(0, 0, 0));
   }
 

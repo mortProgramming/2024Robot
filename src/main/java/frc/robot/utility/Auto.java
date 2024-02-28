@@ -12,7 +12,7 @@ import frc.robot.commands.Auton.Timed.Red.ScoreAmpTwiceR;
 public class Auto {
 	private static SendableChooser<Command> autoChooser;
 	private static SendableChooser<Boolean> isBlue;
-
+	
 	/**
 	 * Create autonomous commands and chooser
 	 */
@@ -41,6 +41,7 @@ public class Auto {
 		autoChooser.addOption("RedOnePiece", new ScoreAmpR());
 		autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
 		autoChooser.addOption("Taxi", new Taxi());
+		autoChooser.addOption("PathPlanner TwoPiece", PathAuto.getTwoPiece());
 	}
 
 	/**
