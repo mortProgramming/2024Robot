@@ -19,6 +19,7 @@ import frc.robot.utility.Constants;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
 import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
+import frc.robot.commands.Auton.Timed.Blue.ScoreAmpB;
 
 
 public class ScoreAmpTwiceR extends SequentialCommandGroup {
@@ -27,19 +28,18 @@ public class ScoreAmpTwiceR extends SequentialCommandGroup {
     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-        new ScoreAmpR(),
-        new TimedDrive(1,0,-1.3, 0),
-        SetArmAndWristPos.intake().withTimeout(.5),
+    addCommands(new ScoreAmpR(),
+    new TimedDrive(1,0,-1.3, 0),
+    SetArmAndWristPos.intake().withTimeout(.5),
       new ParallelCommandGroup(
-      new TimedDrive(0.65,-1,0,0),
-      new IntakeToVelocity(Constants.Intake.INTAKE_SPEED).withTimeout(0.65)
+      new TimedDrive(0.65,1,0,0),
+      new IntakeToVelocity(Constants.Intake.INTAKE_SPEED).withTimeout(0.7)
     ),
     SetArmAndWristPos.rest().withTimeout(.5),
-    new TimedDrive(1,0,1, 0),
-    new TimedDrive(0.75,1,0,0),
-    SetArmAndWristPos.score().withTimeout(1.5),
-    new IntakeToVelocity(Constants.Intake.AMP_SHOOT_SPEED).withTimeout(0.75),
+    new TimedDrive(1,0,1.3, 0),
+    new TimedDrive(0.75,-1.1,0,0),
+    SetArmAndWristPos.score().withTimeout(1.75),
+    new IntakeToVelocity(-0.5).withTimeout(0.75),
     SetArmAndWristPos.rest().withTimeout(.5)
     );
   }

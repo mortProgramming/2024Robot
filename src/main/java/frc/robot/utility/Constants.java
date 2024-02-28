@@ -165,7 +165,7 @@ public final class Constants {
 		public static final double WRIST_REST_POSITION = 10;
 		public static final double WRIST_SCORE_POSITION = 0;
 		public static final double WRIST_INTAKE_POSITION = -160;
-		public static final double WRIST_TRAP_POSITION = 0;
+		public static final double WRIST_TRAP_POSITION = -155;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
 
