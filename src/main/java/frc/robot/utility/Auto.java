@@ -1,5 +1,7 @@
 package frc.robot.utility;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,10 +39,22 @@ public class Auto {
 		// By default, the nothing option is selected
 		autoChooser.setDefaultOption("nothing", null);
     	// autoChooser.addOption("Auton name", new autoncommand1, new autoncommand2);
-		autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
-		autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
-		autoChooser.addOption("RedOnePiece", new ScoreAmpR());
-		autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
+		if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Blue) {
+			autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
+			autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
+		}
+
+		else if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red){
+			autoChooser.addOption("RedOnePiece", new ScoreAmpR());
+			autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
+		}
+
+		else {
+			autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
+			autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
+			autoChooser.addOption("RedOnePiece", new ScoreAmpR());
+			autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
+		}
 		autoChooser.addOption("Taxi", new Taxi());
 		autoChooser.addOption("PathPlanner TwoPiece", PathAuto.getTwoPiece());
 		autoChooser.addOption("Odometer Thing", new ScoreAmpOB());

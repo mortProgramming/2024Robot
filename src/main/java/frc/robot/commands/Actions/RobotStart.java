@@ -18,6 +18,7 @@ public class RobotStart extends SequentialCommandGroup {
   /** Creates a new RobotStart. */
   private Odometer odometer;
   private Drivetrain drivetrain;
+
   public RobotStart(double angle) {
     drivetrain = Drivetrain.getInstance();
     odometer = Odometer.getInstance();
@@ -26,7 +27,22 @@ public class RobotStart extends SequentialCommandGroup {
     addCommands(
       new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
       SetArmAndWristPos.rest().withTimeout(0.05),
-      new InstantCommand(() -> odometer.resetOdometry())
+      new InstantCommand(() -> odometer.resetOdometry()),
+      new InstantCommand(() -> drivetrain.setIsBlue(true))
+
+    );
+  }
+
+  public RobotStart(boolean isBlue, double angle) {
+    drivetrain = Drivetrain.getInstance();
+    odometer = Odometer.getInstance();
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
+    addCommands(
+      new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
+      SetArmAndWristPos.rest().withTimeout(0.05),
+      new InstantCommand(() -> odometer.resetOdometry()),
+      new InstantCommand(() -> drivetrain.setIsBlue(isBlue))
 
     );
   }
@@ -39,8 +55,22 @@ public class RobotStart extends SequentialCommandGroup {
     addCommands(
       new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
       SetArmAndWristPos.rest().withTimeout(0.05),
-      new InstantCommand(() -> odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle))))
+      new InstantCommand(() -> odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle)))),
+      new InstantCommand(() -> drivetrain.setIsBlue(true))
 
+    );
+  }
+
+  public RobotStart(boolean isBlue, double x, double y, double angle) {
+    drivetrain = Drivetrain.getInstance();
+    odometer = Odometer.getInstance();
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
+    addCommands(
+      new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
+      SetArmAndWristPos.rest().withTimeout(0.05),
+      new InstantCommand(() -> odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle)))),
+      new InstantCommand(() -> drivetrain.setIsBlue(isBlue))
     );
   }
 }

@@ -62,9 +62,6 @@ public class PathAuto extends SubsystemBase {
        () ->{return DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == Alliance.Red : false;}, //method for checking current alliance. Path flips if alliance is red
     drivetrain);
 
-
-
-
     NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
       SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
       new IntakeToVelocity(-0.5).withTimeout(1),

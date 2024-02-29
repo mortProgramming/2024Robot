@@ -38,5 +38,20 @@ public class ScoreAmpTwiceR extends SequentialCommandGroup {
     new IntakeToVelocity(-0.5).withTimeout(0.75),
     SetArmAndWristPos.rest().withTimeout(.5)
     );
+
+    // addCommands(new ScoreAmpR(),
+    // SetArmAndWristPos.intake().withTimeout(.5),
+    // new TimedDrive(true, 1,0,1.5, 0),
+    //   new ParallelCommandGroup(
+    //   new TimedDrive(true, 0.65,-1.3,0,0),
+    //   new IntakeToVelocity(Constants.Intake.INTAKE_SPEED).withTimeout(0.7)
+    // ),
+    // SetArmAndWristPos.rest().withTimeout(.5),
+    // new TimedDrive(true, 1,0,-1.45, 0),
+    // new TimedDrive(true, 0.75,1.2,0,0),
+    // SetArmAndWristPos.score().withTimeout(1.75),
+    // new IntakeToVelocity(-0.5).withTimeout(0.75),
+    // SetArmAndWristPos.rest().withTimeout(.5)
+    // );
   }
 }

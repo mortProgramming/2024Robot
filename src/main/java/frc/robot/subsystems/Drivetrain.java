@@ -41,6 +41,7 @@ public class Drivetrain extends SubsystemBase {
 	private ChassisSpeeds chassisSpeeds;
 	private boolean isAngleKept;
 	private double setKeptAngle;
+	private boolean isBlue;
 
 	private PIDController aprilXController;
 	private PIDController aprilYController;
@@ -252,6 +253,10 @@ public class Drivetrain extends SubsystemBase {
 		this.isAngleKept = isAngleKept;
 	}
 
+	public void setIsBlue(boolean isBlue) {
+		this.isBlue = isBlue;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -314,13 +319,20 @@ public class Drivetrain extends SubsystemBase {
 		double x = chassisSpeeds.vxMetersPerSecond;
 		double y = chassisSpeeds.vyMetersPerSecond;
 
-		if(isAngleKept) {
+		if(isAngleKept && isBlue) {
+			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+			y, -x,
+			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
+	        setKeptAngle), 
+			drivetrain.getGyroscopeRotation());
+		}
+
+		else if (isAngleKept) {
 			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
 			-y, x,
 			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
 	        setKeptAngle), 
 			drivetrain.getGyroscopeRotation());
-		//hypothetically speaking, NULL 
 		}
 
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
