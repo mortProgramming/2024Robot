@@ -20,6 +20,7 @@ import frc.robot.subsystems.Wrist;
 
 import static frc.robot.utility.Constants.Arm.ARM_WRIST_TIMEOUT;
 import static frc.robot.utility.Constants.Intake.INTAKE_SPEED;
+import static frc.robot.utility.Constants.Intake.SHOOTER_SHOOT_SPEED;
 import static frc.robot.utility.Constants.Wrist.WRIST_INTAKE_POSITION;
 import static frc.robot.utility.Constants.Wrist.WRIST_REST_POSITION;
 import static frc.robot.utility.Constants.Wrist.WRIST_SCORE_POSITION;
@@ -43,6 +44,7 @@ public class PathAuto extends SubsystemBase {
   private static Drivetrain drivetrain;
   private static Odometer odometry = Odometer.getInstance();
   private static PathPlannerAuto twoPiece;
+  private static PathPlannerAuto gackleyAuto;
 
   public static void init() {
     drivetrain = Drivetrain.getInstance();
@@ -68,7 +70,7 @@ public class PathAuto extends SubsystemBase {
       SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
     ));
 
-    NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
+    NamedCommands.registerCommand("IntakeWithTimeout", new ParallelCommandGroup(//Active intake and bring wrist out
       new IntakeToVelocity(0.6).withTimeout(1),
       new WristToPosition(WRIST_INTAKE_POSITION).withTimeout(1)
     ));
@@ -80,12 +82,17 @@ public class PathAuto extends SubsystemBase {
 
     NamedCommands.registerCommand("AutoActive", new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");}));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
 
+    NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.6).withTimeout(.2));
     //build all path-based autons
     twoPiece = new PathPlannerAuto("PathPlanner 2Piece");
+    gackleyAuto = new PathPlannerAuto("Gackley Auto");
   }
   
   public static Command getTwoPiece(){
     return twoPiece;
+  }
+  public static Command getGackleyAuto(){
+    return gackleyAuto;
   }
 
   @Override
