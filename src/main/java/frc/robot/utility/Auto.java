@@ -3,6 +3,7 @@ package frc.robot.utility;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.Auton.OdometryCentered.Blue.ScoreAmpOB;
 import frc.robot.commands.Auton.Timed.Taxi;
 import frc.robot.commands.Auton.Timed.Blue.ScoreAmpB;
 import frc.robot.commands.Auton.Timed.Blue.ScoreAmpTwiceB;
@@ -42,6 +43,7 @@ public class Auto {
 		autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
 		autoChooser.addOption("Taxi", new Taxi());
 		autoChooser.addOption("PathPlanner TwoPiece", PathAuto.getTwoPiece());
+		autoChooser.addOption("Odometer Thing", new ScoreAmpOB());
 	}
 
 	/**

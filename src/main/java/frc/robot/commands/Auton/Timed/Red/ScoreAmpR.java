@@ -14,13 +14,13 @@ public class ScoreAmpR extends SequentialCommandGroup{
     public ScoreAmpR() {
         addCommands(
             new SequentialCommandGroup(
-                new RobotStart(90),
+                new RobotStart(270),
                 // new RobotStart(0),
                 // new WaitCommand(0.3),
-                new TimedDrive(1.7, 0, -0.9, 0),
-                new TimedDrive(0.75, -1, 0, 0),
+                new TimedDrive(1.65, 0, 1, 0),
+                new TimedDrive(0.75, 1, 0, 0),
                 SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
-                new IntakeToVelocity(AMP_SHOOT_SPEED).withTimeout(0.75),
+                new IntakeToVelocity(AMP_SHOOT_SPEED).withTimeout(1),
                 SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
                
             )

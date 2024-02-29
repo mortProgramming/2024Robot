@@ -241,7 +241,7 @@ public class Drivetrain extends SubsystemBase {
 	 */
 	public void drive(ChassisSpeeds chassisSpeeds) {
 		this.chassisSpeeds = chassisSpeeds;
-		isAngleKept = false;
+		//isAngleKept = false;
 	}
 
 	public void setKeptAngle(double setKeptAngle) {
@@ -310,12 +310,13 @@ public class Drivetrain extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// driveOdometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
-
 		
+		double x = chassisSpeeds.vxMetersPerSecond;
+		double y = chassisSpeeds.vyMetersPerSecond;
 
 		if(isAngleKept) {
-			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds.vxMetersPerSecond,
-			chassisSpeeds.vyMetersPerSecond, 
+			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+			-y, x,
 			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
 	        setKeptAngle), 
 			drivetrain.getGyroscopeRotation());

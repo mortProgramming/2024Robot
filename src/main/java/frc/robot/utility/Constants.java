@@ -16,7 +16,7 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 3;
 		public final static int FRONT_LEFT_STEER = 4;
 		public final static int FRONT_LEFT_STEER_ENCODER = 35;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(287-180+180);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(287-5);
 
 		/* Port and Declaration for Front Right swerve motors & offset */
 		public final static int FRONT_RIGHT_DRIVE = 1;
@@ -116,9 +116,9 @@ public final class Constants {
 		public static final double POSITION_FF_A = 0;
 
 		public static final double LEFT_CLIMBER_REST_POSITION = 1;
-		public static final double LEFT_CLIMBER_MAX_POSITION = -110;
+		public static final double LEFT_CLIMBER_MAX_POSITION = -120;
 
-		public static final double RIGHT_CLIMBER_MAX_POSITION = 105;
+		public static final double RIGHT_CLIMBER_MAX_POSITION = 118;
 		public static final double RIGHT_CLIMBER_REST_POSITION = -4;
 
 		public static final double CLIMBER_NEAR_SETPOINT_ERROR = 0;
@@ -139,7 +139,7 @@ public final class Constants {
 		// public static final double INTAKE_SPEED = 0.25;
 		// public static final double SHOOT_SPEED = -0.50;
 		public static final double INTAKE_SPEED = 0.4;
-		public static final double AMP_SHOOT_SPEED = -0.3;
+		public static final double AMP_SHOOT_SPEED = -0.2;
 		public static final double SHOOTER_SHOOT_SPEED = -1;
 
 		public static final int INTAKE_SENSOR = 0;

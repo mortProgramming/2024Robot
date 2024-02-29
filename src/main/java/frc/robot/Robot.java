@@ -79,6 +79,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		odometer.updateOdometryIgnoreLimelight();
+		// Odometer.updateOdometryIgnoreLimelight();
+
 	}
 
 	@Override
@@ -92,6 +94,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		odometer.updateOdometry();
+		// Odometer.updateOdometry();
+
 	}
 
 	@Override
