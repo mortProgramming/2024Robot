@@ -61,7 +61,7 @@ public class Control {
     private static Intake intake;
     private static Climber climber;
     private static Wrist wrist;
-    private static Odometer odometer;
+    // private static Odometer odometer;
     private static Vision vision;
     private static SysIdRoutine armRoutine;
     private static SysIdRoutine wristRoutine;
@@ -97,7 +97,7 @@ public class Control {
         wrist = Wrist.getInstance();
         climber = Climber.getInstance();
         intake = Intake.getInstance();
-        odometer = Odometer.getInstance();
+        // odometer = Odometer.getInstance();
         vision = Vision.getInstance();
         PathAuto.init();//Drivetrain methods must properly exist for the PathPlanner swerve configuration to work.
 
@@ -127,7 +127,8 @@ public class Control {
         );
 
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
-        joystick.button(7).whileTrue(new InstantCommand(() -> odometer.resetOdometry(vision.getFieldPose())));
+        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
+        // joystick.button(7).whileTrue(new InstantCommand(() -> odometer.resetOdometry(vision.getFieldPose())));
 
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));

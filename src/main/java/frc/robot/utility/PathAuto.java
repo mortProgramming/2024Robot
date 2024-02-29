@@ -37,11 +37,10 @@ import frc.robot.utility.Constants.Drivetrain.AutonConstants;
 import frc.robot.utility.Constants.Drivetrain.AutonConstants.*;
 import frc.robot.utility.Constants.*;
 
-
 public class PathAuto extends SubsystemBase {
   private AutoBuilder autoBuilder;
   private static Drivetrain drivetrain;
-  private static Odometer odometry = Odometer.getInstance();
+  // private static Odometer odometry = Odometer.getInstance();
   private static PathPlannerAuto twoPiece;
 
   public static void init() {
@@ -50,8 +49,10 @@ public class PathAuto extends SubsystemBase {
 
     //Configure path to use swerve settings
     AutoBuilder.configureHolonomic(
-    () -> {return odometry.getOdometry().getEstimatedPosition();},  //get current robot position on the field
-    (Pose2d startPose) -> {odometry.resetOdometry(startPose);}, //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
+      () -> {return Odometer.getOdometry().getEstimatedPosition();},
+    (Pose2d startPose) -> {Odometer.resetOdometry(startPose);},
+    // () -> {return odometry.getOdometry().getEstimatedPosition();},  //get current robot position on the field
+    // (Pose2d startPose) -> {odometry.resetOdometry(startPose);}, //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
     () -> {return drivetrain.getChassisSpeeds();}, //get the current ROBOT RELATIVE SPEEDS
     (ChassisSpeeds robotRelativeOutput) -> {drivetrain.drive(robotRelativeOutput);}, //makes the robot move given ROBOT RELATIVE CHASSISSPEEDS
     new HolonomicPathFollowerConfig(new PIDConstants(AutonConstants.AUTON_POSITION_KP, AutonConstants.AUTON_POSITION_KI, AutonConstants.AUTON_POSITION_KD), //position PID

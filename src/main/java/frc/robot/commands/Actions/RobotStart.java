@@ -16,30 +16,35 @@ import frc.robot.utility.Odometer;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RobotStart extends SequentialCommandGroup {
   /** Creates a new RobotStart. */
-  private Odometer odometer;
+  // private Odometer odometer;
   private Drivetrain drivetrain;
   public RobotStart(double angle) {
     drivetrain = Drivetrain.getInstance();
-    odometer = Odometer.getInstance();
+    // odometer = Odometer.getInstance();
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
       SetArmAndWristPos.rest().withTimeout(0.05),
-      new InstantCommand(() -> odometer.resetOdometry())
+      // new InstantCommand(() -> odometer.resetOdometry())
+      new InstantCommand(() -> Odometer.resetOdometry())
+
 
     );
   }
 
   public RobotStart(double x, double y, double angle) {
     drivetrain = Drivetrain.getInstance();
-    odometer = Odometer.getInstance();
+    // odometer = Odometer.getInstance();
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
       SetArmAndWristPos.rest().withTimeout(0.05),
-      new InstantCommand(() -> odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle))))
+      // new InstantCommand(() -> odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle))))
+      new InstantCommand(() -> Odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle))))
+
+
 
     );
   }
