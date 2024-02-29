@@ -5,7 +5,7 @@
       "x": 0.40206044912338257,
       "y": 7.388927459716797
     },
-    "rotation": -90.54565782341739
+    "rotation": -90.02999580779965
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NewPath.1"
+            "pathName": "TwoPiecePath.1"
           }
         },
         {
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "NewPath.2"
+                  "pathName": "TwoPiecePath.2"
                 }
               },
               {
