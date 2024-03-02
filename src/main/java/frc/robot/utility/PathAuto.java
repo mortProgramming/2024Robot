@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.Actions.RobotStart;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
@@ -42,7 +43,6 @@ import frc.robot.utility.Constants.*;
 public class PathAuto extends SubsystemBase {
   private AutoBuilder autoBuilder;
   private static Drivetrain drivetrain;
-  private static Odometer odometry = Odometer.getInstance();
   private static PathPlannerAuto twoPiece;
   private static PathPlannerAuto gackleyAuto;
 
@@ -52,8 +52,8 @@ public class PathAuto extends SubsystemBase {
 
     //Configure path to use swerve settings
     AutoBuilder.configureHolonomic(
-    () -> {return odometry.getOdometry().getEstimatedPosition();},  //get current robot position on the field
-    (Pose2d startPose) -> {odometry.resetOdometry(startPose);}, //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
+    () -> {return Odometer.getOdometry().getEstimatedPosition();},  //get current robot position on the field
+    (Pose2d startPose) -> {Odometer.resetOdometry(startPose);}, //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
     () -> {return drivetrain.getChassisSpeeds();}, //get the current ROBOT RELATIVE SPEEDS
     (ChassisSpeeds robotRelativeOutput) -> {drivetrain.drive(robotRelativeOutput);}, //makes the robot move given ROBOT RELATIVE CHASSISSPEEDS
     new HolonomicPathFollowerConfig(new PIDConstants(AutonConstants.AUTON_POSITION_KP, AutonConstants.AUTON_POSITION_KI, AutonConstants.AUTON_POSITION_KD), //position PID
@@ -80,8 +80,8 @@ public class PathAuto extends SubsystemBase {
       new WristToPosition(WRIST_REST_POSITION).withTimeout(0.5)
       ));
 
-    NamedCommands.registerCommand("AutoActive", new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");}));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
-
+    NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");})));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
+    NamedCommands.registerCommand("FieldOrient", new RobotStart(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red ?  270 :  90));
     NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.6).withTimeout(.2));
     //build all path-based autons
     twoPiece = new PathPlannerAuto("PathPlanner 2Piece");

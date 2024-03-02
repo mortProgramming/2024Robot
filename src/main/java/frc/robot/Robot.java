@@ -23,8 +23,6 @@ public class Robot extends TimedRobot {
 
 	private RobotContainer robotContainer;
 
-	private Odometer odometer;
-
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -32,8 +30,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		robotContainer = new RobotContainer();
-
-		odometer = Odometer.getInstance();
+		Odometer.OdometerInit();
 	}
 
 	/**
@@ -78,7 +75,7 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during autonomous. */
 	@Override
 	public void autonomousPeriodic() {
-		odometer.updateOdometryIgnoreLimelight();
+		Odometer.updateOdometryIgnoreLimelight();
 		// Odometer.updateOdometryIgnoreLimelight();
 
 	}
@@ -93,9 +90,7 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during operator control. */
 	@Override
 	public void teleopPeriodic() {
-		odometer.updateOdometry();
-		// Odometer.updateOdometry();
-
+		Odometer.updateOdometry();
 	}
 
 	@Override

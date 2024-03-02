@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
 import frc.robot.commands.Actions.Drivetrain.TimedDrive;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
@@ -30,6 +31,7 @@ public class ScoreAmpTwiceB extends SequentialCommandGroup {
     addCommands(new ScoreAmpB(),
     new TimedDrive(1,0,1.3, 0),
     SetArmAndWristPos.intake().withTimeout(.5),
+    new WaitCommand(0.5),
       new ParallelCommandGroup(
       new TimedDrive(0.65,1,0,0),
       new IntakeToVelocity(Constants.Intake.INTAKE_SPEED).withTimeout(0.7)

@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TwoPiecePath.1"
+            "pathName": "TwoPiece.1"
           }
         },
         {
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoPiecePath.2"
+                  "pathName": "TwoPiece.2"
                 }
               },
               {

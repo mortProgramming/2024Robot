@@ -16,12 +16,13 @@ public class WristToPosition extends Command {
     
     @Override
     public void initialize() {
+        wrist.setVelocityMode(false);
         wrist.setSetPoint(target);
     }
 
     @Override
     public void execute() {
-        wrist.setVelocityMode(false);
+        // wrist.setVelocityMode(false);
     }
 
     @Override

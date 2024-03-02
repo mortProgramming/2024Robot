@@ -30,6 +30,7 @@ import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
@@ -53,6 +54,7 @@ public class Control {
     private static Joystick joystickN;
 	private static Joystick throttleN;
 	private static XboxController xboxControllerN;
+    private static DoubleSupplier zeroSupplier;
 
     // private syta
 
@@ -61,7 +63,6 @@ public class Control {
     private static Intake intake;
     private static Climber climber;
     private static Wrist wrist;
-    private static Odometer odometer;
     private static Vision vision;
     private static SysIdRoutine armRoutine;
     private static SysIdRoutine wristRoutine;
@@ -89,15 +90,18 @@ public class Control {
 
         // counter1 = 0;
         // counter1 = 0;
-
-        
+        zeroSupplier = new DoubleSupplier() {
+            @Override
+            public double getAsDouble() {
+                return 0.0;
+            }
+        };
 
 		drivetrain = Drivetrain.getInstance();
         arm = Arm.getInstance();
         wrist = Wrist.getInstance();
         climber = Climber.getInstance();
         intake = Intake.getInstance();
-        odometer = Odometer.getInstance();
         vision = Vision.getInstance();
         PathAuto.init();//Drivetrain methods must properly exist for the PathPlanner swerve configuration to work.
 
@@ -127,7 +131,7 @@ public class Control {
         );
 
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
-        joystick.button(7).whileTrue(new InstantCommand(() -> odometer.resetOdometry(vision.getFieldPose())));
+        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));
@@ -169,6 +173,7 @@ public class Control {
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
        joystick.button(12).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
+       joystick.button(11).toggleOnTrue(new ClimberToVelocity(zeroSupplier, zeroSupplier));
        xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
 
 

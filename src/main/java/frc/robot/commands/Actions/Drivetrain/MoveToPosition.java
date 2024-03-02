@@ -12,8 +12,6 @@ public class MoveToPosition extends Command {
   private double wantedX;
   private double wantedY;
   private double wantedAngle;
-
-  private Odometer odometer;
   /*
    * @param wantedX
    * The velocity in the x direction
@@ -24,7 +22,6 @@ public class MoveToPosition extends Command {
    */
   public MoveToPosition(double wantedX, double wantedY, double wantedAngle) {
     drivetrain = Drivetrain.getInstance();
-    odometer = Odometer.getInstance();
 
     this.wantedX = wantedX;
     this.wantedY = wantedY;
@@ -49,8 +46,8 @@ public class MoveToPosition extends Command {
     drivetrain.setIsAngleKept(true);
     drivetrain.setKeptAngle(wantedAngle);
 	drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-        drivetrain.getYToPositiController().calculate(odometer.getPoseY(), wantedY), 
-        drivetrain.getXToPositiController().calculate(odometer.getPoseX(), wantedX), 
+        -drivetrain.getYToPositiController().calculate(Odometer.getPoseY(), wantedY), 
+        -drivetrain.getXToPositiController().calculate(Odometer.getPoseX(), wantedX), 
         0,
 		drivetrain.getGyroscopeRotation()));
       // drivetrain.setIsAngleKept(true);

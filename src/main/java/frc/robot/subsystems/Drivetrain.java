@@ -129,10 +129,10 @@ public class Drivetrain extends SubsystemBase {
 		thetaController.setSetpoint(0);
 		thetaController.setTolerance(0.5);
 
-		xToPositioController = new PIDController(0.1, 0, 0);
+		xToPositioController = new PIDController(0.3, 0, 0);
 		xToPositioController.setTolerance(0.05);
 
-		yToPositioController = new PIDController(0.1, 0, 0);
+		yToPositioController = new PIDController(0.3, 0, 0);
 		yToPositioController.setTolerance(0.05);
 
 

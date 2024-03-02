@@ -33,7 +33,7 @@ public class ScoreAmpTwiceR extends SequentialCommandGroup {
     ),
     SetArmAndWristPos.rest().withTimeout(.5),
     new TimedDrive(1,0,-1.45, 0),
-    new TimedDrive(0.75,1.2,0,0),
+    new TimedDrive(0.75,1.6,0,0),
     SetArmAndWristPos.score().withTimeout(1.75),
     new IntakeToVelocity(-0.5).withTimeout(0.75),
     SetArmAndWristPos.rest().withTimeout(.5)

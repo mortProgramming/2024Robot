@@ -118,14 +118,23 @@ public class Climber extends SubsystemBase {
 
     rightServo.setAngle(rightServoAngle);
     leftServo.setAngle(leftServoAngle);
-    SmartDashboard.putNumber("LeftServoAngle", leftServo.getAngle());
+    // SmartDashboard.putNumber("LeftServoAngle", leftServo.getAngle());
     
 
     
 
-    SmartDashboard.putNumber("Servo thig", rightServo.getPosition());
+    // SmartDashboard.putNumber("Servo thig", rightServo.getPosition());
+
+    if (rightServoAngle == 90) {
+        SmartDashboard.putBoolean("Climber Locked", true);
+    }
+
+    else {
+        SmartDashboard.putBoolean("Climber Locked", false);
+    }
+
+
     SmartDashboard.putBoolean("Climber Velocity Mode ON/OFF", velocityMode);
-    
     }
 
     /**
