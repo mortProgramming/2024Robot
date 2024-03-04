@@ -20,10 +20,10 @@ public class ScoreAmpR extends SequentialCommandGroup{
         addCommands(
             new SequentialCommandGroup(
                 new RobotStart(270),
-                new TimedDrive(1.65, 0, 1, 0),
-                new TimedDrive(0.75, 1, 0, 0),
+                new TimedDrive(1, 0, .37, 0),//align with amp
+                new TimedDrive(0.75, 1, 0, 0),//go to amp
                 SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
-                new IntakeToVelocity(AMP_SHOOT_SPEED).withTimeout(1),
+                new IntakeToVelocity(AMP_SHOOT_SPEED).withTimeout(.75),
                 SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
                
             )

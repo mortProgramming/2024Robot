@@ -29,17 +29,17 @@ public class ScoreAmpTwiceB extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ScoreAmpB(),
-    new TimedDrive(1,0,1.3, 0),
     SetArmAndWristPos.intake().withTimeout(.5),
+    new TimedDrive(1,0,1.35, 0),
     new WaitCommand(0.5),
       new ParallelCommandGroup(
-      new TimedDrive(0.65,1,0,0),
-      new IntakeToVelocity(Constants.Intake.INTAKE_SPEED).withTimeout(0.7)
-    ),
+       new TimedDrive(0.65,1.2,0,0),
+       new IntakeToVelocity(Constants.Intake.INTAKE_SPEED).withTimeout(0.7)
+      ),
     SetArmAndWristPos.rest().withTimeout(.5),
-    new TimedDrive(1,0,-1.3, 0),
-    new TimedDrive(0.75,-1.1,0,0),
-    SetArmAndWristPos.score().withTimeout(1.75),
+    new TimedDrive(1,0,-0.9, 0),
+    new TimedDrive(1,-1.4 ,0,0),
+    SetArmAndWristPos.score().withTimeout(1.5),
     new IntakeToVelocity(-0.5).withTimeout(0.75),
     SetArmAndWristPos.rest().withTimeout(.5)
     );

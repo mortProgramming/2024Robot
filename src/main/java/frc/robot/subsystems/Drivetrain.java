@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.utility.Auto;
 import frc.robot.utility.Control;
 
 public class Drivetrain extends SubsystemBase {
@@ -249,6 +250,11 @@ public class Drivetrain extends SubsystemBase {
 		this.setKeptAngle = toCircle(setKeptAngle);
 	}
 
+	public void setKeptAngleRelative(double setKeptAngle) {
+		if (isBlue) this.setKeptAngle = toCircle(setKeptAngle + 180);
+		else this.setKeptAngle = toCircle(setKeptAngle);
+	}
+
 	public void setIsAngleKept(boolean isAngleKept) {
 		this.isAngleKept = isAngleKept;
 	}
@@ -315,21 +321,23 @@ public class Drivetrain extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// driveOdometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
+
+		setIsBlue(Auto.getIsBlue());
 		
 		double x = chassisSpeeds.vxMetersPerSecond;
 		double y = chassisSpeeds.vyMetersPerSecond;
 
 		if(isAngleKept && isBlue) {
 			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-			y, -x,
+			-y, x,
 			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
-	        setKeptAngle), 
+	        toCircle(setKeptAngle)), 
 			drivetrain.getGyroscopeRotation());
 		}
 
 		else if (isAngleKept) {
 			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-			-y, x,
+			y, -x,
 			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
 	        setKeptAngle), 
 			drivetrain.getGyroscopeRotation());

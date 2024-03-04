@@ -134,7 +134,9 @@ public class Control {
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
-        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));
+        // joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));
+        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
+
 
         joystick.button(2).whileFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
@@ -156,7 +158,7 @@ public class Control {
         xboxController.x().onTrue(new ArmToPosition(ARM_AMP_POSITION));
         xboxController.y().onTrue(new ArmToPosition(ARM_REST_POSITION));
 
-        wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
+        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
         //arm and wrist switching with 
         xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(true)));
@@ -164,7 +166,6 @@ public class Control {
         xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(false)));
         xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
 
-        
         xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(90)));
         xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(45)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightServo(0)));
@@ -306,14 +307,14 @@ public class Control {
         return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
         // return value * throttleValue;
     }
-    public static double modifyAxis4(double value, double throttleValue) {
+    public static double modifyAxisTwist(double value, double throttleValue) {
         value = deadband(value, DEAD_BAND);
 
-        value = Math.copySign(value * value * value * value, value);
+        value = Math.copySign(value, value);
 
         throttleValue = (-throttleValue + 1) / 2;
 
-        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
+        return value * (throttleValue * (MAX_THROTTLE - MIN_ROTATE) + MIN_ROTATE);
         // return value * throttleValue;
     }
 
@@ -362,7 +363,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickTwist() {
-		return -0.3 * (modifyAxis1(joystick.getTwist(), throttle.getZ())
+		return -0.3 * (modifyAxisTwist(joystick.getTwist(), throttle.getZ())
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 	}
 

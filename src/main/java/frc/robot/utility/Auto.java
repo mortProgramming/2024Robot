@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Auton.OdometryCentered.Blue.ScoreAmpOB;
 import frc.robot.commands.Auton.Timed.Blue.ScoreAmpB;
+import frc.robot.commands.Auton.Timed.Blue.ScoreAmpTaxiB;
 import frc.robot.commands.Auton.Timed.Blue.ScoreAmpTwiceB;
 import frc.robot.commands.Auton.Timed.Blue.TaxiB;
 import frc.robot.commands.Auton.Timed.Red.ScoreAmpR;
+import frc.robot.commands.Auton.Timed.Red.ScoreAmpTaxiR;
 import frc.robot.commands.Auton.Timed.Red.ScoreAmpTwiceR;
 import frc.robot.commands.Auton.Timed.Red.TaxiR;
 
@@ -40,22 +42,22 @@ public class Auto {
 		// By default, the nothing option is selected
 		autoChooser.setDefaultOption("nothing", null);
     	// autoChooser.addOption("Auton name", new autoncommand1, new autoncommand2);
-		if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Blue) {
-			autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
-			autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
-		}
+		// if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Blue) {
+		// 	autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
+		// 	autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
+		// }
 
-		else if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red){
-			autoChooser.addOption("RedOnePiece", new ScoreAmpR());
-			autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
-		}
+		// else if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red){
+		// 	autoChooser.addOption("RedOnePiece", new ScoreAmpR());
+		// 	autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
+		// }
 
-		else {
-			autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
-			autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
-			autoChooser.addOption("RedOnePiece", new ScoreAmpR());
-			autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
-		}
+		// else {
+		// 	autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
+		// 	autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
+		// 	autoChooser.addOption("RedOnePiece", new ScoreAmpR());
+		// 	autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
+		// }
 		//team irrelevant autons
 		autoChooser.addOption("TaxiB", new TaxiB());
 		autoChooser.addOption("TaxiR", new TaxiR());
@@ -69,6 +71,8 @@ public class Auto {
 		autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
 		autoChooser.addOption("RedOnePiece", new ScoreAmpR());
 		autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
+		autoChooser.addOption("BlueOneAndTaxi", new ScoreAmpTaxiB());
+		autoChooser.addOption("RedOneAndTaxi", new ScoreAmpTaxiR());
 	}
 
 	/**

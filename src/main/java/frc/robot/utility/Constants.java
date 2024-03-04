@@ -22,7 +22,7 @@ public final class Constants {
 		public final static int FRONT_RIGHT_DRIVE = 1;
 		public final static int FRONT_RIGHT_STEER = 2;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 34;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(109+180);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(109+180-5);
 
 		/* Port and Declaration for Back left swerve motors & offset */
 		public final static int BACK_LEFT_DRIVE = 5;
@@ -78,7 +78,7 @@ public final class Constants {
 		// to center.
 		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(19);
 		//	Maximum voltage that will be used by subsystem it is called to
-		public static final double MAX_VOLTAGE = 12.0;	
+		public static final double MAX_VOLTAGE = 12.0;
 
 		//	The maximum velocity that can be travelled by swerve system (radians per second and meters per second)
 		public static final double MAX_VELOCITY_METERS_PER_SECOND = (6000 / 60.0
@@ -89,7 +89,8 @@ public final class Constants {
 
 		//Max and minimum throttle ports & declarations
         public static final double MAX_THROTTLE = 1;
-        public static final double MIN_THROTTLE = 0.2;
+        public static final double MIN_THROTTLE = 0.3;
+		public static final double MIN_ROTATE = 0.3;
         public static final double DEAD_BAND = 0.2;
 
 		public static final double DRIVEBASE_RADIUS_IN_METERS = Units.inchesToMeters(14);
@@ -104,7 +105,7 @@ public final class Constants {
 
 		public static final int CLIMBER_LOCK_ANGLE = 25;
 
-		public static final double POSITION_PID_P = 0.0075;
+		public static final double POSITION_PID_P = 0.00;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 0;
@@ -118,7 +119,7 @@ public final class Constants {
 		public static final double LEFT_CLIMBER_REST_POSITION = 1;
 		public static final double LEFT_CLIMBER_MAX_POSITION = -120;
 
-		public static final double RIGHT_CLIMBER_MAX_POSITION = 118;
+		public static final double RIGHT_CLIMBER_MAX_POSITION = 120;
 		public static final double RIGHT_CLIMBER_REST_POSITION = -4;
 
 		public static final double CLIMBER_NEAR_SETPOINT_ERROR = 0;
@@ -148,7 +149,7 @@ public final class Constants {
 	public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
 
-		public static final double POSITION_PID_P = 0.003;
+		public static final double POSITION_PID_P = 0.0015;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -202,7 +203,7 @@ public final class Constants {
 		public static final double POSITION_FF_A = 0;
 
 		public static final double ARM_REST_POSITION = -30;
-		public static final double ARM_AMP_POSITION = 125;
+		public static final double ARM_AMP_POSITION = 120;
 		public static final double ARM_INTAKE_POSITION = -25;
 		public static final double ARM_TRAP_POSITION = 0;
 		public static final double ARM_SPEAKER_POSITION = 0;
@@ -215,7 +216,7 @@ public final class Constants {
 		public static final double ARM_ENCODER_DEGREES_TO_0 = 20;
 		public static final double ARM_NEVER_POSITION = 90;
 
-		public static final double ARM_WRIST_TIMEOUT = 2.0 ;
+		public static final double ARM_WRIST_TIMEOUT = 1.5;
 	}
 
 	public final static class Vision {

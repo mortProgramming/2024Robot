@@ -44,7 +44,7 @@ public class Climber extends SubsystemBase {
     private ArmFeedforward rightClimberPostionFeedForward;
     private ArmFeedforward leftClimberPostionFeedForward;
 
-    private double tolerance = 7.5;
+    private double tolerance = 4;
 
     private static boolean velocityMode;
 
