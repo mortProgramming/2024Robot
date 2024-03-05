@@ -1,13 +1,9 @@
 package frc.robot.commands.Actions.EndEffector;
 
-import static frc.robot.utility.Constants.Climber.LEFT_UNLOCK_POSITION;
-import static frc.robot.utility.Constants.Climber.RIGHT_UNLOCK_POSITION;
 import static frc.robot.utility.Constants.Climber.SERVO_GLOBAL_LOCK_POSITION;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Wrist;
 
 public class ClimberToPosition extends Command{
     private Climber climber;

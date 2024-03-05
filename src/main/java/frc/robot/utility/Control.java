@@ -5,35 +5,23 @@ import static frc.robot.utility.Constants.RobotSpecs.*;
 import static frc.robot.utility.Constants.Arm.*;
 import static frc.robot.utility.Constants.Wrist.*;
 
+
 import java.util.function.DoubleSupplier;
 
 import static frc.robot.utility.Constants.Climber.*;
 import static frc.robot.utility.Constants.Intake.*;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
-
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
-import frc.robot.commands.Actions.EndEffector.WristToPosition;
-import frc.robot.commands.Actions.EndEffector.WristToVelocity;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmToVelocity;
 import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
+import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
+import frc.robot.commands.Actions.EndEffector.WristToPosition;
 import frc.robot.commands.Teleop.DrivetrainCommand;
-import edu.wpi.first.units.Angle;
-import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.MutableMeasure;
-import edu.wpi.first.units.Voltage;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
@@ -42,7 +30,13 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
 import static edu.wpi.first.units.Units.*;
+
+import edu.wpi.first.units.Angle;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.MutableMeasure;
 import edu.wpi.first.units.Velocity;
+import edu.wpi.first.units.Voltage;
+import edu.wpi.first.wpilibj.DriverStation;
 
 import static edu.wpi.first.units.MutableMeasure.mutable;
 
@@ -51,36 +45,24 @@ public class Control {
 	private static CommandJoystick throttle;
 	private static CommandXboxController xboxController;
 
-    private static Joystick joystickN;
-	private static Joystick throttleN;
-	private static XboxController xboxControllerN;
+
     private static DoubleSupplier zeroSupplier;
 
     // private syta
 
 	private static Drivetrain drivetrain;
     private static Arm arm;
-    private static Intake intake;
+
     private static Climber climber;
     private static Wrist wrist;
     private static Vision vision;
     private static SysIdRoutine armRoutine;
-    private static SysIdRoutine wristRoutine;
+    private static Intake intake;
+ 
     
     private final static MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0));
     private final static MutableMeasure<Angle> distance = mutable(Rotations.of(0));
     private final static MutableMeasure<Velocity<Angle>> velocity = mutable(RotationsPerSecond.of(0));
-    
-    //FINISHTHIS
-    //private final MutableMeasure<Distance> mDistance = mutable(Meters.of(0));
-
-    /**
-     * FINISHTHIS
-     */
-
-    //  public static <U extends Unit<U>> MutableMeasure<U> mutable(Measure<U> measure){
-    //     return new MutableMeasure<>(measure.magnitude(), measure.baseUnitMagnitude(), measure.unit());
-    //  }
 
 
     public static void init() {
@@ -103,6 +85,11 @@ public class Control {
         climber = Climber.getInstance();
         intake = Intake.getInstance();
         vision = Vision.getInstance();
+        while (DriverStation.getAlliance().isEmpty()) {
+            //Forces init to wait until alliance exists
+            System.out.println("ALLIANCE NOT FOUND, WAITING");
+        }
+        System.out.println("ALLIANCE FOUND AS" + DriverStation.getAlliance().get().toString());
         PathAuto.init();//Drivetrain methods must properly exist for the PathPlanner swerve configuration to work.
 
 
@@ -136,6 +123,7 @@ public class Control {
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
         // joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
+        
 
 
         joystick.button(2).whileFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
@@ -180,68 +168,16 @@ public class Control {
 
         // climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
 
-        // xboxController.a().onTrue(new ClimberToVelocity(() -> 0.25, true));
-        // xboxController.a().onFalse(new ClimberToVelocity(() -> 0, true));
-        // xboxController.b().onTrue(new ClimberToVelocity(() -> -0.25, true));
-        // xboxController.b().onFalse(new ClimberToVelocity(0));
-
-        // xboxController.povUp().toggleOnTrue(Commands.startEnd(
-        //     () -> new WristToPosition(WRIST_REST_POSITION), () -> new WristToVelocity(Control::getRightJoystickY), 
-        //     wrist));
-
-        // if(xboxControllerN.getLeftBumperPressed() == true) {
-        //     counter1++;
-        // }
-
         xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
         xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
 
-        // if(xboxController.getLeftTriggerAxis() > 0.2 && xboxController.getRightTriggerAxis() > 0.2){
-        //     Commands.startEnd(() -> new ClimberToPosition(CLIMBER_MAX_POSITION), 
-        //     () -> new ClimberToPosition(CLIMBER_REST_POSITION));
-        // }
+      
 
 
 
         // xboxController.y().toggleOnTrue(new SetArmAndWristPos(ARM_TRAP_POSITION, WRIST_TRAP_POSITION));
 
         // TESTING COMMANDS
-
-        // xboxController.rightBumper().onTrue(new IntakeToVelocity(0.25));
-        // xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
-        // xboxController.rightTrigger().onTrue(new IntakeToVelocity(-0.5));
-        // xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
-
-        // arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
-        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
-        
-        // xboxController.a().onTrue(new ClimberToVelocity(0.25));
-        // xboxController.a().onFalse(new ClimberToVelocity(0));
-        // xboxController.b().onTrue(new ClimberToVelocity(-0.25));
-        // xboxController.b().onFalse(new ClimberToVelocity(0));
-
-        // xboxController.x().whileTrue(new ArmToPosition(ARM_AMP_POSITION));
-        // xboxController.y().whileTrue(new ArmToPosition(ARM_REST_POSITION));
-
-        // // xboxController.povUp().toggleOnTrue(Commands.startEnd(
-        // //     () -> new WristToPosition(WRIST_REST_POSITION), () -> new WristToVelocity(Control::getRightJoystickY), 
-        // //     wrist));
-        // xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
-        // xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
-
-        // if(xboxControllerN.getLeftBumperPressed() == true) {
-        //     counter1++;
-        // }
-
-
-        
-
-        
-
-        // joystick.button(9).whileTrue(getQuasistaticDirectionalTest(Direction.kForward));
-        // joystick.button(10).whileTrue(getQuasistaticDirectionalTest(Direction.kReverse));
-        // joystick.button(11).whileTrue(getDynamicDirectionalTest(Direction.kForward));
-        // joystick.button(12).whileTrue(getDynamicDirectionalTest(Direction.kReverse));
         
     }
 

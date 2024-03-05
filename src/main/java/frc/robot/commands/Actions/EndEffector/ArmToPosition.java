@@ -1,6 +1,5 @@
 package frc.robot.commands.Actions.EndEffector;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 

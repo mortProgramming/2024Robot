@@ -3,14 +3,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import static frc.robot.utility.Constants.Arm.*;
-import static frc.robot.utility.Constants.RobotSpecs.*;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.utility.Constants.RobotSpecs;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,12 +27,12 @@ public class Arm extends SubsystemBase {
     private double setpoint;
 
     private ProfiledPIDController armPositionController;
-        // private PIDController armPositionController;
+       
 
-    // private SimpleMotorFeedforward armPostionFeedForward;
-        private ArmFeedforward armPostionFeedForward;
+    
+    private ArmFeedforward armPostionFeedForward;
 
-        private DutyCycleEncoder encoder;
+    private DutyCycleEncoder encoder;
 
 
     public Arm() {
@@ -47,22 +43,12 @@ public class Arm extends SubsystemBase {
 
         followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, false));
 
-        // masterArmMotor.set
-
         armPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
 
-        // armPositionController = new PIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D);
-
-        // armPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
         armPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
-
         encoder = new DutyCycleEncoder(ENCODER_PORT);
 
-    }
-
-    public void init() {
-    //add motor initialization
     }
 
     /**
@@ -71,7 +57,7 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
-        // masterArmMotor.set(armSpeed);
+       
         SmartDashboard.putNumber("Arm Postion", getPosition());
         SmartDashboard.putNumber("Arm Position Degrees", posToDegrees());
         SmartDashboard.putNumber("Encoder Arm Postion", getEncoder().getAbsolutePosition());
@@ -110,14 +96,6 @@ public class Arm extends SubsystemBase {
     public void setArmVelocityG(double armSpeed){
         this.armSpeed = armSpeed + POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees()));
     }
-
-    // public void setArmVelocityArmFeed(double armSpeed){
-    //     this.armSpeed = armSpeed + POSITION_FF_G * Math.sin(Math.toRadians(posToDegrees())) + armPostionFeedForward.calculate(getPosition(), getVelocity());
-    // }
-
-    // public void setArmVelocityArmFeed(double armSpeed){
-    //     this.armSpeed = armSpeed + armPostionFeedForward.calculate(getPosition(), getVelocity());
-    // }
 
     public void setSetPoint(double setpoint){
         this.setpoint = setpoint;
@@ -171,10 +149,7 @@ public class Arm extends SubsystemBase {
         // }    
     }
 
-    // public boolean nearSetpoint(){
-    //     return (Math.abs(armPostionFeedForward.calculate(getPosition(), getVelocity()) + 
-    //      armPositionController.calculate(getPosition(),setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
-    // }
+   
     public boolean nearSetpoint(){
         return Math.abs(armPositionController.calculate(posToDegrees(), setpoint) + POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees()))) < ARM_NEAR_SETPOINT_ERROR;
     }

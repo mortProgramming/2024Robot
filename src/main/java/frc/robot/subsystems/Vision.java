@@ -2,16 +2,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.utility.Constants.Vision.Pipeline;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import static frc.robot.utility.Constants.Vision.*;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.HttpCamera;
-import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -21,20 +12,6 @@ public class Vision extends SubsystemBase {
 
     	private NetworkTable tagTable;
 		private NetworkTable intakeTable;
-	
-		private double totalOutlier;
-		private double newValue;
-		private double position;
-		private double totalPosition;
-		private int valuePosition;
-		private double averageOutlier;
-		private double averagePosition;
-		private double outlierCounter;
-		private double noOutlierCounter;
-		private double nonOutlierCounter;
-		private double[] values = new double[AMOUNT_TEST_FRAMES];
-		private double[] outliers = new double[MAX_OUTLIERS];
-		private VideoSource intakeCam;
 		
     public Vision() {
         // tagTable = NetworkTableInstance.getDefault().getTable("limelight");

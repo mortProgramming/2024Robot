@@ -1,18 +1,16 @@
 package frc.robot.subsystems;
 
 import static frc.robot.utility.Constants.Climber.*;
-import static frc.robot.utility.Constants.RobotSpecs.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.wpilibj.PWM;
+
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
@@ -23,10 +21,10 @@ public class Climber extends SubsystemBase {
     private CANSparkMax rightClimberMotor;
     private CANSparkMax leftClimberMotor;
 
-    // private CANSparkMax rightClimberServo;
-    // private CANSparkMax leftClimberServo;
-    private Servo leftServo;
+
     private Servo rightServo;
+    private Servo leftServo;
+
 
     private double rightClimberSpeed;
     private double leftClimberSpeed;
@@ -40,10 +38,7 @@ public class Climber extends SubsystemBase {
 
     private ProfiledPIDController rightClimberPositionController;
     private ProfiledPIDController leftClimberPositionController;
-
-    private ArmFeedforward rightClimberPostionFeedForward;
-    private ArmFeedforward leftClimberPostionFeedForward;
-
+ 
     private double tolerance = 4;
 
     private static boolean velocityMode;
@@ -52,18 +47,12 @@ public class Climber extends SubsystemBase {
         rightClimberMotor = new CANSparkMax(MASTER_CLIMBER_MOTOR, MotorType.kBrushless);
         leftClimberMotor = new CANSparkMax(FOLLOW_CLIMBER_MOTOR, MotorType.kBrushless);
 
-
-        // rightClimberServo = new CANSparkMax(RIGHT_CLIMBER_Servo, MotorType.kBrushed);
-        // leftClimberServo = new CANSparkMax(LEFT_CLIMBER_Servo, MotorType.kBrushed);
-
        leftServo = new Servo(LEFT_CLIMBER_SERVO);
        rightServo = new Servo(RIGHT_CLIMBER_SERVO);
 
        leftServoAngle = 90;
        rightServoAngle = 90;
 
-
-    //    rightServo = new PWM(RIGHT_CLIMBER_SERVO);
 
         rightClimberPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
@@ -73,17 +62,11 @@ public class Climber extends SubsystemBase {
         rightClimberPositionController.setTolerance(tolerance);
         leftClimberPositionController.setTolerance(tolerance);
 
-        // rightClimberPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
-        // leftClimberPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
-
         velocityMode = true;
         
         
     }
 
-    public void init() {
-    //add motor initialization
-    }
     public ProfiledPIDController getLeftController(){
         return leftClimberPositionController;
     }
@@ -103,27 +86,20 @@ public class Climber extends SubsystemBase {
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
-      if(velocityMode) {
+    if(velocityMode) {
         rightClimberMotor.set(rightClimberSpeed);
         leftClimberMotor.set(leftClimberSpeed);
-      }
-      else {
+    }
+    else {
         leftClimberMotor.set(leftClimberPositionController.calculate(leftClimberMotor.getEncoder().getPosition(), leftSetpoint));
         rightClimberMotor.set(rightClimberPositionController.calculate(rightClimberMotor.getEncoder().getPosition(), rightSetpoint));
-      }
+    }
       SmartDashboard.putNumber("LeftClimberEncoder", leftClimberMotor.getEncoder().getPosition());
       SmartDashboard.putNumber("RightClimberEncoder", rightClimberMotor.getEncoder().getPosition());
-    //   rightClimberServo.set(rightServoSpeed);
-    //   leftClimberServo.set(leftServoSpeed);
 
     rightServo.setAngle(rightServoAngle);
     leftServo.setAngle(leftServoAngle);
-    // SmartDashboard.putNumber("LeftServoAngle", leftServo.getAngle());
-    
 
-    
-
-    // SmartDashboard.putNumber("Servo thig", rightServo.getPosition());
 
     if (rightServoAngle == 90) {
         SmartDashboard.putBoolean("Climber Locked", true);
@@ -150,9 +126,6 @@ public class Climber extends SubsystemBase {
         velocityMode = isVelocityMode;
     }
 
-    /**
-     * 
-     */
 
     public CANSparkMax getRightClimberMotor(){
         return this.rightClimberMotor;
@@ -220,7 +193,7 @@ public class Climber extends SubsystemBase {
         return leftClimberPositionController.atSetpoint();
     }
 
-   public void setRightSetpoint(double rightSetpoint){
+    public void setRightSetpoint(double rightSetpoint){
         this.rightSetpoint = rightSetpoint;
     }
 
@@ -228,10 +201,7 @@ public class Climber extends SubsystemBase {
         this.leftSetpoint = leftSetpoint;
     }
 
-    /**
-     * 
-     * @return
-     */
+    
     public static Climber getInstance(){
         if (climber==null){
             climber = new Climber();

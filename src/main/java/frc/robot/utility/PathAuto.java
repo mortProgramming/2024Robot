@@ -12,22 +12,20 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.Actions.RobotStart;
-import frc.robot.commands.Actions.EndEffector.ArmToPosition;
+
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
 import frc.robot.commands.Actions.EndEffector.WristToPosition;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Wrist;
+
 
 import static frc.robot.utility.Constants.Arm.ARM_WRIST_TIMEOUT;
-import static frc.robot.utility.Constants.Intake.INTAKE_SPEED;
-import static frc.robot.utility.Constants.Intake.SHOOTER_SHOOT_SPEED;
+
 import static frc.robot.utility.Constants.Wrist.WRIST_INTAKE_POSITION;
 import static frc.robot.utility.Constants.Wrist.WRIST_REST_POSITION;
-import static frc.robot.utility.Constants.Wrist.WRIST_SCORE_POSITION;
 
-import java.sql.Driver;
-import java.util.function.BooleanSupplier;
+
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -36,12 +34,11 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import frc.robot.utility.Constants.Drivetrain.AutonConstants;
-import frc.robot.utility.Constants.Drivetrain.AutonConstants.*;
 import frc.robot.utility.Constants.*;
 
 
 public class PathAuto extends SubsystemBase {
-  private AutoBuilder autoBuilder;
+
   private static Drivetrain drivetrain;
   private static PathPlannerAuto twoPiece;
   private static PathPlannerAuto gackleyAuto;
@@ -70,19 +67,17 @@ public class PathAuto extends SubsystemBase {
       SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
     ));
 
-    NamedCommands.registerCommand("IntakeWithTimeout", new ParallelCommandGroup(//Active intake and bring wrist out
+    NamedCommands.registerCommand("IntakeBeam", new SequentialCommandGroup(//Active intake and bring wrist out, when done bring it back in
+      new ParallelCommandGroup(
       new IntakeToVelocity(0.6).withTimeout(1),
-      new WristToPosition(WRIST_INTAKE_POSITION).withTimeout(1)
+      new WristToPosition(WRIST_INTAKE_POSITION).withTimeout(1)),
+      new WristToPosition(WRIST_REST_POSITION)
     ));
 
-    NamedCommands.registerCommand("StopIntake", new ParallelCommandGroup(//Disable intake and bring wrist in
-      new IntakeToVelocity(0).withTimeout(0.1),
-      new WristToPosition(WRIST_REST_POSITION).withTimeout(0.5)
-      ));
+    
 
     NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");})));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
-    NamedCommands.registerCommand("FieldOrient", new RobotStart(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red ?  270 :  90));
-    NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.6).withTimeout(.2));
+    NamedCommands.registerCommand("FieldOrient", new RobotStart(Odometer.getOdometry().getEstimatedPosition().getRotation().getDegrees()));
     //build all path-based autons
     twoPiece = new PathPlannerAuto("PathPlanner 2Piece");
     gackleyAuto = new PathPlannerAuto("Gackley Auto");

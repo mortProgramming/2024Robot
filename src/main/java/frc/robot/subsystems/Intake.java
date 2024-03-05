@@ -30,13 +30,20 @@ public class Intake extends SubsystemBase {
         input = new DigitalInput(INTAKE_SENSOR);
     }
 
-    public void init() {
-    //add motor initialization
-    }
+   
 
     /**
-     * 
+     * Set the intake to the desired intakeSpeed
+     * @param intakeSpeed
+     * The speed to set the intake to, negative numbers will outtake the note
      */
+    public void setIntakeVelocity(double intakeSpeed){
+        this.intakeSpeed = intakeSpeed;
+    }
+    public boolean hasNote(){
+        return input.get();
+    }
+
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
@@ -44,39 +51,11 @@ public class Intake extends SubsystemBase {
 
         SmartDashboard.putNumber("intake master voltage", masterIntakeMotor.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber("intake follower voltage", followIntakeMotor.getMotorVoltage().getValueAsDouble());
-
+        SmartDashboard.putBoolean("HASNOTE", hasNote());
 
         Shuffleboard.update();
     }
-
-    /**
-     * 
-     */
-    @Override
-    public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-    }
-
-    /**
-     * Set the intake to the desired intakeSpeed
-     * @param intakeSpeed
-     * The speed to set the intake to
-     */
-    public void setIntakeVelocity(double intakeSpeed){
-        this.intakeSpeed = intakeSpeed;
-    }
-
-    /**
-     * Not sure why this exists, The intake and outtake are one subsystem that can do both, but only one at a time. Just -1 the intakevelocity method.
-     */
-    public void setOuttakeVelocity(double intakeSpeed){
-        this.intakeSpeed = -intakeSpeed;
-    }
-
-    /**
-     * 
-     * @return
-     */
+    
     public static Intake getInstance(){
         if (intake==null){
             intake = new Intake();
