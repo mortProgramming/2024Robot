@@ -85,6 +85,7 @@ public class Control {
         climber = Climber.getInstance();
         intake = Intake.getInstance();
         vision = Vision.getInstance();
+        Odometer.OdometerInit();
         while (DriverStation.getAlliance().isEmpty()) {
             //Forces init to wait until alliance exists
             System.out.println("ALLIANCE NOT FOUND, WAITING");
@@ -117,15 +118,13 @@ public class Control {
 			new DrivetrainCommand(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true)
         );
 
-        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
+        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(0)));
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
         // joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
         
-
-
         joystick.button(2).whileFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
 
@@ -299,7 +298,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickTwist() {
-		return -0.3 * (modifyAxisTwist(joystick.getTwist(), throttle.getZ())
+		return 0.3 * (modifyAxisTwist(joystick.getTwist(), throttle.getZ())
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 	}
 
