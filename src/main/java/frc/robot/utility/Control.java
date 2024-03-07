@@ -22,6 +22,7 @@ import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmToVelocity;
 import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
+import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
@@ -137,7 +138,7 @@ public class Control {
         // joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
 
-
+        joystick.button(8).whileTrue(new IntakeBeamBreak());
         joystick.button(2).whileFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
 

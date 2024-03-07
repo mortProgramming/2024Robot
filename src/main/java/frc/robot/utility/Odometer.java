@@ -5,6 +5,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
@@ -19,6 +22,8 @@ public class Odometer{
     private static Timer timer;
     private static SwerveDriveKinematics driveKinematics;
 	private static SwerveDrivePoseEstimator odometry;
+
+    private static StructPublisher publisher;
 
     public Odometer() {
         // drivetrain = Drivetrain.getInstance();
@@ -38,7 +43,14 @@ public class Odometer{
 
         driveKinematics = drivetrain.getDriveKinematics();
 
-        odometry = new SwerveDrivePoseEstimator(driveKinematics, drivetrain.getNavX().getRotation2d(), drivetrain.getModulePositions(), new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
+        odometry = new SwerveDrivePoseEstimator(driveKinematics, 
+            drivetrain.getNavX().getRotation2d(), 
+            drivetrain.getModulePositions(), 
+        new Pose2d(new Translation2d(0,0), new Rotation2d(0))
+        );
+
+        publisher = NetworkTableInstance.getDefault()
+        .getStructTopic("MyPose", Pose2d.struct).publish();
 
         timer = new Timer();
         timer.start();
@@ -102,6 +114,8 @@ public class Odometer{
         
         SmartDashboard.putNumber("SwervePoseX", getPoseX());
 	    SmartDashboard.putNumber("swervePoseY", getPoseY());
+
+        publisher.set(odometry.getEstimatedPosition());
         // SmartDashboard.putNumber("swerveTimed", MathSharedStore.getTimestamp());
     }
     public static void updateOdometryIgnoreLimelight() {

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.Actions.RobotStart;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
+import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
 import frc.robot.commands.Actions.EndEffector.WristToPosition;
@@ -70,9 +71,8 @@ public class PathAuto extends SubsystemBase {
       SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
     ));
 
-    NamedCommands.registerCommand("IntakeWithTimeout", new ParallelCommandGroup(//Active intake and bring wrist out
-      new IntakeToVelocity(0.6).withTimeout(1),
-      new WristToPosition(WRIST_INTAKE_POSITION).withTimeout(1)
+    NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
+      new IntakeBeamBreak()
     ));
 
     NamedCommands.registerCommand("StopIntake", new ParallelCommandGroup(//Disable intake and bring wrist in

@@ -33,6 +33,9 @@ public class Intake extends SubsystemBase {
     public void init() {
     //add motor initialization
     }
+    public boolean hasNote(){
+        return !input.get();
+    }
 
     /**
      * 
@@ -45,7 +48,7 @@ public class Intake extends SubsystemBase {
         SmartDashboard.putNumber("intake master voltage", masterIntakeMotor.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber("intake follower voltage", followIntakeMotor.getMotorVoltage().getValueAsDouble());
 
-
+        SmartDashboard.putBoolean("INTAKE BEAMBREAK", hasNote());
         Shuffleboard.update();
     }
 

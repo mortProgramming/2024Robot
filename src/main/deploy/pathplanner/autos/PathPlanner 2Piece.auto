@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.40206044912338257,
-      "y": 7.388927459716797
+      "x": 1.513139724731445,
+      "y": 7.395670413970947
     },
     "rotation": -90.02999580779965
   },
@@ -44,25 +44,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "TwoPiece.2"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "IntakeWithTimeout"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StopIntake"
-                      }
-                    }
-                  ]
                 }
               }
             ]

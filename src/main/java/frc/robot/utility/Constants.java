@@ -16,25 +16,25 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 3;
 		public final static int FRONT_LEFT_STEER = 4;
 		public final static int FRONT_LEFT_STEER_ENCODER = 35;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(287-5);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(286); //+-4
 
 		/* Port and Declaration for Front Right swerve motors & offset */
 		public final static int FRONT_RIGHT_DRIVE = 1;
 		public final static int FRONT_RIGHT_STEER = 2;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 34;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(109+180-5);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(288); //+-7
 
 		/* Port and Declaration for Back left swerve motors & offset */
 		public final static int BACK_LEFT_DRIVE = 5;
 		public final static int BACK_LEFT_STEER = 6;
 		public final static int BACK_LEFT_STEER_ENCODER = 36; 
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(100-90+180);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(190);
 
 		/* Port and Declaration for Back Right swerve motors & offset */
 		public final static int BACK_RIGHT_DRIVE = 7;
 		public final static int BACK_RIGHT_STEER = 8;
 		public final static int BACK_RIGHT_STEER_ENCODER = 37;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(321-180+180);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(324); //+-3
 
 		public final static double XVALUE_KP = 1.1;
 		public final static double XVALUE_KI = 0;
@@ -149,7 +149,7 @@ public final class Constants {
 	public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
 
-		public static final double POSITION_PID_P = 0.0015;
+		public static final double POSITION_PID_P = 0.0025;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
