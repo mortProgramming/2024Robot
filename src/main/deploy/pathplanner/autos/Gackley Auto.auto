@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.40206044912338257,
-      "y": 7.388927459716797
+      "x": 1.5465375185012815,
+      "y": 7.399226188659668
     },
     "rotation": -90.02999580779965
   },
@@ -31,37 +31,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "GackleyAuto.2"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.75
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "IntakeWithTimeout"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Outtake"
-                      }
-                    }
-                  ]
                 }
               }
             ]

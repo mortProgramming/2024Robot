@@ -36,7 +36,6 @@ public class IntakeBeamBreak extends Command {
     if (!intake.hasNote()) {
       intake.setIntakeVelocity(INTAKE_SPEED);
       wrist.setSetPoint(WRIST_INTAKE_POSITION);
-      System.out.println("BANGOOSE");
     }else{
       timer.start();
       wrist.setSetPoint(WRIST_REST_POSITION);
@@ -47,7 +46,6 @@ public class IntakeBeamBreak extends Command {
   @Override
   public void end(boolean interrupted) {
     System.out.println(interrupted);
-    System.out.println("BOINGUS");
     intake.setIntakeVelocity(0);
       wrist.setSetPoint(WRIST_REST_POSITION);
   }
