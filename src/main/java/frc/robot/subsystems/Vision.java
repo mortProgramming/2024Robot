@@ -58,6 +58,10 @@ public class Vision extends SubsystemBase {
 		return intakeTable.getEntry("tv").getInteger(0) == 1;
 	}
 
+	public double getNoteXDegrees() {
+		return intakeTable.getEntry("tx").getDouble(0);
+	}
+
 	/**
 	 * 
 	 * @return The area of the targeted apriltag, if any. -1 if no target found
@@ -175,7 +179,6 @@ public class Vision extends SubsystemBase {
 		// }
 
 		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));
-
 	}
 
 	/**

@@ -134,13 +134,18 @@ public class Control {
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
-        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+        joystick.button(2).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
         // joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
+        joystick.button(3).whileTrue(
+            new InstantCommand(() -> drivetrain.setKeptAngle(
+                drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees()))
+        );
+
+        joystick.button(2).and(joystick.button(3))
+            .onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
         joystick.button(8).whileTrue(new IntakeBeamBreak());
-        joystick.button(2).whileFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
-
 
 //.withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
         //Competition controls
@@ -308,6 +313,7 @@ public class Control {
         return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
         // return value * throttleValue;
     }
+
     public static double modifyAxisTwist(double value, double throttleValue) {
         value = deadband(value, DEAD_BAND);
 
