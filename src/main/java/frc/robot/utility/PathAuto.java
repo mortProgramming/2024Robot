@@ -16,6 +16,7 @@ import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
+import frc.robot.commands.Actions.EndEffector.SpitNote;
 import frc.robot.commands.Actions.EndEffector.WristToPosition;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Wrist;
@@ -72,12 +73,14 @@ public class PathAuto extends SubsystemBase {
     ));
 
     NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
-      new IntakeBeamBreak()
+      new IntakeBeamBreak(WRIST_REST_POSITION)
+    ));
+    NamedCommands.registerCommand("IntakeStayOut", new ParallelCommandGroup(//Active intake and bring wrist out
+      new IntakeBeamBreak(WRIST_INTAKE_POSITION)
     ));
 
-    NamedCommands.registerCommand("StopIntake", new ParallelCommandGroup(//Disable intake and bring wrist in
-      new IntakeToVelocity(0).withTimeout(0.1),
-      new WristToPosition(WRIST_REST_POSITION).withTimeout(0.5)
+    NamedCommands.registerCommand("Spit", new ParallelCommandGroup(//Disable intake and bring wrist in
+      new SpitNote()
       ));
 
     NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");})));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)

@@ -4,46 +4,40 @@
 
 package frc.robot.commands.Actions.EndEffector;
 
-import static frc.robot.utility.Constants.Intake.INTAKE_SPEED;
-import static frc.robot.utility.Constants.Wrist.WRIST_INTAKE_POSITION;
+import static frc.robot.utility.Constants.Intake.SHOOTER_SHOOT_SPEED;
 import static frc.robot.utility.Constants.Wrist.WRIST_REST_POSITION;
+import static frc.robot.utility.Constants.Wrist.WRIST_SPIT_POSITION;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Wrist;
+import edu.wpi.first.wpilibj.Timer;
 
-public class IntakeBeamBreak extends Command {
-  /** Creates a new IntakeBeamBreak. */
+public class SpitNote extends Command {
+  /** Creates a new SpitNote. */
   private Intake intake = Intake.getInstance();
   private Wrist wrist = Wrist.getInstance();
   private Timer timer = new Timer();
-  private double endPosition = WRIST_REST_POSITION;
-  public IntakeBeamBreak(double endPosition) {
+  public SpitNote() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake,wrist);
-    this.endPosition = endPosition;
-  }
-  public IntakeBeamBreak() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake,wrist);
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    wrist.setSetPoint(WRIST_SPIT_POSITION);
+    timer.start();
     
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!intake.hasNote()) {
-      intake.setIntakeVelocity(INTAKE_SPEED);
-      wrist.setSetPoint(WRIST_INTAKE_POSITION);
-    }else{
-      timer.start();
+    if(timer.get()>.3){
+      intake.setIntakeVelocity(SHOOTER_SHOOT_SPEED);
     }
+    
     
   }
 
@@ -53,13 +47,13 @@ public class IntakeBeamBreak extends Command {
     timer.stop();
     timer.reset();
     System.out.println(interrupted);
+    wrist.setSetPoint(WRIST_REST_POSITION);
     intake.setIntakeVelocity(0);
-      wrist.setSetPoint(endPosition);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.hasNote() && timer.get() > .25;
+    return (!intake.hasNote()) && timer.get()>1.5;
   }
 }

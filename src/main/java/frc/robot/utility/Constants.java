@@ -139,7 +139,7 @@ public final class Constants {
 
 		// public static final double INTAKE_SPEED = 0.25;
 		// public static final double SHOOT_SPEED = -0.50;
-		public static final double INTAKE_SPEED = 0.4;
+		public static final double INTAKE_SPEED = 0.5;
 		public static final double AMP_SHOOT_SPEED = -0.3;
 		public static final double SHOOTER_SHOOT_SPEED = -1;
 
@@ -169,6 +169,7 @@ public final class Constants {
 		public static final double WRIST_SCORE_POSITION = 0;
 		public static final double WRIST_INTAKE_POSITION = -160;
 		public static final double WRIST_TRAP_POSITION = -155;
+		public static final double WRIST_SPIT_POSITION = -100;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
 

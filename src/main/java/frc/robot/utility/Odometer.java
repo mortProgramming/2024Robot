@@ -63,11 +63,19 @@ public class Odometer{
     }
 
     public static double getPoseX () {
-        return odometry.getEstimatedPosition().getX();
+        return -odometry.getEstimatedPosition().getX();
     }
 
     public static double getPoseY () {
-        return odometry.getEstimatedPosition().getY();
+        return -odometry.getEstimatedPosition().getY();
+    }
+
+    public static Translation2d getPoseTranslation2d() {
+        return odometry.getEstimatedPosition().getTranslation();
+    }
+
+    public static Rotation2d getPoseRotate() {
+        return odometry.getEstimatedPosition().getRotation();
     }
 
     /**
@@ -83,8 +91,12 @@ public class Odometer{
         if(visionOverride){
             odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), vision.getFieldPose());
         }
-        odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
+        // odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
    }
+
+   public static void resetOdometry() {
+    odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
+    }
 
    /**
     * Resets odometry pose settings
@@ -95,9 +107,9 @@ public class Odometer{
     odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), inputPose);
    }
 
-   public static void resetOdometry(){
+   public static void resetOdometry(double x, double y, double omega){
     odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), 
-    new Pose2d(0,0, new Rotation2d()));
+    new Pose2d(-x, -y, new Rotation2d(omega)));
    }
    
 
@@ -115,7 +127,7 @@ public class Odometer{
         SmartDashboard.putNumber("SwervePoseX", getPoseX());
 	    SmartDashboard.putNumber("swervePoseY", getPoseY());
 
-        publisher.set(odometry.getEstimatedPosition());
+        // publisher.set(new Pose2D(new Translation2d(getPoseY(), getPoseX()), getPoseRotate()));
         // SmartDashboard.putNumber("swerveTimed", MathSharedStore.getTimestamp());
     }
     public static void updateOdometryIgnoreLimelight() {

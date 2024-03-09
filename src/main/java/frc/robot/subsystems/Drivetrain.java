@@ -17,7 +17,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.SerialPort;
+// import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -59,7 +60,8 @@ public class Drivetrain extends SubsystemBase {
 	private static Drivetrain drivetrain;
 
 	public Drivetrain() {
-		navX = new AHRS(SerialPort.Port.kMXP);
+		// navX = new AHRS(SerialPort.Port.kMXP);
+		navX = new AHRS(I2C.Port.kMXP);
 		
 		driveKinematics = new SwerveDriveKinematics(
 				// Front left
@@ -131,10 +133,10 @@ public class Drivetrain extends SubsystemBase {
 		thetaController.setTolerance(0.5);
 
 		xToPositioController = new PIDController(0.3, 0, 0);
-		xToPositioController.setTolerance(0.05);
+		// xToPositioController.setTolerance(0.05);
 
 		yToPositioController = new PIDController(0.3, 0, 0);
-		yToPositioController.setTolerance(0.05);
+		// yToPositioController.setTolerance(0.05);
 
 
 		//	Initialization of PID controller rotateToAngle
@@ -159,6 +161,15 @@ public class Drivetrain extends SubsystemBase {
 	public void zeroGyroscope(double angle) {
 		fieldOrientationOffset = navX.getAngle()+angle;
 	}
+	// public double toCircle(double angle){
+	// 	if(angle < 0){
+	// 		return angle+360;
+	// 	}else if(angle >360){
+	// 		return angle-360;
+	// 	}
+	// 	return angle;
+	// }
+
 	public double toCircle(double angle){
 		if(angle < 0){
 			return angle+360;

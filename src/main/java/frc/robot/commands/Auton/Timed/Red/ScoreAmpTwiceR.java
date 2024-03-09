@@ -20,7 +20,6 @@ import frc.robot.utility.Constants;
 
 import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
 
-
 public class ScoreAmpTwiceR extends SequentialCommandGroup {
   /** Creates a new TwoPiece. */
   public ScoreAmpTwiceR() {

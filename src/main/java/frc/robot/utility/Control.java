@@ -18,12 +18,14 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Actions.EndEffector.WristToPosition;
 import frc.robot.commands.Actions.EndEffector.WristToVelocity;
+import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmToVelocity;
 import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
 import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
 import frc.robot.commands.Teleop.DrivetrainCommand;
+import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
@@ -134,18 +136,25 @@ public class Control {
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
-        joystick.button(2).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
-        // joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngle(90)));
-        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
-        joystick.button(3).whileTrue(
-            new InstantCommand(() -> drivetrain.setKeptAngle(
-                drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees()))
-        );
+        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
 
-        joystick.button(2).and(joystick.button(3))
-            .onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
+    //    joystick.button(2).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+       joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
+       // joystick.button(3).whileTrue(
+     //       new InstantCommand(() -> drivetrain.setKeptAngle(
+       //         drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees()))
+       // );
+
+    //    joystick.button(2).and(joystick.button(3))
+    //        .onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
+
+    joystick.button(2).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
         joystick.button(8).whileTrue(new IntakeBeamBreak());
+
+        joystick.button(6).whileTrue(new MoveToAprilTag(15));
+
+        joystick.button(5).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(0.4, 7.5, 90)));
 
 //.withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
         //Competition controls

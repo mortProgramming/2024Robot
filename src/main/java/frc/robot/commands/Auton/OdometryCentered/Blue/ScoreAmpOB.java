@@ -15,11 +15,11 @@ public class ScoreAmpOB extends SequentialCommandGroup{
             new SequentialCommandGroup(
                 // new RobotStart(true, 0.4, 7.5, 90),
                 new RobotStart(0.4, 7.5, 90),
-                new MoveToPosition(1.9, 7.5, 90),
-                new MoveToPosition(1.9, 7.8, 90),
-                SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
-                new IntakeToVelocity(AMP_SHOOT_SPEED).withTimeout(0.75),
-                SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
+                new MoveToPosition(1.9, 10, 90)
+                // new MoveToPosition(1.9, 7.8, 90),
+                // SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
+                // new IntakeToVelocity(AMP_SHOOT_SPEED).withTimeout(0.75),
+                // SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
             )
         );
     }
