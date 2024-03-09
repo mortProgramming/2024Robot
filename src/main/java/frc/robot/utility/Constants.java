@@ -185,7 +185,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.006;
+		public static final double POSITION_PID_P = 0.0065;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -217,7 +217,15 @@ public final class Constants {
 		public static final double ARM_ENCODER_DEGREES_TO_0 = 20;
 		public static final double ARM_NEVER_POSITION = 90;
 
-		public static final double ARM_WRIST_TIMEOUT = 1.5;
+		public static final double ARM_WRIST_TIMEOUT = 1.25;
+	}
+
+	public static final class Lights {
+		public static final int LEDS_PORT = 0;
+
+		public static final double GREEN_COLOR = 0.77;
+		public static final double RED_COLOR = 0.61;
+		public static final double BLUE_COLOR = 0.87;
 	}
 
 	public final static class Vision {

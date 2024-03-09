@@ -68,9 +68,9 @@ public class PathAuto extends SubsystemBase {
 
     NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
       SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
-      new IntakeToVelocity(-0.5).withTimeout(1),
+      new IntakeToVelocity(-0.5).withTimeout(.6),
       SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
-    ));
+    ).withTimeout(3.45));
 
     NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
       new IntakeBeamBreak(WRIST_REST_POSITION)

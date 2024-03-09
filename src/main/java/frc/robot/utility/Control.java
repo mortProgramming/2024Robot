@@ -9,6 +9,8 @@ import java.util.function.DoubleSupplier;
 
 import static frc.robot.utility.Constants.Climber.*;
 import static frc.robot.utility.Constants.Intake.*;
+import static frc.robot.utility.Constants.Lights.GREEN_COLOR;
+
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 
@@ -42,6 +44,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Vision;
 
 import static edu.wpi.first.units.Units.*;
@@ -67,6 +70,8 @@ public class Control {
     private static Climber climber;
     private static Wrist wrist;
     private static Vision vision;
+    private static Lights lights;
+
     private static SysIdRoutine armRoutine;
     private static SysIdRoutine wristRoutine;
     
@@ -106,6 +111,7 @@ public class Control {
         climber = Climber.getInstance();
         intake = Intake.getInstance();
         vision = Vision.getInstance();
+        // lights = Lights.getInstance();
         PathAuto.init();//Drivetrain methods must properly exist for the PathPlanner swerve configuration to work.
 
 
@@ -137,18 +143,23 @@ public class Control {
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+        joystick.button(3).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+
 
     //    joystick.button(2).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
-       // joystick.button(3).whileTrue(
-     //       new InstantCommand(() -> drivetrain.setKeptAngle(
-       //         drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees()))
-       // );
+       joystick.button(3).whileTrue(
+           new InstantCommand(() -> drivetrain.setKeptAngle(
+            Drivetrain.toCircle(
+               180 + drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees())
+       )));
 
     //    joystick.button(2).and(joystick.button(3))
     //        .onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
     joystick.button(2).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
+    joystick.button(3).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
+
 
         joystick.button(8).whileTrue(new IntakeBeamBreak());
 
@@ -159,8 +170,7 @@ public class Control {
 //.withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
         //Competition controls
 
-        xboxController.rightBumper().onTrue(new IntakeToVelocity(INTAKE_SPEED));
-        xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
+        xboxController.rightBumper().whileTrue(new IntakeBeamBreak(WRIST_REST_POSITION));
 
         xboxController.rightTrigger().onTrue(new IntakeToVelocity(AMP_SHOOT_SPEED));
         xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
@@ -188,9 +198,13 @@ public class Control {
         xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
-       joystick.button(12).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
-       joystick.button(11).toggleOnTrue(new ClimberToVelocity(zeroSupplier, zeroSupplier));
-       xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
+        joystick.button(12).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
+        joystick.button(11).toggleOnTrue(new ClimberToVelocity(zeroSupplier, zeroSupplier));
+        xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
+        xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
+        xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
+
+    //    lights.setDefaultCommand(new InstantCommand(() -> lights.setLights(intake.hasNote() ? RED_COLOR : GREEN_COLOR)));
 
 
         // climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
@@ -208,8 +222,7 @@ public class Control {
         //     counter1++;
         // }
 
-        xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
-        xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
+        
 
         // if(xboxController.getLeftTriggerAxis() > 0.2 && xboxController.getRightTriggerAxis() > 0.2){
         //     Commands.startEnd(() -> new ClimberToPosition(CLIMBER_MAX_POSITION), 

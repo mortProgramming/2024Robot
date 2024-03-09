@@ -273,7 +273,7 @@ public class Vision extends SubsystemBase {
 		// 	outliers[(int) outlierCounter] = newValue;
 		// 	outlierCounter++;
 		// }
-		
+		SmartDashboard.putNumber("note x", getNoteXDegrees());
     }
 
 	/**

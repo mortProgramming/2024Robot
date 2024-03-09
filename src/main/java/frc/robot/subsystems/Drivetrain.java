@@ -17,7 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-// import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -60,8 +60,8 @@ public class Drivetrain extends SubsystemBase {
 	private static Drivetrain drivetrain;
 
 	public Drivetrain() {
-		// navX = new AHRS(SerialPort.Port.kMXP);
-		navX = new AHRS(I2C.Port.kMXP);
+		navX = new AHRS(SerialPort.Port.kMXP);
+		// navX = new AHRS(I2C.Port.kMXP);
 		
 		driveKinematics = new SwerveDriveKinematics(
 				// Front left
@@ -170,7 +170,7 @@ public class Drivetrain extends SubsystemBase {
 	// 	return angle;
 	// }
 
-	public double toCircle(double angle){
+	public static double toCircle(double angle){
 		if(angle < 0){
 			return angle+360;
 		}else if(angle >360){
