@@ -58,7 +58,7 @@ public final class Constants {
 		public static final class AutonConstants{
 			public static final double AUTON_POSITION_KP = 0.000001;
 			public static final double AUTON_POSITION_KI = 0;
-			public static final double AUTON_POSITION_KD = 0.0001;
+			public static final double AUTON_POSITION_KD = 0;
 	
 	
 			public static final double AUTON_ROTATION_KP = 0;
@@ -149,7 +149,7 @@ public final class Constants {
 	public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
 
-		public static final double POSITION_PID_P = 0.0025;
+		public static final double POSITION_PID_P = 0;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -185,7 +185,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.0065;
+		public static final double POSITION_PID_P = 0;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;

@@ -56,17 +56,17 @@ public class Control {
     private static CommandJoystick joystick;
 	private static CommandJoystick throttle;
 	private static CommandXboxController xboxController;
-
-    private static Joystick joystickN;
-	private static Joystick throttleN;
-	private static XboxController xboxControllerN;
-    private static DoubleSupplier zeroSupplier;
+    private static DoubleSupplier zeroSupplier = new DoubleSupplier() {
+        @Override
+        public double getAsDouble() {
+            return 0.0;
+        }
+    };;
 
     // private syta
 
 	private static Drivetrain drivetrain;
     private static Arm arm;
-    private static Intake intake;
     private static Climber climber;
     private static Wrist wrist;
     private static Vision vision;
@@ -74,6 +74,7 @@ public class Control {
 
     private static SysIdRoutine armRoutine;
     private static SysIdRoutine wristRoutine;
+    private static Intake intake;
     
     private final static MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0));
     private final static MutableMeasure<Angle> distance = mutable(Rotations.of(0));
@@ -94,16 +95,7 @@ public class Control {
     public static void init() {
 		joystick = new CommandJoystick(JOYSTICK);
 		throttle = new CommandJoystick(THROTTLE);
-		xboxController = new CommandXboxController(XBOX_CONTROLLER);
-
-        // counter1 = 0;
-        // counter1 = 0;
-        zeroSupplier = new DoubleSupplier() {
-            @Override
-            public double getAsDouble() {
-                return 0.0;
-            }
-        };
+		xboxController = new CommandXboxController(XBOX_CONTROLLER); 
 
 		drivetrain = Drivetrain.getInstance();
         arm = Arm.getInstance();
@@ -112,6 +104,7 @@ public class Control {
         intake = Intake.getInstance();
         vision = Vision.getInstance();
         // lights = Lights.getInstance();
+
         PathAuto.init();//Drivetrain methods must properly exist for the PathPlanner swerve configuration to work.
 
 
@@ -131,13 +124,12 @@ public class Control {
         
     }
 
-    /**
-     * 
-     */
     public static void configure() {
 		drivetrain.setDefaultCommand(
 			new DrivetrainCommand(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true)
         );
+        arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
+        wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
@@ -146,19 +138,16 @@ public class Control {
         joystick.button(3).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
 
 
-    //    joystick.button(2).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
-       joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
-       joystick.button(3).whileTrue(
-           new InstantCommand(() -> drivetrain.setKeptAngle(
+        joystick.button(2).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
+        joystick.button(3).whileTrue(
+            new InstantCommand(() -> drivetrain.setKeptAngle(
             Drivetrain.toCircle(
                180 + drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees())
-       )));
+        )));
 
-    //    joystick.button(2).and(joystick.button(3))
-    //        .onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
-
-    joystick.button(2).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
-    joystick.button(3).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
+        joystick.button(2).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
+        joystick.button(3).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
 
         joystick.button(8).whileTrue(new IntakeBeamBreak());
@@ -167,8 +156,6 @@ public class Control {
 
         joystick.button(5).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(0.4, 7.5, 90)));
 
-//.withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
-        //Competition controls
 
         xboxController.rightBumper().whileTrue(new IntakeBeamBreak(WRIST_REST_POSITION));
 
@@ -178,12 +165,12 @@ public class Control {
         xboxController.a().onTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
         xboxController.a().onFalse(new IntakeToVelocity(0));
 
-        arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
+        
 
         xboxController.x().onTrue(new ArmToPosition(ARM_AMP_POSITION));
         xboxController.y().onTrue(new ArmToPosition(ARM_REST_POSITION));
 
-        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
+        
 
         //arm and wrist switching with 
         xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(true)));
@@ -209,19 +196,7 @@ public class Control {
 
         // climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
 
-        // xboxController.a().onTrue(new ClimberToVelocity(() -> 0.25, true));
-        // xboxController.a().onFalse(new ClimberToVelocity(() -> 0, true));
-        // xboxController.b().onTrue(new ClimberToVelocity(() -> -0.25, true));
-        // xboxController.b().onFalse(new ClimberToVelocity(0));
-
-        // xboxController.povUp().toggleOnTrue(Commands.startEnd(
-        //     () -> new WristToPosition(WRIST_REST_POSITION), () -> new WristToVelocity(Control::getRightJoystickY), 
-        //     wrist));
-
-        // if(xboxControllerN.getLeftBumperPressed() == true) {
-        //     counter1++;
-        // }
-
+       
         
 
         // if(xboxController.getLeftTriggerAxis() > 0.2 && xboxController.getRightTriggerAxis() > 0.2){
@@ -233,43 +208,6 @@ public class Control {
 
         // xboxController.y().toggleOnTrue(new SetArmAndWristPos(ARM_TRAP_POSITION, WRIST_TRAP_POSITION));
 
-        // TESTING COMMANDS
-
-        // xboxController.rightBumper().onTrue(new IntakeToVelocity(0.25));
-        // xboxController.rightBumper().onFalse(new IntakeToVelocity(0));
-        // xboxController.rightTrigger().onTrue(new IntakeToVelocity(-0.5));
-        // xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
-
-        // arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
-        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
-        
-        // xboxController.a().onTrue(new ClimberToVelocity(0.25));
-        // xboxController.a().onFalse(new ClimberToVelocity(0));
-        // xboxController.b().onTrue(new ClimberToVelocity(-0.25));
-        // xboxController.b().onFalse(new ClimberToVelocity(0));
-
-        // xboxController.x().whileTrue(new ArmToPosition(ARM_AMP_POSITION));
-        // xboxController.y().whileTrue(new ArmToPosition(ARM_REST_POSITION));
-
-        // // xboxController.povUp().toggleOnTrue(Commands.startEnd(
-        // //     () -> new WristToPosition(WRIST_REST_POSITION), () -> new WristToVelocity(Control::getRightJoystickY), 
-        // //     wrist));
-        // xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
-        // xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
-
-        // if(xboxControllerN.getLeftBumperPressed() == true) {
-        //     counter1++;
-        // }
-
-
-        
-
-        
-
-        // joystick.button(9).whileTrue(getQuasistaticDirectionalTest(Direction.kForward));
-        // joystick.button(10).whileTrue(getQuasistaticDirectionalTest(Direction.kReverse));
-        // joystick.button(11).whileTrue(getDynamicDirectionalTest(Direction.kForward));
-        // joystick.button(12).whileTrue(getDynamicDirectionalTest(Direction.kReverse));
         
     }
 

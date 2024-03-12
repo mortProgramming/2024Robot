@@ -230,50 +230,27 @@ public class Vision extends SubsystemBase {
 
 		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));
 	}
+	
+	public double[] getFieldPoseAsArray() {
+		double[] poseNum = new double[6];
+		
+		if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+			poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
+		} else {
+			poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+		}
+
+		return poseNum;
+	}
 
 	/**
      * 
      */
     @Override
     public void periodic() {
-		// totalOutlier = 0; 
-		// newValue = position;
-		// totalPosition = 0;
-		// valuePosition++;
-
-		// if(valuePosition == AMOUNT_TEST_FRAMES){
-		// 	valuePosition = 0;
-		// }
 		
-		// for(int counter = 0; counter < MAX_OUTLIERS; counter++){
-		// 	totalPosition += totalPosition + values[counter];
-		// }
-
-		// averagePosition = totalPosition/AMOUNT_TEST_FRAMES;
-		
-		// if(outlierCounter > MAX_OUTLIERS){
-		// 	for(int counter = 0; counter < MAX_OUTLIERS; counter++){
-		// 		totalOutlier += outliers[counter];
-		// 	}
-		// 	averageOutlier = totalOutlier/AMOUNT_TEST_FRAMES;
-		// 	for(int counter = 0; counter < MAX_OUTLIERS; counter++){
-		// 		values[counter] = averageOutlier;
-		// 	}
-		// 	outlierCounter = 0;
-		// 	noOutlierCounter = 0;
-		// }else if(newValue < averagePosition + MAX_ERROR && newValue > (averagePosition - MAX_ERROR)){
-		// 	values[valuePosition] = newValue;
-		// 	nonOutlierCounter++;
-		// 	if(nonOutlierCounter > MAX_NON_OUTLIERS){
-		// 		nonOutlierCounter = 0;
-		// 		outlierCounter = 0;
-		// 	}
-		// }else{
-		// 	nonOutlierCounter = 0;
-		// 	outliers[(int) outlierCounter] = newValue;
-		// 	outlierCounter++;
-		// }
 		SmartDashboard.putNumber("note x", getNoteXDegrees());
+		SmartDashboard.putNumberArray("Field Positioning", getFieldPoseAsArray());
     }
 
 	/**
