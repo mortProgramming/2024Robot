@@ -170,39 +170,39 @@ public class Control {
 //.withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
         //Competition controls
 
-        xboxController.rightBumper().whileTrue(new IntakeBeamBreak(WRIST_REST_POSITION));
+        // xboxController.rightBumper().whileTrue(new IntakeBeamBreak(WRIST_REST_POSITION));
 
-        xboxController.rightTrigger().onTrue(new IntakeToVelocity(AMP_SHOOT_SPEED));
-        xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
+        // xboxController.rightTrigger().onTrue(new IntakeToVelocity(AMP_SHOOT_SPEED));
+        // xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
 
-        xboxController.a().onTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
-        xboxController.a().onFalse(new IntakeToVelocity(0));
+        // xboxController.a().onTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
+        // xboxController.a().onFalse(new IntakeToVelocity(0));
 
-        arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
+        // arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
 
-        xboxController.x().onTrue(new ArmToPosition(ARM_AMP_POSITION));
-        xboxController.y().onTrue(new ArmToPosition(ARM_REST_POSITION));
+        // xboxController.x().onTrue(new ArmToPosition(ARM_AMP_POSITION));
+        // xboxController.y().onTrue(new ArmToPosition(ARM_REST_POSITION));
 
         // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
         //arm and wrist switching with 
-        xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(true)));
-        xboxController.start().whileTrue(new InstantCommand(() -> wrist.setVelocityMode(true)));
-        xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(false)));
-        xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
+        // xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(true)));
+        // xboxController.start().whileTrue(new InstantCommand(() -> wrist.setVelocityMode(true)));
+        // xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(false)));
+        // xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
 
-        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(90)));
-        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(45)));
-        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightServo(0)));
-        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(90)));
-        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
-        //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
+        // xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(90)));
+        // xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(45)));
+        // //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightServo(0)));
+        // xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(90)));
+        // xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
+        // //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
-        joystick.button(12).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
-        joystick.button(11).toggleOnTrue(new ClimberToVelocity(zeroSupplier, zeroSupplier));
-        xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
-        xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
-        xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
+        // joystick.button(12).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
+        // joystick.button(11).toggleOnTrue(new ClimberToVelocity(zeroSupplier, zeroSupplier));
+        // xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
+        // xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
+        // xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
 
     //    lights.setDefaultCommand(new InstantCommand(() -> lights.setLights(intake.hasNote() ? RED_COLOR : GREEN_COLOR)));
 
@@ -392,7 +392,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickTwist() {
-		return -0.3 * (modifyAxisTwist(joystick.getTwist(), throttle.getZ())
+		return -0.3 * (modifyAxisTwist(joystick.getRawAxis(3), throttle.getZ())
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 	}
 

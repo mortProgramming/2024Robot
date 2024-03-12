@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Actions.RobotStart;
 import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
@@ -67,16 +69,16 @@ public class PathAuto extends SubsystemBase {
     drivetrain);
 
     NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
-      SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
-      new IntakeToVelocity(-0.5).withTimeout(.6),
-      SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
+      new PrintCommand("ScoreInAmp"),
+      new WaitCommand(5)
     ).withTimeout(3.45));
 
     NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
-      new IntakeBeamBreak(WRIST_REST_POSITION)
+      new PrintCommand("Intake")
+  
     ));
     NamedCommands.registerCommand("IntakeStayOut", new ParallelCommandGroup(//Active intake and bring wrist out
-      new IntakeBeamBreak(WRIST_INTAKE_POSITION)
+      new PrintCommand("IntakeStayOut")
     ));
 
     NamedCommands.registerCommand("Spit", new ParallelCommandGroup(//Disable intake and bring wrist in
