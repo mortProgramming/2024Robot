@@ -58,11 +58,15 @@ public final class Constants {
 
 		public static final class AutonConstants{
 			public static final double AUTON_POSITION_KP = 0.1;
+
+
 			public static final double AUTON_POSITION_KI = 0;
 			public static final double AUTON_POSITION_KD = 0;
 	
 	
+
 			public static final double AUTON_ROTATION_KP = 0.1;
+
 			public static final double AUTON_ROTATION_KI = 0;
 			public static final double AUTON_ROTATION_KD = 0;
 
