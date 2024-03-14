@@ -5,6 +5,7 @@ import edu.wpi.first.math.util.Units;
 
 public final class Constants {
 
+	
     public final static class PeripheralPorts {
 		public final static int JOYSTICK = 0;	// Joystick port & Declaration
 		public final static int THROTTLE = 1;	// Throttle port & Declaration
@@ -56,12 +57,12 @@ public final class Constants {
 		public final static double TO_POSITION_KD = 0;
 
 		public static final class AutonConstants{
-			public static final double AUTON_POSITION_KP = 0.000001;
+			public static final double AUTON_POSITION_KP = 0.01;
 			public static final double AUTON_POSITION_KI = 0;
 			public static final double AUTON_POSITION_KD = 0;
 	
 	
-			public static final double AUTON_ROTATION_KP = 0;
+			public static final double AUTON_ROTATION_KP = 0.01;
 			public static final double AUTON_ROTATION_KI = 0;
 			public static final double AUTON_ROTATION_KD = 0;
 
@@ -91,7 +92,7 @@ public final class Constants {
         public static final double MAX_THROTTLE = 1;
         public static final double MIN_THROTTLE = 0.3;
 		public static final double MIN_ROTATE = 0.3;
-        public static final double DEAD_BAND = 0.2;
+        public static final double DEAD_BAND = 0.07;
 
 		public static final double DRIVEBASE_RADIUS_IN_METERS = Units.inchesToMeters(14);
 	}
@@ -100,14 +101,14 @@ public final class Constants {
 		public static final int FOLLOW_CLIMBER_MOTOR = 24;
 		public static final int MASTER_CLIMBER_MOTOR = 15;
 
-		public static final int LEFT_CLIMBER_SERVO = 1;
-		public static final int RIGHT_CLIMBER_SERVO = 0;
+		public static final int LEFT_CLIMBER_SERVO = 0;
+		public static final int RIGHT_CLIMBER_SERVO = 1;
 
 		public static final int CLIMBER_LOCK_ANGLE = 25;
 
-		public static final double POSITION_PID_P = 0.00;
-		public static final double POSITION_PID_I = 0;
-		public static final double POSITION_PID_D = 0;
+		public static final double POSITION_PID_P = 0.03;
+		public static final double POSITION_PID_I = 0.00002;
+		public static final double POSITION_PID_D = 0.0002;
 		public static final double POSITION_PID_V = 0;
 		public static final double POSITION_PID_A = 0;
 
@@ -116,11 +117,11 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double LEFT_CLIMBER_REST_POSITION = 1;
-		public static final double LEFT_CLIMBER_MAX_POSITION = -120;
+		public static final double LEFT_CLIMBER_REST_POSITION = 175;
+		public static final double LEFT_CLIMBER_MAX_POSITION = 27;
 
-		public static final double RIGHT_CLIMBER_MAX_POSITION = 120;
-		public static final double RIGHT_CLIMBER_REST_POSITION = -4;
+		public static final double RIGHT_CLIMBER_MAX_POSITION = -24;
+		public static final double RIGHT_CLIMBER_REST_POSITION = -174;
 
 		public static final double CLIMBER_NEAR_SETPOINT_ERROR = 0;
 
@@ -149,7 +150,7 @@ public final class Constants {
 	public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
 
-		public static final double POSITION_PID_P = 0;
+		public static final double POSITION_PID_P = 0.002;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -165,11 +166,11 @@ public final class Constants {
 		// public static final double WRIST_SCORE_POSITION = 1.3;
 		// public static final double WRIST_INTAKE_POSITION = 7.9;
 		// public static final double WRIST_TRAP_POSITION = 0;
-		public static final double WRIST_REST_POSITION = 10;
+		public static final double WRIST_REST_POSITION = -12;
 		public static final double WRIST_SCORE_POSITION = 0;
-		public static final double WRIST_INTAKE_POSITION = -160;
-		public static final double WRIST_TRAP_POSITION = -155;
-		public static final double WRIST_SPIT_POSITION = -100;
+		public static final double WRIST_INTAKE_POSITION = 200;
+		public static final double WRIST_TRAP_POSITION = 129.765372;
+		public static final double WRIST_SPIT_POSITION = -6;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
 
@@ -185,7 +186,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0;
+		public static final double POSITION_PID_P = 0.006;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -204,24 +205,25 @@ public final class Constants {
 		public static final double POSITION_FF_A = 0;
 
 		public static final double ARM_REST_POSITION = -30;
-		public static final double ARM_AMP_POSITION = 120;
+		public static final double ARM_AMP_POSITION = 125;
 		public static final double ARM_INTAKE_POSITION = -25;
-		public static final double ARM_TRAP_POSITION = 0;
+		public static final double ARM_TRAP_POSITION = 55;
 		public static final double ARM_SPEAKER_POSITION = 0;
+		public static final double ARM_PRETRAP_POSITION = 168;
 		
 		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 
 		public static final double ARM_DEGREES_TO_0 = -33;
 		public static final double ARM_GEAR_RATIO = 5;
 
-		public static final double ARM_ENCODER_DEGREES_TO_0 = 20;
+		public static final double ARM_ENCODER_DEGREES_TO_0 = -130;
 		public static final double ARM_NEVER_POSITION = 90;
 
 		public static final double ARM_WRIST_TIMEOUT = 1.25;
 	}
 
 	public static final class Lights {
-		public static final int LEDS_PORT = 0;
+		public static final int LEDS_PORT = 2;
 
 		public static final double GREEN_COLOR = 0.77;
 		public static final double RED_COLOR = 0.61;

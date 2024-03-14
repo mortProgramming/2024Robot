@@ -17,20 +17,7 @@ public class RobotContainer {
 	public RobotContainer() { 
     drivetrain = Drivetrain.getInstance();
 		// initialize subsystems (TODO)
-		while(DriverStation.isDSAttached()){
-			//do nothing. Forces RobotContainer to wait until DS is connected
-
-		}
-		if(DriverStation.isFMSAttached()){
-			System.out.println("DRIVERSTATION CONNECTED AND FMS CONNECTION ESTABLISHED, INITIALIZING SUBSYSTEMS");
-		}else{
-			System.out.println("NO FMS CONNECTION DETECTED, INITIALIZING SUBSYSTEMS");
-		}
-		//During a match, if these three lights are on, autonomous is good to run if on BLUE
-		//if on red, final boolean should be false
-		SmartDashboard.putBoolean("DS CONNECTED", DriverStation.isDSAttached());
-		SmartDashboard.putBoolean("FMS CONNECTED", DriverStation.isFMSAttached());
-		SmartDashboard.putBoolean("TRUE IF BLUE ALLIANCE", DriverStation.getAlliance().get() == Alliance.Blue);
+		
     	Control.init();
     	Control.configure();
 

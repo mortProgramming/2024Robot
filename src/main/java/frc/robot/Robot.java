@@ -5,12 +5,17 @@
 package frc.robot;
 
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.utility.Control;
 import frc.robot.utility.Odometer;
-import edu.wpi.first.net.PortForwarder;
+
+import java.sql.Driver;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,6 +37,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		robotContainer = new RobotContainer();
 		Odometer.OdometerInit();
+		System.out.println("RobotInit");
 	}
 
 	/**
@@ -53,10 +59,23 @@ public class Robot extends TimedRobot {
 	/** This function is called once each time the robot enters Disabled mode. */
 	@Override
 	public void disabledInit() {
+		
+		
 	}
 
 	@Override
 	public void disabledPeriodic() {
+		Alliance alliance = Alliance.Blue;
+		if(DriverStation.isDSAttached()){
+			if(DriverStation.isFMSAttached()){
+				if (DriverStation.getAlliance().get() != alliance){
+					System.out.println("REGENERATING SUBSYSTEMS");
+					Control.init();
+					Control.configure();
+					alliance = DriverStation.getAlliance().get();
+				}
+			}
+		}
 	}
 
 	/**

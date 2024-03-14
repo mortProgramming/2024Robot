@@ -1,24 +1,21 @@
 package frc.robot.subsystems;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.utility.Constants.Vision.Pipeline;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import static frc.robot.utility.Constants.Vision.AMOUNT_TEST_FRAMES;
+import static frc.robot.utility.Constants.Vision.MAX_OUTLIERS;
 
-import static frc.robot.utility.Constants.Vision.*;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class Vision extends SubsystemBase {
     public static Vision vision;
-
+		private Alliance defaultAlliance = Alliance.Blue;
     	private NetworkTable tagTable;
 		private NetworkTable intakeTable;
 	
@@ -64,17 +61,6 @@ public class Vision extends SubsystemBase {
 
 	/**
 	 * 
-	 * @return The area of the targeted apriltag, if any. -1 if no target found
-	 */
-    public double getTagArea() {
-		if(hasTag()){
-			return tagTable.getEntry("ta").getDouble(0);
-		}
-		return -1;
-		
-	}
-	/**
-	 * 
 	 * @return The area of the targeted note piece, if any. -1 if no target found
 	 */
 	public double getNoteArea() {
@@ -85,8 +71,21 @@ public class Vision extends SubsystemBase {
 		
 	}
 
+	public void setNoteCamLights(int input) {
+		tagTable.getEntry("ledMode").setNumber(input);
+	}
 
-
+	/**
+	 * 
+	 * @return The area of the targeted apriltag, if any. -1 if no target found
+	 */
+    public double getTagArea() {
+		if(hasTag()){
+			return tagTable.getEntry("ta").getDouble(0);
+		}
+		return -1;
+		
+	}
 
 	// Translation (x, y, z) Rotation(pitch, yaw, roll)
 	/**
@@ -171,12 +170,16 @@ public class Vision extends SubsystemBase {
 	 */
 	public Pose2d getPose() {
 		double[] poseNum = new double[6];
-
-		// if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-		// 	poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
-		// } else {
-		// 	poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
-		// }
+		if(DriverStation.isDSAttached()){
+			if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+				poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
+			} else {
+				poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+			}
+		}else{
+			poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+		}
+		
 
 		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));
 	}
@@ -234,11 +237,16 @@ public class Vision extends SubsystemBase {
 	public double[] getFieldPoseAsArray() {
 		double[] poseNum = new double[6];
 		
-		if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-			poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
-		} else {
+		if(DriverStation.isDSAttached()){
+			if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+				poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
+			} else {
+				poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+			}
+		}else{
 			poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
 		}
+		
 
 		return poseNum;
 	}
