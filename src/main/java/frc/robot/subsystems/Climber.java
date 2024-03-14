@@ -10,7 +10,6 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,7 +43,7 @@ public class Climber extends SubsystemBase {
     private ArmFeedforward rightClimberPostionFeedForward;
     private ArmFeedforward leftClimberPostionFeedForward;
 
-    private double tolerance = 1;
+    private double tolerance = 4;
 
     private static boolean velocityMode;
 

@@ -134,12 +134,6 @@ public class Odometer{
         publisher.set(new Pose2d(new Translation2d(getPoseY(), getPoseX()), getPoseRotate()));
         // SmartDashboard.putNumber("swerveTimed", MathSharedStore.getTimestamp());
     }
-    public static void updateOdometryIgnoreLimelight() {
-        odometry.update(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions());    
-        
-        SmartDashboard.putNumber("SwervePoseX", getPoseX());
-	    SmartDashboard.putNumber("swervePoseY", getPoseY());
-        // SmartDashboard.putNumber("swerveTimed", MathSharedStore.getTimestamp());
-    }
+    
     
 }

@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
 	private Command autonomousCommand;
+	private Alliance alliance = Alliance.Blue;
+	private boolean regenSub = false;
 
 	private RobotContainer robotContainer;
 
@@ -65,7 +67,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		Alliance alliance = Alliance.Blue;
+		SmartDashboard.putBoolean("SUBSYSTEMS REGENERATED", regenSub);
 		if(DriverStation.isDSAttached()){
 			if(DriverStation.isFMSAttached()){
 				if (DriverStation.getAlliance().get() != alliance){
@@ -95,7 +97,7 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during autonomous. */
 	@Override
 	public void autonomousPeriodic() {
-		Odometer.updateOdometryIgnoreLimelight();
+		Odometer.updateOdometry();
 		// Odometer.updateOdometryIgnoreLimelight();
 
 	}

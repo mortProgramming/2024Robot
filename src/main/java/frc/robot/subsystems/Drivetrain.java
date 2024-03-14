@@ -115,8 +115,6 @@ public class Drivetrain extends SubsystemBase {
 				.withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER).withSteerOffset(BACK_RIGHT_STEER_OFFSET)
 				.build();
 			
-		//Drivetrain odometry setup
-		// driveOdometry = new SwerveDriveOdometry(driveKinematics, getGyroscopeRotation(), getModulePositions());
 
 		//	Initialization of PID controller x
 		xController = new PIDController(0.8, 0, 0);
@@ -188,7 +186,7 @@ public class Drivetrain extends SubsystemBase {
 	public Rotation2d getGyroscopeRotation() {
 		if (navX.isMagnetometerCalibrated()) {
 			// We will only get valid fused headings if the magnetometer is calibrated
-			return Rotation2d.fromDegrees(toCircle(navX.getFusedHeading()-fieldOrientationOffset));
+			return Rotation2d.fromDegrees(360.0 - toCircle(navX.getFusedHeading()-fieldOrientationOffset));
 		}
 
 		// We have to invert the angle of the NavX so that rotating the robot
