@@ -19,6 +19,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -60,7 +61,7 @@ public class Drivetrain extends SubsystemBase {
 	private static Drivetrain drivetrain;
 
 	public Drivetrain() {
-		navX = new AHRS(SerialPort.Port.kMXP);
+		navX = new AHRS(SPI.Port.kMXP);
 		// navX = new AHRS(I2C.Port.kMXP);
 		
 		driveKinematics = new SwerveDriveKinematics(
@@ -358,6 +359,7 @@ public class Drivetrain extends SubsystemBase {
 		setModuleStates(states);
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
 		SmartDashboard.putNumber("ThrottleThing", Control.getThrottle());
+		SmartDashboard.putNumber("Other angle", navX.getYaw());
 	}
 
 	/**

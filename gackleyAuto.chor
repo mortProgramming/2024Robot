@@ -16,8 +16,8 @@
         "TwoPiece": {
             "waypoints": [
                 {
-                    "x": 1.5131397247314453,
-                    "y": 7.395670413970947,
+                    "x": 1.5153143405914307,
+                    "y": 7.3950629234313965,
                     "heading": -1.5713198524027956,
                     "isInitialGuess": false,
                     "translationConstrained": true,
@@ -46,6 +46,15 @@
                     "x": 1.9089418649673462,
                     "y": 7.843009948730469,
                     "heading": -1.5707963267948966,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
+                    "x": 6.851639270782471,
+                    "y": 5.5926337242126465,
+                    "heading": 0,
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
@@ -431,7 +440,7 @@
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "GackleyAuto": {
             "waypoints": [
