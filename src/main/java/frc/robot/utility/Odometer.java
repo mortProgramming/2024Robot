@@ -109,7 +109,9 @@ public class Odometer{
    public static void resetOdometry(Pose2d inputPose){
     odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), inputPose);
    }
-
+/**
+ * OMEGA MUST BE IN RADIANS
+ */
    public static void resetOdometry(double x, double y, double omega){
     odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), 
     new Pose2d(-x, -y, new Rotation2d(omega)));
@@ -122,6 +124,7 @@ public class Odometer{
         //checks if Limelight pose measurements are within a certain amount of the ones given by the encoders. If they aren't, the vision measurements are disregarded
         //Pose Comparison will not happen if limelight doesnt have a target
         //Pose comparison will not check angular measurement. We assume the limelight is more accurate in that regard
+        //Override will happen if either x or y axis is within max error
         if(vision.hasTag()){
             if(Math.abs(getPoseX()-vision.getX())<Constants.Vision.MAX_POSE_ERROR_METERS || Math.abs(getPoseY()-vision.getY())<Constants.Vision.MAX_POSE_ERROR_METERS){
                 odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp());
