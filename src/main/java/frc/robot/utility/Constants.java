@@ -96,7 +96,7 @@ public final class Constants {
         public static final double MAX_THROTTLE = 1;
         public static final double MIN_THROTTLE = 0.3;
 		public static final double MIN_ROTATE = 0.3;
-        public static final double DEAD_BAND = 0.07;
+        public static final double DEAD_BAND = 0.05;
 
 		public static final double DRIVEBASE_RADIUS_IN_METERS = Units.inchesToMeters(14);
 	}
