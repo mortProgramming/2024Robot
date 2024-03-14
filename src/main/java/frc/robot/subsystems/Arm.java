@@ -45,7 +45,7 @@ public class Arm extends SubsystemBase {
         masterArmMotor = new TalonFX(MASTER_ARM_MOTOR);
         followArmMotor = new TalonFX(FOLLOW_ARM_MOTOR);
 
-        followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, false));
+        followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, true));
 
         // masterArmMotor.set
 
@@ -159,7 +159,7 @@ public class Arm extends SubsystemBase {
             degrees -= 360;
         }
 
-        degrees = - degrees;
+        degrees = degrees;
 
         return degrees;
         // if(getEncoderPosition() < 0) {

@@ -36,4 +36,7 @@ public class SetArmAndWristPos extends SequentialCommandGroup{
     public final static SetArmAndWristPos zero(){
         return new SetArmAndWristPos(0, 0);
     }
+    public final static SetArmAndWristPos trap(){
+        return new SetArmAndWristPos(ARM_TRAP_POSITION, WRIST_TRAP_POSITION);
+    }
 }

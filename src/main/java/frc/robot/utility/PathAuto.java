@@ -58,7 +58,8 @@ public class PathAuto extends SubsystemBase {
     (Pose2d startPose) -> {Odometer.resetOdometry(startPose);}, //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
     () -> {return drivetrain.getChassisSpeeds();}, //get the current ROBOT RELATIVE SPEEDS
     (ChassisSpeeds robotRelativeOutput) -> {drivetrain.drive(robotRelativeOutput);}, //makes the robot move given ROBOT RELATIVE CHASSISSPEEDS
-    new HolonomicPathFollowerConfig(new PIDConstants(AutonConstants.AUTON_POSITION_KP, AutonConstants.AUTON_POSITION_KI, AutonConstants.AUTON_POSITION_KD), //position PID
+    new HolonomicPathFollowerConfig(
+      new PIDConstants(AutonConstants.AUTON_POSITION_KP, AutonConstants.AUTON_POSITION_KI, AutonConstants.AUTON_POSITION_KD), //position PID
         new PIDConstants(AutonConstants.AUTON_ROTATION_KP, AutonConstants.AUTON_ROTATION_KI, AutonConstants.AUTON_ROTATION_KD), //rotation PID
         AutonConstants.MAX_AUTON_VELOCITY, //max Module Speed in M/s
         RobotSpecs.DRIVEBASE_RADIUS_IN_METERS, //todo: Find this number

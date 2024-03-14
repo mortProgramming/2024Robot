@@ -33,7 +33,8 @@ public class Intake extends SubsystemBase {
     public void init() {
     //add motor initialization
     }
-    public boolean hasNote(){
+    
+    public static boolean hasNote(){
         return !input.get();
     }
 
