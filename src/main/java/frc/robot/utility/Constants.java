@@ -94,7 +94,7 @@ public final class Constants {
         public static final double MAX_THROTTLE = 1;
         public static final double MIN_THROTTLE = 0.3;
 		public static final double MIN_ROTATE = 0.3;
-        public static final double DEAD_BAND = 0.05;
+        public static final double DEAD_BAND = 0.025;
 		public static final double TWIST_DEAD_BAND = 0.1;
 
 		public static final double DRIVEBASE_RADIUS_IN_METERS = Units.inchesToMeters(14);
@@ -146,7 +146,7 @@ public final class Constants {
 		public static final double INTAKE_SPEED = 0.4;
 		public static final double AMP_SHOOT_SPEED = -0.25;
 		public static final double SHOOTER_SHOOT_SPEED = -1;
-		public static final double AUTO_SHOOT_SPEED = -0.;
+		public static final double AUTO_SHOOT_SPEED = -0.2;
 
 		public static final int INTAKE_SENSOR = 0;
 	}
@@ -190,7 +190,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.008;
+		public static final double POSITION_PID_P = 0.007;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -208,22 +208,22 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0.00;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double ARM_REST_POSITION = -30;
-		public static final double ARM_AMP_POSITION = 125;
+		public static final double ARM_REST_POSITION = -32;
+		public static final double ARM_AMP_POSITION = 92;  //169
 		public static final double ARM_INTAKE_POSITION = -25;
-		public static final double ARM_TRAP_POSITION = 55;
+		public static final double ARM_TRAP_POSITION = 65;
 		public static final double ARM_SPEAKER_POSITION = 0;
-		public static final double ARM_PRETRAP_POSITION = 168;
+		public static final double ARM_PRETRAP_POSITION = 130;
 		
 		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 
 		public static final double ARM_DEGREES_TO_0 = -33;
 		public static final double ARM_GEAR_RATIO = 5;
 
-		public static final double ARM_ENCODER_DEGREES_TO_0 = -130;
+		public static final double ARM_ENCODER_DEGREES_TO_0 = -80;
 		public static final double ARM_NEVER_POSITION = 90;
 
-		public static final double ARM_WRIST_TIMEOUT = 1.25;
+		public static final double ARM_WRIST_TIMEOUT = 1.6;
 	}
 
 	public static final class Lights {

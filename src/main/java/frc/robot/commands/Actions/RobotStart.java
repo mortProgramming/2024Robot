@@ -25,7 +25,6 @@ public class RobotStart extends SequentialCommandGroup {
     addCommands(
       new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
       SetArmAndWristPos.rest().withTimeout(0.05),
-      new InstantCommand(() -> Odometer.resetOdometry()),
       new InstantCommand(() -> drivetrain.setIsBlue(true))
 
     );

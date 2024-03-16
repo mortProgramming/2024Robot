@@ -12,6 +12,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "FieldOrient"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "TwoPieceOne"

@@ -4,6 +4,7 @@ import static frc.robot.utility.Constants.Drivetrain.*;
 import static frc.robot.utility.Constants.RobotSpecs.*;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.swervedrivespecialties.swervelib.MkModuleConfiguration;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -59,10 +60,14 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController rotateToAngleController;
 	//Declaration of drivetrain variable
 	private static Drivetrain drivetrain;
+	private MkModuleConfiguration defaultDriveConfig;
 
 	public Drivetrain() {
 		navX = new AHRS(SPI.Port.kMXP);
 		// navX = new AHRS(I2C.Port.kMXP);
+		defaultDriveConfig = new MkModuleConfiguration();
+		defaultDriveConfig.setDriveCurrentLimit(Double.NaN);
+		
 		
 		driveKinematics = new SwerveDriveKinematics(
 				// Front left
@@ -80,17 +85,16 @@ public class Drivetrain extends SubsystemBase {
 		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
 		//	Builds Front left swerve module with motors and encoders
-		frontLeftModule = new MkSwerveModuleBuilder()
+		frontLeftModule = new MkSwerveModuleBuilder(defaultDriveConfig)
 				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, FRONT_LEFT_DRIVE)
 				.withSteerMotor(MotorType.FALCON, FRONT_LEFT_STEER)
 				.withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER).withSteerOffset(FRONT_LEFT_STEER_OFFSET)
 				.build();
-		
 
 		//	Builds Front Right swerve module with motors and encoders
-		frontRightModule = new MkSwerveModuleBuilder()
+		frontRightModule = new MkSwerveModuleBuilder(defaultDriveConfig)
 				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, FRONT_RIGHT_DRIVE)
@@ -99,7 +103,7 @@ public class Drivetrain extends SubsystemBase {
 				.build();
 
 		//	Builds Back left swerve module with motors and encoders
-		backLeftModule = new MkSwerveModuleBuilder()
+		backLeftModule = new MkSwerveModuleBuilder(defaultDriveConfig)
 				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, BACK_LEFT_DRIVE)
@@ -108,7 +112,7 @@ public class Drivetrain extends SubsystemBase {
 				.build();
 
 		//	Builds Back Right swerve module with motors and encoders
-		backRightModule = new MkSwerveModuleBuilder()
+		backRightModule = new MkSwerveModuleBuilder(defaultDriveConfig)
 				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, BACK_RIGHT_DRIVE)

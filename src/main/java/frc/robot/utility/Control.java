@@ -127,12 +127,12 @@ public class Control {
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(0)));
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
-        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+        joystick.button(9).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
         joystick.button(3).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
 
 
-        joystick.button(2).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
-        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
+        joystick.button(9).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
+        joystick.button(9).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
         joystick.button(3).whileTrue(
             new InstantCommand(() -> drivetrain.setKeptAngle(
                 Drivetrain.toCircle(
@@ -141,7 +141,7 @@ public class Control {
             )
         );
 
-        joystick.button(2).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
+        joystick.button(9).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
         joystick.button(3).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
 
@@ -181,8 +181,8 @@ public class Control {
         xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
-        joystick.button(5).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
-        joystick.button(5).toggleOnTrue(SetArmAndWristPos.trap());
+        joystick.button(12).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
+        joystick.button(12).toggleOnTrue(SetArmAndWristPos.trap());
         joystick.button(11).toggleOnTrue(new ClimberToVelocity(zeroSupplier, zeroSupplier));
         xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
         xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));

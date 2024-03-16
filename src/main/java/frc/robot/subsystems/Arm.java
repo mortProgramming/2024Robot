@@ -108,7 +108,7 @@ public class Arm extends SubsystemBase {
     }
 
     public void setArmVelocityG(double armSpeed){
-        this.armSpeed = armSpeed + POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees()));
+        this.armSpeed = armSpeed + POSITION_FF_G * Math.cos(Math.toRadians(encoderToDegrees()));
     }
 
     // public void setArmVelocityArmFeed(double armSpeed){
@@ -159,7 +159,11 @@ public class Arm extends SubsystemBase {
             degrees -= 360;
         }
 
-        degrees = degrees;
+        if (degrees < -90 && degrees > -270) {
+            degrees += 360;
+        }
+
+        // degrees = degrees;
 
         return degrees;
         // if(getEncoderPosition() < 0) {
@@ -209,8 +213,8 @@ public class Arm extends SubsystemBase {
     }
 
     private double setPosition(double setpoint) {
-		double output = (POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees())))
-        - armPositionController.calculate(posToDegrees(), setpoint);
+		double output = (POSITION_FF_G * Math.cos(Math.toRadians(encoderToDegrees())))
+        - armPositionController.calculate(encoderToDegrees(), setpoint);
 		// if (output >= 1){
 		// 	output = 0.1;
 		// } else if (output <= -1) {
