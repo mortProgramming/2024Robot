@@ -145,7 +145,7 @@ public class Arm extends SubsystemBase {
 	}
 
     public double posToDegrees(){
-        return (getPosition() * ARM_GEAR_RATIO)  + ARM_DEGREES_TO_0;
+        return (getPosition() * ARM_GEAR_RATIO)  +  ARM_DEGREES_TO_0;
     }
 
     //encoder

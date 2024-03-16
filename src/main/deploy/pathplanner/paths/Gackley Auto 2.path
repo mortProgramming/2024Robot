@@ -1,0 +1,92 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.8267774427286747,
+        "y": 7.8
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.826777442728675,
+        "y": 7.8
+      },
+      "isLocked": false,
+      "linkedName": "Amp"
+    },
+    {
+      "anchor": {
+        "x": 5.813317469865345,
+        "y": 6.971077125052112
+      },
+      "prevControl": {
+        "x": 4.662846000276325,
+        "y": 7.331818179075787
+      },
+      "nextControl": {
+        "x": 6.530510280344661,
+        "y": 6.746194633630632
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 6.863829784666696
+      },
+      "prevControl": {
+        "x": 7.858059357898743,
+        "y": 6.863829784666696
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "note 1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": -90.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeStayOut",
+      "waypointRelativePos": 0.8,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeStayOut"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.39,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 800.0,
+    "maxAngularAcceleration": 400.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "Gackley Auto",
+  "previewStartingState": {
+    "rotation": -90.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

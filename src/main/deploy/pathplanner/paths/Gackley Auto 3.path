@@ -1,0 +1,114 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 6.863829784666696
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.270256540513081,
+        "y": 6.863829784666696
+      },
+      "isLocked": false,
+      "linkedName": "note 1"
+    },
+    {
+      "anchor": {
+        "x": 5.24783149328769,
+        "y": 6.756582444281278
+      },
+      "prevControl": {
+        "x": 5.7478314932876895,
+        "y": 7.168509728943449
+      },
+      "nextControl": {
+        "x": 4.74783149328769,
+        "y": 6.344655159619108
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.827292324418378,
+        "y": 6.600586312811581
+      },
+      "prevControl": {
+        "x": 6.295493787394939,
+        "y": 6.698540914896557
+      },
+      "nextControl": {
+        "x": 7.359090861441818,
+        "y": 6.502631710726605
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.792518387887133,
+        "y": 6.1520974348362
+      },
+      "prevControl": {
+        "x": 6.792518387887133,
+        "y": 6.1520974348362
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "note 2"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -160.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Outtake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.39,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 800.0,
+    "maxAngularAcceleration": 400.0
+  },
+  "goalEndState": {
+    "velocity": 0.5,
+    "rotation": 0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "Gackley Auto",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

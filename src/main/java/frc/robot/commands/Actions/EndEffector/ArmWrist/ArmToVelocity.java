@@ -1,32 +1,32 @@
-package frc.robot.commands.Actions.EndEffector;
+package frc.robot.commands.Actions.EndEffector.ArmWrist;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.Arm;
 
 import java.util.function.DoubleSupplier;
 
-public class WristToVelocity extends Command{
-    private Wrist wrist;
+
+public class ArmToVelocity extends Command{
+    private Arm arm;
     private DoubleSupplier velocity;
 
-    public WristToVelocity(DoubleSupplier velocity){
+    public ArmToVelocity(DoubleSupplier velocity){
         this.velocity = velocity;
-        wrist = Wrist.getInstance();
-        addRequirements(wrist);
+        arm = Arm.getInstance();
+        addRequirements(arm);
     }
 
     @Override
     public void initialize() {
         // TODO Auto-generated method stub
         super.initialize();
-        wrist.setVelocityMode(true);
+        arm.setVelocityMode(true);
     }
 
     @Override
     public void execute() {
-        // wrist.setWristVelocity(velocity.getAsDouble());
-        wrist.setWristVelocityWristFeed(velocity.getAsDouble());
-        
+        // arm.setArmVelocity(velocity.getAsDouble());
+        arm.setArmVelocityG(velocity.getAsDouble());
     }
 
     @Override

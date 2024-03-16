@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.5136740962318043,
+        "y": 7.380566970160069
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.5461177361101157,
+        "y": 7.367317298737161
+      },
+      "isLocked": false,
+      "linkedName": "Start"
+    },
+    {
+      "anchor": {
+        "x": 1.8267774427286747,
+        "y": 7.8
+      },
+      "prevControl": {
+        "x": 1.8384705840636755,
+        "y": 7.8
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Amp"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 0.8,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 800.0,
+    "maxAngularAcceleration": 400.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Gackley Auto",
+  "previewStartingState": {
+    "rotation": -90.40235138828466,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

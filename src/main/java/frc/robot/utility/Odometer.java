@@ -57,6 +57,7 @@ public class Odometer{
 
         timer = new Timer();
         timer.start();
+        
     }
 
    
@@ -66,11 +67,11 @@ public class Odometer{
     }
 
     public static double getPoseX () {
-        return -odometry.getEstimatedPosition().getX();
+        return odometry.getEstimatedPosition().getX();
     }
 
     public static double getPoseY () {
-        return -odometry.getEstimatedPosition().getY();
+        return odometry.getEstimatedPosition().getY();
     }
 
     public static Translation2d getPoseTranslation2d() {
@@ -92,13 +93,13 @@ public class Odometer{
 
     public static void resetOdometry(boolean visionOverride){
         if(visionOverride){
-            odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), vision.getFieldPose());
+            odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), vision.getFieldPose());
         }
         // odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
    }
 
    public static void resetOdometry() {
-    odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
+    odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
     }
 
    /**
@@ -107,19 +108,19 @@ public class Odometer{
     * Resets the translation and rotation to the given input pose. Mostly used by path-based autonomous routines with a start position.
     */
    public static void resetOdometry(Pose2d inputPose){
-    odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), inputPose);
+    odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), inputPose);
    }
 /**
  * OMEGA MUST BE IN RADIANS
  */
    public static void resetOdometry(double x, double y, double omega){
-    odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), 
-    new Pose2d(-x, -y, new Rotation2d(omega)));
+    odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), 
+    new Pose2d(y, -x, new Rotation2d(omega)));
    }
    
 
    public static void updateOdometry () {
-        odometry.update(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions());
+        odometry.update(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions());
         
         //checks if Limelight pose measurements are within a certain amount of the ones given by the encoders. If they aren't, the vision measurements are disregarded
         //Pose Comparison will not happen if limelight doesnt have a target
@@ -134,7 +135,7 @@ public class Odometer{
         SmartDashboard.putNumber("SwervePoseX", getPoseX());
 	    SmartDashboard.putNumber("swervePoseY", getPoseY());
 
-        publisher.set(new Pose2d(new Translation2d(getPoseY(), getPoseX()), getPoseRotate()));
+        publisher.set(new Pose2d(new Translation2d(getPoseX(), getPoseY()), getPoseRotate()));
         // SmartDashboard.putNumber("swerveTimed", MathSharedStore.getTimestamp());
     }
     

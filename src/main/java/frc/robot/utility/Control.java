@@ -20,16 +20,18 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Actions.EndEffector.LightsCommand;
-import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
-import frc.robot.commands.Actions.EndEffector.WristToPosition;
-import frc.robot.commands.Actions.EndEffector.WristToVelocity;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToPosition;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToVelocity;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.WristToPosition;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.WristToVelocity;
 import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
-import frc.robot.commands.Actions.EndEffector.ArmToPosition;
-import frc.robot.commands.Actions.EndEffector.ArmToVelocity;
 import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
 import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
 import frc.robot.commands.Teleop.DrivetrainCommand;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
@@ -122,7 +124,7 @@ public class Control {
         arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
-        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(180)));
+        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(0)));
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
         joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
@@ -143,7 +145,7 @@ public class Control {
         joystick.button(3).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
 
-        joystick.button(8).whileTrue(new IntakeBeamBreak());
+        joystick.button(8).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(new Pose2d(1.515,7.395, Rotation2d.fromRadians(-1.571)))));
 
         joystick.button(6).whileTrue(new MoveToAprilTag(15));
 
@@ -180,8 +182,7 @@ public class Control {
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
         joystick.button(5).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
-        joystick.button(5).toggleOnTrue(new ArmToPosition(ARM_TRAP_POSITION));
-        joystick.button(5).toggleOnTrue(new WristToPosition(WRIST_TRAP_POSITION));
+        joystick.button(5).toggleOnTrue(SetArmAndWristPos.trap());
         joystick.button(11).toggleOnTrue(new ClimberToVelocity(zeroSupplier, zeroSupplier));
         xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
         xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
@@ -301,7 +302,7 @@ public class Control {
      * @return
      */
     public static double getJoystickX() {
-		return (modifyAxis1(joystick.getX(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
+		return -(modifyAxis1(joystick.getX(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
 	}
 
     /**
@@ -309,7 +310,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickY() {
-		return (modifyAxis1(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
+		return -(modifyAxis1(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
 	}
 
     /**

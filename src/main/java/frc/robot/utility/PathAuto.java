@@ -12,16 +12,17 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.Actions.RobotStart;
-import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
-import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
 import frc.robot.commands.Actions.EndEffector.SpitNote;
-import frc.robot.commands.Actions.EndEffector.WristToPosition;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToPosition;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.WristToPosition;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Wrist;
 
 import static frc.robot.utility.Constants.Arm.ARM_WRIST_TIMEOUT;
+import static frc.robot.utility.Constants.Intake.AUTO_SHOOT_SPEED;
 import static frc.robot.utility.Constants.Intake.INTAKE_SPEED;
 import static frc.robot.utility.Constants.Intake.SHOOTER_SHOOT_SPEED;
 import static frc.robot.utility.Constants.Wrist.WRIST_INTAKE_POSITION;
@@ -47,6 +48,9 @@ public class PathAuto extends SubsystemBase {
   private static Drivetrain drivetrain;
   private static PathPlannerAuto twoPiece;
   private static PathPlannerAuto gackleyAuto;
+  private static PathPlannerAuto bieryAuto;
+  private static PathPlannerAuto pureTwoPiece;
+  private static PathPlannerAuto gackleyAutoPure;
 
   public static void init() {
     drivetrain = Drivetrain.getInstance();
@@ -68,14 +72,16 @@ public class PathAuto extends SubsystemBase {
     drivetrain);
 
     NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
+      new WristToPosition(WRIST_REST_POSITION).withTimeout(.25),
       SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
-      new IntakeToVelocity(-0.5).withTimeout(.6),
+      new IntakeToVelocity(AUTO_SHOOT_SPEED).withTimeout(1),
       SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
     ).withTimeout(3.45));
 
     NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
       new IntakeBeamBreak(WRIST_REST_POSITION)
     ));
+    
     NamedCommands.registerCommand("IntakeStayOut", new ParallelCommandGroup(//Active intake and bring wrist out
       new IntakeBeamBreak(WRIST_INTAKE_POSITION)
     ));
@@ -90,13 +96,24 @@ public class PathAuto extends SubsystemBase {
     //build all path-based autons
     twoPiece = new PathPlannerAuto("PathPlanner 2Piece");
     gackleyAuto = new PathPlannerAuto("Gackley Auto");
+    bieryAuto = new PathPlannerAuto("BieryWildAuto");
+    gackleyAutoPure = new PathPlannerAuto("GackleyAuto1");
   }
   
   public static Command getTwoPiece(){
     return twoPiece;
   }
+  public static Command getPurePathTwoPiece(){
+    return pureTwoPiece;
+  }
   public static Command getGackleyAuto(){
     return gackleyAuto;
+  }
+  public static Command getBieryAuto(){
+    return bieryAuto;
+  }
+  public static Command getGackleyAutoPure(){
+    return gackleyAutoPure;
   }
 
   @Override

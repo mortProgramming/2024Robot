@@ -10,15 +10,10 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
 import frc.robot.commands.Actions.Drivetrain.TimedDrive;
-import frc.robot.commands.Actions.EndEffector.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.utility.Constants;
-
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-
-import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToPosition;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
 
 public class ScoreAmpTwiceR extends SequentialCommandGroup {
   /** Creates a new TwoPiece. */

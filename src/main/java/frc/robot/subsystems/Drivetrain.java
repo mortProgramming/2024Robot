@@ -87,6 +87,7 @@ public class Drivetrain extends SubsystemBase {
 				.withSteerMotor(MotorType.FALCON, FRONT_LEFT_STEER)
 				.withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER).withSteerOffset(FRONT_LEFT_STEER_OFFSET)
 				.build();
+		
 
 		//	Builds Front Right swerve module with motors and encoders
 		frontRightModule = new MkSwerveModuleBuilder()
@@ -114,7 +115,12 @@ public class Drivetrain extends SubsystemBase {
 				.withSteerMotor(MotorType.FALCON, BACK_RIGHT_STEER)
 				.withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER).withSteerOffset(BACK_RIGHT_STEER_OFFSET)
 				.build();
-			
+		
+		frontLeftModule.getDriveMotor().setInverted(false);
+		frontRightModule.getDriveMotor().setInverted(false);
+		backLeftModule.getDriveMotor().setInverted(false);
+		backRightModule.getDriveMotor().setInverted(false);
+
 
 		//	Initialization of PID controller x
 		xController = new PIDController(0.8, 0, 0);
@@ -196,13 +202,28 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	/**
+	 * Gets the current rotation of the robot from its gyroscope
+	 * @return Rotation2d
+	 * Rotation of the robot as a Rotation2d
+	 */
+	public Rotation2d getAbsoluteGyroscopeRotation() {
+		if (navX.isMagnetometerCalibrated()) {
+			// We will only get valid fused headings if the magnetometer is calibrated
+			return Rotation2d.fromDegrees(360.0 - toCircle(navX.getFusedHeading()));
+		}
+
+		// We have to invert the angle of the NavX so that rotating the robot
+		// counter-clockwise
+		// makes the angle increase.
+		return Rotation2d.fromDegrees(360.0 - toCircle(navX.getYaw()));
+	}
+
+	/**
 	 * @return SwerveDriveKinematics
 	 */
 	public SwerveDriveKinematics getDriveKinematics() {
 		return driveKinematics;
 	}
-
-	
 
 	/**
 	 * Gets the position of each swerve module
@@ -229,13 +250,13 @@ public class Drivetrain extends SubsystemBase {
 		SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
 		frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[0].angle.getRadians() + Math.toRadians(90));
+				states[0].angle.getRadians());
 		frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[1].angle.getRadians() + Math.toRadians(90));
+				states[1].angle.getRadians());
 		backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[2].angle.getRadians() + Math.toRadians(90));
+				states[2].angle.getRadians());
 		backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[3].angle.getRadians() + Math.toRadians(90));
+				states[3].angle.getRadians());
 	}
 
 	/**

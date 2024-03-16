@@ -5,7 +5,7 @@
       "x": 1.5136740962318043,
       "y": 7.380566970160069
     },
-    "rotation": -90.26314047783393
+    "rotation": -88.63607246839715
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TwoPieceOne"
+            "pathName": "Gackley Auto 1"
           }
         },
         {
@@ -26,13 +26,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TwoPieceTwo"
+            "pathName": "Gackley Auto 2"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ScoreInAmp"
+            "pathName": "Gackley Auto 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Gackley Auto 4"
           }
         }
       ]

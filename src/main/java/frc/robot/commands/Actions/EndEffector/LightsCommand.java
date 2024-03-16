@@ -28,7 +28,7 @@ public class LightsCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Intake.hasNote()) {
+    if (Intake.getInstance().hasNote()) {
         lights.setLightsGreen();
         vision.setNoteCamLights(2);
     }
@@ -46,6 +46,6 @@ public class LightsCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

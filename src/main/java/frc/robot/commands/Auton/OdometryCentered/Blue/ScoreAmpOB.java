@@ -7,7 +7,7 @@ import frc.robot.commands.Actions.RobotStart;
 import frc.robot.commands.Actions.Drivetrain.MoveToPosition;
 import frc.robot.commands.Actions.Drivetrain.TimedDrive;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
-import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
 
 public class ScoreAmpOB extends SequentialCommandGroup{
     public ScoreAmpOB() {

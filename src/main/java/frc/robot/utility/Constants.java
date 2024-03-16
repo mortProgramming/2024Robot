@@ -17,25 +17,25 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 3;
 		public final static int FRONT_LEFT_STEER = 4;
 		public final static int FRONT_LEFT_STEER_ENCODER = 35;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(286); //+-4
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(13+180+4); //+-4
 
 		/* Port and Declaration for Front Right swerve motors & offset */
 		public final static int FRONT_RIGHT_DRIVE = 1;
 		public final static int FRONT_RIGHT_STEER = 2;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 34;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(288); //+-7
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(16+180+4); //+-7
 
 		/* Port and Declaration for Back left swerve motors & offset */
 		public final static int BACK_LEFT_DRIVE = 5;
 		public final static int BACK_LEFT_STEER = 6;
 		public final static int BACK_LEFT_STEER_ENCODER = 36; 
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(190);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(280+180);
 
 		/* Port and Declaration for Back Right swerve motors & offset */
 		public final static int BACK_RIGHT_DRIVE = 7;
 		public final static int BACK_RIGHT_STEER = 8;
 		public final static int BACK_RIGHT_STEER_ENCODER = 37;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(324); //+-3
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(233); //+-3
 
 		public final static double XVALUE_KP = 1.1;
 		public final static double XVALUE_KI = 0;
@@ -57,15 +57,13 @@ public final class Constants {
 		public final static double TO_POSITION_KD = 0;
 
 		public static final class AutonConstants{
-			public static final double AUTON_POSITION_KP = 0.1;
+			public static final double AUTON_POSITION_KP = .81;
 
 
 			public static final double AUTON_POSITION_KI = 0;
 			public static final double AUTON_POSITION_KD = 0;
 	
-	
-
-			public static final double AUTON_ROTATION_KP = 0.1;
+			public static final double AUTON_ROTATION_KP = 3.2;
 
 			public static final double AUTON_ROTATION_KI = 0;
 			public static final double AUTON_ROTATION_KD = 0;
@@ -97,6 +95,7 @@ public final class Constants {
         public static final double MIN_THROTTLE = 0.3;
 		public static final double MIN_ROTATE = 0.3;
         public static final double DEAD_BAND = 0.05;
+		public static final double TWIST_DEAD_BAND = 0.1;
 
 		public static final double DRIVEBASE_RADIUS_IN_METERS = Units.inchesToMeters(14);
 	}
@@ -110,8 +109,8 @@ public final class Constants {
 
 		public static final int CLIMBER_LOCK_ANGLE = 25;
 
-		public static final double POSITION_PID_P = 0.03;
-		public static final double POSITION_PID_I = 0.00002;
+		public static final double POSITION_PID_P = 0.04;
+		public static final double POSITION_PID_I = 0.00003;
 		public static final double POSITION_PID_D = 0.0002;
 		public static final double POSITION_PID_V = 0;
 		public static final double POSITION_PID_A = 0;
@@ -121,11 +120,11 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double LEFT_CLIMBER_REST_POSITION = 175;
-		public static final double LEFT_CLIMBER_MAX_POSITION = 27;
+		public static final double LEFT_CLIMBER_REST_POSITION = 179;
+		public static final double LEFT_CLIMBER_MAX_POSITION = 39;
 
-		public static final double RIGHT_CLIMBER_MAX_POSITION = -24;
-		public static final double RIGHT_CLIMBER_REST_POSITION = -174;
+		public static final double RIGHT_CLIMBER_MAX_POSITION = -32;
+		public static final double RIGHT_CLIMBER_REST_POSITION = -175;
 
 		public static final double CLIMBER_NEAR_SETPOINT_ERROR = 0;
 
@@ -144,9 +143,10 @@ public final class Constants {
 
 		// public static final double INTAKE_SPEED = 0.25;
 		// public static final double SHOOT_SPEED = -0.50;
-		public static final double INTAKE_SPEED = 0.5;
-		public static final double AMP_SHOOT_SPEED = -0.3;
+		public static final double INTAKE_SPEED = 0.4;
+		public static final double AMP_SHOOT_SPEED = -0.25;
 		public static final double SHOOTER_SHOOT_SPEED = -1;
+		public static final double AUTO_SHOOT_SPEED = -0.;
 
 		public static final int INTAKE_SENSOR = 0;
 	}
@@ -173,7 +173,7 @@ public final class Constants {
 		public static final double WRIST_REST_POSITION = -12;
 		public static final double WRIST_SCORE_POSITION = 0;
 		public static final double WRIST_INTAKE_POSITION = 200;
-		public static final double WRIST_TRAP_POSITION = 129.765372;
+		public static final double WRIST_TRAP_POSITION = 125;
 		public static final double WRIST_SPIT_POSITION = -6;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
@@ -190,7 +190,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.006;
+		public static final double POSITION_PID_P = 0.008;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -199,7 +199,7 @@ public final class Constants {
 		// simple feed forward plus guess
 		// public static final double POSITION_FF_S = 0.47 / 12;
 		// public static final double POSITION_FF_G = -0.015;
-		public static final double POSITION_FF_G = -0.001;
+		public static final double POSITION_FF_G = -0.02;
 		// public static final double POSITION_FF_V = 0.07 / 12;
 		// public static final double POSITION_FF_A = 0.0182 / 12;
 
@@ -230,7 +230,7 @@ public final class Constants {
 		public static final int LEDS_PORT = 2;
 
 		public static final double GREEN_COLOR = 0.77;
-		public static final double RED_COLOR = 0.61;
+		public static final double RED_COLOR = -0.11; //0.61
 		public static final double BLUE_COLOR = 0.87;
 	}
 

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Actions.RobotStart;
 import frc.robot.commands.Actions.Drivetrain.TimedDrive;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
-import frc.robot.commands.Actions.EndEffector.SetArmAndWristPos;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
 import frc.robot.subsystems.Drivetrain;
 
 public class ScoreAmpB extends SequentialCommandGroup{

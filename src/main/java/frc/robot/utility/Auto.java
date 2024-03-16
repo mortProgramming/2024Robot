@@ -73,6 +73,8 @@ public class Auto {
 		autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
 		autoChooser.addOption("BlueOneAndTaxi", new ScoreAmpTaxiB());
 		autoChooser.addOption("RedOneAndTaxi", new ScoreAmpTaxiR());
+		autoChooser.addOption("BieryTestAuto", PathAuto.getBieryAuto());
+		autoChooser.addOption("GackleyAutoPure", PathAuto.getGackleyAutoPure());
 	}
 
 	/**

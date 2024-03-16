@@ -8,7 +8,7 @@ import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
 import frc.robot.commands.Actions.Drivetrain.TimedDrive;
-import frc.robot.commands.Actions.EndEffector.ArmToPosition;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToPosition;
 import frc.robot.utility.Constants;
 import frc.robot.utility.Constants.AprilTagData.Blue;
 import edu.wpi.first.wpilibj.DriverStation;

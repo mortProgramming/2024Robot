@@ -21,16 +21,13 @@ public class IntakeBeamBreak extends Command {
   private Timer timer = new Timer();
   private double endPosition = WRIST_REST_POSITION;
 
-  private Command wristCommandOut = new WristToPosition(WRIST_INTAKE_POSITION);
-  private Command intakeCommandIn = new IntakeToVelocity(INTAKE_SPEED);
-  private Command wristCommandIn;
-  private Command intakeCommandStop = new IntakeToVelocity(0);
+ 
 
   public IntakeBeamBreak(double endPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake,wrist);
     this.endPosition = endPosition;
-    wristCommandIn = new WristToPosition(endPosition);
+    
   }
   public IntakeBeamBreak() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -48,7 +45,7 @@ public class IntakeBeamBreak extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(intake.hasNote()){
+    if(Intake.hasNote()){
       timer.start();
     }
   }
