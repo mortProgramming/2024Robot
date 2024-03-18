@@ -182,6 +182,8 @@ public final class Constants {
 
 		public static final double WRIST_DEGREES_TO_0 = 0;
 		public static final double WRIST_GEAR_RATIO = -25;
+
+		public static final int FINGER_SERVO_PORT = 8;
 	}
 
 	public final static class Arm{
@@ -215,7 +217,7 @@ public final class Constants {
 		public static final double ARM_SPEAKER_POSITION = 0;
 		public static final double ARM_PRETRAP_POSITION = 130;
 		
-		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
+		public static final double ARM_NEAR_SETPOINT_ERROR = 1;
 
 		public static final double ARM_DEGREES_TO_0 = -33;
 		public static final double ARM_GEAR_RATIO = 5;

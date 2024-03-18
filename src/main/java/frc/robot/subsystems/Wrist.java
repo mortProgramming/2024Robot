@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Wrist extends SubsystemBase {
@@ -25,6 +26,9 @@ public class Wrist extends SubsystemBase {
 
     private ProfiledPIDController wristPositionController;
     private SimpleMotorFeedforward wristPostionFeedForward;
+    private Servo finger;
+    private double fingerTargetPos = 110;
+
 
     public Wrist() {
         velocityMode = true;
@@ -34,6 +38,7 @@ public class Wrist extends SubsystemBase {
         new Constraints(POSITION_PID_V, POSITION_PID_A));
 
         wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
+        finger = new Servo(FINGER_SERVO_PORT);
     }
 
     public void init() {
@@ -49,10 +54,7 @@ public class Wrist extends SubsystemBase {
         wristMotor.set(wristSpeed);
         SmartDashboard.putNumber("Wrist Position", getPosition());
         SmartDashboard.putNumber("Wrist Position Degrees", posToDegrees());
-        SmartDashboard.putNumber("Wrist Setpoint", setpoint);
-        SmartDashboard.putNumber("Wrist output", setPosition(setpoint));
-        SmartDashboard.putNumber("ActualWristMotorOutput", wristMotor.get());
-        SmartDashboard.putBoolean("isvelocityModeWrist", velocityMode);
+        SmartDashboard.putNumber("Finger servo position", getFingerPosition());
 
         if(velocityMode == true) {
             wristMotor.set(wristSpeed);
@@ -60,6 +62,7 @@ public class Wrist extends SubsystemBase {
         else {
             wristMotor.set(setPosition(setpoint));
         }
+        finger.setAngle(fingerTargetPos);
     }
 
     /**
@@ -70,11 +73,15 @@ public class Wrist extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
     }
 
-    /**
-     * Sets the velocity of the wrist as it rotates
-     * @param wristSpeed
-     * The desired wrist velocity as a double
-     */
+    public void setFingerPosition(double fingerTargetPos){
+        this.fingerTargetPos = fingerTargetPos;
+    }
+    public double getFingerPosition(){
+        return finger.getAngle();
+    }
+
+
+    
     public void setWristVelocity(double wristSpeed){
         this.wristSpeed = wristSpeed;
     }
