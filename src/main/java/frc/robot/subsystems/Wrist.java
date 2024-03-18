@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Wrist extends SubsystemBase {
@@ -25,6 +26,8 @@ public class Wrist extends SubsystemBase {
 
     private ProfiledPIDController wristPositionController;
     private SimpleMotorFeedforward wristPostionFeedForward;
+    private Servo trapServo;
+    private double servoPos = 110;
 
     public Wrist() {
         velocityMode = true;
@@ -34,7 +37,9 @@ public class Wrist extends SubsystemBase {
         new Constraints(POSITION_PID_V, POSITION_PID_A));
 
         wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
+        trapServo = new Servo(TRAP_SERVO_POS);
     }
+
 
     public void init() {
     //add motor initialization
@@ -53,6 +58,7 @@ public class Wrist extends SubsystemBase {
         SmartDashboard.putNumber("Wrist output", setPosition(setpoint));
         SmartDashboard.putNumber("ActualWristMotorOutput", wristMotor.get());
         SmartDashboard.putBoolean("isvelocityModeWrist", velocityMode);
+        trapServo.setAngle(servoPos);
 
         if(velocityMode == true) {
             wristMotor.set(wristSpeed);
@@ -68,6 +74,12 @@ public class Wrist extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+    }
+    public double getServoPos(){
+        return servoPos;
+    }
+    public void setServoPos(double servoPos){
+        this.servoPos = servoPos;
     }
 
     /**

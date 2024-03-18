@@ -11,7 +11,7 @@ public class SetArmAndWristPos extends SequentialCommandGroup{
         addCommands(
             
             new ParallelCommandGroup(
-                new ArmToPosition(armSetpoint).withTimeout(.45),
+                new ArmToPosition(armSetpoint).withTimeout(1),
                 new WristToPosition(wristSetpoint).withTimeout(.3)
             )
         );

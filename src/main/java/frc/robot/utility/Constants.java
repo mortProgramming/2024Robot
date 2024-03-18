@@ -109,7 +109,7 @@ public final class Constants {
 
 		public static final int CLIMBER_LOCK_ANGLE = 25;
 
-		public static final double POSITION_PID_P = 0.04;
+		public static final double POSITION_PID_P = 0.02;
 		public static final double POSITION_PID_I = 0.00003;
 		public static final double POSITION_PID_D = 0.0002;
 		public static final double POSITION_PID_V = 0;
@@ -173,7 +173,7 @@ public final class Constants {
 		public static final double WRIST_REST_POSITION = -12;
 		public static final double WRIST_SCORE_POSITION = 0;
 		public static final double WRIST_INTAKE_POSITION = 200;
-		public static final double WRIST_TRAP_POSITION = 125;
+		public static final double WRIST_TRAP_POSITION = 158;
 		public static final double WRIST_SPIT_POSITION = -6;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
@@ -182,6 +182,7 @@ public final class Constants {
 
 		public static final double WRIST_DEGREES_TO_0 = 0;
 		public static final double WRIST_GEAR_RATIO = -25;
+		public static final int TRAP_SERVO_POS = 8;
 	}
 
 	public final static class Arm{
@@ -190,7 +191,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.007;
+		public static final double POSITION_PID_P = 0.006;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -211,7 +212,7 @@ public final class Constants {
 		public static final double ARM_REST_POSITION = -32;
 		public static final double ARM_AMP_POSITION = 92;  //169
 		public static final double ARM_INTAKE_POSITION = -25;
-		public static final double ARM_TRAP_POSITION = 65;
+		public static final double ARM_TRAP_POSITION = 38;
 		public static final double ARM_SPEAKER_POSITION = 0;
 		public static final double ARM_PRETRAP_POSITION = 130;
 		
