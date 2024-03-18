@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Wrist extends SubsystemBase {
@@ -28,6 +29,8 @@ public class Wrist extends SubsystemBase {
     private SimpleMotorFeedforward wristPostionFeedForward;
     private Servo trapServo;
     private double servoPos = 110;
+
+
 
     public Wrist() {
         velocityMode = true;
@@ -66,6 +69,7 @@ public class Wrist extends SubsystemBase {
         else {
             wristMotor.set(setPosition(setpoint));
         }
+        trapServo.setAngle(servoPos);
     }
 
     /**
@@ -82,11 +86,9 @@ public class Wrist extends SubsystemBase {
         this.servoPos = servoPos;
     }
 
-    /**
-     * Sets the velocity of the wrist as it rotates
-     * @param wristSpeed
-     * The desired wrist velocity as a double
-     */
+
+
+    
     public void setWristVelocity(double wristSpeed){
         this.wristSpeed = wristSpeed;
     }
