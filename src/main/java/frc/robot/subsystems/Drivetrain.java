@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
 		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
 		//	Builds Front left swerve module with motors and encoders
-		frontLeftModule = new MkSwerveModuleBuilder(defaultDriveConfig)
+		frontLeftModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, FRONT_LEFT_DRIVE)
@@ -94,7 +94,7 @@ public class Drivetrain extends SubsystemBase {
 				.build();
 
 		//	Builds Front Right swerve module with motors and encoders
-		frontRightModule = new MkSwerveModuleBuilder(defaultDriveConfig)
+		frontRightModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, FRONT_RIGHT_DRIVE)
@@ -103,7 +103,7 @@ public class Drivetrain extends SubsystemBase {
 				.build();
 
 		//	Builds Back left swerve module with motors and encoders
-		backLeftModule = new MkSwerveModuleBuilder(defaultDriveConfig)
+		backLeftModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, BACK_LEFT_DRIVE)
@@ -112,7 +112,7 @@ public class Drivetrain extends SubsystemBase {
 				.build();
 
 		//	Builds Back Right swerve module with motors and encoders
-		backRightModule = new MkSwerveModuleBuilder(defaultDriveConfig)
+		backRightModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
 				.withDriveMotor(MotorType.FALCON, BACK_RIGHT_DRIVE)

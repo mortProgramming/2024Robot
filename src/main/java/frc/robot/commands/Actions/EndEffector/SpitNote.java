@@ -4,56 +4,24 @@
 
 package frc.robot.commands.Actions.EndEffector;
 
-import static frc.robot.utility.Constants.Intake.SHOOTER_SHOOT_SPEED;
-import static frc.robot.utility.Constants.Wrist.WRIST_REST_POSITION;
+import static frc.robot.utility.Constants.Wrist.WRIST_INTAKE_POSITION;
 import static frc.robot.utility.Constants.Wrist.WRIST_SPIT_POSITION;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Wrist;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Actions.EndEffector.ArmWrist.WristToPosition;
 
-public class SpitNote extends Command {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class SpitNote extends SequentialCommandGroup {
   /** Creates a new SpitNote. */
-  private Intake intake = Intake.getInstance();
-  private Wrist wrist = Wrist.getInstance();
-  private Timer timer = new Timer();
   public SpitNote() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    wrist.setSetPoint(WRIST_SPIT_POSITION);
-    timer.start();
-    
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    if(timer.get()>.3){
-      intake.setIntakeVelocity(SHOOTER_SHOOT_SPEED);
-    }
-    
-    
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    timer.stop();
-    timer.reset();
-    System.out.println(interrupted);
-    wrist.setSetPoint(WRIST_REST_POSITION);
-    intake.setIntakeVelocity(0);
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return (!intake.hasNote()) && timer.get()>1.5;
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
+    addCommands(
+      new WristToPosition(WRIST_SPIT_POSITION).withTimeout(.3),
+      new IntakeToVelocity(-.5).withTimeout(.4),
+      new WristToPosition(WRIST_INTAKE_POSITION)
+    );
   }
 }

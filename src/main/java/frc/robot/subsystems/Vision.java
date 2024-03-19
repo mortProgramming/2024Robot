@@ -19,16 +19,7 @@ public class Vision extends SubsystemBase {
     	private NetworkTable tagTable;
 		private NetworkTable intakeTable;
 	
-		private double totalOutlier;
-		private double newValue;
-		private double position;
-		private double totalPosition;
-		private int valuePosition;
-		private double averageOutlier;
-		private double averagePosition;
-		private double outlierCounter;
-		private double noOutlierCounter;
-		private double nonOutlierCounter;
+		
 		private double[] values = new double[AMOUNT_TEST_FRAMES];
 		private double[] outliers = new double[MAX_OUTLIERS];
 		private VideoSource intakeCam;

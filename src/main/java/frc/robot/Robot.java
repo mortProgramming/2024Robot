@@ -5,8 +5,11 @@
 package frc.robot;
 
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Wrist;
 import frc.robot.utility.Control;
 import frc.robot.utility.Odometer;
+
+import static frc.robot.utility.Constants.Wrist.WRIST_REST_POSITION;
 
 import java.sql.Driver;
 
@@ -107,6 +110,9 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		Wrist.getInstance().setServoPos(110);		
+		Wrist.getInstance().setVelocityMode(false);
+		Wrist.getInstance().setSetPoint(WRIST_REST_POSITION);
 	}
 
 	/** This function is called periodically during operator control. */

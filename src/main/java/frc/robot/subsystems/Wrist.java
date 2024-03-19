@@ -28,8 +28,7 @@ public class Wrist extends SubsystemBase {
     private ProfiledPIDController wristPositionController;
     private SimpleMotorFeedforward wristPostionFeedForward;
     private Servo trapServo;
-    private double servoPos = 110;
-
+    private double servoPos;
 
 
     public Wrist() {
@@ -41,6 +40,7 @@ public class Wrist extends SubsystemBase {
 
         wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
         trapServo = new Servo(TRAP_SERVO_POS);
+        servoPos = 110;
     }
 
 

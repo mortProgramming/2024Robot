@@ -72,6 +72,7 @@ public class PathAuto extends SubsystemBase {
     drivetrain);
 
     NamedCommands.registerCommand("ScoreInAmp", new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
+      // new InstantCommand(() -> ),
       new WristToPosition(WRIST_REST_POSITION).withTimeout(.25),
       SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
       new IntakeToVelocity(AUTO_SHOOT_SPEED).withTimeout(1),
@@ -92,12 +93,11 @@ public class PathAuto extends SubsystemBase {
 
     NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");})));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
     NamedCommands.registerCommand("FieldOrient", new RobotStart((DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) ?  90 : 270));
-    NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.6).withTimeout(.2));
+    NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.6).withTimeout(.75));
     //build all path-based autons
-    twoPiece = new PathPlannerAuto("PathPlanner 2Piece");
-    gackleyAuto = new PathPlannerAuto("Gackley Auto");
+    twoPiece = new PathPlannerAuto("PathPlanner2Piece");
+    gackleyAuto = new PathPlannerAuto("GackleyAuto1");
     bieryAuto = new PathPlannerAuto("BieryWildAuto");
-    gackleyAutoPure = new PathPlannerAuto("GackleyAuto1");
   }
   
   public static Command getTwoPiece(){

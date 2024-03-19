@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.8267774427286747,
+        "x": 1.81,
         "y": 7.8
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.826777442728675,
-        "y": 7.8
+        "x": 4.001890169022504,
+        "y": 7.83508347643476
       },
       "isLocked": false,
       "linkedName": "Amp"
     },
     {
       "anchor": {
-        "x": 5.813317469865345,
-        "y": 6.971077125052112
+        "x": 5.416882856557735,
+        "y": 7.308846526524962
       },
       "prevControl": {
-        "x": 4.662846000276325,
-        "y": 7.331818179075787
+        "x": 4.888027154958397,
+        "y": 7.239865348055484
       },
       "nextControl": {
-        "x": 6.530510280344661,
-        "y": 6.746194633630632
+        "x": 5.685848408733854,
+        "y": 7.343928989852282
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.270256540513081,
-        "y": 6.863829784666696
+        "x": 7.054064478499327,
+        "y": 7.414093916506922
       },
       "prevControl": {
-        "x": 7.858059357898743,
-        "y": 6.863829784666696
+        "x": 7.0413523392288955,
+        "y": 7.411246288589444
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": -90.0,
+      "rotateFast": true
+    },
+    {
+      "waypointRelativePos": 1.55,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
@@ -72,7 +77,7 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.39,
+    "maxVelocity": 2.0,
     "maxAcceleration": 4.0,
     "maxAngularVelocity": 800.0,
     "maxAngularAcceleration": 400.0
@@ -80,7 +85,7 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0.0,
-    "rotateFast": true
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "Gackley Auto",

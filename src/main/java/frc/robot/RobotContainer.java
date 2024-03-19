@@ -1,16 +1,11 @@
 package frc.robot;
 
-import java.sql.Driver;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utility.Auto;
 import frc.robot.utility.Control;
-import frc.robot.utility.PathAuto;
 
 public class RobotContainer {
 	private Drivetrain drivetrain;

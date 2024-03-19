@@ -57,16 +57,16 @@ public final class Constants {
 		public final static double TO_POSITION_KD = 0;
 
 		public static final class AutonConstants{
-			public static final double AUTON_POSITION_KP = .81;
+			public static final double AUTON_POSITION_KP = 2.4;
 
 
 			public static final double AUTON_POSITION_KI = 0;
 			public static final double AUTON_POSITION_KD = 0;
 	
-			public static final double AUTON_ROTATION_KP = 3.2;
+			public static final double AUTON_ROTATION_KP = 2.95;
 
 			public static final double AUTON_ROTATION_KI = 0;
-			public static final double AUTON_ROTATION_KD = 0;
+			public static final double AUTON_ROTATION_KD = 0.0025;
 
 			public static final double MAX_AUTON_VELOCITY = 4.17;
 		}
@@ -146,7 +146,7 @@ public final class Constants {
 		public static final double INTAKE_SPEED = 0.4;
 		public static final double AMP_SHOOT_SPEED = -0.25;
 		public static final double SHOOTER_SHOOT_SPEED = -1;
-		public static final double AUTO_SHOOT_SPEED = -0.2;
+		public static final double AUTO_SHOOT_SPEED = -0.3;
 
 		public static final int INTAKE_SENSOR = 0;
 	}
@@ -154,7 +154,7 @@ public final class Constants {
 	public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
 
-		public static final double POSITION_PID_P = 0.002;
+		public static final double POSITION_PID_P = 0.003;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -170,7 +170,7 @@ public final class Constants {
 		// public static final double WRIST_SCORE_POSITION = 1.3;
 		// public static final double WRIST_INTAKE_POSITION = 7.9;
 		// public static final double WRIST_TRAP_POSITION = 0;
-		public static final double WRIST_REST_POSITION = -12;
+		public static final double WRIST_REST_POSITION = -22;
 		public static final double WRIST_SCORE_POSITION = 0;
 		public static final double WRIST_INTAKE_POSITION = 200;
 		public static final double WRIST_TRAP_POSITION = 158;
@@ -191,7 +191,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.006;
+		public static final double POSITION_PID_P = 0.007;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -209,7 +209,7 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0.00;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double ARM_REST_POSITION = -32;
+		public static final double ARM_REST_POSITION = -36;
 		public static final double ARM_AMP_POSITION = 92;  //169
 		public static final double ARM_INTAKE_POSITION = -25;
 		public static final double ARM_TRAP_POSITION = 38;
@@ -231,7 +231,7 @@ public final class Constants {
 		public static final int LEDS_PORT = 2;
 
 		public static final double GREEN_COLOR = 0.77;
-		public static final double RED_COLOR = -0.11; //0.61
+		public static final double RED_COLOR = -0.17; //0.61
 		public static final double BLUE_COLOR = 0.87;
 	}
 

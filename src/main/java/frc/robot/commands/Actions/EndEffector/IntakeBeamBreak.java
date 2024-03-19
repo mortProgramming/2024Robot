@@ -53,7 +53,7 @@ public class IntakeBeamBreak extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    wrist.setSetPoint(WRIST_REST_POSITION);
+    wrist.setSetPoint(endPosition);
     intake.setIntakeVelocity(0);
     
   }
