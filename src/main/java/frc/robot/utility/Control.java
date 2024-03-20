@@ -121,7 +121,7 @@ public class Control {
 		drivetrain.setDefaultCommand(
 			new DrivetrainCommand(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true)
         );
-        arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
+       //arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(0)));
@@ -188,10 +188,15 @@ public class Control {
         xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
         xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
 
+        xboxController.povLeft().whileTrue(new ClimberToVelocity(() -> {return 1;} ,() -> {return 0;}));
+        xboxController.povRight().whileTrue(new ClimberToVelocity(() -> {return 0;} ,() -> {return -1;}));
+        xboxController.povLeft().and(xboxController.povRight()).whileFalse(new ClimberToVelocity(() ->{return 0;}, () -> {return 0;}));
+
+
        lights.setDefaultCommand(new LightsCommand());
 
 
-        // climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
+        climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
 
        
         

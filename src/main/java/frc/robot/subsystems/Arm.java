@@ -180,7 +180,7 @@ public class Arm extends SubsystemBase {
     //      armPositionController.calculate(getPosition(),setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
     // }
     public boolean nearSetpoint(){
-        return Math.abs(armPositionController.calculate(posToDegrees(), setpoint) + POSITION_FF_G * Math.cos(Math.toRadians(posToDegrees()))) < ARM_NEAR_SETPOINT_ERROR;
+        return encoderToDegrees()+ARM_NEAR_SETPOINT_ERROR >= setpoint || encoderToDegrees()-ARM_NEAR_SETPOINT_ERROR <= setpoint;
     }
 
     /**

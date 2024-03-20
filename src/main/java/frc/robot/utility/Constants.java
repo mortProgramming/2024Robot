@@ -109,7 +109,7 @@ public final class Constants {
 
 		public static final int CLIMBER_LOCK_ANGLE = 25;
 
-		public static final double POSITION_PID_P = 0.02;
+		public static final double POSITION_PID_P = 0.03;
 		public static final double POSITION_PID_I = 0.00003;
 		public static final double POSITION_PID_D = 0.0002;
 		public static final double POSITION_PID_V = 0;
@@ -191,7 +191,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.007;
+		public static final double POSITION_PID_P = 0.0075;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
