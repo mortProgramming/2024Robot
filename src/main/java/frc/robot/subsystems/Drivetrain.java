@@ -48,6 +48,7 @@ public class Drivetrain extends SubsystemBase {
 	private boolean isBlue;
 	private boolean noteLock = false;
 	private boolean canLock = false;
+	private Intake intake = Intake.getInstance();
 
 	private PIDController aprilXController;
 	private PIDController aprilYController;
@@ -391,8 +392,13 @@ public class Drivetrain extends SubsystemBase {
 	        setKeptAngle), 
 			drivetrain.getGyroscopeRotation());
 		}
-		if(noteLock && Vision.getInstance().hasNote()){
+		//Untested note lock
+		if(noteLock && Vision.getInstance().hasNote() && !Intake.hasNote()){
 			canLock = true;
+			chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(x,y,
+			rotateToAngleController.calculate(Vision.getInstance().getNoteXDegrees(), 0), drivetrain.getGyroscopeRotation());
+			
+			
 		}else{
 			canLock = false;
 		}

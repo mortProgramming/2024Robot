@@ -61,6 +61,7 @@ public class IntakeBeamBreak extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Intake.hasNote() && timer.get()>.09;
+   // return Intake.hasNote() && timer.get()>.09; 
+   return false;
   }
 }

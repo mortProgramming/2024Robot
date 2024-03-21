@@ -124,7 +124,8 @@ public class Control {
        //arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
-        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(0)));
+        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.noteLockOn()));
+        joystick.trigger().whileFalse(new InstantCommand(() -> drivetrain.noteLockOff()));
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
         joystick.button(9).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
@@ -140,7 +141,7 @@ public class Control {
                 )
             )
         );
-
+    
         joystick.button(9).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
         joystick.button(3).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
