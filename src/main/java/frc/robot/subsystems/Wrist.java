@@ -40,7 +40,7 @@ public class Wrist extends SubsystemBase {
 
         wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
         trapServo = new Servo(TRAP_SERVO_POS);
-        servoPos = 110;
+        servoPos = 90;
     }
 
 

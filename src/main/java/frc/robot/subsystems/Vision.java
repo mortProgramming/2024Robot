@@ -26,8 +26,8 @@ public class Vision extends SubsystemBase {
 		
     public Vision() {
         // tagTable = NetworkTableInstance.getDefault().getTable("limelight");
-		tagTable = NetworkTableInstance.getDefault().getTable("TagLight");
-		intakeTable = NetworkTableInstance.getDefault().getTable("intakeLight");
+		tagTable = NetworkTableInstance.getDefault().getTable("limelight-tag");
+		intakeTable = NetworkTableInstance.getDefault().getTable("limelight-intake");
 		
     }
 
@@ -36,14 +36,14 @@ public class Vision extends SubsystemBase {
 	 * @return True if the limelight has a target, false if no target
 	 */
     public boolean hasTag() {
-		return tagTable.getEntry("tv").getInteger(0) == 1;
+		return tagTable.getEntry("tv").getDouble(0) == 1.0;
 	}
 	/**
 	 * 
 	 * @return True if the limelight has a target, false if no target
 	 */
     public boolean hasNote() {
-		return intakeTable.getEntry("tv").getInteger(0) == 1;
+		return intakeTable.getEntry("tv").getDouble(0) == 1.0;
 	}
 
 	public double getNoteXDegrees() {
@@ -250,6 +250,8 @@ public class Vision extends SubsystemBase {
 		
 		SmartDashboard.putNumber("note x", getNoteXDegrees());
 		SmartDashboard.putNumberArray("Field Positioning", getFieldPoseAsArray());
+		SmartDashboard.putBoolean("HASTAG", hasTag());
+		
     }
 
 	/**

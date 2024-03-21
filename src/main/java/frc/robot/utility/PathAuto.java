@@ -80,7 +80,7 @@ public class PathAuto extends SubsystemBase {
     ).withTimeout(3.45));
 
     NamedCommands.registerCommand("Intake", new ParallelCommandGroup(//Active intake and bring wrist out
-      new IntakeBeamBreak(WRIST_REST_POSITION)
+      new IntakeBeamBreak(WRIST_REST_POSITION).withTimeout(2.25)
     ));
     
     NamedCommands.registerCommand("IntakeStayOut", new ParallelCommandGroup(//Active intake and bring wrist out

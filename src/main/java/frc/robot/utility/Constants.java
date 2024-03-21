@@ -121,7 +121,7 @@ public final class Constants {
 		public static final double POSITION_FF_A = 0;
 
 		public static final double LEFT_CLIMBER_REST_POSITION = 179;
-		public static final double LEFT_CLIMBER_MAX_POSITION = 39;
+		public static final double LEFT_CLIMBER_MAX_POSITION = 34;
 
 		public static final double RIGHT_CLIMBER_MAX_POSITION = -32;
 		public static final double RIGHT_CLIMBER_REST_POSITION = -175;
@@ -143,7 +143,7 @@ public final class Constants {
 
 		// public static final double INTAKE_SPEED = 0.25;
 		// public static final double SHOOT_SPEED = -0.50;
-		public static final double INTAKE_SPEED = 0.4;
+		public static final double INTAKE_SPEED = 0.6;
 		public static final double AMP_SHOOT_SPEED = -0.25;
 		public static final double SHOOTER_SHOOT_SPEED = -1;
 		public static final double AUTO_SHOOT_SPEED = -0.3;
@@ -154,7 +154,7 @@ public final class Constants {
 	public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
 
-		public static final double POSITION_PID_P = 0.003;
+		public static final double POSITION_PID_P = 0.0025;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -173,7 +173,7 @@ public final class Constants {
 		public static final double WRIST_REST_POSITION = -22;
 		public static final double WRIST_SCORE_POSITION = 0;
 		public static final double WRIST_INTAKE_POSITION = 200;
-		public static final double WRIST_TRAP_POSITION = 158;
+		public static final double WRIST_TRAP_POSITION = 141;
 		public static final double WRIST_SPIT_POSITION = -6;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
@@ -191,7 +191,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.0075;
+		public static final double POSITION_PID_P = 0.0068;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -209,7 +209,7 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0.00;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double ARM_REST_POSITION = -36;
+		public static final double ARM_REST_POSITION = -32;
 		public static final double ARM_AMP_POSITION = 92;  //169
 		public static final double ARM_INTAKE_POSITION = -25;
 		public static final double ARM_TRAP_POSITION = 38;
@@ -231,7 +231,7 @@ public final class Constants {
 		public static final int LEDS_PORT = 2;
 
 		public static final double GREEN_COLOR = 0.77;
-		public static final double RED_COLOR = -0.17; //0.61
+		public static final double RED_COLOR = -0.57; //0.61
 		public static final double BLUE_COLOR = 0.87;
 	}
 

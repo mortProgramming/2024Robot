@@ -19,8 +19,8 @@ public class SpitNote extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new WristToPosition(WRIST_SPIT_POSITION).withTimeout(.3),
-      new IntakeToVelocity(-.5).withTimeout(.4),
+      new WristToPosition(WRIST_SPIT_POSITION).withTimeout(.5),
+      new IntakeToVelocity(-1).withTimeout(.5),
       new WristToPosition(WRIST_INTAKE_POSITION)
     );
   }

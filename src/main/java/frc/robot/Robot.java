@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
-		Wrist.getInstance().setServoPos(110);		
+		Wrist.getInstance().setServoPos(90);		
 		Wrist.getInstance().setVelocityMode(false);
 		Wrist.getInstance().setSetPoint(WRIST_REST_POSITION);
 	}

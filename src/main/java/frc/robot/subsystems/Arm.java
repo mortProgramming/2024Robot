@@ -88,7 +88,7 @@ public class Arm extends SubsystemBase {
             masterArmMotor.set(-setPosition(setpoint));
             // masterArmMotor.set(0);
         }
-
+        //masterArmMotor.set(0);
         // setPosition(setpoint);
     }
 
@@ -180,7 +180,7 @@ public class Arm extends SubsystemBase {
     //      armPositionController.calculate(getPosition(),setpoint)) / MAX_VOLTAGE) < ARM_NEAR_SETPOINT_ERROR;
     // }
     public boolean nearSetpoint(){
-        return encoderToDegrees()+ARM_NEAR_SETPOINT_ERROR >= setpoint || encoderToDegrees()-ARM_NEAR_SETPOINT_ERROR <= setpoint;
+        return encoderToDegrees()+ARM_NEAR_SETPOINT_ERROR >= setpoint && encoderToDegrees()-ARM_NEAR_SETPOINT_ERROR <= setpoint;
     }
 
     /**

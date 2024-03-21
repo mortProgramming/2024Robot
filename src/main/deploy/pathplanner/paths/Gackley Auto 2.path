@@ -16,28 +16,76 @@
     },
     {
       "anchor": {
-        "x": 5.416882856557735,
-        "y": 7.308846526524962
+        "x": 5.451965319885056,
+        "y": 7.449176379834242
       },
       "prevControl": {
-        "x": 4.888027154958397,
-        "y": 7.239865348055484
+        "x": 4.808786825550858,
+        "y": 7.753224395337679
       },
       "nextControl": {
-        "x": 5.685848408733854,
-        "y": 7.343928989852282
+        "x": 5.697189397673434,
+        "y": 7.333252270334282
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.054064478499327,
-        "y": 7.414093916506922
+        "x": 7.6621605095062035,
+        "y": 7.554423769816201
       },
       "prevControl": {
-        "x": 7.0413523392288955,
-        "y": 7.411246288589444
+        "x": 7.231129436596479,
+        "y": 7.530838506513195
+      },
+      "nextControl": {
+        "x": 8.093191582415924,
+        "y": 7.578009033119207
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.814484107600694,
+        "y": 7.449176379834242
+      },
+      "prevControl": {
+        "x": 5.916482380670868,
+        "y": 7.6237224056557285
+      },
+      "nextControl": {
+        "x": 5.712485834530519,
+        "y": 7.274630354012755
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.527827528589529,
+        "y": 6.969716047694203
+      },
+      "prevControl": {
+        "x": 5.946487206319045,
+        "y": 6.985427948296111
+      },
+      "nextControl": {
+        "x": 6.960511242959806,
+        "y": 6.958021893251762
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.012985142779401,
+        "y": 6.420090788899527
+      },
+      "prevControl": {
+        "x": 7.9999579608282945,
+        "y": 6.420090788899527
       },
       "nextControl": null,
       "isLocked": false,
@@ -51,8 +99,13 @@
       "rotateFast": true
     },
     {
-      "waypointRelativePos": 1.55,
+      "waypointRelativePos": 2.2,
       "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": -119.35775354279122,
       "rotateFast": false
     }
   ],
@@ -69,6 +122,40 @@
               "type": "named",
               "data": {
                 "name": "IntakeStayOut"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Spit",
+      "waypointRelativePos": 2.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Outtake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Intake",
+      "waypointRelativePos": 3.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Intake"
               }
             }
           ]

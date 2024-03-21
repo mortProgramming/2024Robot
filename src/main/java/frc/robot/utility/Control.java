@@ -175,10 +175,10 @@ public class Control {
         xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
 
         xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(90)));
-        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(45)));
+        //xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(45)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightServo(0)));
         xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(90)));
-        xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
+       // xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
         joystick.button(12).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
@@ -190,13 +190,11 @@ public class Control {
 
         xboxController.povLeft().whileTrue(new ClimberToVelocity(() -> {return 1;} ,() -> {return 0;}));
         xboxController.povRight().whileTrue(new ClimberToVelocity(() -> {return 0;} ,() -> {return -1;}));
-        xboxController.povLeft().and(xboxController.povRight()).whileFalse(new ClimberToVelocity(() ->{return 0;}, () -> {return 0;}));
+
+        lights.setDefaultCommand(new LightsCommand());
 
 
-       lights.setDefaultCommand(new LightsCommand());
-
-
-        climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
+        //climber.setDefaultCommand(new ClimberToVelocity(Control::getLeftJoystickY, Control::getRightJoystickY));
 
        
         
@@ -238,6 +236,7 @@ public class Control {
             return 0.0;
         }
     }
+   
 
     //raw data of value setting anything less than deadband equal to 0
 
