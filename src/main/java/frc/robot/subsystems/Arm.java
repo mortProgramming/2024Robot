@@ -45,7 +45,7 @@ public class Arm extends SubsystemBase {
         masterArmMotor = new TalonFX(MASTER_ARM_MOTOR);
         followArmMotor = new TalonFX(FOLLOW_ARM_MOTOR);
 
-        followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, true));
+        followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, false));
 
         // masterArmMotor.set
 

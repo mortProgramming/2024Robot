@@ -174,7 +174,7 @@ public final class Constants {
 		public static final double WRIST_SCORE_POSITION = 0;
 		public static final double WRIST_INTAKE_POSITION = 200;
 		public static final double WRIST_TRAP_POSITION = 141;
-		public static final double WRIST_SPIT_POSITION = -6;
+		public static final double WRIST_SPIT_POSITION = 41;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
 
@@ -191,7 +191,7 @@ public final class Constants {
 		public static final int ENCODER_PORT = 9;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.0068;
+		public static final double POSITION_PID_P = 0.0066;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;

@@ -163,7 +163,7 @@ public class Drivetrain extends SubsystemBase {
 
 		aprilXController = new PIDController(XVALUE_KP , XVALUE_KI, XVALUE_KD);
 		aprilXController.setTolerance(XVALUE_TOLERANCE);
-		// aprilYController = new PIDController(YV joiALUE_KP, YVALUE_KI, YVALUE_KD);
+		aprilYController = new PIDController(YVALUE_KP, YVALUE_KI, YVALUE_KD);
 		aprilYController.setTolerance(YVALUE_TOLERANCE);
 		aprilOmegaController = new PIDController(OMEGAVALUE_KP, OMEGAVALUE_KI , OMEGAVALUE_KD);
 		aprilOmegaController.setTolerance(OMEGAVALUE_TOLERANCE);
