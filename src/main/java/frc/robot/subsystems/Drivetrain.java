@@ -46,6 +46,8 @@ public class Drivetrain extends SubsystemBase {
 	private boolean isAngleKept;
 	private double setKeptAngle;
 	private boolean isBlue;
+	private boolean noteLock = false;
+	private boolean canLock = false;
 
 	private PIDController aprilXController;
 	private PIDController aprilYController;
@@ -167,6 +169,12 @@ public class Drivetrain extends SubsystemBase {
 		aprilYController.setTolerance(YVALUE_TOLERANCE);
 		aprilOmegaController = new PIDController(OMEGAVALUE_KP, OMEGAVALUE_KI , OMEGAVALUE_KD);
 		aprilOmegaController.setTolerance(OMEGAVALUE_TOLERANCE);
+	}
+	public void noteLockOn(){
+		noteLock = true;
+	}
+	public void noteLockOff(){
+		noteLock = false;
 	}
 
 	/** Sets the gyroscope angle to zero. 
@@ -383,7 +391,12 @@ public class Drivetrain extends SubsystemBase {
 	        setKeptAngle), 
 			drivetrain.getGyroscopeRotation());
 		}
-
+		if(noteLock && Vision.getInstance().hasNote()){
+			canLock = true;
+		}else{
+			canLock = false;
+		}
+		SmartDashboard.putBoolean("CanLock", canLock);
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());

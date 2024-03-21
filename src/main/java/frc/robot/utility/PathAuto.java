@@ -93,7 +93,7 @@ public class PathAuto extends SubsystemBase {
 
     NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");})));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
     NamedCommands.registerCommand("FieldOrient", new RobotStart((DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) ?  90 : 270));
-    NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.6).withTimeout(.75));
+    NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.65).withTimeout(.75));
     //build all path-based autons
     twoPiece = new PathPlannerAuto("PathPlanner2Piece");
     gackleyAuto = new PathPlannerAuto("GackleyAuto1");
