@@ -161,16 +161,8 @@ public class Vision extends SubsystemBase {
 	 */
 	public Pose2d getPose() {
 		double[] poseNum = new double[6];
-		if(DriverStation.isDSAttached()){
-			if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-				poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
-			} else {
-				poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
-			}
-		}else{
-			poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
-		}
 		
+		poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
 
 		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));
 	}
@@ -215,31 +207,13 @@ public class Vision extends SubsystemBase {
 	 */
 	public Pose2d getFieldPose() {
 		double[] poseNum = new double[6];
-		
-		if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-			poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
-		} else {
-			poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
-		}
+		poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
 
 		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));
 	}
 	
 	public double[] getFieldPoseAsArray() {
-		double[] poseNum = new double[6];
-		
-		if(DriverStation.isDSAttached()){
-			if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-				poseNum = tagTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
-			} else {
-				poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
-			}
-		}else{
-			poseNum = tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
-		}
-		
-
-		return poseNum;
+		return tagTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
 	}
 
 	/**

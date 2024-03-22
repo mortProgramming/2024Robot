@@ -395,6 +395,7 @@ public class Drivetrain extends SubsystemBase {
 		//Untested note lock
 		if(noteLock && Vision.getInstance().hasNote() && !Intake.hasNote()){
 			canLock = true;
+			//NoteX of 0 means we are directly facing the note. Robot relative should then drive it forward towards the note
 			chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(x,y,
 			rotateToAngleController.calculate(Vision.getInstance().getNoteXDegrees(), 0), drivetrain.getGyroscopeRotation());
 			
