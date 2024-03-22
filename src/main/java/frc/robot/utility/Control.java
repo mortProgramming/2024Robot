@@ -9,10 +9,6 @@ import java.util.function.DoubleSupplier;
 
 import static frc.robot.utility.Constants.Climber.*;
 import static frc.robot.utility.Constants.Intake.*;
-import static frc.robot.utility.Constants.Lights.*;
-
-
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -21,10 +17,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.Actions.EndEffector.IntakeToVelocity;
 import frc.robot.commands.Actions.EndEffector.LightsCommand;
 import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToPosition;
-import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToVelocity;
 import frc.robot.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
 import frc.robot.commands.Actions.EndEffector.ArmWrist.WristToPosition;
-import frc.robot.commands.Actions.EndEffector.ArmWrist.WristToVelocity;
 import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
 import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
@@ -32,21 +26,12 @@ import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.units.Angle;
-import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
 import edu.wpi.first.units.Voltage;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
@@ -121,52 +106,68 @@ public class Control {
 		drivetrain.setDefaultCommand(
 			new DrivetrainCommand(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true)
         );
+        //ARM DEFAULT CONTROLS (Manual)
        //arm.setDefaultCommand(new ArmToVelocity(Control::getLeftJoystickY));
        // wrist.setDefaultCommand(new WristToVelocity(Control::getRightJoystickY));
 
+       //Drivetrain Field Orient command
+        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(0)));
+
+        //Drivetrain note locking command
         joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.noteLockOn()));
         joystick.trigger().whileFalse(new InstantCommand(() -> drivetrain.noteLockOff()));
+
+        //Drivetrain reset odometry command
         joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
 
+        //Drivetrain rotate to AMP button (NOT WORKING RED/BLUE)
         joystick.button(9).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
         joystick.button(3).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
-
-
         joystick.button(9).or(joystick.button(3)).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
         joystick.button(9).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(90)));
-        joystick.button(3).whileTrue(
-            new InstantCommand(() -> drivetrain.setKeptAngle(
-                Drivetrain.toCircle(
-                    180 + drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees())
-                )
-            )
-        );
-    
         joystick.button(9).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
         joystick.button(3).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
 
-
+        // joystick.button(3).whileTrue(
+        //     new InstantCommand(() -> drivetrain.setKeptAngle(
+        //         Drivetrain.toCircle(
+        //             180 + drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees())
+        //         )
+        //     )
+        // );
+        
+        //Odometry reset to robot starting position command
         joystick.button(8).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(new Pose2d(1.515,7.395, Rotation2d.fromRadians(-1.571)))));
 
+
+        //Move to april tag 15 (not tested)
         joystick.button(6).whileTrue(new MoveToAprilTag(15));
 
       //  joystick.button(5).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(0.4, 7.5, 90)));
 
-
+        //Wrist intaking (USING INTAKE BEAM BREAK)
         xboxController.rightBumper().whileTrue(new IntakeBeamBreak(WRIST_REST_POSITION));
 
+        //Wrist outtaking (shoot into amp)
         xboxController.rightTrigger().onTrue(new IntakeToVelocity(AMP_SHOOT_SPEED));
         xboxController.rightTrigger().onFalse(new IntakeToVelocity(0));
 
+        //Wrist outtaking (shoot into trap/FULL SPEED)
         xboxController.a().onTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
         xboxController.a().onFalse(new IntakeToVelocity(0));
 
         
-
+        //ARM TO AMP
         xboxController.x().onTrue(new ArmToPosition(ARM_AMP_POSITION));
+
+        //ARM TO REST
         xboxController.y().onTrue(new ArmToPosition(ARM_REST_POSITION));
+
+        //ARM AND WRIST TO TRAP
         xboxController.b().onTrue(new ArmToPosition(ARM_TRAP_POSITION));
         xboxController.b().onTrue(new WristToPosition(WRIST_TRAP_POSITION));
+
+        //ARM TO PRETRAP
         xboxController.back().onTrue(new ArmToPosition(ARM_PRETRAP_POSITION));
 
         //arm and wrist switching with 
@@ -182,13 +183,21 @@ public class Control {
        // xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
+        //Climber to trap/Arm and Wrist to trap
         joystick.button(12).toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_REST_POSITION, RIGHT_CLIMBER_REST_POSITION));
         joystick.button(12).toggleOnTrue(SetArmAndWristPos.trap().andThen(new InstantCommand(() -> wrist.setServoPos(0))));
         joystick.button(11).toggleOnTrue(new ClimberToVelocity(zeroSupplier, zeroSupplier));
+        
+        //Climbers up for preclimb
         xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
+
+        //Wrist to rest
         xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
+
+        //Wrist to intake
         xboxController.leftTrigger().onTrue(new WristToPosition(WRIST_INTAKE_POSITION));
 
+        //MANUAL CLIMBER CONTROL
         xboxController.povLeft().whileTrue(new ClimberToVelocity(() -> {return 1;} ,() -> {return 0;}));
         xboxController.povRight().whileTrue(new ClimberToVelocity(() -> {return 0;} ,() -> {return -1;}));
 

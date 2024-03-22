@@ -28,7 +28,7 @@ public class MoveToAprilTag extends Command{
 
 	@Override
 	public void initialize() {
-		
+		//Resets all April Tag control settings
 		drivetrain.getAprilTagXController().reset();
 		drivetrain.getAprilTagYController().reset();
 		drivetrain.getAprilTagOmegaController().reset();
@@ -36,6 +36,7 @@ public class MoveToAprilTag extends Command{
 
 	@Override
 	public void execute() {
+		//Uses april tag controller to calculate X, Y, and Z positions
 		double x = -drivetrain.getAprilTagXController().calculate(vision.getCamTranslationZ(), -1.4);
 		double y =
 				// vision.getCamTranZ() > -1.5 ?
@@ -51,6 +52,7 @@ public class MoveToAprilTag extends Command{
 
 	@Override
 	public boolean isFinished() {
+		//Checks to see if april tag controller is at its setpoint
 		return !vision.hasTag()
 				|| (drivetrain.getAprilTagXController().atSetpoint() && drivetrain.getAprilTagYController().atSetpoint()
 						&& drivetrain.getAprilTagOmegaController().atSetpoint());
