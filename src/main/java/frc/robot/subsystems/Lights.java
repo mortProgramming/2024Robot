@@ -20,7 +20,7 @@ public class Lights extends SubsystemBase{
     public void setLightsRed() {
         leds.set(RED_COLOR);
     }
-
+ 
     public void setLightsBlue() {
         leds.set(BLUE_COLOR);
     }

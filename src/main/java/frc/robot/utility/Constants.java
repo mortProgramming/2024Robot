@@ -56,8 +56,10 @@ public final class Constants {
 		public final static double TO_POSITION_KI = 0;
 		public final static double TO_POSITION_KD = 0;
 
+		public final static double MAX_REASONABLE_ROTATE_SPEED = Math.PI;
+
 		public static final class AutonConstants{
-			public static final double AUTON_POSITION_KP = 2.4;
+			public static final double AUTON_POSITION_KP = 2;
 
 
 			public static final double AUTON_POSITION_KI = 0;
@@ -120,11 +122,11 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double LEFT_CLIMBER_REST_POSITION = 179;
+		public static final double LEFT_CLIMBER_REST_POSITION = 177;
 		public static final double LEFT_CLIMBER_MAX_POSITION = 34;
 
 		public static final double RIGHT_CLIMBER_MAX_POSITION = -32;
-		public static final double RIGHT_CLIMBER_REST_POSITION = -175;
+		public static final double RIGHT_CLIMBER_REST_POSITION = -173;
 
 		public static final double CLIMBER_NEAR_SETPOINT_ERROR = 0;
 
@@ -221,7 +223,7 @@ public final class Constants {
 		public static final double ARM_DEGREES_TO_0 = -33;
 		public static final double ARM_GEAR_RATIO = 5;
 
-		public static final double ARM_ENCODER_DEGREES_TO_0 = -80;
+		public static final double ARM_ENCODER_DEGREES_TO_0 = 84;
 		public static final double ARM_NEVER_POSITION = 90;
 
 		public static final double ARM_WRIST_TIMEOUT = 1.6;

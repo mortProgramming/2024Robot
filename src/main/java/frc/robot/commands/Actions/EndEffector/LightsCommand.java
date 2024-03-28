@@ -30,22 +30,24 @@ public class LightsCommand extends Command {
   public void execute() {
     if (Intake.hasNote()) {
         lights.setLightsGreen();
-        vision.setNoteCamLights(2);
+        vision.setCamLights(2);
     }
+
     else {
         lights.setLightsRed();
-        vision.setNoteCamLights(1);
+        vision.setCamLights(1);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    vision.setCamLights(1);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

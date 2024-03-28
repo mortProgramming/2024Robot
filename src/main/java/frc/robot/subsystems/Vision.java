@@ -62,8 +62,9 @@ public class Vision extends SubsystemBase {
 		
 	}
 
-	public void setNoteCamLights(int input) {
+	public void setCamLights(int input) {
 		intakeTable.getEntry("ledMode").setNumber(input);
+		tagTable.getEntry("ledMode").setNumber(input);
 	}
 
 	/**

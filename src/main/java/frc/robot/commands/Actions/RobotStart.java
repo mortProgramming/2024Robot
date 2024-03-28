@@ -24,9 +24,7 @@ public class RobotStart extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
-      SetArmAndWristPos.rest().withTimeout(0.05),
-      new InstantCommand(() -> drivetrain.setIsBlue(true))
-
+      SetArmAndWristPos.rest().withTimeout(0.05)
     );
   }
 
@@ -50,8 +48,7 @@ public class RobotStart extends SequentialCommandGroup {
     addCommands(
       new InstantCommand(() -> drivetrain.zeroGyroscope(angle)),
       SetArmAndWristPos.rest().withTimeout(0.05),
-      new InstantCommand(() -> Odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle)))),
-      new InstantCommand(() -> drivetrain.setIsBlue(true))
+      new InstantCommand(() -> Odometer.resetOdometry(new Pose2d(x, y, new Rotation2d(angle))))
 
     );
   }

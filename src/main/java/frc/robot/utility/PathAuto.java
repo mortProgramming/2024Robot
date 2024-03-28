@@ -51,6 +51,8 @@ public class PathAuto extends SubsystemBase {
   private static PathPlannerAuto bieryAuto;
   private static PathPlannerAuto pureTwoPiece;
   private static PathPlannerAuto gackleyAutoPure;
+  private static PathPlannerAuto choreoOneNote;
+  private static Command twoPieceAmpSide;
 
   public static void init() {
     drivetrain = Drivetrain.getInstance();
@@ -92,12 +94,14 @@ public class PathAuto extends SubsystemBase {
       ));
 
     NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> {System.out.println("PATH AUTON IS ACTIVE");})));//A simple print command that should run at the the start of any paths we make(NOT AUTOMATIC, MUST DO OURSELVES)
-    NamedCommands.registerCommand("FieldOrient", new RobotStart((DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) ?  90 : 270));
+    NamedCommands.registerCommand("FieldOrient", new RobotStart((DriverStation.getAlliance().get() == Alliance.Red) ?  90 : 270));
     NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.65).withTimeout(.75));
     //build all path-based autons
     twoPiece = new PathPlannerAuto("PathPlanner2Piece");
     gackleyAuto = new PathPlannerAuto("GackleyAuto1");
     bieryAuto = new PathPlannerAuto("BieryWildAuto");
+    choreoOneNote = new PathPlannerAuto("OneNote");
+    twoPieceAmpSide = new PathPlannerAuto("TwoPieceAmpSide");
   }
   
   public static Command getTwoPiece(){
@@ -114,6 +118,12 @@ public class PathAuto extends SubsystemBase {
   }
   public static Command getGackleyAutoPure(){
     return gackleyAutoPure;
+  }
+  public static Command getChoreoOneNote(){
+    return choreoOneNote;
+  }
+  public static Command getTwoPieceAmpSide(){
+    return twoPieceAmpSide;
   }
 
   @Override

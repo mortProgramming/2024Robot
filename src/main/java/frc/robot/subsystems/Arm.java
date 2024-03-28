@@ -150,7 +150,7 @@ public class Arm extends SubsystemBase {
 
     //encoder
     public double encoderToDegrees() {
-        double degrees = getEncoderPosition() * 360 - ARM_ENCODER_DEGREES_TO_0;
+        double degrees = getEncoderPosition() * 360 + ARM_ENCODER_DEGREES_TO_0;
         if (degrees < 0) {
             degrees += 360;
         }

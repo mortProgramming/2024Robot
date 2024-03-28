@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Auton.OdometryCentered.Blue.ScoreAmpOB;
+import frc.robot.commands.Auton.OdometryCentered.Red.ScoreAmpOR;
 import frc.robot.commands.Auton.Timed.Blue.ScoreAmpB;
 import frc.robot.commands.Auton.Timed.Blue.ScoreAmpTaxiB;
 import frc.robot.commands.Auton.Timed.Blue.ScoreAmpTwiceB;
@@ -63,16 +64,18 @@ public class Auto {
 		autoChooser.addOption("TaxiR", new TaxiR());
 
 		autoChooser.addOption("PathPlanner TwoPiece", PathAuto.getTwoPiece());
-		autoChooser.addOption("Odometer Thing", new ScoreAmpOB());
+		autoChooser.addOption("Odometer Thing", new ScoreAmpOR());
+		autoChooser.addOption("OneNote", PathAuto.getChoreoOneNote());
 		autoChooser.addOption("Gackley Auto", PathAuto.getGackleyAuto());
+		autoChooser.addOption("TwoPieceAmpSide", PathAuto.getTwoPieceAmpSide());
 
 		//things
-		autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
-		autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
-		autoChooser.addOption("RedOnePiece", new ScoreAmpR());
-		autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
-		autoChooser.addOption("BlueOneAndTaxi", new ScoreAmpTaxiB());
-		autoChooser.addOption("RedOneAndTaxi", new ScoreAmpTaxiR());
+		// autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
+		// autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
+		// autoChooser.addOption("RedOnePiece", new ScoreAmpR());
+		// autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
+		// autoChooser.addOption("BlueOneAndTaxi", new ScoreAmpTaxiB());
+		// autoChooser.addOption("RedOneAndTaxi", new ScoreAmpTaxiR());
 		autoChooser.addOption("BieryTestAuto", PathAuto.getBieryAuto());
 	}
 

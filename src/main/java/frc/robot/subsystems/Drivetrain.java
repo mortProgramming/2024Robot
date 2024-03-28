@@ -48,6 +48,7 @@ public class Drivetrain extends SubsystemBase {
 	private boolean isBlue;
 	private boolean noteLock = false;
 	private boolean canLock = false;
+	private double ampAngleSpeed = 0;
 	private Intake intake = Intake.getInstance();
 
 	private PIDController aprilXController;
@@ -377,28 +378,39 @@ public class Drivetrain extends SubsystemBase {
 		double x = chassisSpeeds.vxMetersPerSecond;
 		double y = chassisSpeeds.vyMetersPerSecond;
 
+		if ((rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
+		toCircle(setKeptAngle))) > MAX_REASONABLE_ROTATE_SPEED) {
+			ampAngleSpeed = MAX_REASONABLE_ROTATE_SPEED;
+		}
+
+		else if ((rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
+		toCircle(setKeptAngle))) < -MAX_REASONABLE_ROTATE_SPEED) {
+			ampAngleSpeed = -MAX_REASONABLE_ROTATE_SPEED;
+		}
+
+		else {
+			ampAngleSpeed = rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
+		toCircle(setKeptAngle));
+		}
+
 		if(isAngleKept && isBlue) {
 			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
 			y,- x,// -y, x
-			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
-	        toCircle(setKeptAngle)), 
+			ampAngleSpeed, 
 			drivetrain.getGyroscopeRotation());
 		}
 
 		else if (isAngleKept) {
 			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
 			-y, x,//y, -x
-			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
-	        setKeptAngle), 
+			ampAngleSpeed,
 			drivetrain.getGyroscopeRotation());
 		}
 		//Untested note lock
 		if(noteLock && Vision.getInstance().hasNote() && !Intake.hasNote()){
 			canLock = true;
 			//NoteX of 0 means we are directly facing the note. Robot relative should then drive it forward towards the note
-			chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(x,y,
-			rotateToAngleController.calculate(Vision.getInstance().getNoteXDegrees(), 0), drivetrain.getGyroscopeRotation());
-			
+			chassisSpeeds.omegaRadiansPerSecond = rotateToAngleController.calculate(Vision.getInstance().getNoteXDegrees(), 0);
 			
 		}else{
 			canLock = false;

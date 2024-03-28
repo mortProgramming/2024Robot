@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.51,
+      "y": 7.359
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "FieldOrient"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoPieceOne"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreInAmp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoPieceTwo"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreInAmp"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

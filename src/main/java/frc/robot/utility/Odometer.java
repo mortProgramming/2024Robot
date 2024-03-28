@@ -7,6 +7,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
@@ -26,8 +28,8 @@ public class Odometer{
 	private static SwerveDrivePoseEstimator odometry;
 
     private static StructPublisher publisher;
-    private static Matrix poseDeviation = VecBuilder.fill(0.2, 0.2, 0.1);
-    private static Matrix limeDeviation = VecBuilder.fill(0.9,0.9,0.9);
+    private static Matrix<N3,N1> poseDeviation = VecBuilder.fill(0.2, 0.1, 0.1);
+    private static Matrix<N3,N1> limeDeviation = VecBuilder.fill(0.9,0.9,99999);
     
     
     /*
@@ -55,8 +57,8 @@ public class Odometer{
             drivetrain.getNavX().getRotation2d(), 
             drivetrain.getModulePositions(), 
         new Pose2d(new Translation2d(0,0), new Rotation2d(0)),
-        VecBuilder.fill(.25, .55, .1),
-        VecBuilder.fill(0.9,0.9,0.9)
+        poseDeviation,
+        limeDeviation
         );
 
         publisher = NetworkTableInstance.getDefault()
@@ -122,7 +124,7 @@ public class Odometer{
  */
    public static void resetOdometry(double x, double y, double omega){
     odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), 
-    new Pose2d(y, -x, new Rotation2d(omega)));
+    new Pose2d(x, y, new Rotation2d(omega)));
    }
    
 
@@ -134,13 +136,25 @@ public class Odometer{
         //Pose comparison will not check angular measurement. We assume the limelight is more accurate in that regard
         //Override will happen if either x or y axis is within max error
         if(vision.hasTag()){
-            if(Math.abs(getPoseX()-vision.getX())<Constants.Vision.MAX_POSE_ERROR_METERS || Math.abs(getPoseY()-vision.getY())<Constants.Vision.MAX_POSE_ERROR_METERS){
-                odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp());
+            if(Math.abs(getPoseX()-vision.getX())< Constants.Vision.MAX_POSE_ERROR_METERS || Math.abs(getPoseY()-vision.getY())< Constants.Vision.MAX_POSE_ERROR_METERS){
+               // odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp() - (Vision.getInstance().getLatency()));
                 canUseLimelight = true;
+                resetOdometry(Vision.getInstance().getFieldPose());
+                System.out.println("running!");
             }else{
                 canUseLimelight = false;
             }
-        }    
+        }
+        
+        if(getPoseX() > 16.10 ){
+            resetOdometry(16.10, getPoseY(), getPoseRotate().getRadians());
+        }
+        if(getPoseX() < 0.44){
+            resetOdometry(0.44, getPoseY(), getPoseRotate().getRadians());
+        }
+        if(getPoseY() > 8.36){
+            resetOdometry(getPoseX(), 8.36, getPoseRotate().getRadians());
+        }
         
         SmartDashboard.putBoolean("LIMELIGHT POSE IN RANGE", canUseLimelight);
 	    SmartDashboard.putNumber("swervePoseY", getPoseY());

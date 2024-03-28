@@ -46,7 +46,7 @@ public class MoveToPosition extends Command {
     drivetrain.setIsAngleKept(true);
     drivetrain.setKeptAngle(wantedAngle);
 	drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-        drivetrain.getYToPositiController().calculate(Odometer.getPoseY(), wantedY), 
+        drivetrain.getXToPositiController().calculate(Odometer.getPoseX(), wantedY), 
         0,
         // -drivetrain.getXToPositiController().calculate(Odometer.getPoseX(), wantedX), 
         0,
