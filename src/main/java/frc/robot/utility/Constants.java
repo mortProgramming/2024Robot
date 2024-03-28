@@ -231,7 +231,7 @@ public final class Constants {
 		public static final int LEDS_PORT = 2;
 
 		public static final double GREEN_COLOR = 0.77;
-		public static final double RED_COLOR = -0.57; //0.61
+		public static final double RED_COLOR = 0.87; //0.61
 		public static final double BLUE_COLOR = 0.87;
 	}
 

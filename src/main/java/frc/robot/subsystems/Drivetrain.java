@@ -301,8 +301,8 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	public void setKeptAngleRelative(double setKeptAngle) {
-		if (isBlue) this.setKeptAngle = toCircle(setKeptAngle + 180);
-		else this.setKeptAngle = toCircle(setKeptAngle);
+		if (isBlue) this.setKeptAngle = toCircle(setKeptAngle);
+		else this.setKeptAngle = toCircle(setKeptAngle + 180);
 	}
 
 	public void setIsAngleKept(boolean isAngleKept) {
@@ -379,7 +379,7 @@ public class Drivetrain extends SubsystemBase {
 
 		if(isAngleKept && isBlue) {
 			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-			-y, x,
+			y,- x,// -y, x
 			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
 	        toCircle(setKeptAngle)), 
 			drivetrain.getGyroscopeRotation());
@@ -387,7 +387,7 @@ public class Drivetrain extends SubsystemBase {
 
 		else if (isAngleKept) {
 			chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-			y, -x,
+			-y, x,//y, -x
 			rotateToAngleController.calculate(getGyroscopeRotation().getDegrees() + 180,
 	        setKeptAngle), 
 			drivetrain.getGyroscopeRotation());

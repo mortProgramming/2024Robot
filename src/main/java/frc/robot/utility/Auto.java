@@ -81,7 +81,7 @@ public class Auto {
 	 * @return
 	 */
 	public static Boolean getIsBlue() {
-		return isBlue.getSelected() != null ? isBlue.getSelected() : true;
+		return DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == Alliance.Blue : true;
 	}
 
 	/**

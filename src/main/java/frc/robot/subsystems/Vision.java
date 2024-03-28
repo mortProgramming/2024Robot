@@ -24,11 +24,11 @@ public class Vision extends SubsystemBase {
 		private double[] outliers = new double[MAX_OUTLIERS];
 		private VideoSource intakeCam;
 		
+		
     public Vision() {
         // tagTable = NetworkTableInstance.getDefault().getTable("limelight");
 		tagTable = NetworkTableInstance.getDefault().getTable("limelight-tag");
 		intakeTable = NetworkTableInstance.getDefault().getTable("limelight-intake");
-		
     }
 
 	/**
@@ -56,14 +56,14 @@ public class Vision extends SubsystemBase {
 	 */
 	public double getNoteArea() {
 		if(hasNote()){
-			return tagTable.getEntry("ta").getDouble(0);
+			return intakeTable.getEntry("ta").getDouble(0);
 		}
 		return -1;
 		
 	}
 
 	public void setNoteCamLights(int input) {
-		tagTable.getEntry("ledMode").setNumber(input);
+		intakeTable.getEntry("ledMode").setNumber(input);
 	}
 
 	/**

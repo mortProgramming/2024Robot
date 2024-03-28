@@ -77,10 +77,12 @@ public class Robot extends TimedRobot {
 					System.out.println("REGENERATING SUBSYSTEMS");
 					Control.init();
 					Control.configure();
+					regenSub = true;
 					alliance = DriverStation.getAlliance().get();
 				}
 			}
 		}
+		
 	}
 
 	/**
