@@ -177,6 +177,7 @@ public final class Constants {
 		public static final double WRIST_INTAKE_POSITION = 200;
 		public static final double WRIST_TRAP_POSITION = 141;
 		public static final double WRIST_SPIT_POSITION = 41;
+		public static final double WRIST_FLOORTRAP_POSITION = 141;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
 
@@ -190,7 +191,13 @@ public final class Constants {
 	public final static class Arm{
 		public static final int FOLLOW_ARM_MOTOR = 13;
 		public static final int MASTER_ARM_MOTOR = 14;
+		public static final int BLOWER_MOTOR = 19;
+
 		public static final int ENCODER_PORT = 9;
+
+		public static final double BLOWER_PID_P = 0.005;
+		public static final double BLOWER_PID_I = 0;
+		public static final double BLOWER_PID_D = 0;
 
 		// public static final double POSITION_PID_P = 0.01;
 		public static final double POSITION_PID_P = 0.0066;
@@ -217,6 +224,7 @@ public final class Constants {
 		public static final double ARM_TRAP_POSITION = 38;
 		public static final double ARM_SPEAKER_POSITION = 0;
 		public static final double ARM_PRETRAP_POSITION = 130;
+		public static final double ARM_FLOORTRAP_POSITION = 38;
 		
 		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 
@@ -227,13 +235,15 @@ public final class Constants {
 		public static final double ARM_NEVER_POSITION = 90;
 
 		public static final double ARM_WRIST_TIMEOUT = 1.6;
+
+		public static final double BLOWER_MOTOR_MAX_SPEED = 0.7;
 	}
 
 	public static final class Lights {
 		public static final int LEDS_PORT = 2;
 
 		public static final double GREEN_COLOR = 0.77;
-		public static final double RED_COLOR = 0.87; //0.61
+		public static final double RED_COLOR = 0.61; //0.61
 		public static final double BLUE_COLOR = 0.87;
 	}
 

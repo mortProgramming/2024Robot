@@ -4,9 +4,12 @@ import static frc.robot.utility.Constants.RobotSpecs.*;
 import static frc.robot.utility.Constants.Wrist.*;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Servo;
@@ -18,7 +21,6 @@ public class Wrist extends SubsystemBase {
     private static Wrist wrist;
 
     private TalonFX wristMotor;
-
     private double wristSpeed;
 
     private double setpoint;
@@ -41,7 +43,7 @@ public class Wrist extends SubsystemBase {
         wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
         trapServo = new Servo(TRAP_SERVO_POS);
         servoPos = 90;
-    }
+        }
 
 
     public void init() {

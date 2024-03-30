@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+
 import static frc.robot.utility.Constants.Arm.*;
 import static frc.robot.utility.Constants.RobotSpecs.*;
 
@@ -27,10 +30,18 @@ public class Arm extends SubsystemBase {
     private static TalonFX masterArmMotor;
     private static TalonFX followArmMotor;
 
+    private CANSparkMax blowerMotor;
+
     private double armSpeed;
     private double setpoint;
 
+    private double targetBlowerOutput;
+    private double currentBlowerOutput;
+
     private ProfiledPIDController armPositionController;
+
+    private PIDController blowerController;
+
         // private PIDController armPositionController;
 
     // private SimpleMotorFeedforward armPostionFeedForward;
@@ -38,9 +49,10 @@ public class Arm extends SubsystemBase {
 
         private DutyCycleEncoder encoder;
 
-
     public Arm() {
         velocityMode = true;
+        targetBlowerOutput = 0;
+        currentBlowerOutput = 0;
 
         masterArmMotor = new TalonFX(MASTER_ARM_MOTOR);
         followArmMotor = new TalonFX(FOLLOW_ARM_MOTOR);
@@ -58,6 +70,9 @@ public class Arm extends SubsystemBase {
         armPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
 
         encoder = new DutyCycleEncoder(ENCODER_PORT);
+
+        blowerController = new PIDController(BLOWER_PID_P, BLOWER_PID_I, BLOWER_PID_D);
+        blowerMotor = new CANSparkMax(BLOWER_MOTOR, MotorType.kBrushless);
 
     }
 
@@ -84,12 +99,18 @@ public class Arm extends SubsystemBase {
         if(velocityMode == true) {
             masterArmMotor.set(-armSpeed);
         }
+
         else {
             masterArmMotor.set(-setPosition(setpoint));
             // masterArmMotor.set(0);
         }
         //masterArmMotor.set(0);
         // setPosition(setpoint);
+
+        currentBlowerOutput += blowerController.calculate(currentBlowerOutput, targetBlowerOutput);
+
+        blowerMotor.set(currentBlowerOutput);
+
     }
 
     /**
@@ -98,6 +119,10 @@ public class Arm extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+    }
+
+    public void setBlowerTarget(double targetBlowerOutput){
+        this.targetBlowerOutput = targetBlowerOutput;
     }
 
     /**

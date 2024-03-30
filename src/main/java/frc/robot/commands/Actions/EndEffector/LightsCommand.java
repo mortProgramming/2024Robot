@@ -34,7 +34,7 @@ public class LightsCommand extends Command {
     }
 
     else {
-        lights.setLightsRed();
+        lights.setLightsBlue();
         vision.setCamLights(1);
     }
   }
@@ -43,6 +43,7 @@ public class LightsCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     vision.setCamLights(1);
+    lights.setLightsBlue();
   }
 
   // Returns true when the command should end.

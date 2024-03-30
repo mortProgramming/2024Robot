@@ -58,8 +58,8 @@ public class Climber extends SubsystemBase {
        leftServo = new Servo(LEFT_CLIMBER_SERVO);
        rightServo = new Servo(RIGHT_CLIMBER_SERVO);
 
-       leftServoAngle = 90;
-       rightServoAngle = 90;
+       leftServoAngle = SERVO_GLOBAL_LOCK_POSITION;
+       rightServoAngle = SERVO_GLOBAL_LOCK_POSITION;
 
 
     //    rightServo = new PWM(RIGHT_CLIMBER_SERVO);
@@ -124,7 +124,7 @@ public class Climber extends SubsystemBase {
 
     // SmartDashboard.putNumber("Servo thig", rightServo.getPosition());
 
-    if (rightServoAngle == 90) {
+    if (rightServoAngle == SERVO_GLOBAL_LOCK_POSITION) {
         SmartDashboard.putBoolean("Climber Locked", true);
     }
 

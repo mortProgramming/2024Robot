@@ -136,14 +136,7 @@ public class Odometer{
         //Pose comparison will not check angular measurement. We assume the limelight is more accurate in that regard
         //Override will happen if either x or y axis is within max error
         if(vision.hasTag()){
-            if(Math.abs(getPoseX()-vision.getX())< Constants.Vision.MAX_POSE_ERROR_METERS || Math.abs(getPoseY()-vision.getY())< Constants.Vision.MAX_POSE_ERROR_METERS){
-               // odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp() - (Vision.getInstance().getLatency()));
-                canUseLimelight = true;
-                resetOdometry(Vision.getInstance().getFieldPose());
-                System.out.println("running!");
-            }else{
-                canUseLimelight = false;
-            }
+            odometry.addVisionMeasurement(vision.getPose(), Timer.getFPGATimestamp()-vision.getFieldPoseAsArray()[6]);
         }
         
         if(getPoseX() > 16.10 ){
@@ -152,18 +145,18 @@ public class Odometer{
         if(getPoseX() < 0.44){
             resetOdometry(0.44, getPoseY(), getPoseRotate().getRadians());
         }
-        if(getPoseY() > 8.36){
+        if(getPoseY() > 7.85){
             resetOdometry(getPoseX(), 8.36, getPoseRotate().getRadians());
+        }
+        if(getPoseY()< .37){
+            resetOdometry(getPoseX(), .47, getPoseRotate().getRadians());
         }
         
         SmartDashboard.putBoolean("LIMELIGHT POSE IN RANGE", canUseLimelight);
 	    SmartDashboard.putNumber("swervePoseY", getPoseY());
         SmartDashboard.putNumber("swervePoseX", getPoseX());
 
-
         publisher.set(new Pose2d(new Translation2d(getPoseX(), getPoseY()), getPoseRotate()));
         // SmartDashboard.putNumber("swerveTimed", MathSharedStore.getTimestamp());
     }
-    
-    
 }

@@ -20,6 +20,7 @@ import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
 import frc.robot.commands.Actions.EndEffector.ArmWrist.WristToPosition;
 import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
+import frc.robot.commands.Actions.EndEffector.BlowerToVelocity;
 import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
 import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
@@ -176,10 +177,14 @@ public class Control {
         xboxController.start().whileFalse(new InstantCommand(() -> arm.setVelocityMode(false)));
         xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
 
-        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(90)));
+        //floor trap
+        xboxController.povDown().whileTrue(new BlowerToVelocity(BLOWER_MOTOR_MAX_SPEED));
+        //xboxController.povDown().whileTrue(SetArmAndWristPos.floorTrap());
+
+        // xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(90)));
         //xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(45)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setRightServo(0)));
-        xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(90)));
+        // xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(90)));
        // xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setLeftServo(45+90)));
         //xboxController.povDown().toggleOnFalse(new InstantCommand(() -> climber.setLeftServo(0)));
 
