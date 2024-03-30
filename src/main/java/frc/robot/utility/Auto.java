@@ -64,7 +64,8 @@ public class Auto {
 		autoChooser.addOption("TaxiR", new TaxiR());
 
 		autoChooser.addOption("PathPlanner TwoPiece", PathAuto.getTwoPiece());
-		autoChooser.addOption("Odometer Thing", new ScoreAmpOR());
+		autoChooser.addOption("Odometer Thing Blue", new ScoreAmpOB());
+		autoChooser.addOption("Odometer Thing Red", new ScoreAmpOR());
 		autoChooser.addOption("OneNote", PathAuto.getChoreoOneNote());
 		autoChooser.addOption("Gackley Auto", PathAuto.getGackleyAuto());
 		autoChooser.addOption("TwoPieceAmpSide", PathAuto.getTwoPieceAmpSide());

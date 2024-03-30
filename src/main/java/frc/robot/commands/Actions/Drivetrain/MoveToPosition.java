@@ -43,12 +43,12 @@ public class MoveToPosition extends Command {
    */
   @Override
   public void execute() {
-    drivetrain.setIsAngleKept(true);
-    drivetrain.setKeptAngle(wantedAngle);
+    // drivetrain.setIsAngleKept(true);
+    // drivetrain.setKeptAngle(wantedAngle);
 	drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-        drivetrain.getXToPositiController().calculate(Odometer.getPoseX(), wantedY), 
-        0,
-        // -drivetrain.getXToPositiController().calculate(Odometer.getPoseX(), wantedX), 
+        drivetrain.getXToPositiController().calculate(Odometer.getPoseX(), wantedX), 
+        // 0,
+        drivetrain.getYToPositiController().calculate(Odometer.getPoseY(), wantedY), 
         0,
 		drivetrain.getGyroscopeRotation()));
       // drivetrain.setIsAngleKept(true);
@@ -73,8 +73,8 @@ public class MoveToPosition extends Command {
    */
   @Override
   public boolean isFinished() {
-    // return (drivetrain.getXToPositiController().atSetpoint() && 
-    // drivetrain.getYToPositiController().atSetpoint());
-    return drivetrain.getYToPositiController().atSetpoint();
+    return (drivetrain.getXToPositiController().atSetpoint() && 
+    drivetrain.getYToPositiController().atSetpoint());
+    // return drivetrain.getYToPositiController().atSetpoint();
   }
 }

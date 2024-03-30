@@ -1,5 +1,7 @@
 package frc.robot.utility;
 
+import static frc.robot.utility.Constants.Vision.MAX_POSE_ERROR_METERS;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -28,7 +30,7 @@ public class Odometer{
 	private static SwerveDrivePoseEstimator odometry;
 
     private static StructPublisher publisher;
-    private static Matrix<N3,N1> poseDeviation = VecBuilder.fill(0.2, 0.1, 0.1);
+    private static Matrix<N3,N1> poseDeviation = VecBuilder.fill(0.1, 0.1, 0.1);
     private static Matrix<N3,N1> limeDeviation = VecBuilder.fill(0.9,0.9,99999);
     
     
@@ -135,22 +137,24 @@ public class Odometer{
         //Pose Comparison will not happen if limelight doesnt have a target
         //Pose comparison will not check angular measurement. We assume the limelight is more accurate in that regard
         //Override will happen if either x or y axis is within max error
-        if(vision.hasTag()){
-            odometry.addVisionMeasurement(vision.getPose(), Timer.getFPGATimestamp()-vision.getFieldPoseAsArray()[6]);
-        }
+        // if(vision.hasTag()){
+        //     if(Math.abs((vision.getX() - odometry.getEstimatedPosition().getX()))<MAX_POSE_ERROR_METERS && Math.abs(vision.getY() - odometry.getEstimatedPosition().getY()) < MAX_POSE_ERROR_METERS){
+        //         odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp()- (vision.getFieldPoseAsArray()[6]/1000));
+        //     }
+        // }
         
-        if(getPoseX() > 16.10 ){
-            resetOdometry(16.10, getPoseY(), getPoseRotate().getRadians());
+        // if(getPoseX() > 16.10 ){
+        //     resetOdometry(16.10, getPoseY(), getPoseRotate().getRadians());
+        // }
+        // if(getPoseX() < 0.44){
+        //     resetOdometry(0.44, getPoseY(), getPoseRotate().getRadians());
+        // }
+        if(getPoseY() > 7.9){
+            resetOdometry(getPoseX(), 7.9, getPoseRotate().getRadians());
         }
-        if(getPoseX() < 0.44){
-            resetOdometry(0.44, getPoseY(), getPoseRotate().getRadians());
-        }
-        if(getPoseY() > 7.85){
-            resetOdometry(getPoseX(), 8.36, getPoseRotate().getRadians());
-        }
-        if(getPoseY()< .37){
-            resetOdometry(getPoseX(), .47, getPoseRotate().getRadians());
-        }
+        // if(getPoseY()< .37){
+        //     resetOdometry(getPoseX(), .37, getPoseRotate().getRadians());
+        // }
         
         SmartDashboard.putBoolean("LIMELIGHT POSE IN RANGE", canUseLimelight);
 	    SmartDashboard.putNumber("swervePoseY", getPoseY());

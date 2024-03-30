@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.5198941230773926,
+      "x": 0.41989412307739227,
       "y": 7.374640941619873
     },
     "rotation": -90.0
@@ -21,6 +21,12 @@
           "type": "path",
           "data": {
             "pathName": "FirstNoteScored"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreInAmp"
           }
         }
       ]

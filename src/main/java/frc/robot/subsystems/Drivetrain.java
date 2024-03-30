@@ -10,6 +10,7 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -18,6 +19,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
@@ -59,8 +61,8 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController yController;
 	private PIDController thetaController;
 
-	private PIDController xToPositioController;
-	private PIDController yToPositioController;
+	private ProfiledPIDController xToPositioController;
+	private ProfiledPIDController yToPositioController;
 	private PIDController rotateToAngleController;
 	//Declaration of drivetrain variable
 	private static Drivetrain drivetrain;
@@ -151,11 +153,13 @@ public class Drivetrain extends SubsystemBase {
 		thetaController.setSetpoint(0);
 		thetaController.setTolerance(0.5);
 
-		xToPositioController = new PIDController(0.3, 0, 0);
-		// xToPositioController.setTolerance(0.05);
+		xToPositioController = new ProfiledPIDController(TO_POSITION_KP, TO_POSITION_KI, TO_POSITION_KD,
+		new Constraints(TO_POSITION_KV, TO_POSITION_KA));
+		xToPositioController.setTolerance(TO_POSITION_TOLERANCE);
 
-		yToPositioController = new PIDController(0.3, 0, 0);
-		// yToPositioController.setTolerance(0.05);
+		yToPositioController = new ProfiledPIDController(TO_POSITION_KP, TO_POSITION_KI, TO_POSITION_KD,
+		new Constraints(TO_POSITION_KV, TO_POSITION_KA));
+		yToPositioController.setTolerance(TO_POSITION_TOLERANCE);
 
 
 		//	Initialization of PID controller rotateToAngle
@@ -212,13 +216,13 @@ public class Drivetrain extends SubsystemBase {
 	public Rotation2d getGyroscopeRotation() {
 		if (navX.isMagnetometerCalibrated()) {
 			// We will only get valid fused headings if the magnetometer is calibrated
-			return Rotation2d.fromDegrees(360.0 - toCircle(navX.getFusedHeading()-fieldOrientationOffset));
+			return Rotation2d.fromDegrees(360.0 - (navX.getFusedHeading()-fieldOrientationOffset));
 		}
 
 		// We have to invert the angle of the NavX so that rotating the robot
 		// counter-clockwise
 		// makes the angle increase.
-		return Rotation2d.fromDegrees(360.0 - toCircle(navX.getYaw()-fieldOrientationOffset));
+		return Rotation2d.fromDegrees(360.0 - navX.getYaw()-fieldOrientationOffset);
 	}
 
 	/**
@@ -229,7 +233,7 @@ public class Drivetrain extends SubsystemBase {
 	public Rotation2d getAbsoluteGyroscopeRotation() {
 		if (navX.isMagnetometerCalibrated()) {
 			// We will only get valid fused headings if the magnetometer is calibrated
-			return Rotation2d.fromDegrees(360.0 - toCircle(navX.getFusedHeading()));
+			return Rotation2d.fromDegrees(360.0 - navX.getFusedHeading());
 		}
 
 		// We have to invert the angle of the NavX so that rotating the robot
@@ -346,11 +350,11 @@ public class Drivetrain extends SubsystemBase {
 		return rotateToAngleController;
 	}
 
-	public PIDController getXToPositiController() {
+	public ProfiledPIDController getXToPositiController() {
 		return xToPositioController;
 	}
 
-	public PIDController getYToPositiController() {
+	public ProfiledPIDController getYToPositiController() {
 		return yToPositioController;
 	}
 

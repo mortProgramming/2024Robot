@@ -77,7 +77,7 @@ public class PathAuto extends SubsystemBase {
       // new InstantCommand(() -> ),
       new WristToPosition(WRIST_REST_POSITION).withTimeout(.25),
       SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
-      new IntakeToVelocity(AUTO_SHOOT_SPEED).withTimeout(1),
+      new IntakeToVelocity(AUTO_SHOOT_SPEED).withTimeout(.7),
       SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
     ).withTimeout(3.45));
 

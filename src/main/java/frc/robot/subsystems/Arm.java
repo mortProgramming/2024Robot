@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Arm extends SubsystemBase {
     
     private static boolean velocityMode;
+    private static boolean holdVelocity = false;
 
     private static Arm arm;
 
@@ -57,7 +58,7 @@ public class Arm extends SubsystemBase {
         masterArmMotor = new TalonFX(MASTER_ARM_MOTOR);
         followArmMotor = new TalonFX(FOLLOW_ARM_MOTOR);
 
-        followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, false));
+        followArmMotor.setControl(new Follower(MASTER_ARM_MOTOR, true));
 
         // masterArmMotor.set
 
@@ -75,6 +76,9 @@ public class Arm extends SubsystemBase {
         blowerMotor = new CANSparkMax(BLOWER_MOTOR, MotorType.kBrushless);
 
     }
+    public void setBlowerHold(boolean holdVelocity){
+        this.holdVelocity = holdVelocity;
+    }
 
     public void init() {
     //add motor initialization
@@ -87,27 +91,27 @@ public class Arm extends SubsystemBase {
     public void periodic() {
       // This method will be called once per scheduler run
         // masterArmMotor.set(armSpeed);
-        SmartDashboard.putNumber("Arm Postion", getPosition());
-        SmartDashboard.putNumber("Arm Position Degrees", posToDegrees());
-        SmartDashboard.putNumber("Encoder Arm Postion", getEncoder().getAbsolutePosition());
+        
         SmartDashboard.putNumber("Encoder Arm Position Degrees", encoderToDegrees());
         SmartDashboard.putNumber("Arm Setpoint", setpoint);
         SmartDashboard.putNumber("arm output", setPosition(setpoint));
         SmartDashboard.putNumber("ActualArmMotorOutput", masterArmMotor.get());
-        SmartDashboard.putBoolean("isvelocityMode", velocityMode);
+        SmartDashboard.putNumber("Blower Value", currentBlowerOutput);
 
         if(velocityMode == true) {
-            masterArmMotor.set(-armSpeed);
+            masterArmMotor.set(armSpeed);
         }
 
         else {
-            masterArmMotor.set(-setPosition(setpoint));
+            masterArmMotor.set(setPosition(setpoint));
             // masterArmMotor.set(0);
         }
         //masterArmMotor.set(0);
         // setPosition(setpoint);
 
-        currentBlowerOutput += blowerController.calculate(currentBlowerOutput, targetBlowerOutput);
+        
+        currentBlowerOutput += blowerController.calculate(currentBlowerOutput,targetBlowerOutput);
+ 
 
         blowerMotor.set(currentBlowerOutput);
 

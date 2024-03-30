@@ -41,7 +41,7 @@ public class Wrist extends SubsystemBase {
         new Constraints(POSITION_PID_V, POSITION_PID_A));
 
         wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
-        trapServo = new Servo(TRAP_SERVO_POS);
+        trapServo = new Servo(TRAP_SERVO_PORT);
         servoPos = 90;
         }
 
@@ -64,6 +64,7 @@ public class Wrist extends SubsystemBase {
         SmartDashboard.putNumber("ActualWristMotorOutput", wristMotor.get());
         SmartDashboard.putBoolean("isvelocityModeWrist", velocityMode);
         trapServo.setAngle(servoPos);
+        SmartDashboard.putNumber("Servo Angle", trapServo.getAngle());
 
         if(velocityMode == true) {
             wristMotor.set(wristSpeed);

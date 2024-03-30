@@ -178,8 +178,11 @@ public class Control {
         xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
 
         //floor trap
-        xboxController.povDown().whileTrue(new BlowerToVelocity(BLOWER_MOTOR_MAX_SPEED));
-        //xboxController.povDown().whileTrue(SetArmAndWristPos.floorTrap());
+        xboxController.povDown().whileTrue(new BlowerToVelocity(-BLOWER_MOTOR_MAX_SPEED));
+        xboxController.povDown().onFalse(new BlowerToVelocity(0));
+    
+        xboxController.povDown().whileFalse(new InstantCommand(() -> wrist.setServoPos(90)));
+        xboxController.povDown().whileTrue(SetArmAndWristPos.floorTrap().andThen(new InstantCommand(() -> {wrist.setServoPos(TRAP_SERVO_POS);})));
 
         // xboxController.povDown().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(90)));
         //xboxController.povRight().toggleOnTrue(new InstantCommand(() -> climber.setRightServo(45)));
@@ -195,7 +198,8 @@ public class Control {
         
         //Climbers up for preclimb
         xboxController.povUp().toggleOnTrue(new ClimberToPosition(LEFT_CLIMBER_MAX_POSITION, RIGHT_CLIMBER_MAX_POSITION));
-
+        xboxController.povUp().toggleOnTrue(new BlowerToVelocity(BLOWER_MOTOR_MAX_SPEED));
+        xboxController.povUp().toggleOnTrue(new BlowerToVelocity(BLOWER_MOTOR_MAX_SPEED));
         //Wrist to rest
         xboxController.leftBumper().onTrue(new WristToPosition(WRIST_REST_POSITION));
 

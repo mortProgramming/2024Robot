@@ -96,6 +96,8 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.schedule();
 		}
+		Wrist.getInstance().setVelocityMode(false);
+		Wrist.getInstance().setSetPoint(WRIST_REST_POSITION);
 
 	}
 
@@ -125,6 +127,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testInit() {
+		
 	}
 
 	/** This function is called periodically during test mode. */

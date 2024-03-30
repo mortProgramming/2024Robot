@@ -52,23 +52,26 @@ public final class Constants {
 		public final static double OMEGAVALUE_KD = 0;
 		public final static double OMEGAVALUE_TOLERANCE = 0;
 
-		public final static double TO_POSITION_KP = 0.01;
+		public final static double TO_POSITION_KP = 0.5;
 		public final static double TO_POSITION_KI = 0;
 		public final static double TO_POSITION_KD = 0;
+		public final static double TO_POSITION_KA = 10;
+		public final static double TO_POSITION_KV = 10;
+		public final static double TO_POSITION_TOLERANCE = 0.05;
 
 		public final static double MAX_REASONABLE_ROTATE_SPEED = Math.PI;
 
 		public static final class AutonConstants{
-			public static final double AUTON_POSITION_KP = 2;
+			public static final double AUTON_POSITION_KP = 1.6;
 
 
 			public static final double AUTON_POSITION_KI = 0;
 			public static final double AUTON_POSITION_KD = 0;
 	
-			public static final double AUTON_ROTATION_KP = 2.95;
+			public static final double AUTON_ROTATION_KP = 1.85;
 
 			public static final double AUTON_ROTATION_KI = 0;
-			public static final double AUTON_ROTATION_KD = 0.0025;
+			public static final double AUTON_ROTATION_KD = 0;
 
 			public static final double MAX_AUTON_VELOCITY = 4.17;
 		}
@@ -147,7 +150,7 @@ public final class Constants {
 		// public static final double SHOOT_SPEED = -0.50;
 		public static final double INTAKE_SPEED = 0.6;
 		public static final double AMP_SHOOT_SPEED = -0.25;
-		public static final double SHOOTER_SHOOT_SPEED = -1;
+		public static final double SHOOTER_SHOOT_SPEED = -.80;
 		public static final double AUTO_SHOOT_SPEED = -0.3;
 
 		public static final int INTAKE_SENSOR = 0;
@@ -177,7 +180,7 @@ public final class Constants {
 		public static final double WRIST_INTAKE_POSITION = 200;
 		public static final double WRIST_TRAP_POSITION = 141;
 		public static final double WRIST_SPIT_POSITION = 41;
-		public static final double WRIST_FLOORTRAP_POSITION = 141;
+		public static final double WRIST_FLOORTRAP_POSITION = 151;
 
 		public static final double WRIST_NEAR_SETPOINT_ERROR = 0;
 
@@ -185,7 +188,8 @@ public final class Constants {
 
 		public static final double WRIST_DEGREES_TO_0 = 0;
 		public static final double WRIST_GEAR_RATIO = -25;
-		public static final int TRAP_SERVO_POS = 8;
+		public static final int TRAP_SERVO_PORT = 8;
+		public static final double TRAP_SERVO_POS = -11.5;
 	}
 
 	public final static class Arm{
@@ -195,7 +199,7 @@ public final class Constants {
 
 		public static final int ENCODER_PORT = 9;
 
-		public static final double BLOWER_PID_P = 0.005;
+		public static final double BLOWER_PID_P = 0.01;
 		public static final double BLOWER_PID_I = 0;
 		public static final double BLOWER_PID_D = 0;
 
@@ -224,7 +228,7 @@ public final class Constants {
 		public static final double ARM_TRAP_POSITION = 38;
 		public static final double ARM_SPEAKER_POSITION = 0;
 		public static final double ARM_PRETRAP_POSITION = 130;
-		public static final double ARM_FLOORTRAP_POSITION = 38;
+		public static final double ARM_FLOORTRAP_POSITION = 50;
 		
 		public static final double ARM_NEAR_SETPOINT_ERROR = 0;
 
@@ -234,9 +238,9 @@ public final class Constants {
 		public static final double ARM_ENCODER_DEGREES_TO_0 = 84;
 		public static final double ARM_NEVER_POSITION = 90;
 
-		public static final double ARM_WRIST_TIMEOUT = 1.6;
+		public static final double ARM_WRIST_TIMEOUT = 1.5;
 
-		public static final double BLOWER_MOTOR_MAX_SPEED = 0.7;
+		public static final double BLOWER_MOTOR_MAX_SPEED = 1;
 	}
 
 	public static final class Lights {

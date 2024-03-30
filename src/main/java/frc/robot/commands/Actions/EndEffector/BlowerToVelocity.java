@@ -27,7 +27,7 @@ public class BlowerToVelocity extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        arm.setBlowerTarget(0);
+        // arm.setBlowerTarget(0);
     }
 
     @Override

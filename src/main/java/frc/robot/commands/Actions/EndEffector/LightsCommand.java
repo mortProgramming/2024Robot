@@ -3,6 +3,7 @@ package frc.robot.commands.Actions.EndEffector;
 import static frc.robot.utility.Constants.Intake.AMP_SHOOT_SPEED;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
@@ -31,6 +32,7 @@ public class LightsCommand extends Command {
     if (Intake.hasNote()) {
         lights.setLightsGreen();
         vision.setCamLights(2);
+        
     }
 
     else {
