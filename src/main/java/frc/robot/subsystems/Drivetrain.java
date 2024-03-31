@@ -75,7 +75,7 @@ public class Drivetrain extends SubsystemBase {
 		// defaultDriveConfig.setDriveCurrentLimit(Double.NaN);
 
 		//defaultDriveConfig = new MkModuleConfiguration();
-  defaultDriveConfig = MkModuleConfiguration().getDefaultSteerFalcon500();
+  		defaultDriveConfig = MkModuleConfiguration.getDefaultSteerFalcon500();
 		defaultDriveConfig.setDriveCurrentLimit(360);
 		defaultDriveConfig.setSteerCurrentLimit(360);
 		
