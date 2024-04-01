@@ -32,7 +32,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TwoPieceAmpSide"
+            "pathName": "TwoPieceAmpSide1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoPieceAmpSide2"
           }
         }
       ]
