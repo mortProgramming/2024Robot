@@ -60,7 +60,7 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController xController;
 	private PIDController yController;
 	private PIDController thetaController;
-
+	
 	private ProfiledPIDController xToPositioController;
 	private ProfiledPIDController yToPositioController;
 	private PIDController rotateToAngleController;
@@ -78,6 +78,7 @@ public class Drivetrain extends SubsystemBase {
   		defaultDriveConfig = MkModuleConfiguration.getDefaultSteerFalcon500();
 		defaultDriveConfig.setDriveCurrentLimit(360);
 		defaultDriveConfig.setSteerCurrentLimit(360);
+
 		
 		driveKinematics = new SwerveDriveKinematics(
 				// Front left
@@ -90,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
 				new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
 		chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
-
+		
 		//	Puts Drivetrain on shuffleboard
 		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
@@ -421,6 +422,7 @@ public class Drivetrain extends SubsystemBase {
 			canLock = false;
 		}
 		SmartDashboard.putBoolean("CanLock", canLock);
+		chassisSpeeds = ChassisSpeeds.discretize(chassisSpeeds, 0.02);
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
