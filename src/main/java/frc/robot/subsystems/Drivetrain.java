@@ -422,7 +422,7 @@ public class Drivetrain extends SubsystemBase {
 			canLock = false;
 		}
 		SmartDashboard.putBoolean("CanLock", canLock);
-		chassisSpeeds = ChassisSpeeds.discretize(chassisSpeeds, 0.02);
+		chassisSpeeds = ChassisSpeeds.discretize(chassisSpeeds, DISCRETIZE_TIME);
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
