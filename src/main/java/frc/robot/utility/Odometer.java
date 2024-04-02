@@ -17,7 +17,7 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
-
+import frc.robot.utility.Constants.Drivetrain.OdometryConstants;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Odometer{
@@ -137,11 +137,13 @@ public class Odometer{
         //Pose Comparison will not happen if limelight doesnt have a target
         //Pose comparison will not check angular measurement. We assume the limelight is more accurate in that regard
         //Override will happen if either x or y axis is within max error
-        // if(vision.hasTag()){
-        //     if(Math.abs((vision.getX() - odometry.getEstimatedPosition().getX()))<MAX_POSE_ERROR_METERS && Math.abs(vision.getY() - odometry.getEstimatedPosition().getY()) < MAX_POSE_ERROR_METERS){
-        //         odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp()- (vision.getFieldPoseAsArray()[6]/1000));
-        //     }
-        // }
+        if(vision.hasTag()){
+            if(Math.abs((vision.getX() - odometry.getEstimatedPosition().getX()))<MAX_POSE_ERROR_METERS && Math.abs(vision.getY() - odometry.getEstimatedPosition().getY()) < MAX_POSE_ERROR_METERS){
+                odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp()- (vision.getFieldPoseAsArray()[6]/1000));
+                canUseLimelight = true;
+            }
+            canUseLimelight = false;
+        }
         
         // if(getPoseX() > 16.10 ){
         //     resetOdometry(16.10, getPoseY(), getPoseRotate().getRadians());
@@ -149,8 +151,8 @@ public class Odometer{
         // if(getPoseX() < 0.44){
         //     resetOdometry(0.44, getPoseY(), getPoseRotate().getRadians());
         // }
-        if(getPoseY() > 7.9){
-            resetOdometry(getPoseX(), 7.9, getPoseRotate().getRadians());
+        if(getPoseY() > OdometryConstants.UPPER_Y_MAX){
+            resetOdometry(getPoseX(), OdometryConstants.UPPER_Y_MAX, getPoseRotate().getRadians());
         }
         // if(getPoseY()< .37){
         //     resetOdometry(getPoseX(), .37, getPoseRotate().getRadians());

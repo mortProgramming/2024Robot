@@ -61,14 +61,18 @@ public final class Constants {
 
 		public final static double MAX_REASONABLE_ROTATE_SPEED = Math.PI;
 
+		public static final class OdometryConstants{
+			public static final double UPPER_Y_MAX = 7.85;
+		}
+
 		public static final class AutonConstants{
-			public static final double AUTON_POSITION_KP = 1.6;
+			public static final double AUTON_POSITION_KP = .315;
 
 
 			public static final double AUTON_POSITION_KI = 0;
-			public static final double AUTON_POSITION_KD = 0;
+			public static final double AUTON_POSITION_KD = 0.001;
 	
-			public static final double AUTON_ROTATION_KP = 1.85;
+			public static final double AUTON_ROTATION_KP = 1.45;
 
 			public static final double AUTON_ROTATION_KI = 0;
 			public static final double AUTON_ROTATION_KD = 0;
@@ -149,9 +153,9 @@ public final class Constants {
 		// public static final double INTAKE_SPEED = 0.25;
 		// public static final double SHOOT_SPEED = -0.50;
 		public static final double INTAKE_SPEED = 0.6;
-		public static final double AMP_SHOOT_SPEED = -0.25;
+		public static final double AMP_SHOOT_SPEED = -0.3;
 		public static final double SHOOTER_SHOOT_SPEED = -.80;
-		public static final double AUTO_SHOOT_SPEED = -0.3;
+		public static final double AUTO_SHOOT_SPEED = -0.45;
 
 		public static final int INTAKE_SENSOR = 0;
 	}
@@ -188,7 +192,10 @@ public final class Constants {
 
 		public static final double WRIST_DEGREES_TO_0 = 0;
 		public static final double WRIST_GEAR_RATIO = -25;
+
+
 		public static final int TRAP_SERVO_PORT = 8;
+		public static final double TRAP_SERVO_REST_POS = 80;
 		public static final double TRAP_SERVO_POS = -11.5;
 	}
 
@@ -238,7 +245,7 @@ public final class Constants {
 		public static final double ARM_ENCODER_DEGREES_TO_0 = 84;
 		public static final double ARM_NEVER_POSITION = 90;
 
-		public static final double ARM_WRIST_TIMEOUT = 1.5;
+		public static final double ARM_WRIST_TIMEOUT = 1;
 
 		public static final double BLOWER_MOTOR_MAX_SPEED = 1;
 	}
