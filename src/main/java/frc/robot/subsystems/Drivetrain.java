@@ -244,6 +244,14 @@ public class Drivetrain extends SubsystemBase {
 		return Rotation2d.fromDegrees(360.0 - toCircle(navX.getYaw()));
 	}
 
+	public double getAccelMag() {
+		return Math.sqrt(
+			navX.getWorldLinearAccelX() * navX.getWorldLinearAccelX() + 
+			navX.getWorldLinearAccelY() * navX.getWorldLinearAccelY() + 
+			navX.getWorldLinearAccelZ() * navX.getWorldLinearAccelZ()
+		);
+	}
+
 	/**
 	 * @return SwerveDriveKinematics
 	 */

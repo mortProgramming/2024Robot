@@ -98,7 +98,7 @@ public class PathAuto extends SubsystemBase {
     NamedCommands.registerCommand("FieldOrient", new RobotStart((DriverStation.getAlliance().get() == Alliance.Red) ?  90 : 270));
     NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.65).withTimeout(.75));
     //build all path-based autons
-    twoPiece = new PathPlannerAuto("PathPlanner2Piece");
+    twoPiece = new PathPlannerAuto("PathPlanner2PieceTest");
     gackleyAuto = new PathPlannerAuto("GackleyAuto1");
     bieryAuto = new PathPlannerAuto("BieryWildAuto");
     choreoOneNote = new PathPlannerAuto("OneNote");

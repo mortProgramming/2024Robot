@@ -29,7 +29,7 @@ public final class Constants {
 		public final static int BACK_LEFT_DRIVE = 5;
 		public final static int BACK_LEFT_STEER = 6;
 		public final static int BACK_LEFT_STEER_ENCODER = 36; 
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(280+180);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(279-180+5);
 
 		/* Port and Declaration for Back Right swerve motors & offset */
 		public final static int BACK_RIGHT_DRIVE = 7;
@@ -60,7 +60,7 @@ public final class Constants {
 		public final static double TO_POSITION_TOLERANCE = 0.05;
 
 		public final static double MAX_REASONABLE_ROTATE_SPEED = Math.PI;
-
+		public final static double DISCRETIZE_TIME = 0.02;
 		public static final class OdometryConstants{
 			public static final double UPPER_Y_MAX = 7.85;
 		}
@@ -129,7 +129,7 @@ public final class Constants {
 		public static final double POSITION_FF_V = 0;
 		public static final double POSITION_FF_A = 0;
 
-		public static final double LEFT_CLIMBER_REST_POSITION = 177;
+		public static final double LEFT_CLIMBER_REST_POSITION = 182;
 		public static final double LEFT_CLIMBER_MAX_POSITION = 34;
 
 		public static final double RIGHT_CLIMBER_MAX_POSITION = -32;
@@ -211,7 +211,7 @@ public final class Constants {
 		public static final double BLOWER_PID_D = 0;
 
 		// public static final double POSITION_PID_P = 0.01;
-		public static final double POSITION_PID_P = 0.0066;
+		public static final double POSITION_PID_P = 0.0068;
 		public static final double POSITION_PID_I = 0;
 		public static final double POSITION_PID_D = 0;
 		public static final double POSITION_PID_V = 3000;
@@ -230,7 +230,7 @@ public final class Constants {
 		public static final double POSITION_FF_A = 0;
 
 		public static final double ARM_REST_POSITION = -32;
-		public static final double ARM_AMP_POSITION = 92;  //169
+		public static final double ARM_AMP_POSITION = 92;  
 		public static final double ARM_INTAKE_POSITION = -25;
 		public static final double ARM_TRAP_POSITION = 38;
 		public static final double ARM_SPEAKER_POSITION = 0;
@@ -253,9 +253,14 @@ public final class Constants {
 	public static final class Lights {
 		public static final int LEDS_PORT = 2;
 
-		public static final double GREEN_COLOR = 0.77;
-		public static final double RED_COLOR = 0.61; //0.61
-		public static final double BLUE_COLOR = 0.87;
+		public static final double GREEN_SOLID = 0.77;
+		public static final double RED_SOLID = 0.61; //0.61
+		public static final double BLUE_SOLID = 0.87;
+		public static final double GOLD_BLINK = -0.07;
+
+		public static final double CRASH_ANIMATION_TIME = 0.5;
+		public static final double CRASH_DETECTED_G_PER_S = 200;
+		public static final int JERK_COUNTER_MAX = 10;
 	}
 
 	public final static class Vision {

@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.cameraserver.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -44,6 +45,7 @@ public class Robot extends TimedRobot {
 		robotContainer = new RobotContainer();
 		Odometer.OdometerInit();
 		System.out.println("RobotInit");
+		CameraServer.startAutomaticCapture();
 	}
 
 	/**
@@ -93,6 +95,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		autonomousCommand = robotContainer.getAutonomousCommand();
+
+		
 
 		if (autonomousCommand != null) {
 			autonomousCommand.schedule();

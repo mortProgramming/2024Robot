@@ -39,7 +39,8 @@ public class Arm extends SubsystemBase {
     private double targetBlowerOutput;
     private double currentBlowerOutput;
 
-    private ProfiledPIDController armPositionController;
+    private ProfiledPIDController armUpController;
+    private ProfiledPIDController armDownController;
 
     private PIDController blowerController;
 
@@ -62,7 +63,9 @@ public class Arm extends SubsystemBase {
 
         // masterArmMotor.set
 
-        armPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
+        armUpController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
+        new Constraints(POSITION_PID_V, POSITION_PID_A));
+        armDownController = new ProfiledPIDController(0.0067, POSITION_PID_I, POSITION_PID_D, 
         new Constraints(POSITION_PID_V, POSITION_PID_A));
 
         // armPositionController = new PIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D);
@@ -243,7 +246,7 @@ public class Arm extends SubsystemBase {
 
     private double setPosition(double setpoint) {
 		double output = (POSITION_FF_G * Math.cos(Math.toRadians(encoderToDegrees())))
-        - armPositionController.calculate(encoderToDegrees(), setpoint);
+        - armUpController.calculate(encoderToDegrees(), setpoint);
 		// if (output >= 1){
 		// 	output = 0.1;
 		// } else if (output <= -1) {

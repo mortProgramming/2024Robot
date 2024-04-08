@@ -38,15 +38,7 @@ public class Odometer{
      * DO NOT USE, ODOMETER IS STATIC
      */
     public Odometer() {
-        // drivetrain = Drivetrain.getInstance();
-        // vision = Vision.getInstance();
 
-        // driveKinematics = drivetrain.getDriveKinematics();
-
-        // odometry = new SwerveDrivePoseEstimator(driveKinematics, drivetrain.getNavX().getRotation2d(), drivetrain.getModulePositions(), new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
-
-        // timer = new Timer();
-        // timer.start();
     }
 
     public static void OdometerInit() {
@@ -129,7 +121,6 @@ public class Odometer{
     new Pose2d(x, y, new Rotation2d(omega)));
    }
    
-
    public static void updateOdometry () {
         odometry.update(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions());
         
