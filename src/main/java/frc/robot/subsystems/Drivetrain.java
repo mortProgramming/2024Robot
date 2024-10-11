@@ -417,7 +417,7 @@ public class Drivetrain extends SubsystemBase {
 			canLock = true;
 			//NoteX of 0 means we are directly facing the note. Robot relative should then drive it forward towards the note
 			chassisSpeeds.omegaRadiansPerSecond = rotateToAngleController.calculate(LimelightHelpers
-.getTX(""), 0);
+.getTX("notelite"), 0);
 			
 		}else{
 			canLock = false;

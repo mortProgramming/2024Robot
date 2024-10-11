@@ -116,7 +116,7 @@ public class Control {
         joystick.trigger().whileFalse(new InstantCommand(() -> drivetrain.noteLockOff()));
 
         //Drivetrain reset odometry command
-        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue(""))));
+        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("taglite"))));
 
         //Drivetrain rotate to AMP button (NOT WORKING RED/BLUE)
         joystick.button(9).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));

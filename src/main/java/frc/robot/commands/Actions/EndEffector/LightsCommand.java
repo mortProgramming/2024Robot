@@ -30,22 +30,22 @@ public class LightsCommand extends Command {
   public void execute() {
     if (Intake.hasNote()) {
         lights.setLightsGreen();
-        LimelightHelpers.setLEDMode_ForceBlink("");
-        LimelightHelpers.setLEDMode_ForceBlink("");
+        LimelightHelpers.setLEDMode_ForceBlink("taglite");
+        LimelightHelpers.setLEDMode_ForceBlink("notelite");
         
     }
 
     else {
         lights.setLightsBlue();
-        LimelightHelpers.setLEDMode_ForceOff("");
-        LimelightHelpers.setLEDMode_ForceOff("");    }
+        LimelightHelpers.setLEDMode_ForceOff("taglite");
+        LimelightHelpers.setLEDMode_ForceOff("notelite");    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    LimelightHelpers.setLEDMode_ForceOff("");
-    LimelightHelpers.setLEDMode_ForceOff("");
+    LimelightHelpers.setLEDMode_ForceOff("taglite");
+    LimelightHelpers.setLEDMode_ForceOff("notelite");
     lights.setLightsBlue();
   }
 

@@ -102,7 +102,7 @@ public class Odometer{
 
     public static void resetOdometry(boolean visionOverride){
         if(visionOverride){
-            odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), LimelightHelpers.getBotPose2d_wpiBlue(""));
+            odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), LimelightHelpers.getBotPose2d_wpiBlue("taglite"));
         }
         // odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
    }

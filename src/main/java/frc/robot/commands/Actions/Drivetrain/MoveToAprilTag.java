@@ -31,7 +31,7 @@ public class MoveToAprilTag extends Command{
 		drivetrain.getAprilTagXController().reset();
 		drivetrain.getAprilTagYController().reset();
 		drivetrain.getAprilTagOmegaController().reset();
-		pose = LimelightHelpers.getBotPose3d_wpiBlue("");
+		pose = LimelightHelpers.getBotPose3d_wpiBlue("taglite");
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class MoveToAprilTag extends Command{
 	@Override
 	public boolean isFinished() {
 		//Checks to see if april tag controller is at its setpoint
-		return !LimelightHelpers.getTV("")
+		return !LimelightHelpers.getTV("taglite")
 				|| (drivetrain.getAprilTagXController().atSetpoint() && drivetrain.getAprilTagYController().atSetpoint()
 						&& drivetrain.getAprilTagOmegaController().atSetpoint());
 	}
