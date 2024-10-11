@@ -7,17 +7,16 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
-import frc.robot.subsystems.Vision;
+import frc.robot.utility.LimelightHelpers;
 import frc.robot.subsystems.Wrist;
 
 public class LightsCommand extends Command {
   /** Creates a new IntakeBeamBreak. */
   private Lights lights = Lights.getInstance();
-  private Vision vision = Vision.getInstance();
 
   public LightsCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lights, vision);
+    addRequirements(lights);
   }
 
   // Called when the command is initially scheduled.
@@ -31,20 +30,22 @@ public class LightsCommand extends Command {
   public void execute() {
     if (Intake.hasNote()) {
         lights.setLightsGreen();
-        vision.setCamLights(2);
+        LimelightHelpers.setLEDMode_ForceBlink("");
+        LimelightHelpers.setLEDMode_ForceBlink("");
         
     }
 
     else {
         lights.setLightsBlue();
-        vision.setCamLights(1);
-    }
+        LimelightHelpers.setLEDMode_ForceOff("");
+        LimelightHelpers.setLEDMode_ForceOff("");    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    vision.setCamLights(1);
+    LimelightHelpers.setLEDMode_ForceOff("");
+    LimelightHelpers.setLEDMode_ForceOff("");
     lights.setLightsBlue();
   }
 

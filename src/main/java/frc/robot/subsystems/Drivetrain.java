@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utility.Auto;
 import frc.robot.utility.Control;
+import frc.robot.utility.LimelightHelpers;
 
 public class Drivetrain extends SubsystemBase {
 	private AHRS navX;
@@ -412,10 +413,11 @@ public class Drivetrain extends SubsystemBase {
 			drivetrain.getGyroscopeRotation());
 		}
 		//Untested note lock
-		if(noteLock && Vision.getInstance().hasNote() && !Intake.hasNote()){
+		if(noteLock && LimelightHelpers.getTV(("TV")) && !Intake.hasNote()){
 			canLock = true;
 			//NoteX of 0 means we are directly facing the note. Robot relative should then drive it forward towards the note
-			chassisSpeeds.omegaRadiansPerSecond = rotateToAngleController.calculate(Vision.getInstance().getNoteXDegrees(), 0);
+			chassisSpeeds.omegaRadiansPerSecond = rotateToAngleController.calculate(LimelightHelpers
+.getTX(""), 0);
 			
 		}else{
 			canLock = false;

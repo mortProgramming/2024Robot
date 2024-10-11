@@ -2,13 +2,13 @@ package frc.robot.commands.Actions.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
-import frc.robot.utility.Constants.Vision.Pipeline;
+import frc.robot.utility.LimelightHelpers;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class MoveToAprilTag extends Command{
     private Drivetrain drivetrain;
-    private Vision vision;
+	private Pose3d pose;
 
     private int id;
 	/**
@@ -18,10 +18,9 @@ public class MoveToAprilTag extends Command{
 	 */
     public MoveToAprilTag(int id){
         drivetrain = Drivetrain.getInstance();
-        vision = Vision.getInstance();
 
         this.id = id;
-        addRequirements(drivetrain, vision);
+        addRequirements(drivetrain);
 
     }
 
@@ -32,19 +31,20 @@ public class MoveToAprilTag extends Command{
 		drivetrain.getAprilTagXController().reset();
 		drivetrain.getAprilTagYController().reset();
 		drivetrain.getAprilTagOmegaController().reset();
+		pose = LimelightHelpers.getBotPose3d_wpiBlue("");
 	}
 
 	@Override
 	public void execute() {
 		//Uses april tag controller to calculate X, Y, and Z positions
-		double x = -drivetrain.getAprilTagXController().calculate(vision.getCamTranslationZ(), -1.4);
+		double x = -drivetrain.getAprilTagXController().calculate(pose.getZ(), -1.4);
 		double y =
-				// vision.getCamTranZ() > -1.5 ?
-				-drivetrain.getAprilTagYController().calculate(vision.getCamTranslationX(), 0);
+				// LimelightHelpers.getCamTranZ() > -1.5 ?
+				-drivetrain.getAprilTagYController().calculate(pose.getX(), 0);
 		// : 0;
 		double omega =
-				// vision.getCamTranZ() > -1.5 ?
-				-drivetrain.getAprilTagOmegaController().calculate(vision.getCamTranslationYaw(), 0);
+				// LimelightHelpers.getCamTranZ() > -1.5 ?
+				-drivetrain.getAprilTagOmegaController().calculate(pose.getRotation().getY(), 0);
 		// : 0;
 
 		drivetrain.drive(new ChassisSpeeds(x, y, omega));
@@ -53,7 +53,7 @@ public class MoveToAprilTag extends Command{
 	@Override
 	public boolean isFinished() {
 		//Checks to see if april tag controller is at its setpoint
-		return !vision.hasTag()
+		return !LimelightHelpers.getTV("")
 				|| (drivetrain.getAprilTagXController().atSetpoint() && drivetrain.getAprilTagYController().atSetpoint()
 						&& drivetrain.getAprilTagOmegaController().atSetpoint());
 	}

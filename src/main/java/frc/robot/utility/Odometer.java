@@ -16,14 +16,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
+import frc.robot.utility.LimelightHelpers;
 
 import edu.wpi.first.wpilibj.Timer;
 
 public class Odometer{
     private static boolean canUseLimelight;
     private static Drivetrain drivetrain;
-    private static Vision vision;
+    private static LimelightHelpers vision;
 
     private static Timer timer;
     private static SwerveDriveKinematics driveKinematics;
@@ -51,8 +51,6 @@ public class Odometer{
 
     public static void OdometerInit() {
         drivetrain = Drivetrain.getInstance();
-        vision = Vision.getInstance();
-
         driveKinematics = drivetrain.getDriveKinematics();
 
         odometry = new SwerveDrivePoseEstimator(driveKinematics, 
@@ -104,7 +102,7 @@ public class Odometer{
 
     public static void resetOdometry(boolean visionOverride){
         if(visionOverride){
-            odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), vision.getFieldPose());
+            odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), LimelightHelpers.getBotPose2d_wpiBlue(""));
         }
         // odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
    }

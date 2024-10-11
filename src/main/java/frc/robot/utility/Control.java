@@ -39,8 +39,7 @@ import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
-import frc.robot.subsystems.Vision;
-
+import frc.robot.utility.LimelightHelpers;
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.Velocity;
 
@@ -64,7 +63,6 @@ public class Control {
     private static Arm arm;
     private static Climber climber;
     private static Wrist wrist;
-    private static Vision vision;
     private static Lights lights;
 
     private static SysIdRoutine armRoutine;
@@ -92,7 +90,6 @@ public class Control {
         wrist = Wrist.getInstance();
         climber = Climber.getInstance();
         intake = Intake.getInstance();
-        vision = Vision.getInstance();
         lights = Lights.getInstance();
         System.out.println("Subsystem init");
 
@@ -119,7 +116,7 @@ public class Control {
         joystick.trigger().whileFalse(new InstantCommand(() -> drivetrain.noteLockOff()));
 
         //Drivetrain reset odometry command
-        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
+        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue(""))));
 
         //Drivetrain rotate to AMP button (NOT WORKING RED/BLUE)
         joystick.button(9).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
@@ -132,7 +129,7 @@ public class Control {
         // joystick.button(3).whileTrue(
         //     new InstantCommand(() -> drivetrain.setKeptAngle(
         //         Drivetrain.toCircle(
-        //             180 + drivetrain.getGyroscopeRotation().getDegrees() + vision.getNoteXDegrees())
+        //             180 + drivetrain.getGyroscopeRotation().getDegrees() + LimelightHelpers.getNoteXDegrees())
         //         )
         //     )
         // );
