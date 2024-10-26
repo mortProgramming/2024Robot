@@ -1,0 +1,28 @@
+package org.mort11.commands.Auton.OdometryCentered.Blue;
+
+import static org.mort11.configuration.Constants.Arm.*;
+import static org.mort11.configuration.Constants.Intake.*;
+
+import org.mort11.commands.Actions.RobotStart;
+import org.mort11.commands.Actions.Drivetrain.MoveToPosition;
+import org.mort11.commands.Actions.Drivetrain.TimedDrive;
+import org.mort11.commands.Actions.EndEffector.IntakeToVelocity;
+import org.mort11.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
+
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+public class ScoreAmpOB extends SequentialCommandGroup{
+    public ScoreAmpOB() {
+        addCommands( 
+            new SequentialCommandGroup(
+                // new RobotStart(true, 0.4, 7.5, 90),
+                new RobotStart(0.4, 7.4, 270),
+                new MoveToPosition(1.5, 7.9, 270)
+                // new MoveToPosition(1.9, 7.8, 90),
+                // SetArmAndWristPos.score().withTimeout(ARM_WRIST_TIMEOUT),
+                // new IntakeToVelocity(AMP_SHOOT_SPEED).withTimeout(0.75),
+                // SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT)
+            )
+        );
+    }
+}
