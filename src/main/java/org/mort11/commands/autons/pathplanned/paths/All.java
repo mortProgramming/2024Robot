@@ -1,0 +1,52 @@
+package org.mort11.commands.autons.pathplanned.paths;
+
+import org.mort11.commands.actions.RobotStart;
+import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
+import org.mort11.commands.actions.endeffector.IntakeToVelocity;
+import org.mort11.commands.actions.endeffector.SpitNote;
+import org.mort11.commands.actions.endeffector.armwrist.SetArmAndWristPos;
+import org.mort11.commands.actions.endeffector.armwrist.WristToPos;
+import org.mort11.configuration.IO;
+
+import static org.mort11.configuration.constants.PhysicalConstants.Arm.*;
+import static org.mort11.configuration.constants.PhysicalConstants.Intake.*;
+import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
+
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+public class All {
+    
+    public static void setCommands () {
+        NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> System.out.println("PATH AUTON IS ACTIVE"))));
+
+        NamedCommands.registerCommand("FieldOrient", new RobotStart(IO.isBlue() ?  270 : 90));
+
+        NamedCommands.registerCommand("ScoreInAmp", 
+            new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
+                new WristToPos(WRIST_REST_POS).withTimeout(0.01),
+                SetArmAndWristPos.amp().withTimeout(ARM_WRIST_TIMEOUT),
+                new IntakeToVelocity(AUTO_SHOOT_SPEED).withTimeout(0.4),
+                SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT))
+            .withTimeout(3.45));
+
+        NamedCommands.registerCommand("Intake", 
+            new ParallelCommandGroup(
+                new PrintCommand("RUNNING INTAKE"),  
+                new IntakeBeamBreak(WRIST_REST_POS))
+            .withTimeout(2.2));
+    
+        NamedCommands.registerCommand("IntakeStayOut",
+            new IntakeBeamBreak(WRIST_INTAKE_POS));
+
+        NamedCommands.registerCommand("Spit", 
+            new SpitNote());
+
+        NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.65)
+            .withTimeout(0.75));
+    }
+}

@@ -1,16 +1,15 @@
 package org.mort11.subsystems;
 
-import static org.mort11.configuration.Constants.Arm.*;
-import static org.mort11.configuration.Constants.RobotSpecs.*;
-
-import org.mort11.configuration.Constants.RobotSpecs;
+import static org.mort11.configuration.constants.PhysicalConstants.Arm.*;
+import static org.mort11.configuration.constants.PIDConstants.Arm.*;
+import static org.mort11.configuration.constants.PortConstants.Arm.*;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+// import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -63,17 +62,17 @@ public class Arm extends SubsystemBase {
 
         // masterArmMotor.set
 
-        armPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
-        new Constraints(POSITION_PID_V, POSITION_PID_A));
+        armPositionController = new ProfiledPIDController(POS_KP, POS_KI, POS_KD, 
+            POS_CONSTRAINTS);
 
-        // armPositionController = new PIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D);
+        // armPositionController = new PIDController(POS_KP, POS_KI, POS_KD);
 
-        // armPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
-        armPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
+        // armPostionFeedForward = new SimpleMotorFeedforward(POS_KS, POS_KV, POS_KA);
+        armPostionFeedForward = new ArmFeedforward(POS_KS, POS_KG, POS_KV, POS_KA);
 
         encoder = new DutyCycleEncoder(ENCODER_PORT);
 
-        blowerController = new PIDController(BLOWER_PID_P, BLOWER_PID_I, BLOWER_PID_D);
+        blowerController = new PIDController(BLOWER_KP, BLOWER_KI, BLOWER_KD);
         blowerMotor = new CANSparkMax(BLOWER_MOTOR, MotorType.kBrushless);
 
     }
@@ -93,7 +92,7 @@ public class Arm extends SubsystemBase {
       // This method will be called once per scheduler run
         // masterArmMotor.set(armSpeed);
         
-        SmartDashboard.putNumber("Encoder Arm Position Degrees", encoderToDegrees());
+        SmartDashboard.putNumber("Encoder Arm Pos Degrees", encoderToDegrees());
         SmartDashboard.putNumber("Arm Setpoint", setpoint);
         SmartDashboard.putNumber("arm output", setPosition(setpoint));
         SmartDashboard.putNumber("ActualArmMotorOutput", masterArmMotor.get());
@@ -138,11 +137,11 @@ public class Arm extends SubsystemBase {
     }
 
     public void setArmVelocityG(double armSpeed){
-        this.armSpeed = armSpeed + POSITION_FF_G * Math.cos(Math.toRadians(encoderToDegrees()));
+        this.armSpeed = armSpeed + POS_KG * Math.cos(Math.toRadians(encoderToDegrees()));
     }
 
     // public void setArmVelocityArmFeed(double armSpeed){
-    //     this.armSpeed = armSpeed + POSITION_FF_G * Math.sin(Math.toRadians(posToDegrees())) + armPostionFeedForward.calculate(getPosition(), getVelocity());
+    //     this.armSpeed = armSpeed + POS_KG * Math.sin(Math.toRadians(posToDegrees())) + armPostionFeedForward.calculate(getPosition(), getVelocity());
     // }
 
     // public void setArmVelocityArmFeed(double armSpeed){
@@ -174,18 +173,14 @@ public class Arm extends SubsystemBase {
 		return encoder.getAbsolutePosition();
 	}
 
-    public double posToDegrees(){
-        return (getPosition() * ARM_GEAR_RATIO)  +  ARM_DEGREES_TO_0;
-    }
-
     //encoder
     public double encoderToDegrees() {
-        double degrees = getEncoderPosition() * 360 + ARM_ENCODER_DEGREES_TO_0;
+        double degrees = getEncoderPosition() * 360 + ARM_ENCODER_TO_0_DEGREES;
         if (degrees < 0) {
             degrees += 360;
         }
 
-        if (degrees > ARM_NEVER_POSITION) {
+        if (degrees > ARM_NEVER_POS) {
             degrees -= 360;
         }
 
@@ -243,7 +238,7 @@ public class Arm extends SubsystemBase {
     }
 
     private double setPosition(double setpoint) {
-		double output = (POSITION_FF_G * Math.cos(Math.toRadians(encoderToDegrees())))
+		double output = (POS_KG * Math.cos(Math.toRadians(encoderToDegrees())))
         - armPositionController.calculate(encoderToDegrees(), setpoint);
 		// if (output >= 1){
 		// 	output = 0.1;

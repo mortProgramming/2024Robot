@@ -1,6 +1,4 @@
 package org.mort11.subsystems;
-import static org.mort11.configuration.Constants.Vision.AMOUNT_TEST_FRAMES;
-import static org.mort11.configuration.Constants.Vision.MAX_OUTLIERS;
 
 import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -18,12 +16,6 @@ public class Vision extends SubsystemBase {
 		private Alliance defaultAlliance = Alliance.Blue;
     	private NetworkTable tagTable;
 		private NetworkTable intakeTable;
-	
-		
-		private double[] values = new double[AMOUNT_TEST_FRAMES];
-		private double[] outliers = new double[MAX_OUTLIERS];
-		private VideoSource intakeCam;
-		
 		
     public Vision() {
         // tagTable = NetworkTableInstance.getDefault().getTable("limelight");

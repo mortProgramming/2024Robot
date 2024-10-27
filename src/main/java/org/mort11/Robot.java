@@ -4,21 +4,16 @@
 
 package org.mort11;
 
-import static org.mort11.configuration.Constants.Wrist.TRAP_SERVO_REST_POS;
-import static org.mort11.configuration.Constants.Wrist.WRIST_REST_POSITION;
-
-import java.sql.Driver;
-
 import org.mort11.configuration.Auto;
 import org.mort11.configuration.IO;
 import org.mort11.configuration.Odometer;
-import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Wrist;
+
+import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -42,7 +37,6 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 
 		IO.configure();
-
 		Auto.configure();
 
 		Odometer.OdometerInit();
@@ -74,8 +68,6 @@ public class Robot extends TimedRobot {
 		if(DriverStation.isDSAttached() && DriverStation.isFMSAttached()){
 			if (DriverStation.getAlliance().get() != alliance){
 				System.out.println("REGENERATING SUBSYSTEMS");
-				IO.init();
-				IO.configure();
 				Auto.configure();
 				alliance = DriverStation.getAlliance().get();
 			}
@@ -112,7 +104,7 @@ public class Robot extends TimedRobot {
 		}
 		Wrist.getInstance().setServoPos(TRAP_SERVO_REST_POS);		
 		Wrist.getInstance().setVelocityMode(false);
-		Wrist.getInstance().setSetPoint(WRIST_REST_POSITION);
+		Wrist.getInstance().setSetPoint(WRIST_REST_POS);
 	}
 
 	/** This function is called periodically during operator control. */

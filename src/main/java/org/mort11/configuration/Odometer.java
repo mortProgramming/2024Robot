@@ -1,10 +1,9 @@
 package org.mort11.configuration;
 
-import static org.mort11.configuration.Constants.Vision.MAX_POSE_ERROR_METERS;
-
-import org.mort11.configuration.Constants.Drivetrain.OdometryConstants;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Vision;
+
+import static org.mort11.configuration.constants.PhysicalConstants.Vision.*;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
@@ -15,7 +14,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

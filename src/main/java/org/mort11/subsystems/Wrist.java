@@ -1,11 +1,10 @@
 package org.mort11.subsystems;
 
-import static org.mort11.configuration.Constants.RobotSpecs.*;
-import static org.mort11.configuration.Constants.Wrist.*;
+import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
+import static org.mort11.configuration.constants.PIDConstants.Wrist.*;
+import static org.mort11.configuration.constants.PortConstants.Wrist.*;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -36,10 +35,10 @@ public class Wrist extends SubsystemBase {
         velocityMode = true;
         wristMotor = new TalonFX(WRIST_MOTOR);
     
-        wristPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
-        new Constraints(POSITION_PID_V, POSITION_PID_A));
+        wristPositionController = new ProfiledPIDController(POS_KP, POS_KI, POS_KD, 
+        POS_CONSTRAINTS);
 
-        wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
+        wristPostionFeedForward = new SimpleMotorFeedforward(POS_KS, POS_KV, POS_KA);
         trapServo = new Servo(TRAP_SERVO_PORT);
         servoPos = 90;
         }
@@ -56,8 +55,8 @@ public class Wrist extends SubsystemBase {
     public void periodic() {
       // This method will be called once per scheduler run
         wristMotor.set(wristSpeed);
-        SmartDashboard.putNumber("Wrist Position", getPosition());
-        SmartDashboard.putNumber("Wrist Position Degrees", posToDegrees());
+        SmartDashboard.putNumber("Wrist Pos", getPosition());
+        SmartDashboard.putNumber("Wrist Pos Degrees", posToDegrees());
         SmartDashboard.putNumber("Wrist Setpoint", setpoint);
         SmartDashboard.putNumber("Wrist output", setPosition(setpoint));
         SmartDashboard.putNumber("ActualWristMotorOutput", wristMotor.get());
@@ -160,7 +159,7 @@ public class Wrist extends SubsystemBase {
  */
     public boolean nearSetpoint(){
          return (Math.abs((wristPostionFeedForward.calculate(getPosition(), getVelocity()) + 
-         wristPositionController.calculate(getPosition(),setpoint))) / 12) < WRIST_NEAR_SETPOINT_ERROR;
+         wristPositionController.calculate(getPosition(),setpoint))) / 12) < 0;
     }
 
     public boolean isClear(){

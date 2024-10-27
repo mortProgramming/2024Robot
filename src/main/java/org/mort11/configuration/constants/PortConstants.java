@@ -48,6 +48,8 @@ public class PortConstants {
     public final static class Intake {
 		public static final int FOLLOW_INTAKE_MOTOR = 11;
 		public static final int MASTER_INTAKE_MOTOR = 12;
+
+		public static final int INTAKE_SENSOR = 0;
     }
 
     public static final class Lights {
@@ -56,8 +58,6 @@ public class PortConstants {
 
     public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
-
-        public static final int INTAKE_SENSOR = 0;
 
         public static final int TRAP_SERVO_PORT = 8;
     }

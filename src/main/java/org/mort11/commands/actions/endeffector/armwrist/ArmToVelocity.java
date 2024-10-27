@@ -1,0 +1,44 @@
+package org.mort11.commands.actions.endeffector.armwrist;
+
+import edu.wpi.first.wpilibj2.command.Command;
+
+import java.util.function.DoubleSupplier;
+
+import org.mort11.subsystems.Arm;
+
+
+public class ArmToVelocity extends Command{
+    private Arm arm;
+    private DoubleSupplier velocity;
+
+    public ArmToVelocity(DoubleSupplier velocity){
+        this.velocity = velocity;
+        arm = Arm.getInstance();
+        addRequirements(arm);
+    }
+
+    @Override
+    public void initialize() {
+        // TODO Auto-generated method stub
+        super.initialize();
+        arm.setVelocityMode(true);
+    }
+
+    @Override
+    public void execute() {
+        // arm.setArmVelocity(velocity.getAsDouble());
+        arm.setArmVelocityG(velocity.getAsDouble());
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+
+}

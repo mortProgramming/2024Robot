@@ -1,10 +1,11 @@
 package org.mort11.subsystems;
 
-import static org.mort11.configuration.Constants.Drivetrain.*;
-import static org.mort11.configuration.Constants.RobotSpecs.*;
-
 import org.mort11.configuration.Auto;
 import org.mort11.configuration.IO;
+
+import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
+import static org.mort11.configuration.constants.PIDConstants.Drivetrain.*;
+import static org.mort11.configuration.constants.PortConstants.Drivetrain.*;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.MkModuleConfiguration;
@@ -101,9 +102,9 @@ public class Drivetrain extends SubsystemBase {
 		// frontLeftModule = new MkSwerveModuleBuilder(defaultDriveConfig)
 				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
-				.withDriveMotor(MotorType.FALCON, FRONT_LEFT_DRIVE)
-				.withSteerMotor(MotorType.FALCON, FRONT_LEFT_STEER)
-				.withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER).withSteerOffset(FRONT_LEFT_STEER_OFFSET)
+				.withDriveMotor(MotorType.FALCON, FRONT_LEFT_DRIVE_MOTOR)
+				.withSteerMotor(MotorType.FALCON, FRONT_LEFT_STEER_MOTOR)
+				.withSteerEncoderPort(FRONT_LEFT_ENCODER).withSteerOffset(FRONT_LEFT_OFFSET)
 				.build();
 
 		//	Builds Front Right swerve module with motors and encoders
@@ -111,9 +112,9 @@ public class Drivetrain extends SubsystemBase {
 		// frontRightModule = new MkSwerveModuleBuilder(defaultDriveConfig)
 				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
-				.withDriveMotor(MotorType.FALCON, FRONT_RIGHT_DRIVE)
-				.withSteerMotor(MotorType.FALCON, FRONT_RIGHT_STEER)
-				.withSteerEncoderPort(FRONT_RIGHT_STEER_ENCODER).withSteerOffset(FRONT_RIGHT_STEER_OFFSET)
+				.withDriveMotor(MotorType.FALCON, FRONT_RIGHT_DRIVE_MOTOR)
+				.withSteerMotor(MotorType.FALCON, FRONT_RIGHT_STEER_MOTOR)
+				.withSteerEncoderPort(FRONT_RIGHT_ENCODER).withSteerOffset(FRONT_RIGHT_OFFSET)
 				.build();
 
 		//	Builds Back left swerve module with motors and encoders
@@ -121,9 +122,9 @@ public class Drivetrain extends SubsystemBase {
 		// backLeftModule = new MkSwerveModuleBuilder(defaultDriveConfig)
 				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
-				.withDriveMotor(MotorType.FALCON, BACK_LEFT_DRIVE)
-				.withSteerMotor(MotorType.FALCON, BACK_LEFT_STEER)
-				.withSteerEncoderPort(BACK_LEFT_STEER_ENCODER).withSteerOffset(BACK_LEFT_STEER_OFFSET)
+				.withDriveMotor(MotorType.FALCON, BACK_LEFT_DRIVE_MOTOR)
+				.withSteerMotor(MotorType.FALCON, BACK_LEFT_STEER_MOTOR)
+				.withSteerEncoderPort(BACK_LEFT_ENCODER).withSteerOffset(BACK_LEFT_OFFSET)
 				.build();
 
 		//	Builds Back Right swerve module with motors and encoders
@@ -131,9 +132,9 @@ public class Drivetrain extends SubsystemBase {
 		// backRightModule = new MkSwerveModuleBuilder(defaultDriveConfig)
 				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L3)
-				.withDriveMotor(MotorType.FALCON, BACK_RIGHT_DRIVE)
-				.withSteerMotor(MotorType.FALCON, BACK_RIGHT_STEER)
-				.withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER).withSteerOffset(BACK_RIGHT_STEER_OFFSET)
+				.withDriveMotor(MotorType.FALCON, BACK_RIGHT_DRIVE_MOTOR)
+				.withSteerMotor(MotorType.FALCON, BACK_RIGHT_STEER_MOTOR)
+				.withSteerEncoderPort(BACK_RIGHT_ENCODER).withSteerOffset(BACK_RIGHT_OFFSET)
 				.build();
 		
 		frontLeftModule.getDriveMotor().setInverted(false);
@@ -156,13 +157,13 @@ public class Drivetrain extends SubsystemBase {
 		thetaController.setSetpoint(0);
 		thetaController.setTolerance(0.5);
 
-		xToPositioController = new ProfiledPIDController(TO_POSITION_KP, TO_POSITION_KI, TO_POSITION_KD,
-		new Constraints(TO_POSITION_KV, TO_POSITION_KA));
-		xToPositioController.setTolerance(TO_POSITION_TOLERANCE);
+		xToPositioController = new ProfiledPIDController(TO_POS_KP, TO_POS_KI, TO_POS_KD,
+			TO_POS_CONSTRAINTS);
+		xToPositioController.setTolerance(TO_POS_TOLERANCE);
 
-		yToPositioController = new ProfiledPIDController(TO_POSITION_KP, TO_POSITION_KI, TO_POSITION_KD,
-		new Constraints(TO_POSITION_KV, TO_POSITION_KA));
-		yToPositioController.setTolerance(TO_POSITION_TOLERANCE);
+		yToPositioController = new ProfiledPIDController(TO_POS_KP, TO_POS_KI, TO_POS_KD,
+			TO_POS_CONSTRAINTS);
+		yToPositioController.setTolerance(TO_POS_TOLERANCE);
 
 
 		//	Initialization of PID controller rotateToAngle
@@ -173,11 +174,11 @@ public class Drivetrain extends SubsystemBase {
 
 
 		aprilXController = new PIDController(XVALUE_KP , XVALUE_KI, XVALUE_KD);
-		aprilXController.setTolerance(XVALUE_TOLERANCE);
+		aprilXController.setTolerance(XVALUE_POS_TOLERANCE);
 		aprilYController = new PIDController(YVALUE_KP, YVALUE_KI, YVALUE_KD);
-		aprilYController.setTolerance(YVALUE_TOLERANCE);
+		aprilYController.setTolerance(YVALUE_POS_TOLERANCE);
 		aprilOmegaController = new PIDController(OMEGAVALUE_KP, OMEGAVALUE_KI , OMEGAVALUE_KD);
-		aprilOmegaController.setTolerance(OMEGAVALUE_TOLERANCE);
+		aprilOmegaController.setTolerance(OMEGAVALUE_POS_TOLERANCE);
 	}
 	public void noteLockOn(){
 		noteLock = true;

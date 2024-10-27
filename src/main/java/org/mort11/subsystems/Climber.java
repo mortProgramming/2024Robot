@@ -1,7 +1,8 @@
 package org.mort11.subsystems;
 
-import static org.mort11.configuration.Constants.Climber.*;
-import static org.mort11.configuration.Constants.RobotSpecs.*;
+import static org.mort11.configuration.constants.PhysicalConstants.Climber.*;
+import static org.mort11.configuration.constants.PIDConstants.Climber.*;
+import static org.mort11.configuration.constants.PortConstants.Climber.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -58,22 +59,22 @@ public class Climber extends SubsystemBase {
        leftServo = new Servo(LEFT_CLIMBER_SERVO);
        rightServo = new Servo(RIGHT_CLIMBER_SERVO);
 
-       leftServoAngle = SERVO_GLOBAL_LOCK_POSITION;
-       rightServoAngle = SERVO_GLOBAL_LOCK_POSITION;
+       leftServoAngle = SERVO_GLOBAL_LOCK_POS;
+       rightServoAngle = SERVO_GLOBAL_LOCK_POS;
 
 
     //    rightServo = new PWM(RIGHT_CLIMBER_SERVO);
 
-        rightClimberPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
-        new Constraints(POSITION_PID_V, POSITION_PID_A));
-        leftClimberPositionController = new ProfiledPIDController(POSITION_PID_P, POSITION_PID_I, POSITION_PID_D, 
-        new Constraints(POSITION_PID_V, POSITION_PID_A));
+        rightClimberPositionController = new ProfiledPIDController(POS_KP, POS_KI, POS_KD, 
+            POS_CONSTRAINTS);
+        leftClimberPositionController = new ProfiledPIDController(POS_KP, POS_KI, POS_KD, 
+            POS_CONSTRAINTS);
         
         rightClimberPositionController.setTolerance(tolerance);
         leftClimberPositionController.setTolerance(tolerance);
 
-        // rightClimberPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
-        // leftClimberPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
+        // rightClimberPostionFeedForward = new ArmFeedforward(POS_FF_S, POS_FF_G, POS_FF_V, POS_FF_A);
+        // leftClimberPostionFeedForward = new ArmFeedforward(POS_FF_S, POS_FF_G, POS_FF_V, POS_FF_A);
 
         velocityMode = true;
         
@@ -124,7 +125,7 @@ public class Climber extends SubsystemBase {
 
     // SmartDashboard.putNumber("Servo thig", rightServo.getPosition());
 
-    if (rightServoAngle == SERVO_GLOBAL_LOCK_POSITION) {
+    if (rightServoAngle == SERVO_GLOBAL_LOCK_POS) {
         SmartDashboard.putBoolean("Climber Locked", true);
     }
 

@@ -7,15 +7,15 @@ public class PIDConstants {
 
     public final static class Arm{
 
-		public static final double POSITION_KP = 0.0066;
-		public static final double POSITION_KI = 0;
-		public static final double POSITION_KD = 0;
-		public static final Constraints POSITION_CONSTRAINTS = new Constraints(3000, 3000);
+		public static final double POS_KP = 0.0066;
+		public static final double POS_KI = 0;
+		public static final double POS_KD = 0;
+		public static final Constraints POS_CONSTRAINTS = new Constraints(3000, 3000);
 
-        public static final double POSITION_KG = -0.02;
-		public static final double POSITION_KS = 0.03;
-		public static final double POSITION_KV = 0.00;
-		public static final double POSITION_KA = 0;
+        public static final double POS_KG = -0.02;
+		public static final double POS_KS = 0.03;
+		public static final double POS_KV = 0.00;
+		public static final double POS_KA = 0;
 
 
         public static final double BLOWER_KP = 0.01;
@@ -25,15 +25,15 @@ public class PIDConstants {
     }
 
     public final static class Climber {
-		public static final double POSITION_KP = 0.03;
-		public static final double POSITION_KI = 0.00003;
-		public static final double POSITION_KD = 0.0002;
-		public static final Constraints POSITION_CONSTRAINTS = new Constraints(0, 0);
+		public static final double POS_KP = 0.03;
+		public static final double POS_KI = 0.00003;
+		public static final double POS_KD = 0.0002;
+		public static final Constraints POS_CONSTRAINTS = new Constraints(0, 0);
 
-		public static final double POSITION_KS = 0;
-		public static final double POSITION_KG = 0;
-		public static final double POSITION_KV = 0;
-		public static final double POSITION_KA = 0;
+		public static final double POS_KS = 0;
+		public static final double POS_KG = 0;
+		public static final double POS_KV = 0;
+		public static final double POS_KA = 0;
     }
 
     public final static class Drivetrain {
@@ -52,21 +52,18 @@ public class PIDConstants {
 		public final static double OMEGAVALUE_KD = 0;
 		public final static double OMEGAVALUE_POS_TOLERANCE = 0;
 
-		public final static double TO_POSITION_KP = 0.5;
-		public final static double TO_POSITION_KI = 0;
-		public final static double TO_POSITION_KD = 0;
-		public final static double TO_POSITION_KA = 10;
-		public final static double TO_POSITION_KV = 10;
-		public final static double TO_POSITION_POS_TOLERANCE = 0.05;
+		public final static double TO_POS_KP = 0.5;
+		public final static double TO_POS_KI = 0;
+		public final static double TO_POS_KD = 0;
+		public static final Constraints TO_POS_CONSTRAINTS = new Constraints(10, 10);
+		public final static double TO_POS_TOLERANCE = 0.05;
 
 
-        public static final double AUTON_POSITION_KP = 0.315;
-
-		public static final double AUTON_POSITION_KI = 0;
-		public static final double AUTON_POSITION_KD = 0.001;
+        public static final double AUTON_POS_KP = 0.315;
+		public static final double AUTON_POS_KI = 0;
+		public static final double AUTON_POS_KD = 0.001;
 	
 		public static final double AUTON_ROTATION_KP = 1.45;
-
 		public static final double AUTON_ROTATION_KI = 0;
 		public static final double AUTON_ROTATION_KD = 0;
 
@@ -74,14 +71,14 @@ public class PIDConstants {
     }
 
     public final static class Wrist{
-		public static final double POSITION_KP = 0.0025;
-		public static final double POSITION_KI = 0;
-		public static final double POSITION_KD = 0;
-		public static final Constraints POSITION_CONSTRAINTS = new Constraints(3000, 3000);
+		public static final double POS_KP = 0.0025;
+		public static final double POS_KI = 0;
+		public static final double POS_KD = 0;
+		public static final Constraints POS_CONSTRAINTS = new Constraints(3000, 3000);
 
-		public static final double POSITION_KS = 0.00022;
-		public static final double POSITION_GK = 0;
-		public static final double POSITION_KV = 0;
-		public static final double POSITION_KA = 0;
+		public static final double POS_KS = 0.00022;
+		public static final double POS_GK = 0;
+		public static final double POS_KV = 0;
+		public static final double POS_KA = 0;
     }
 }

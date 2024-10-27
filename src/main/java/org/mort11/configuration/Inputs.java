@@ -1,7 +1,8 @@
 package org.mort11.configuration;
 
-import static org.mort11.configuration.Constants.RobotSpecs.*;
-import static org.mort11.configuration.Constants.PeripheralPorts.*;
+import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
+import static org.mort11.configuration.constants.PhysicalConstants.Controller.*;
+import static org.mort11.configuration.constants.PortConstants.Controller.*;
 
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -15,13 +16,12 @@ public class Inputs {
 		joystick = new CommandJoystick(JOYSTICK);
         xboxController = new CommandXboxController(CONTROLLER);
 
-        // joystick.setXChannel(JOYSTICK_X_CHANNEL);
-        // joystick.setYChannel(JOYSTICK_Y_CHANNEL);
-        // joystick.setTwistChannel(JOYSTICK_TWIST_CHANNEL);
-        // joystick.setThrottleChannel(THROTTLE_CHANNEL);
-
-        // throttle.setThrottleChannel(THROTTLE_CHANNEL);
+        joystick.setXChannel(JOYSTICK_X_CHANNEL);
+        joystick.setYChannel(JOYSTICK_Y_CHANNEL);
+        joystick.setTwistChannel(JOYSTICK_TWIST_CHANNEL);
+        joystick.setThrottleChannel(THROTTLE_CHANNEL);
     }
+
     /**
      * scaled deadband - removing a value of the region around the zero value and scaling the rest to fit
      * 
@@ -45,12 +45,9 @@ public class Inputs {
             return 0.0;
         }
     }
-   
-
-    //raw data of value setting anything less than deadband equal to 0
 
     /**
-     * 
+     * raw data of value setting anything less than deadband equal to 0
      * @param value
      * @param deadband
      * @return
@@ -65,27 +62,18 @@ public class Inputs {
         }
     }
 
-     public static double modifyAxis1(double value, double throttleValue) {
-        value = deadband(value, DEAD_BAND);
+     public static double modifyLateralAxis(double value, double throttleValue) {
+        value = deadband(value, LATERAL_DEAD_BAND);
+
+        // value = Math.copySign(value * value, value);
 
         throttleValue = (-throttleValue + 1) / 2;
 
-        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
+        return value * (throttleValue * (MAX_LATERAL_THROTTLE - MIN_LATERAL_THROTTLE) + MIN_LATERAL_THROTTLE);
     }
 
-    public static double modifyAxis2(double value, double throttleValue) {
-        value = deadband(value, DEAD_BAND);
-
-        value = Math.copySign(value * value, value);
-
-        throttleValue = (-throttleValue + 1) / 2;
-
-        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
-        // return value * throttleValue;
-    }
-
-    public static double modifyAxisTwist(double value, double throttleValue) {
-        value = deadband(value, DEAD_BAND);
+    public static double modifyRotateAxis(double value, double throttleValue) {
+        value = deadband(value, ROTATE_DEAD_BAND);
 
         value = Math.copySign(value, value);
 
@@ -95,23 +83,12 @@ public class Inputs {
         // return value * throttleValue;
     }
 
-    public static double modifyAxis5(double value, double throttleValue) {
-        value = deadband(value, DEAD_BAND);
-
-        value = Math.copySign(value * value * value * value * value, value);
-
-        throttleValue = (-throttleValue + 1) / 2;
-
-        return value * (throttleValue * (MAX_THROTTLE - MIN_THROTTLE) + MIN_THROTTLE);
-        // return value * throttleValue;
-    }
-
     /**
      * 
      * @return
      */
     public static double getJoystickX() {
-		return -(modifyAxis1(joystick.getX(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
+		return -(modifyLateralAxis(joystick.getX(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
 	}
 
     /**
@@ -119,21 +96,17 @@ public class Inputs {
      * @return
      */
 	public static double getJoystickY() {
-		return -(modifyAxis1(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
+		return -(modifyLateralAxis(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
 	}
 
     /**
      * 
      * @return
      */
-	public static double getJoystickTwist() {
-		return -0.3 * (modifyAxisTwist(joystick.getRawAxis(3), joystick.getRawAxis(2))
+	public static double getJoystickRotate() {
+		return -(modifyRotateAxis(joystick.getRawAxis(3), joystick.getRawAxis(2))
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 	}
-
-    // public static double getJoystickTwist(){
-    //     return (joystick.getTwist() * (throttle.getZ() + 1) / 2) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
-    // }
 
     public static double getLeftJoystickY() {
         return xboxController.getLeftY() * -0.25;
