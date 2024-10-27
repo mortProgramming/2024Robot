@@ -56,6 +56,11 @@ public class PortConstants {
 		public static final int LEDS_PORT = 2;
     }
 
+	public static final class Vision {
+		public static final String TAG_CAMERA = "taglite";
+		public static final String NOTE_CAMERA = "notelite";
+    }
+
     public final static class Wrist{
 		public static final int WRIST_MOTOR = 10;
 

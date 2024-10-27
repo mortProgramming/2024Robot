@@ -6,6 +6,7 @@ import org.mort11.configuration.IO;
 import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
 import static org.mort11.configuration.constants.PIDConstants.Drivetrain.*;
 import static org.mort11.configuration.constants.PortConstants.Drivetrain.*;
+import static org.mort11.configuration.constants.PortConstants.Vision.*;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.MkModuleConfiguration;
@@ -415,10 +416,10 @@ public class Drivetrain extends SubsystemBase {
 			drivetrain.getGyroscopeRotation());
 		}
 		//Untested note lock
-		if(noteLock && Vision.getInstance().hasNote() && !Intake.hasNote()){
+		if(noteLock && LimelightHelpers.getTV(NOTE_CAMERA) && !Intake.hasNote()){
 			canLock = true;
 			//NoteX of 0 means we are directly facing the note. Robot relative should then drive it forward towards the note
-			chassisSpeeds.omegaRadiansPerSecond = rotateToAngleController.calculate(Vision.getInstance().getNoteXDegrees(), 0);
+			chassisSpeeds.omegaRadiansPerSecond = rotateToAngleController.calculate(LimelightHelpers.getTX(NOTE_CAMERA), 0);
 			
 		}else{
 			canLock = false;

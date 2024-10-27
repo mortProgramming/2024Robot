@@ -3,13 +3,12 @@ package org.mort11.commands.actions.drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import org.mort11.subsystems.Drivetrain;
-import org.mort11.subsystems.Vision;
+import org.mort11.subsystems.LimelightHelpers;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class MoveToAprilTag extends Command{
     private Drivetrain drivetrain;
-    private Vision vision;
 
     private int id;
 	/**
@@ -19,10 +18,9 @@ public class MoveToAprilTag extends Command{
 	 */
     public MoveToAprilTag(int id){
         drivetrain = Drivetrain.getInstance();
-        vision = Vision.getInstance();
 
         this.id = id;
-        addRequirements(drivetrain, vision);
+        addRequirements(drivetrain);
 
     }
 
@@ -38,14 +36,14 @@ public class MoveToAprilTag extends Command{
 	@Override
 	public void execute() {
 		//Uses april tag controller to calculate X, Y, and Z positions
-		double x = -drivetrain.getAprilTagXController().calculate(vision.getCamTranslationZ(), -1.4);
+		double x = -drivetrain.getAprilTagXController().calculate(LimelightHelpers.getTargetPose_RobotSpace(TAG_CAMERA)[2], -1.4);
 		double y =
 				// vision.getCamTranZ() > -1.5 ?
-				-drivetrain.getAprilTagYController().calculate(vision.getCamTranslationX(), 0);
+				-drivetrain.getAprilTagYController().calculate(LimelightHelpers.getTargetPose_RobotSpace(TAG_CAMERA)[0], 0);
 		// : 0;
 		double omega =
 				// vision.getCamTranZ() > -1.5 ?
-				-drivetrain.getAprilTagOmegaController().calculate(vision.getCamTranslationYaw(), 0);
+				-drivetrain.getAprilTagOmegaController().calculate(LimelightHelpers.getTargetPose_RobotSpace(TAG_CAMERA)[4], 0);
 		// : 0;
 
 		drivetrain.drive(new ChassisSpeeds(x, y, omega));
@@ -54,7 +52,7 @@ public class MoveToAprilTag extends Command{
 	@Override
 	public boolean isFinished() {
 		//Checks to see if april tag controller is at its setpoint
-		return !vision.hasTag()
+		return !LimelightHelpers.getTV(TAG_CAMERA)
 				|| (drivetrain.getAprilTagXController().atSetpoint() && drivetrain.getAprilTagYController().atSetpoint()
 						&& drivetrain.getAprilTagOmegaController().atSetpoint());
 	}

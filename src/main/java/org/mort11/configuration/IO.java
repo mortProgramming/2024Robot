@@ -5,7 +5,7 @@ package org.mort11.configuration;
 import org.mort11.subsystems.Drivetrain;
 // import org.mort11.subsystems.Intake;
 import org.mort11.subsystems.Lights;
-import org.mort11.subsystems.Vision;
+import org.mort11.subsystems.LimelightHelpers;
 import org.mort11.subsystems.Wrist;
 
 import static org.mort11.configuration.Inputs.*;
@@ -14,6 +14,7 @@ import static org.mort11.configuration.constants.PhysicalConstants.Climber.*;
 import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
 import static org.mort11.configuration.constants.PhysicalConstants.Intake.*;
 import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
+import static org.mort11.configuration.constants.PortConstants.Vision.*;
 
 import org.mort11.commands.actions.drivetrain.Drive;
 import org.mort11.commands.actions.endeffector.BlowerToVelocity;
@@ -35,7 +36,6 @@ public class IO {
     // private static Arm arm;
     // private static Climber climber;
     private static Wrist wrist;
-    private static Vision vision;
     private static Lights lights;
     // private static Intake intake;
 
@@ -46,7 +46,6 @@ public class IO {
         wrist = Wrist.getInstance();
         // climber = Climber.getInstance();
         // intake = Intake.getInstance();
-        vision = Vision.getInstance();
         lights = Lights.getInstance();
         System.out.println("Subsystem init");
     }
@@ -69,7 +68,7 @@ public class IO {
         joystick.trigger().whileFalse(new InstantCommand(() -> drivetrain.noteLockOff()));
 
         //Drivetrain reset odometry command
-        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(vision.getFieldPose())));
+        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue(TAG_CAMERA))));
 
         //Drivetrain rotate to AMP button (NOT WORKING RED/BLUE)
         joystick.button(3).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));

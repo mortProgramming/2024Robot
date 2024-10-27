@@ -1,9 +1,10 @@
 package org.mort11.configuration;
 
 import org.mort11.subsystems.Drivetrain;
-import org.mort11.subsystems.Vision;
+import org.mort11.subsystems.LimelightHelpers;
 
 import static org.mort11.configuration.constants.PhysicalConstants.Vision.*;
+import static org.mort11.configuration.constants.PortConstants.Vision.*;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
@@ -22,7 +23,6 @@ import edu.wpi.first.wpilibj.Timer;
 public class Odometer{
     private static boolean canUseLimelight;
     private static Drivetrain drivetrain;
-    private static Vision vision;
 
     private static Timer timer;
     private static SwerveDriveKinematics driveKinematics;
@@ -38,7 +38,7 @@ public class Odometer{
      */
     public Odometer() {
         // drivetrain = Drivetrain.getInstance();
-        // vision = Vision.getInstance();
+        // vision = LimelightHelpers.getInstance();
 
         // driveKinematics = drivetrain.getDriveKinematics();
 
@@ -50,7 +50,6 @@ public class Odometer{
 
     public static void OdometerInit() {
         drivetrain = Drivetrain.getInstance();
-        vision = Vision.getInstance();
 
         driveKinematics = drivetrain.getDriveKinematics();
 
@@ -103,7 +102,7 @@ public class Odometer{
 
     public static void resetOdometry(boolean visionOverride){
         if(visionOverride){
-            odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), vision.getFieldPose());
+            odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), LimelightHelpers.getBotPose2d_wpiBlue(TAG_CAMERA));
         }
         // odometry.resetPosition(drivetrain.getGyroscopeRotation(), drivetrain.getModulePositions(), new Pose2d(0,0,new Rotation2d()));
    }
@@ -127,6 +126,13 @@ public class Odometer{
     odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), 
     new Pose2d(x, y, new Rotation2d(omega)));
    }
+
+   public static Pose2d getFieldPose() {
+    return new Pose2d(
+        LimelightHelpers.getBotPose_wpiBlue(TAG_CAMERA)[0], 
+        LimelightHelpers.getBotPose_wpiBlue(TAG_CAMERA)[1], 
+        new Rotation2d(Math.toRadians(LimelightHelpers.getBotPose_wpiBlue(TAG_CAMERA)[5])));
+}
    
 
    public static void updateOdometry () {
@@ -136,9 +142,12 @@ public class Odometer{
         //Pose Comparison will not happen if limelight doesnt have a target
         //Pose comparison will not check angular measurement. We assume the limelight is more accurate in that regard
         //Override will happen if either x or y axis is within max error
-        if(vision.hasTag()){
-            if(Math.abs((vision.getX() - odometry.getEstimatedPosition().getX()))<MAX_POSE_ERROR_METERS && Math.abs(vision.getY() - odometry.getEstimatedPosition().getY()) < MAX_POSE_ERROR_METERS){
-                odometry.addVisionMeasurement(vision.getFieldPose(), Timer.getFPGATimestamp()- (vision.getFieldPoseAsArray()[6]/1000));
+        if(LimelightHelpers.getTV(TAG_CAMERA)){
+            if(
+                    Math.abs(LimelightHelpers.getTX(TAG_CAMERA) - odometry.getEstimatedPosition().getX()) < MAX_POSE_ERROR_METERS
+                    && Math.abs(LimelightHelpers.getTY(TAG_CAMERA) - odometry.getEstimatedPosition().getY()) < MAX_POSE_ERROR_METERS)
+                {
+                odometry.addVisionMeasurement(getFieldPose(), Timer.getFPGATimestamp()- (LimelightHelpers.getBotPose_wpiBlue(TAG_CAMERA)[6]/1000));
                 canUseLimelight = true;
             }
             canUseLimelight = false;
