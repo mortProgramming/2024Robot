@@ -1,7 +1,7 @@
 package org.mort11.configuration;
 
-import org.mort11.commands.autons.odometried.blue.ScoreAmpOB;
-import org.mort11.commands.autons.odometried.red.ScoreAmpOR;
+import org.mort11.commands.autons.odometered.ScoreAmpBlue;
+import org.mort11.commands.autons.odometered.ScoreAmpRed;
 import org.mort11.commands.autons.pathplanned.GetPlanned;
 import org.mort11.commands.autons.timed.blue.TaxiB;
 import org.mort11.commands.autons.timed.red.TaxiR;
@@ -48,8 +48,8 @@ public class Auto {
 		autoChooser.addOption("TaxiB", new TaxiB());
 		autoChooser.addOption("TaxiR", new TaxiR());
 
-		autoChooser.addOption("Odometer Thing Blue", new ScoreAmpOB());
-		autoChooser.addOption("Odometer Thing Red", new ScoreAmpOR());
+		autoChooser.addOption("Odometer Thing Blue", new ScoreAmpBlue());
+		autoChooser.addOption("Odometer Thing Red", new ScoreAmpRed());
 
 		autoChooser.addOption("PathPlanner TwoPiece", GetPlanned.getTwoPiece());
 		autoChooser.addOption("OneNote", GetPlanned.getChoreoOneNote());

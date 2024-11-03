@@ -1,13 +1,12 @@
 package org.mort11.commands.actions.endeffector;
 
-import java.util.function.DoubleSupplier;
-
 import org.mort11.subsystems.Climber;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ClimberToVelocity extends Command{
     private Climber climber;
+    
     private double leftVelocity;
     private double rightVelocity; 
 
@@ -21,29 +20,19 @@ public class ClimberToVelocity extends Command{
     }
 
     @Override
-    public void initialize() {
-        // TODO Auto-generated method stub
-        super.initialize();
-    }
-
-    @Override
     public void execute() {
-        climber.setVelocityMode(true);
-        climber.setRightClimberVelocity(rightVelocity);
-        climber.setLeftClimberVelocity(leftVelocity);
+        climber.setRightVelocity(rightVelocity);
+        climber.setLeftVelocity(leftVelocity);
     }
 
     @Override
     public void end(boolean interrupted) {
-        climber.setRightClimberVelocity(0);
-        climber.setLeftClimberVelocity(0);
-
+        climber.setRightVelocity(0);
+        climber.setLeftVelocity(0);
     }
 
     @Override
     public boolean isFinished() {
         return false;
     }
-
-
 }

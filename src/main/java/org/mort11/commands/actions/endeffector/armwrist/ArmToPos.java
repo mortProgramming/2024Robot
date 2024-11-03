@@ -2,36 +2,25 @@ package org.mort11.commands.actions.endeffector.armwrist;
 
 import org.mort11.subsystems.Arm;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ArmToPos extends Command{
     private Arm arm;
+
     private double target;
 
-    public ArmToPos(double target){
+    public ArmToPos(double target) {
         this.target = target;
+
         arm = Arm.getInstance();
+
         addRequirements(arm);
     }
 
     @Override
-    public void initialize() {
-        arm.setVelocityMode(false);
-
-    }
-
-    @Override
     public void execute() {
-        arm.setSetPoint(target);
-        // arm.setVelocityMode(false);
+        arm.setSetpoint(target);
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        // arm.setVelocityMode(true);
-    }
-
 
     @Override
     public boolean isFinished() {

@@ -1,4 +1,4 @@
-package org.mort11.commands.autons.odometried.blue;
+package org.mort11.commands.autons.odometered;
 
 import static org.mort11.configuration.constants.PhysicalConstants.Arm.*;
 import static org.mort11.configuration.constants.PhysicalConstants.Intake.*;
@@ -11,8 +11,8 @@ import org.mort11.commands.actions.endeffector.armwrist.SetArmAndWristPos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class ScoreAmpOB extends SequentialCommandGroup{
-    public ScoreAmpOB() {
+public class ScoreAmpBlue extends SequentialCommandGroup{
+    public ScoreAmpBlue() {
         addCommands( 
             new SequentialCommandGroup(
                 // new RobotStart(true, 0.4, 7.5, 90),

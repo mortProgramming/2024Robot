@@ -160,11 +160,11 @@ public class Drivetrain extends SubsystemBase {
 
 		xToPositioController = new ProfiledPIDController(TO_POS_KP, TO_POS_KI, TO_POS_KD,
 			TO_POS_CONSTRAINTS);
-		xToPositioController.setTolerance(TO_POS_TOLERANCE);
+		xToPositioController.setTolerance(TO_POS_POS_TOLERANCE);
 
 		yToPositioController = new ProfiledPIDController(TO_POS_KP, TO_POS_KI, TO_POS_KD,
 			TO_POS_CONSTRAINTS);
-		yToPositioController.setTolerance(TO_POS_TOLERANCE);
+		yToPositioController.setTolerance(TO_POS_POS_TOLERANCE);
 
 
 		//	Initialization of PID controller rotateToAngle

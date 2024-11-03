@@ -29,11 +29,7 @@ public class PIDConstants {
 		public static final double POS_KI = 0.00003;
 		public static final double POS_KD = 0.0002;
 		public static final Constraints POS_CONSTRAINTS = new Constraints(0, 0);
-
-		public static final double POS_KS = 0;
-		public static final double POS_KG = 0;
-		public static final double POS_KV = 0;
-		public static final double POS_KA = 0;
+		public static final double POS_POS_TOLERANCE = 1;
     }
 
     public final static class Drivetrain {
@@ -56,7 +52,7 @@ public class PIDConstants {
 		public final static double TO_POS_KI = 0;
 		public final static double TO_POS_KD = 0;
 		public static final Constraints TO_POS_CONSTRAINTS = new Constraints(10, 10);
-		public final static double TO_POS_TOLERANCE = 0.05;
+		public final static double TO_POS_POS_TOLERANCE = 0.05;
 
 
         public static final double AUTON_POS_KP = 0.315;

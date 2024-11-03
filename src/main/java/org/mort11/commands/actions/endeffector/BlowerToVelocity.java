@@ -9,10 +9,12 @@ public class BlowerToVelocity extends Command {
 
     private double speed;
 
-    public BlowerToVelocity(double speed){
-        arm = Arm.getInstance();
-        addRequirements(arm);
+    public BlowerToVelocity(double speed) {
         this.speed = speed;
+
+        arm = Arm.getInstance();
+
+        addRequirements(arm);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class BlowerToVelocity extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        // arm.setBlowerTarget(0);
+        
     }
 
     @Override

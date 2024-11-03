@@ -82,6 +82,8 @@ public class PhysicalConstants {
 		  public static final double AMP_SHOOT_SPEED = -0.3;
 		  public static final double SHOOTER_SHOOT_SPEED = -0.80;
 		  public static final double AUTO_SHOOT_SPEED = -0.45;
+
+      public static final double SENSOR_MIN_TIME = 0.05;
     }
 
     public static final class Lights {

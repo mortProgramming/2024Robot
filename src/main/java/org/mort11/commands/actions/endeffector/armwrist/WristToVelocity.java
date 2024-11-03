@@ -8,37 +8,29 @@ import org.mort11.subsystems.Wrist;
 
 public class WristToVelocity extends Command{
     private Wrist wrist;
+
     private DoubleSupplier velocity;
 
     public WristToVelocity(DoubleSupplier velocity){
         this.velocity = velocity;
+
         wrist = Wrist.getInstance();
+
         addRequirements(wrist);
     }
 
     @Override
-    public void initialize() {
-        // TODO Auto-generated method stub
-        super.initialize();
-        wrist.setVelocityMode(true);
-    }
-
-    @Override
     public void execute() {
-        // wrist.setWristVelocity(velocity.getAsDouble());
-        wrist.setWristVelocityWristFeed(velocity.getAsDouble());
-        
+        wrist.setWristVelocity(velocity.getAsDouble());
     }
 
     @Override
     public void end(boolean interrupted) {
-
+        wrist.setWristVelocity(0);
     }
 
     @Override
     public boolean isFinished() {
         return false;
     }
-
-
 }

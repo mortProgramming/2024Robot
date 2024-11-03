@@ -15,44 +15,22 @@ public class ClimberToVelocity extends Command{
     public ClimberToVelocity(DoubleSupplier leftVelocity, DoubleSupplier rightVelocity){
         this.leftVelocity = leftVelocity;
         this.rightVelocity = rightVelocity;
-        climber = Climber.getInstance();
-        addRequirements(climber);
-    }
-
-    public ClimberToVelocity(double leftVelocity, double rightVelocity){
-        this.leftVelocity = new DoubleSupplier() {
-            public double getAsDouble() {
-                return leftVelocity;
-            }
-        };
-        this.rightVelocity = new DoubleSupplier() {
-            public double getAsDouble() {
-                return rightVelocity;
-            }
-        };
 
         climber = Climber.getInstance();
 
         addRequirements(climber);
-    }
-
-    @Override
-    public void initialize() {
-        // TODO Auto-generated method stub
-        super.initialize();
     }
 
     @Override
     public void execute() {
-        climber.setVelocityMode(true);
         climber.setRightClimberVelocity(rightVelocity.getAsDouble());
         climber.setLeftClimberVelocity(leftVelocity.getAsDouble());
     }
 
     @Override
     public void end(boolean interrupted) {
-        climber.setRightClimberVelocity(0);
-        climber.setLeftClimberVelocity(0);
+        climber.setRightVelocity(0);
+        climber.setLeftVelocity(0);
 
     }
 
@@ -60,6 +38,4 @@ public class ClimberToVelocity extends Command{
     public boolean isFinished() {
         return false;
     }
-
-
 }

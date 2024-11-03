@@ -1,12 +1,12 @@
-package org.mort11.commands.autons.odometried.red;
+package org.mort11.commands.autons.odometered;
 
 import org.mort11.commands.actions.RobotStart;
 import org.mort11.commands.actions.drivetrain.MoveToPos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class ScoreAmpOR extends SequentialCommandGroup{
-    public ScoreAmpOR() {
+public class ScoreAmpRed extends SequentialCommandGroup{
+    public ScoreAmpRed() {
         addCommands( 
             new SequentialCommandGroup(
                 // new RobotStart(true, 0.4, 7.5, 90),

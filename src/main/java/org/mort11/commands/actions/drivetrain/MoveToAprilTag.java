@@ -1,9 +1,11 @@
 package org.mort11.commands.actions.drivetrain;
 
-import edu.wpi.first.wpilibj2.command.Command;
-
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.LimelightHelpers;
+
+import static org.mort11.configuration.constants.PortConstants.Vision.*;
+
+import edu.wpi.first.wpilibj2.command.Command;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 

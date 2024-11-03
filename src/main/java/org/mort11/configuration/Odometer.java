@@ -33,22 +33,9 @@ public class Odometer{
     private static Matrix<N3,N1> limeDeviation = VecBuilder.fill(0.9,0.9,99999);
     
     
-    /*
-     * DO NOT USE, ODOMETER IS STATIC
-     */
-    public Odometer() {
-        // drivetrain = Drivetrain.getInstance();
-        // vision = LimelightHelpers.getInstance();
+    public Odometer() {}
 
-        // driveKinematics = drivetrain.getDriveKinematics();
-
-        // odometry = new SwerveDrivePoseEstimator(driveKinematics, drivetrain.getNavX().getRotation2d(), drivetrain.getModulePositions(), new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
-
-        // timer = new Timer();
-        // timer.start();
-    }
-
-    public static void OdometerInit() {
+    public static void odometerInit() {
         drivetrain = Drivetrain.getInstance();
 
         driveKinematics = drivetrain.getDriveKinematics();
@@ -62,7 +49,7 @@ public class Odometer{
         );
 
         publisher = NetworkTableInstance.getDefault()
-        .getStructTopic("MyPose", Pose2d.struct).publish();
+            .getStructTopic("MyPose", Pose2d.struct).publish();
 
         timer = new Timer();
         timer.start();

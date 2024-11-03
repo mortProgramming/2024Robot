@@ -19,7 +19,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
+// import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
@@ -1207,32 +1207,32 @@ public class LimelightHelpers {
     /**
      * Asynchronously take snapshot.
      */
-    public static CompletableFuture<Boolean> takeSnapshot(String tableName, String snapshotName) {
-        return CompletableFuture.supplyAsync(() -> {
-            return SYNCH_TAKESNAPSHOT(tableName, snapshotName);
-        });
-    }
+    // public static CompletableFuture<Boolean> takeSnapshot(String tableName, String snapshotName) {
+    //     return CompletableFuture.supplyAsync(() -> {
+    //         return SYNCH_TAKESNAPSHOT(tableName, snapshotName);
+    //     });
+    // }
 
-    private static boolean SYNCH_TAKESNAPSHOT(String tableName, String snapshotName) {
-        URL url = getLimelightURLString(tableName, "capturesnapshot");
-        try {
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            if (snapshotName != null && snapshotName != "") {
-                connection.setRequestProperty("snapname", snapshotName);
-            }
+    // private static boolean SYNCH_TAKESNAPSHOT(String tableName, String snapshotName) {
+    //     URL url = getLimelightURLString(tableName, "capturesnapshot");
+    //     try {
+    //         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    //         connection.setRequestMethod("GET");
+    //         if (snapshotName != null && snapshotName != "") {
+    //             connection.setRequestProperty("snapname", snapshotName);
+    //         }
 
-            int responseCode = connection.getResponseCode();
-            if (responseCode == 200) {
-                return true;
-            } else {
-                System.err.println("Bad LL Request");
-            }
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-        return false;
-    }
+    //         int responseCode = connection.getResponseCode();
+    //         if (responseCode == 200) {
+    //             return true;
+    //         } else {
+    //             System.err.println("Bad LL Request");
+    //         }
+    //     } catch (IOException e) {
+    //         System.err.println(e.getMessage());
+    //     }
+    //     return false;
+    // }
 
     /**
      * Parses Limelight's JSON results dump into a LimelightResults Object
