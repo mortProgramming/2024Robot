@@ -1,4 +1,4 @@
-package org.mort11.commands.actions.endeffector.armwrist;
+package org.mort11.commands.actions.endeffector.velocity;
 
 import edu.wpi.first.wpilibj2.command.Command;
 

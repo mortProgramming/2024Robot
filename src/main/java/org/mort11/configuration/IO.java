@@ -17,14 +17,16 @@ import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
 import static org.mort11.configuration.constants.PortConstants.Vision.*;
 
 import org.mort11.commands.actions.drivetrain.Drive;
-import org.mort11.commands.actions.endeffector.BlowerToVelocity;
-import org.mort11.commands.actions.endeffector.ClimberToPos;
-import org.mort11.commands.actions.endeffector.ClimberToVelocity;
+import org.mort11.commands.actions.drivetrain.DriveAtAngle;
+import org.mort11.commands.actions.drivetrain.DriveNoteLocked;
 import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
-import org.mort11.commands.actions.endeffector.IntakeToVelocity;
 import org.mort11.commands.actions.endeffector.LightsCommand;
-import org.mort11.commands.actions.endeffector.armwrist.SetArmAndWristPos;
-import org.mort11.commands.actions.endeffector.armwrist.WristToPos;
+import org.mort11.commands.actions.endeffector.pos.ClimberToPos;
+import org.mort11.commands.actions.endeffector.pos.SetArmAndWristPos;
+import org.mort11.commands.actions.endeffector.pos.WristToPos;
+import org.mort11.commands.actions.endeffector.velocity.BlowerToVelocity;
+import org.mort11.commands.actions.endeffector.velocity.ClimberToVelocity;
+import org.mort11.commands.actions.endeffector.velocity.IntakeToVelocity;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -61,19 +63,16 @@ public class IO {
         lights.setDefaultCommand(new LightsCommand());
 
        //Drivetrain Field Orient command
-        joystick.button(2).whileTrue(new InstantCommand(() -> drivetrain.zeroGyroscope(0)));
+        joystick.button(2).whileTrue(drivetrain.setGyroscopeZero(0));
 
         //Drivetrain note locking command
-        joystick.trigger().whileTrue(new InstantCommand(() -> drivetrain.noteLockOn()));
-        joystick.trigger().whileFalse(new InstantCommand(() -> drivetrain.noteLockOff()));
+        joystick.trigger().whileTrue(new DriveNoteLocked(Inputs::getJoystickY, Inputs::getJoystickX));
 
         //Drivetrain reset odometry command
-        joystick.button(7).whileTrue(new InstantCommand(() -> Odometer.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue(TAG_CAMERA))));
+        joystick.button(7).whileTrue(Odometer.resetOdometryCommand(LimelightHelpers.getBotPose2d_wpiBlue(TAG_CAMERA)));
 
-        //Drivetrain rotate to AMP button (NOT WORKING RED/BLUE)
-        joystick.button(3).whileTrue(new InstantCommand(() -> drivetrain.setIsAngleKept(true)));
-        joystick.button(3).whileTrue(new InstantCommand(() -> drivetrain.setKeptAngleRelative(IMU_TO_ROBOT_FRONT_ANGLE)));
-        joystick.button(3).onFalse(new InstantCommand(() -> drivetrain.setIsAngleKept(false)));
+        //Drivetrain rotate to AMP button
+        joystick.button(3).whileTrue(new DriveAtAngle(Inputs::getJoystickY, Inputs::getJoystickX, IMU_TO_ROBOT_FRONT_ANGLE));
 
 
 

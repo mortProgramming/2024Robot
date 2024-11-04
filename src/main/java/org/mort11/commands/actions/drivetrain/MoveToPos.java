@@ -7,73 +7,34 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class MoveToPos extends Command {
-    private Drivetrain drivetrain;
+  private Drivetrain drivetrain;
+
   private double wantedX;
   private double wantedY;
-  private double wantedAngle;
-  /*
-   * @param wantedX
-   * The velocity in the x direction
-   * @param wantedY
-   * The velocity in the y direction
-   * @param wantedAngle
-   * The angular velocity
-   */
-  public MoveToPos(double wantedX, double wantedY, double wantedAngle) {
+
+  public MoveToPos(double wantedX, double wantedY) {
     drivetrain = Drivetrain.getInstance();
 
     this.wantedX = wantedX;
     this.wantedY = wantedY;
-    this.wantedAngle = wantedAngle;
 
     addRequirements(drivetrain);
   }
 
-  /**
-   * Called when the command is initially scheduled.
-   */
-  @Override
-  public void initialize() {
-    
-  }
-
-  /**
-   * Called every time the scheduler runs while the command is scheduled.
-   */
   @Override
   public void execute() {
-    // drivetrain.setIsAngleKept(true);
-    // drivetrain.setKeptAngle(wantedAngle);
-	drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-        drivetrain.getXToPositiController().calculate(Odometer.getPoseX(), wantedX), 
-        // 0,
-        drivetrain.getYToPositiController().calculate(Odometer.getPoseY(), wantedY), 
-        0,
-		drivetrain.getGyroscopeRotation()));
-      // drivetrain.setIsAngleKept(true);
-      // drivetrain.setKeptAngle(wantedAngle);
-	    // drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-      //   drivetrain.getYToPositiController().calculate(Odometer.getPoseY(), wantedY), 
-      //   drivetrain.getXToPositiController().calculate(Odometer.getPoseX(), wantedX), 
-      //   0,
-		  //   drivetrain.getGyroscopeRotation()));
+   drivetrain.setPosController(Odometer.getPoseX(), Odometer.getPoseY(), wantedX, wantedY);
 	}
   
-  /**
-   * Called once the command ends or is interrupted.
-   */
   @Override
   public void end(boolean interrupted) {
-    drivetrain.drive(new ChassisSpeeds(0, 0, 0));
+    drivetrain.setDrive(new ChassisSpeeds(0, 0, 0));
   }
 
-  /**
-   * Returns true when the command should end.
-   */
   @Override
   public boolean isFinished() {
-    return (drivetrain.getXToPositiController().atSetpoint() && 
-    drivetrain.getYToPositiController().atSetpoint());
-    // return drivetrain.getYToPositiController().atSetpoint();
+    return (drivetrain.getXControllerAtSetpoint() && 
+      drivetrain.getYControllerAtSetpoint()
+    );
   }
 }

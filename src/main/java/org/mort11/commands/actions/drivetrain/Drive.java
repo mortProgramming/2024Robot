@@ -30,43 +30,22 @@ public class Drive extends Command {
 		addRequirements(drivetrain);
 	}
 
-	/**
-	 * Assumes robot-oriented drive
-	 *
-	 * @param translationXSupplier
-	 *            Supplier for x-axis movement
-	 * @param translationYSupplier
-	 *            Supplier for y-axis movement
-	 * @param rotationSupplier
-	 *            Supplier for rotational movement
-	 */
 	public Drive(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
 			DoubleSupplier rotationSupplier) {
 		this(translationXSupplier, translationYSupplier, rotationSupplier, false);
 	}
 
-    /**
-     * 
-     */
-	@Override
-	public void initialize() {
-
-	}
-
-    /**
-     * Will propel the drivetrain to the speeds set by ChassisSpeeds
-     */
-	@Override
+    @Override
 	public void execute() {
 		if (fieldOriented) {
-			drivetrain.drive(
+			drivetrain.setDrive(
 				ChassisSpeeds.fromFieldRelativeSpeeds(
 					translationXSupplier.getAsDouble(),
 					translationYSupplier.getAsDouble(), 
 					rotationSupplier.getAsDouble(),
 					drivetrain.getGyroscopeRotation()));
 		} else {
-			drivetrain.drive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
+			drivetrain.setDrive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
 					rotationSupplier.getAsDouble()));
 		}
 	}
@@ -78,7 +57,7 @@ public class Drive extends Command {
 
     @Override
 	public void end(boolean interrupted) {
-		drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
+		drivetrain.setDrive(new ChassisSpeeds(0.0, 0.0, 0.0));
 	}
 }
 

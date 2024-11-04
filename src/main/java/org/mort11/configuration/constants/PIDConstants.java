@@ -33,26 +33,18 @@ public class PIDConstants {
     }
 
     public final static class Drivetrain {
-        public final static double XVALUE_KP = 1.1;
-		public final static double XVALUE_KI = 0;
-		public final static double XVALUE_KD = 0;
-		public final static double XVALUE_POS_TOLERANCE = 0.01;
-
-		public final static double YVALUE_KP = 1.1;
-		public final static double YVALUE_KI = 0;
-		public final static double YVALUE_KD = 0;
-		public final static double YVALUE_POS_TOLERANCE = 0.05;
-
-		public final static double OMEGAVALUE_KP = 0.02;
-		public final static double OMEGAVALUE_KI = 0;
-		public final static double OMEGAVALUE_KD = 0;
-		public final static double OMEGAVALUE_POS_TOLERANCE = 0;
-
-		public final static double TO_POS_KP = 0.5;
+        public final static double TO_POS_KP = 0.5;
 		public final static double TO_POS_KI = 0;
 		public final static double TO_POS_KD = 0;
 		public static final Constraints TO_POS_CONSTRAINTS = new Constraints(10, 10);
 		public final static double TO_POS_POS_TOLERANCE = 0.05;
+
+		public final static double TO_ANGLE_KP = 0.07;
+		public final static double TO_ANGLE_KI = 0;
+		public final static double TO_ANGLE_KD = 0.001;
+		public static final Constraints TO_ANGLE_CONSTRAINTS = new Constraints(300, 300);
+		public final static double TO_ANGLE_POS_TOLERANCE = 3;
+		public final static double TO_ANGLE_VEL_TOLERANCE = 30;
 
 
         public static final double AUTON_POS_KP = 0.315;

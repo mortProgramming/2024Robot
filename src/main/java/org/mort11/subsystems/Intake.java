@@ -12,14 +12,13 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
-    
     private static Intake intake;
 
     //left is main motor
     private TalonFX followIntakeMotor;
     private TalonFX masterIntakeMotor;
 
-    private static DigitalInput input;
+    private static DigitalInput input = new DigitalInput(INTAKE_SENSOR);
 
     private double intakeSpeed;
 
@@ -28,8 +27,6 @@ public class Intake extends SubsystemBase {
         followIntakeMotor = new TalonFX(FOLLOW_INTAKE_MOTOR);
 
         followIntakeMotor.setControl(new Follower(MASTER_INTAKE_MOTOR, true));
-
-        input = new DigitalInput(INTAKE_SENSOR);
 
         Shuffleboard.getTab("Intake Sensor").add("Piece In", input.get());
     }

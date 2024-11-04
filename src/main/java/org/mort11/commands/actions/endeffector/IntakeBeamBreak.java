@@ -58,7 +58,6 @@ public class IntakeBeamBreak extends Command {
     wrist.setSetpoint(endPosition);
 
     intake.setIntakeVelocity(0);
-    
   }
 
   @Override

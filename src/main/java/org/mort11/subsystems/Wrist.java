@@ -42,7 +42,7 @@ public class Wrist extends SubsystemBase {
         wristMotor.set(wristSpeed);
         trapServo.setAngle(servoPos);
 
-        SmartDashboard.putNumber("Wrist Pos", getWristPosition());
+        SmartDashboard.putNumber("Wrist Pos", getWristPos());
         SmartDashboard.putNumber("Wrist Pos Degrees", getWristPosDeg());
         SmartDashboard.putNumber("Wrist output", wristSpeed);
         SmartDashboard.putNumber("ActualWristMotorOutput", wristMotor.get());
@@ -51,12 +51,12 @@ public class Wrist extends SubsystemBase {
     }
 
     public void setWristVelocity(double wristSpeed) {
-        this.wristSpeed = wristSpeed + wristPostionFeedForward.calculate(getWristPosition(), getWristVelocity());
+        this.wristSpeed = wristSpeed + wristPostionFeedForward.calculate(getWristPos(), getWristVel());
     }
 
     public void setSetpoint(double setpoint) {
         wristSpeed = - wristPositionController.calculate(getWristPosDeg(), setpoint) + 
-            wristPostionFeedForward.calculate(getWristPosition(), getWristVelocity());
+            wristPostionFeedForward.calculate(getWristPos(), getWristVel());
     }
 
     public void setServoPos(double servoPos) {
@@ -65,16 +65,16 @@ public class Wrist extends SubsystemBase {
 
 
 
-    public double getWristPosition() {
+    public double getWristPos() {
         return wristMotor.getPosition().getValueAsDouble();
     }
 
-    public double getWristVelocity() {
+    public double getWristVel() {
         return wristMotor.getVelocity().getValueAsDouble();
     }
 
     public double getWristPosDeg() {
-        return (getWristPosition() * WRIST_GEAR_RATIO)  + WRIST_DEGREES_TO_0;
+        return (getWristPos() * WRIST_GEAR_RATIO)  + WRIST_DEGREES_TO_0;
     }
 
     public static Wrist getInstance() {

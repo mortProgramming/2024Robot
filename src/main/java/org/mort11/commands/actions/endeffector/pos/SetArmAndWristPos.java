@@ -1,4 +1,4 @@
-package org.mort11.commands.actions.endeffector.armwrist;
+package org.mort11.commands.actions.endeffector.pos;
 
 import static org.mort11.configuration.constants.PhysicalConstants.Arm.*;
 import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;

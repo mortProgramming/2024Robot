@@ -1,4 +1,4 @@
-package org.mort11.commands.actions.endeffector.armwrist;
+package org.mort11.commands.actions.endeffector.pos;
 
 import org.mort11.subsystems.Wrist;
 

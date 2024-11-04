@@ -18,6 +18,8 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Odometer{
@@ -41,7 +43,7 @@ public class Odometer{
         driveKinematics = drivetrain.getDriveKinematics();
 
         odometry = new SwerveDrivePoseEstimator(driveKinematics, 
-            drivetrain.getNavX().getRotation2d(), 
+            drivetrain.getRotation2d(), 
             drivetrain.getModulePositions(), 
         new Pose2d(new Translation2d(0,0), new Rotation2d(0)),
         poseDeviation,
@@ -106,12 +108,20 @@ public class Odometer{
    public static void resetOdometry(Pose2d inputPose){
     odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), inputPose);
    }
+
+   public static Command resetOdometryCommand(Pose2d inputPose) {
+    return new InstantCommand(() -> resetOdometry(inputPose));
+   }
 /**
  * OMEGA MUST BE IN RADIANS
  */
    public static void resetOdometry(double x, double y, double omega){
     odometry.resetPosition(drivetrain.getAbsoluteGyroscopeRotation(), drivetrain.getModulePositions(), 
     new Pose2d(x, y, new Rotation2d(omega)));
+   }
+
+   public static Command resetOdometryCommand(double x, double y, double angle) {
+    return new InstantCommand(() -> resetOdometry(x, y, angle));
    }
 
    public static Pose2d getFieldPose() {

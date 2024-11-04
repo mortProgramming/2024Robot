@@ -80,7 +80,7 @@ public class PhysicalConstants {
     public final static class Intake {
       public static final double INTAKE_SPEED = 0.6;
 		  public static final double AMP_SHOOT_SPEED = -0.3;
-		  public static final double SHOOTER_SHOOT_SPEED = -0.80;
+		  public static final double SHOOTER_SHOOT_SPEED = -1;
 		  public static final double AUTO_SHOOT_SPEED = -0.45;
 
       public static final double SENSOR_MIN_TIME = 0.05;

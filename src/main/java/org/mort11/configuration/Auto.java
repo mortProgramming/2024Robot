@@ -20,7 +20,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class Auto {
 
@@ -40,6 +39,24 @@ public class Auto {
 		
 		System.out.println("auto init");
 	}
+
+	public static void configureAutoBuilder() {
+		drivetrain.setGyroscopeZero(0);
+
+		AutoBuilder.configureHolonomic(
+    		() -> Odometer.getOdometry().getEstimatedPosition(),
+    		(Pose2d startPose) -> Odometer.resetOdometry(startPose), //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
+    		() -> drivetrain.getChassisSpeeds(),
+    		(ChassisSpeeds robotRelativeOutput) -> drivetrain.setDrive(robotRelativeOutput),
+    		new HolonomicPathFollowerConfig(
+      			new PIDConstants(AUTON_POS_KP, AUTON_POS_KI, AUTON_POS_KD),
+      			new PIDConstants(AUTON_ROTATION_KP, AUTON_ROTATION_KI, AUTON_ROTATION_KD),
+      			AUTON_MAX_VELOCITY, //max Module Speed in M/s
+      			DRIVEBASE_RADIUS_METERS,
+       			new ReplanningConfig()), 
+       		() -> !IO.isBlue(), //true when flips, default blue
+    		drivetrain);
+	}
 	
 	public static void addAutoOptions() {
 		// By default, the nothing option is selected
@@ -58,27 +75,6 @@ public class Auto {
 		autoChooser.addOption("BieryTestAuto", GetPlanned.getBieryAuto());
 	}
 
-	public static void configureAutoBuilder() {
-		new InstantCommand(() -> drivetrain.zeroGyroscope(0));
-
-		AutoBuilder.configureHolonomic(
-    		() -> Odometer.getOdometry().getEstimatedPosition(),
-    		(Pose2d startPose) -> Odometer.resetOdometry(startPose), //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
-    		() -> drivetrain.getChassisSpeeds(),
-    		(ChassisSpeeds robotRelativeOutput) -> drivetrain.drive(robotRelativeOutput),
-    		new HolonomicPathFollowerConfig(
-      			new PIDConstants(AUTON_POS_KP, AUTON_POS_KI, AUTON_POS_KD),
-      			new PIDConstants(AUTON_ROTATION_KP, AUTON_ROTATION_KI, AUTON_ROTATION_KD),
-      			AUTON_MAX_VELOCITY, //max Module Speed in M/s
-      			DRIVEBASE_RADIUS_METERS,
-       			new ReplanningConfig()), 
-       		() -> !IO.isBlue(), //true when flips, default blue
-    		drivetrain);
-	}
-
-	/**
-	 * @return selected auto from auto chooser
-	 */
 	public static Command getAutonomousCommand() {
 		return autoChooser.getSelected();
 	}

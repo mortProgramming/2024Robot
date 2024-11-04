@@ -9,7 +9,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,12 +16,11 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends SubsystemBase {
-    
     private static Arm arm;
 
     //left is main motor
-    private static TalonFX masterArmMotor;
-    private static TalonFX followArmMotor;
+    private TalonFX masterArmMotor;
+    private TalonFX followArmMotor;
     private CANSparkMax blowerMotor;
 
     private double armSpeed;
@@ -46,12 +44,11 @@ public class Arm extends SubsystemBase {
         targetBlowerOutput = 0;
         currentBlowerOutput = 0;
 
-        armPositionController = new ProfiledPIDController(POS_KP, POS_KI, POS_KD, 
-            POS_CONSTRAINTS);
+        armPositionController = new ProfiledPIDController(
+            POS_KP, POS_KI, POS_KD, POS_CONSTRAINTS
+        );
 
         blowerController = new PIDController(BLOWER_KP, BLOWER_KI, BLOWER_KD);
-        
-
     }
 
     @Override
@@ -61,8 +58,7 @@ public class Arm extends SubsystemBase {
         currentBlowerOutput += blowerController.calculate(currentBlowerOutput,targetBlowerOutput);
         blowerMotor.set(currentBlowerOutput);
 
-        SmartDashboard.putNumber("Encoder Arm Pos Degrees", encoderToDegrees());
-        SmartDashboard.putNumber("Arm Setpoint", setpoint);
+        SmartDashboard.putNumber("Encoder Arm Pos Degrees", getEncoderPosDeg());
         SmartDashboard.putNumber("arm output", armSpeed);
         SmartDashboard.putNumber("ActualArmMotorOutput", masterArmMotor.get());
         SmartDashboard.putNumber("Blower Value", currentBlowerOutput);
@@ -73,9 +69,7 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSetpoint(double setpoint){
-        this.setpoint = setpoint;
-
-        this.armSpeed = -armPositionController.calculate(encoderToDegrees(), setpoint) +
+        this.armSpeed = -armPositionController.calculate(getEncoderPosDeg(), setpoint) +
             getGravityOffset();
     }
 
@@ -85,26 +79,21 @@ public class Arm extends SubsystemBase {
 
 
 
-    public double getSetpoint(){
-        return setpoint;
-    }
-
-    public double getVelocity() {
-        return masterArmMotor.getVelocity().getValueAsDouble();
-    }
-
-    public double getPosition() {
+    public double getPos() {
 		return masterArmMotor.getPosition().getValueAsDouble();
 	}
 
-    // encoder
-    public double getEncoderPosition() {
+    public double getVel() {
+        return masterArmMotor.getVelocity().getValueAsDouble();
+    }
+
+    public double getEncoderPos() {
 		return encoder.getAbsolutePosition();
 	}
 
-    //encoder
-    public double encoderToDegrees() {
-        double degrees = getEncoderPosition() * 360 + ARM_ENCODER_TO_0_DEGREES;
+    public double getEncoderPosDeg() {
+        double degrees = getEncoderPos() * 360 + ARM_ENCODER_TO_0_DEGREES;
+
         if (degrees < 0) {
             degrees += 360;
         }
@@ -120,25 +109,13 @@ public class Arm extends SubsystemBase {
         return degrees; 
     }
 
-    public boolean nearSetpoint(){
-        return encoderToDegrees() >= setpoint && encoderToDegrees() <= setpoint;
-    }
-
-    private double setPosition(double setpoint) {
-		double output = (POS_KG * Math.cos(Math.toRadians(encoderToDegrees())))
-        - armPositionController.calculate(encoderToDegrees(), setpoint);
-
-        return output;
-	}
-
     private double getGravityOffset() {
-        return POS_KG * Math.cos(Math.toRadians(encoderToDegrees()));
+        return POS_KG * Math.cos(Math.toRadians(getEncoderPosDeg()));
     }
 
-    public static Arm getInstance(){
-        if (arm==null){
+    public static Arm getInstance() {
+        if (arm == null){
             arm = new Arm();
-
         }
         return arm;
     }

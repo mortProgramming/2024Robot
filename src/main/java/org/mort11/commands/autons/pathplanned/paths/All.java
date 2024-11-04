@@ -1,11 +1,11 @@
 package org.mort11.commands.autons.pathplanned.paths;
 
-import org.mort11.commands.actions.RobotStart;
+import org.mort11.commands.actions.drivetrain.Orient;
 import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
-import org.mort11.commands.actions.endeffector.IntakeToVelocity;
 import org.mort11.commands.actions.endeffector.SpitNote;
-import org.mort11.commands.actions.endeffector.armwrist.SetArmAndWristPos;
-import org.mort11.commands.actions.endeffector.armwrist.WristToPos;
+import org.mort11.commands.actions.endeffector.pos.SetArmAndWristPos;
+import org.mort11.commands.actions.endeffector.pos.WristToPos;
+import org.mort11.commands.actions.endeffector.velocity.IntakeToVelocity;
 import org.mort11.configuration.IO;
 
 import static org.mort11.configuration.constants.PhysicalConstants.Arm.*;
@@ -24,7 +24,7 @@ public class All {
     public static void setCommands () {
         NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> System.out.println("PATH AUTON IS ACTIVE"))));
 
-        NamedCommands.registerCommand("FieldOrient", new RobotStart(IO.isBlue() ?  270 : 90));
+        NamedCommands.registerCommand("FieldOrient", new Orient(IO.isBlue() ?  270 : 90));
 
         NamedCommands.registerCommand("ScoreInAmp", 
             new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
