@@ -4,11 +4,12 @@ import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
 import static org.mort11.configuration.constants.PhysicalConstants.Controller.*;
 import static org.mort11.configuration.constants.PortConstants.Controller.*;
 
+import org.mort11.subsystems.Drivetrain;
+
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class Inputs {
-
     public static CommandJoystick joystick;
 	public static CommandXboxController xboxController;
 
@@ -83,29 +84,17 @@ public class Inputs {
         // return value * throttleValue;
     }
 
-    /**
-     * 
-     * @return
-     */
     public static double getJoystickX() {
-		return -(modifyLateralAxis(joystick.getX(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
+		return -0.75 * modifyLateralAxis(joystick.getX(), joystick.getRawAxis(2)) * Drivetrain.getInstance().getMaxSpeedMeters();
 	}
 
-    /**
-     * 
-     * @return
-     */
-	public static double getJoystickY() {
-		return -(modifyLateralAxis(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
+    public static double getJoystickY() {
+		return -modifyLateralAxis(joystick.getY(), joystick.getRawAxis(2)) * Drivetrain.getInstance().getMaxSpeedMeters();
 	}
 
-    /**
-     * 
-     * @return
-     */
-	public static double getJoystickRotate() {
-		return -(modifyRotateAxis(joystick.getRawAxis(3), joystick.getRawAxis(2))
-				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+    public static double getJoystickRotate() {
+		return -modifyRotateAxis(joystick.getRawAxis(3), joystick.getRawAxis(2))
+				* Drivetrain.getInstance().getMaxSpeedMeters() / DRIVEBASE_RADIUS_METERS;
 	}
 
     public static double getLeftJoystickY() {

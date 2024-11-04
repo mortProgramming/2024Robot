@@ -5,6 +5,7 @@ import org.mort11.commands.autons.odometered.ScoreAmpRed;
 import org.mort11.commands.autons.pathplanned.GetPlanned;
 import org.mort11.commands.autons.timed.blue.TaxiB;
 import org.mort11.commands.autons.timed.red.TaxiR;
+import org.mort11.library.Swerve.PathPlanner;
 import org.mort11.subsystems.Drivetrain;
 
 import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
@@ -36,8 +37,6 @@ public class Auto {
 		addAutoOptions();
 
 		SmartDashboard.putData(autoChooser);
-		
-		System.out.println("auto init");
 	}
 
 	public static void configureAutoBuilder() {
@@ -55,7 +54,15 @@ public class Auto {
       			DRIVEBASE_RADIUS_METERS,
        			new ReplanningConfig()), 
        		() -> !IO.isBlue(), //true when flips, default blue
-    		drivetrain);
+    		drivetrain
+		);
+
+		// PathPlanner.configure(
+		// 	drivetrain, drivetrain.swerveDrive, 
+		// 	new PIDConstants(AUTON_POS_KP, AUTON_POS_KI, AUTON_POS_KD), 
+		// 	new PIDConstants(AUTON_ROTATION_KP, AUTON_ROTATION_KI, AUTON_ROTATION_KD), 
+		// 	DRIVEBASE_RADIUS_METERS
+		// );
 	}
 	
 	public static void addAutoOptions() {
