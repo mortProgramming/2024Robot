@@ -1,7 +1,5 @@
 package org.mort11.configuration.constants;
 
-import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
-
 import edu.wpi.first.math.util.Units;
 
 public class PhysicalConstants {
@@ -23,18 +21,18 @@ public class PhysicalConstants {
     }
 
     public final static class Arm{
-		public static final double ARM_REST_POS = -32;
-		public static final double ARM_AMP_POS = 92;  //169
-		public static final double ARM_TRAP_POS = 38;
-		public static final double ARM_PRETRAP_POS = 130;
-		public static final double ARM_FLOORTRAP_POS = 50;
+		  public static final double ARM_REST_POS = -32;
+		  public static final double ARM_AMP_POS = 92;  //169
+      public static final double ARM_TRAP_POS = 38;
+      public static final double ARM_PRETRAP_POS = 130;
+      public static final double ARM_FLOORTRAP_POS = 50;
 
-		public static final double ARM_ENCODER_TO_0_DEGREES = 84;
-		public static final double ARM_NEVER_POS = 90;
+      public static final double ARM_ENCODER_TO_0_DEGREES = 84;
+      public static final double ARM_NEVER_POS = 90;
 
-		public static final double ARM_WRIST_TIMEOUT = 1;
+      public static final double ARM_WRIST_TIMEOUT = 1;
 
-		public static final double BLOWER_MOTOR_MAX_SPEED = -1;
+      public static final double BLOWER_MOTOR_MAX_SPEED = -1;
     }
 
     public final static class Climber {
@@ -52,21 +50,14 @@ public class PhysicalConstants {
     }
 
     public static final class Drivetrain {
-        // The left-to-right distance between the drivetrain wheels measured from center
+    // The left-to-right distance between the drivetrain wheels measured from center
 		// to center.
 		public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(19);
 		// The front-to-back distance between the drivetrain wheels measured from center
 		// to center.
 		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(19);
 
-        public static final double DRIVEBASE_RADIUS_METERS = Math.hypot((DRIVETRAIN_TRACKWIDTH_METERS / 2), (DRIVETRAIN_WHEELBASE_METERS / 2));
-
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = (6000 / 60.0
-				* SdsModuleConfigurations.MK4I_L3.getDriveReduction()
-				* SdsModuleConfigurations.MK4I_L3.getWheelDiameter() * Math.PI) * 0.99; // 100% ~4.97 m/s
-
-		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
-				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
+    public static final double DRIVEBASE_RADIUS_METERS = Math.hypot((DRIVETRAIN_TRACKWIDTH_METERS / 2), (DRIVETRAIN_WHEELBASE_METERS / 2));
 
     public static final double IMU_TO_ROBOT_FRONT_ANGLE = 90;
 
