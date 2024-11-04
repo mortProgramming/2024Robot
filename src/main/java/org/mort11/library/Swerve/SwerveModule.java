@@ -61,6 +61,9 @@ public class SwerveModule {
         maxVoltage = 12;
         offset = 0;
         rotationToMeters = Math.PI;
+        state = new SwerveModuleState(
+            0, Rotation2d.fromDegrees(0)
+        );
 
         switch(driveMotorType) {
             case NEO:

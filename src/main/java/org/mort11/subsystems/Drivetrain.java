@@ -107,8 +107,6 @@ public class Drivetrain extends SubsystemBase {
     	backLeftModule.steerMotor.setDirectionFlip(false);
     	backRightModule.steerMotor.setDirectionFlip(false);
 
-		swerveDrive.setOffsets(FRONT_LEFT_OFFSET, FRONT_RIGHT_OFFSET, BACK_LEFT_OFFSET, BACK_RIGHT_OFFSET);
-
 		driveKinematics = new SwerveDriveKinematics(
 			// Front left
 			new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
@@ -125,6 +123,8 @@ public class Drivetrain extends SubsystemBase {
 			backLeftModule, backRightModule,
 			driveKinematics
 		);
+
+		swerveDrive.setOffsets(FRONT_LEFT_OFFSET, FRONT_RIGHT_OFFSET, BACK_LEFT_OFFSET, BACK_RIGHT_OFFSET);
 	}
 
 	@Override

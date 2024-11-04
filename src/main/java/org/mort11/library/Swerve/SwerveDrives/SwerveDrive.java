@@ -113,6 +113,8 @@ public class SwerveDrive {
 
             this.kinematics = kinematics;
 
+        velocity = new ChassisSpeeds(0, 0, 0);
+        
         descritizedValue = 0.02;
 
         tangentRateLimiterLimit = 1000000;
