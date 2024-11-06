@@ -1,18 +1,18 @@
 package org.mort11.commands.actions.drivetrain;
 
-import org.mort11.configuration.Odometer;
+import org.mort11.config.Odometer;
 import org.mort11.subsystems.Drivetrain;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class MoveToPos extends Command {
+public class DriveToPos extends Command {
   private Drivetrain drivetrain;
 
   private double wantedX;
   private double wantedY;
 
-  public MoveToPos(double wantedX, double wantedY) {
+  public DriveToPos(double wantedX, double wantedY) {
     drivetrain = Drivetrain.getInstance();
 
     this.wantedX = wantedX;

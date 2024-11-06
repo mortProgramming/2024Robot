@@ -1,10 +1,10 @@
-package org.mort11.library.Commands;
+package org.mort11.library.commands;
 
-import static org.mort11.library.Others.Ternary.*;
+import static org.mort11.library.others.Ternary.*;
 
 import java.util.function.BooleanSupplier;
 
-import org.mort11.library.Others.Ternary;
+import org.mort11.library.others.Ternary;
 
 import edu.wpi.first.wpilibj2.command.Command;
 

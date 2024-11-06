@@ -1,4 +1,4 @@
-package org.mort11.configuration.constants;
+package org.mort11.config.constants;
 
 
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;

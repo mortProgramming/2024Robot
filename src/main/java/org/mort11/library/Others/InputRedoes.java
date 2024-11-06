@@ -1,4 +1,4 @@
-package org.mort11.library.Others;
+package org.mort11.library.others;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -8,7 +8,7 @@ public class InputRedoes {
 
     public double currentNumber, lastNumber;
     
-    public InputRedoes (String key, double startValue) {
+    public InputRedoes(String key, double startValue) {
         SmartDashboard.putNumber(key, startValue);
 
         currentNumber = startValue;
@@ -29,7 +29,4 @@ public class InputRedoes {
     public double getNumber () {
         return SmartDashboard.getNumber(key, currentNumber);
     }
-
-
-
 }

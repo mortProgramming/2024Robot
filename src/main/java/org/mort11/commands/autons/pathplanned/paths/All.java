@@ -1,16 +1,16 @@
 package org.mort11.commands.autons.pathplanned.paths;
 
+import static org.mort11.config.constants.PhysicalConstants.Arm.*;
+import static org.mort11.config.constants.PhysicalConstants.Intake.*;
+import static org.mort11.config.constants.PhysicalConstants.Wrist.*;
+
 import org.mort11.commands.actions.drivetrain.Orient;
 import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
 import org.mort11.commands.actions.endeffector.SpitNote;
-import org.mort11.commands.actions.endeffector.pos.SetArmAndWristPos;
+import org.mort11.commands.actions.endeffector.pos.SetArmWristPos;
 import org.mort11.commands.actions.endeffector.pos.WristToPos;
-import org.mort11.commands.actions.endeffector.velocity.IntakeToVelocity;
-import org.mort11.configuration.IO;
-
-import static org.mort11.configuration.constants.PhysicalConstants.Arm.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Intake.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
+import org.mort11.commands.actions.endeffector.vel.IntakeToVel;
+import org.mort11.config.IO;
 
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -29,9 +29,9 @@ public class All {
         NamedCommands.registerCommand("ScoreInAmp", 
             new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest
                 new WristToPos(WRIST_REST_POS).withTimeout(0.01),
-                SetArmAndWristPos.amp().withTimeout(ARM_WRIST_TIMEOUT),
-                new IntakeToVelocity(AUTO_SHOOT_SPEED).withTimeout(0.4),
-                SetArmAndWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT))
+                SetArmWristPos.amp().withTimeout(ARM_WRIST_TIMEOUT),
+                new IntakeToVel(AUTO_SHOOT_SPEED).withTimeout(0.4),
+                SetArmWristPos.rest().withTimeout(ARM_WRIST_TIMEOUT))
             .withTimeout(3.45));
 
         NamedCommands.registerCommand("Intake", 
@@ -46,7 +46,7 @@ public class All {
         NamedCommands.registerCommand("Spit", 
             new SpitNote());
 
-        NamedCommands.registerCommand("Outtake", new IntakeToVelocity(-0.65)
+        NamedCommands.registerCommand("Outtake", new IntakeToVel(-0.65)
             .withTimeout(0.75));
     }
 }

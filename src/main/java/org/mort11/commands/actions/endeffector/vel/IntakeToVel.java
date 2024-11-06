@@ -1,15 +1,15 @@
-package org.mort11.commands.actions.endeffector.velocity;
+package org.mort11.commands.actions.endeffector.vel;
 
 import org.mort11.subsystems.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;   
 
-public class IntakeToVelocity extends Command {
+public class IntakeToVel extends Command {
     private Intake intake;
 
     private double speed;
 
-    public IntakeToVelocity(double speed){
+    public IntakeToVel(double speed){
         this.speed = speed;
 
         intake = Intake.getInstance();

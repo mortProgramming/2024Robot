@@ -1,4 +1,4 @@
-package org.mort11.library.Hardware.Encoder;
+package org.mort11.library.hardware.encoder;
 
 public enum EncoderTypeEnum {
     CANCODER

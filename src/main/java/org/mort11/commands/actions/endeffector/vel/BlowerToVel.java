@@ -1,15 +1,15 @@
-package org.mort11.commands.actions.endeffector.velocity;
+package org.mort11.commands.actions.endeffector.vel;
 
 import org.mort11.subsystems.Arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class BlowerToVelocity extends Command {
+public class BlowerToVel extends Command {
     private Arm arm;
 
     private double speed;
 
-    public BlowerToVelocity(double speed) {
+    public BlowerToVel(double speed) {
         this.speed = speed;
 
         arm = Arm.getInstance();

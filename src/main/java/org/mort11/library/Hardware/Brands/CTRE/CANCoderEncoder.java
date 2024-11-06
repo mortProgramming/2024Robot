@@ -1,6 +1,6 @@
-package org.mort11.library.Hardware.Brands.CTRE;
+package org.mort11.library.hardware.brands.ctre;
 
-import org.mort11.library.Hardware.Encoder.EncoderIntf;
+import org.mort11.library.hardware.encoder.EncoderIntf;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 

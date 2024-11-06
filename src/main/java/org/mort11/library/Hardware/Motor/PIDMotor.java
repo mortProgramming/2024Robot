@@ -1,4 +1,4 @@
-package org.mort11.library.Hardware.Motor;
+package org.mort11.library.hardware.motor;
 
 import edu.wpi.first.math.controller.PIDController;
 

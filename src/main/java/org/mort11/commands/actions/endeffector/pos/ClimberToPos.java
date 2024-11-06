@@ -1,6 +1,6 @@
 package org.mort11.commands.actions.endeffector.pos;
 
-import static org.mort11.configuration.constants.PhysicalConstants.Climber.*;
+import static org.mort11.config.constants.PhysicalConstants.Climber.*;
 
 import org.mort11.subsystems.Climber;
 

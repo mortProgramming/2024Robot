@@ -1,8 +1,8 @@
-package org.mort11.configuration;
+package org.mort11.config;
 
-import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Controller.*;
-import static org.mort11.configuration.constants.PortConstants.Controller.*;
+import static org.mort11.config.constants.PhysicalConstants.Controller.*;
+import static org.mort11.config.constants.PhysicalConstants.Drivetrain.*;
+import static org.mort11.config.constants.PortConstants.Controller.*;
 
 import org.mort11.subsystems.Drivetrain;
 

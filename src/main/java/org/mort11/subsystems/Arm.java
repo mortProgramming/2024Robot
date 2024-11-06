@@ -1,8 +1,8 @@
 package org.mort11.subsystems;
 
-import static org.mort11.configuration.constants.PhysicalConstants.Arm.*;
-import static org.mort11.configuration.constants.PIDConstants.Arm.*;
-import static org.mort11.configuration.constants.PortConstants.Arm.*;
+import static org.mort11.config.constants.PIDConstants.Arm.*;
+import static org.mort11.config.constants.PhysicalConstants.Arm.*;
+import static org.mort11.config.constants.PortConstants.Arm.*;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;

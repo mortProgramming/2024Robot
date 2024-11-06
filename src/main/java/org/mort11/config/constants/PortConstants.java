@@ -1,4 +1,4 @@
-package org.mort11.configuration.constants;
+package org.mort11.config.constants;
 
 public class PortConstants {
 

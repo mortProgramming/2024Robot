@@ -1,7 +1,7 @@
-package org.mort11.library.Hardware.Motor;
+package org.mort11.library.hardware.motor;
 
-import org.mort11.library.Hardware.Brands.CTRE.TalonFXMotor;
-import org.mort11.library.Hardware.Brands.REV.CANSparkMaxMotor;
+import org.mort11.library.hardware.brands.ctre.TalonFXMotor;
+import org.mort11.library.hardware.brands.rev.CANSparkMaxMotor;
 
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkLowLevel.MotorType;

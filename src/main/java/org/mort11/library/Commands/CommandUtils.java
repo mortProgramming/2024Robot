@@ -1,4 +1,4 @@
-package org.mort11.library.Commands;
+package org.mort11.library.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;

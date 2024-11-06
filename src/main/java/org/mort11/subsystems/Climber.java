@@ -1,8 +1,8 @@
 package org.mort11.subsystems;
 
-import static org.mort11.configuration.constants.PhysicalConstants.Climber.*;
-import static org.mort11.configuration.constants.PIDConstants.Climber.*;
-import static org.mort11.configuration.constants.PortConstants.Climber.*;
+import static org.mort11.config.constants.PIDConstants.Climber.*;
+import static org.mort11.config.constants.PhysicalConstants.Climber.*;
+import static org.mort11.config.constants.PortConstants.Climber.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;

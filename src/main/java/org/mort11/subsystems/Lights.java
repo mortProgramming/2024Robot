@@ -1,8 +1,8 @@
 package org.mort11.subsystems;
 
-import static org.mort11.configuration.constants.PhysicalConstants.Lights.*;
-import static org.mort11.configuration.constants.PortConstants.Lights.*;
-import static org.mort11.configuration.constants.PortConstants.Vision.*;
+import static org.mort11.config.constants.PhysicalConstants.Lights.*;
+import static org.mort11.config.constants.PortConstants.Lights.*;
+import static org.mort11.config.constants.PortConstants.Vision.*;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

@@ -4,11 +4,11 @@ import org.mort11.subsystems.Intake;
 import org.mort11.subsystems.Lights;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class LightsCommand extends Command {
+public class Lighting extends Command {
   /** Creates a new IntakeBeamBreak. */
   private Lights lights;
 
-  public LightsCommand() {
+  public Lighting() {
     lights = Lights.getInstance();
 
     addRequirements(lights);

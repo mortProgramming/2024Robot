@@ -1,16 +1,16 @@
-package org.mort11.commands.actions.endeffector.velocity;
+package org.mort11.commands.actions.endeffector.vel;
 
 import org.mort11.subsystems.Climber;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class ClimberToVelocity extends Command{
+public class ClimberToVel extends Command{
     private Climber climber;
     
     private double leftVelocity;
     private double rightVelocity; 
 
-    public ClimberToVelocity(double leftVelocity, double rightVelocity){
+    public ClimberToVel(double leftVelocity, double rightVelocity){
         this.leftVelocity = leftVelocity;
         this.rightVelocity = rightVelocity;
 

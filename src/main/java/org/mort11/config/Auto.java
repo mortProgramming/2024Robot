@@ -1,15 +1,15 @@
-package org.mort11.configuration;
+package org.mort11.config;
+
+import static org.mort11.config.constants.PIDConstants.Drivetrain.*;
+import static org.mort11.config.constants.PhysicalConstants.Drivetrain.*;
 
 import org.mort11.commands.autons.odometered.ScoreAmpBlue;
 import org.mort11.commands.autons.odometered.ScoreAmpRed;
 import org.mort11.commands.autons.pathplanned.GetPlanned;
 import org.mort11.commands.autons.timed.blue.TaxiB;
 import org.mort11.commands.autons.timed.red.TaxiR;
-import org.mort11.library.Swerve.PathPlanner;
+import org.mort11.library.swerve.PathPlanner;
 import org.mort11.subsystems.Drivetrain;
-
-import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
-import static org.mort11.configuration.constants.PIDConstants.Drivetrain.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;

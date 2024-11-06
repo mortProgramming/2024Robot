@@ -5,9 +5,9 @@
 package org.mort11.commands.autons.timed.blue;
 
 import org.mort11.commands.actions.drivetrain.TimedDrive;
-import org.mort11.commands.actions.endeffector.pos.SetArmAndWristPos;
-import org.mort11.commands.actions.endeffector.velocity.IntakeToVelocity;
-import org.mort11.configuration.constants.PhysicalConstants.*;
+import org.mort11.commands.actions.endeffector.pos.SetArmWristPos;
+import org.mort11.commands.actions.endeffector.vel.IntakeToVel;
+import org.mort11.config.constants.PhysicalConstants.*;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -19,19 +19,19 @@ public class ScoreAmpTwiceB extends SequentialCommandGroup {
     
     addCommands(
       new ScoreAmpB(),
-      SetArmAndWristPos.intake().withTimeout(0.5),
+      SetArmWristPos.intake().withTimeout(0.5),
       new TimedDrive(1, 0, 1.35,  0),
       new WaitCommand(0.5),
         new ParallelCommandGroup(
         new TimedDrive(0.65,1.2,0,0),
-        new IntakeToVelocity(Intake.INTAKE_SPEED).withTimeout(0.7)
+        new IntakeToVel(Intake.INTAKE_SPEED).withTimeout(0.7)
       ),
-      SetArmAndWristPos.rest().withTimeout(0.5),
+      SetArmWristPos.rest().withTimeout(0.5),
       new TimedDrive(1,0,-0.9, 0),
       new TimedDrive(1,-1.4 ,0,0),
-      SetArmAndWristPos.amp().withTimeout(1.5),
-      new IntakeToVelocity(-0.5).withTimeout(0.75),
-      SetArmAndWristPos.rest().withTimeout(0.5)
+      SetArmWristPos.amp().withTimeout(1.5),
+      new IntakeToVel(-0.5).withTimeout(0.75),
+      SetArmWristPos.rest().withTimeout(0.5)
     );
   }
 }

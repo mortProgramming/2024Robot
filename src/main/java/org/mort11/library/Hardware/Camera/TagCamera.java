@@ -1,6 +1,6 @@
-package org.mort11.library.Hardware.Camera;
+package org.mort11.library.hardware.camera;
 
-import org.mort11.library.Hardware.Brands.LimeLight.LimeLightTagCamera;
+import org.mort11.library.hardware.brands.limelight.LimeLightTagCamera;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;

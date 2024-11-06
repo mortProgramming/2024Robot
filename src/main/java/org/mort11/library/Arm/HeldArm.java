@@ -1,8 +1,8 @@
-package org.mort11.library.Arm;
+package org.mort11.library.arm;
 
-import org.mort11.library.Hardware.Motor.Motor;
-import org.mort11.library.Hardware.Motor.MotorIntf;
-import org.mort11.library.Hardware.Motor.MotorTypeEnum;
+import org.mort11.library.hardware.motor.Motor;
+import org.mort11.library.hardware.motor.MotorIntf;
+import org.mort11.library.hardware.motor.MotorTypeEnum;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 

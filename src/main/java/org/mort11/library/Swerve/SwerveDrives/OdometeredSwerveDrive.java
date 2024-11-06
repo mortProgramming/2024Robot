@@ -1,12 +1,12 @@
-package org.mort11.library.Swerve.SwerveDrives;
+package org.mort11.library.swerve.swervedrives;
 
-import org.mort11.library.Hardware.Encoder.EncoderTypeEnum;
-import org.mort11.library.Hardware.IMU.IMU;
-import org.mort11.library.Hardware.IMU.IMUTypeEnum;
-import org.mort11.library.Hardware.Motor.MotorTypeEnum;
-import org.mort11.library.Swerve.ModuleTypeEnum;
-import org.mort11.library.Swerve.Odometer;
-import org.mort11.library.Swerve.SwerveModule;
+import org.mort11.library.hardware.encoder.EncoderTypeEnum;
+import org.mort11.library.hardware.imu.IMU;
+import org.mort11.library.hardware.imu.IMUTypeEnum;
+import org.mort11.library.hardware.motor.MotorTypeEnum;
+import org.mort11.library.swerve.ModuleTypeEnum;
+import org.mort11.library.swerve.Odometer;
+import org.mort11.library.swerve.SwerveModule;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;

@@ -1,6 +1,6 @@
-package org.mort11.library.Hardware.Encoder;
+package org.mort11.library.hardware.encoder;
 
-import org.mort11.library.Hardware.Brands.CTRE.CANCoderEncoder;
+import org.mort11.library.hardware.brands.ctre.CANCoderEncoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 

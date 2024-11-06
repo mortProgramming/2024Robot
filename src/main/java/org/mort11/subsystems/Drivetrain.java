@@ -1,18 +1,19 @@
 package org.mort11.subsystems;
 
-import org.mort11.configuration.Odometer;
-import org.mort11.configuration.IO;
-import org.mort11.library.Hardware.IMU.IMU;
-import org.mort11.library.Swerve.SwerveModule;
-import org.mort11.library.Swerve.SwerveDrives.SwerveDrive;
+import org.mort11.library.hardware.imu.IMU;
+import org.mort11.library.swerve.SwerveModule;
+import org.mort11.library.swerve.swervedrives.SwerveDrive;
 
-import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
-import static org.mort11.configuration.constants.PIDConstants.Drivetrain.*;
-import static org.mort11.configuration.constants.PortConstants.Drivetrain.*;
-import static org.mort11.library.Hardware.Encoder.EncoderTypeEnum.*;
-import static org.mort11.library.Hardware.IMU.IMUTypeEnum.*;
-import static org.mort11.library.Hardware.Motor.MotorTypeEnum.*;
-import static org.mort11.library.Swerve.ModuleTypeEnum.*;
+import static org.mort11.config.constants.PIDConstants.Drivetrain.*;
+import static org.mort11.config.constants.PhysicalConstants.Drivetrain.*;
+import static org.mort11.config.constants.PortConstants.Drivetrain.*;
+import static org.mort11.library.hardware.encoder.EncoderTypeEnum.*;
+import static org.mort11.library.hardware.imu.IMUTypeEnum.*;
+import static org.mort11.library.hardware.motor.MotorTypeEnum.*;
+import static org.mort11.library.swerve.ModuleTypeEnum.*;
+
+import org.mort11.config.IO;
+import org.mort11.config.Odometer;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;

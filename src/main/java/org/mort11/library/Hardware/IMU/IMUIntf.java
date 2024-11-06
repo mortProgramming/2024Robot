@@ -1,4 +1,4 @@
-package org.mort11.library.Hardware.IMU;
+package org.mort11.library.hardware.imu;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;

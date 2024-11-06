@@ -1,16 +1,16 @@
-package org.mort11.library.Swerve;
+package org.mort11.library.swerve;
 
-import static org.mort11.library.Swerve.Constants.*;
+import static org.mort11.library.swerve.Constants.*;
 
-import org.mort11.library.Hardware.Brands.CTRE.CTREUtility.Falcon500;
-import org.mort11.library.Hardware.Brands.CTRE.CTREUtility.Krakenx60;
-import org.mort11.library.Hardware.Brands.REV.RevUtility.NEO;
-import org.mort11.library.Hardware.Brands.REV.RevUtility.NEO550;
-import org.mort11.library.Hardware.Encoder.Encoder;
-import org.mort11.library.Hardware.Encoder.EncoderTypeEnum;
-import org.mort11.library.Hardware.Motor.Motor;
-import org.mort11.library.Hardware.Motor.MotorTypeEnum;
-import org.mort11.library.Hardware.Motor.PIDMotor;
+import org.mort11.library.hardware.brands.ctre.CTREUtility.Falcon500;
+import org.mort11.library.hardware.brands.ctre.CTREUtility.Krakenx60;
+import org.mort11.library.hardware.brands.rev.RevUtility.NEO;
+import org.mort11.library.hardware.brands.rev.RevUtility.NEO550;
+import org.mort11.library.hardware.encoder.Encoder;
+import org.mort11.library.hardware.encoder.EncoderTypeEnum;
+import org.mort11.library.hardware.motor.Motor;
+import org.mort11.library.hardware.motor.MotorTypeEnum;
+import org.mort11.library.hardware.motor.PIDMotor;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -112,7 +112,7 @@ public class SwerveModule {
         }
 
         steerMotor.setPIDEnableContinuousInput(0, 1);
-        steerMotor.setPIDTolerance(3, 10000);
+        steerMotor.setPIDTolerance(0.5, 10);
 
         switch (moduleType) {
             case MK4i:
@@ -143,9 +143,8 @@ public class SwerveModule {
     }
 
     public void setModuleState(SwerveModuleState state) {
-        this.state = state;
+        this.state = SwerveModuleState.optimize(state, getEncoderPosition());
 
-        SwerveModuleState.optimize(state, getEncoderPosition());
         setDriveSpeedMeters(state.speedMetersPerSecond);
         setPosition(state.angle);
     }

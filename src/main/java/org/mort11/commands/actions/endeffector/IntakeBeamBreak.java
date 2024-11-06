@@ -1,10 +1,10 @@
 package org.mort11.commands.actions.endeffector;
 
+import static org.mort11.config.constants.PhysicalConstants.Intake.*;
+import static org.mort11.config.constants.PhysicalConstants.Wrist.*;
+
 import org.mort11.subsystems.Intake;
 import org.mort11.subsystems.Wrist;
-
-import static org.mort11.configuration.constants.PhysicalConstants.Intake.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;

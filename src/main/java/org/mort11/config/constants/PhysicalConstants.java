@@ -1,4 +1,4 @@
-package org.mort11.configuration.constants;
+package org.mort11.config.constants;
 
 import edu.wpi.first.math.util.Units;
 
@@ -62,10 +62,10 @@ public class PhysicalConstants {
 
     public static final double IMU_TO_ROBOT_FRONT_ANGLE = 90;
 
-    public static final double FRONT_LEFT_OFFSET = 197;
-		public static final double FRONT_RIGHT_OFFSET = 200;
-		public static final double BACK_LEFT_OFFSET = 100;
-		public static final double BACK_RIGHT_OFFSET = 233;
+    public static final double FRONT_LEFT_OFFSET = 0;
+		public static final double FRONT_RIGHT_OFFSET = 0;
+		public static final double BACK_LEFT_OFFSET = 0;
+		public static final double BACK_RIGHT_OFFSET = 0;
 
     }
 

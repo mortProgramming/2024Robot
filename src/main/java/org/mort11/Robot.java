@@ -4,14 +4,15 @@
 
 package org.mort11;
 
-import org.mort11.configuration.Auto;
-import org.mort11.configuration.IO;
-import org.mort11.configuration.Odometer;
 import org.mort11.subsystems.Arm;
 import org.mort11.subsystems.Wrist;
-import org.mort11.subsystems.*;
 
-import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
+import static org.mort11.config.constants.PhysicalConstants.Wrist.*;
+
+import org.mort11.config.Auto;
+import org.mort11.config.IO;
+import org.mort11.config.Odometer;
+import org.mort11.subsystems.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -46,10 +47,10 @@ public class Robot extends TimedRobot {
 		Lights.getInstance();
 		Wrist.getInstance();
 
-		Odometer.odometerInit();
-
 		IO.configure();
 		Auto.configure();
+
+		Odometer.odometerInit();
 
 		System.out.println("RobotInit");
 	}

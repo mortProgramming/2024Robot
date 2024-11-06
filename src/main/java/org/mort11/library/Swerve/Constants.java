@@ -1,4 +1,4 @@
-package org.mort11.library.Swerve;
+package org.mort11.library.swerve;
 
 public class Constants {
     

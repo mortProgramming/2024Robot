@@ -1,7 +1,7 @@
-package org.mort11.library.Hardware.IMU;
+package org.mort11.library.hardware.imu;
 
-import org.mort11.library.Hardware.Brands.CTRE.Pigeon2IMU;
-import org.mort11.library.Hardware.Brands.KauaiLabs.NavX2IMU;
+import org.mort11.library.hardware.brands.ctre.Pigeon2IMU;
+import org.mort11.library.hardware.brands.kauailabs.NavX2IMU;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;

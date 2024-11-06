@@ -1,8 +1,8 @@
 package org.mort11.subsystems;
 
-import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
-import static org.mort11.configuration.constants.PIDConstants.Wrist.*;
-import static org.mort11.configuration.constants.PortConstants.Wrist.*;
+import static org.mort11.config.constants.PIDConstants.Wrist.*;
+import static org.mort11.config.constants.PhysicalConstants.Wrist.*;
+import static org.mort11.config.constants.PortConstants.Wrist.*;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 

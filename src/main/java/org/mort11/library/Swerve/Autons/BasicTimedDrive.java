@@ -1,7 +1,7 @@
-package org.mort11.library.Swerve.Autons;
+package org.mort11.library.swerve.autons;
 
-import org.mort11.library.Swerve.SwerveDrives.OrientedSwerveDrive;
-import org.mort11.library.Swerve.SwerveDrives.SwerveDrive;
+import org.mort11.library.swerve.swervedrives.OrientedSwerveDrive;
+import org.mort11.library.swerve.swervedrives.SwerveDrive;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;

@@ -1,10 +1,10 @@
-package org.mort11.configuration;
+package org.mort11.config;
+
+import static org.mort11.config.constants.PhysicalConstants.Vision.*;
+import static org.mort11.config.constants.PortConstants.Vision.*;
 
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.LimelightHelpers;
-
-import static org.mort11.configuration.constants.PhysicalConstants.Vision.*;
-import static org.mort11.configuration.constants.PortConstants.Vision.*;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;

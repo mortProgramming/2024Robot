@@ -1,6 +1,6 @@
-package org.mort11.library.Hardware.Brands.CTRE;
+package org.mort11.library.hardware.brands.ctre;
 
-import org.mort11.library.Hardware.Motor.MotorIntf;
+import org.mort11.library.hardware.motor.MotorIntf;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;

@@ -1,9 +1,9 @@
-package org.mort11.library.Hardware.Brands.CTRE;
+package org.mort11.library.hardware.brands.ctre;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 
-import org.mort11.library.Hardware.IMU.IMUIntf;
+import org.mort11.library.hardware.imu.IMUIntf;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 

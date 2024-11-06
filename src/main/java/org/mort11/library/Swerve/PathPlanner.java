@@ -1,7 +1,7 @@
-package org.mort11.library.Swerve;
+package org.mort11.library.swerve;
 
-import org.mort11.library.Swerve.SwerveDrives.OdometeredSwerveDrive;
-import org.mort11.library.Swerve.SwerveDrives.SwerveDrive;
+import org.mort11.library.swerve.swervedrives.OdometeredSwerveDrive;
+import org.mort11.library.swerve.swervedrives.SwerveDrive;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;

@@ -1,32 +1,32 @@
-package org.mort11.configuration;
+package org.mort11.config;
 
-// import org.mort11.subsystems.Arm;
-// import org.mort11.subsystems.Climber;
+import org.mort11.subsystems.Arm;
+import org.mort11.subsystems.Climber;
 import org.mort11.subsystems.Drivetrain;
-// import org.mort11.subsystems.Intake;
+import org.mort11.subsystems.Intake;
 import org.mort11.subsystems.Lights;
 import org.mort11.subsystems.LimelightHelpers;
 import org.mort11.subsystems.Wrist;
 
-import static org.mort11.configuration.Inputs.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Arm.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Climber.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Drivetrain.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Intake.*;
-import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
-import static org.mort11.configuration.constants.PortConstants.Vision.*;
+import static org.mort11.config.Inputs.*;
+import static org.mort11.config.constants.PhysicalConstants.Arm.*;
+import static org.mort11.config.constants.PhysicalConstants.Climber.*;
+import static org.mort11.config.constants.PhysicalConstants.Drivetrain.*;
+import static org.mort11.config.constants.PhysicalConstants.Intake.*;
+import static org.mort11.config.constants.PhysicalConstants.Wrist.*;
+import static org.mort11.config.constants.PortConstants.Vision.*;
 
 import org.mort11.commands.actions.drivetrain.Drive;
 import org.mort11.commands.actions.drivetrain.DriveAtAngle;
 import org.mort11.commands.actions.drivetrain.DriveNoteLocked;
 import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
-import org.mort11.commands.actions.endeffector.LightsCommand;
+import org.mort11.commands.actions.endeffector.Lighting;
 import org.mort11.commands.actions.endeffector.pos.ClimberToPos;
-import org.mort11.commands.actions.endeffector.pos.SetArmAndWristPos;
+import org.mort11.commands.actions.endeffector.pos.SetArmWristPos;
 import org.mort11.commands.actions.endeffector.pos.WristToPos;
-import org.mort11.commands.actions.endeffector.velocity.BlowerToVelocity;
-import org.mort11.commands.actions.endeffector.velocity.ClimberToVelocity;
-import org.mort11.commands.actions.endeffector.velocity.IntakeToVelocity;
+import org.mort11.commands.actions.endeffector.vel.BlowerToVel;
+import org.mort11.commands.actions.endeffector.vel.ClimberToVel;
+import org.mort11.commands.actions.endeffector.vel.IntakeToVel;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -35,19 +35,18 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class IO {
 
 	private static Drivetrain drivetrain;
-    // private static Arm arm;
-    // private static Climber climber;
+    private static Arm arm;
+    private static Climber climber;
     private static Wrist wrist;
     private static Lights lights;
-    // private static Intake intake;
+    private static Intake intake;
 
     public static void init() {
-
 		drivetrain = Drivetrain.getInstance();
-        // arm = Arm.getInstance();
+        arm = Arm.getInstance();
         wrist = Wrist.getInstance();
-        // climber = Climber.getInstance();
-        // intake = Intake.getInstance();
+        climber = Climber.getInstance();
+        intake = Intake.getInstance();
         lights = Lights.getInstance();
         System.out.println("Subsystem init");
     }
@@ -57,10 +56,10 @@ public class IO {
         Inputs.init();
 
 		drivetrain.setDefaultCommand(
-			new Drive(Inputs::getJoystickY, Inputs::getJoystickX, Inputs::getJoystickRotate, true)
+			new Drive(Inputs::getJoystickX, Inputs::getJoystickY, Inputs::getJoystickRotate, true)
         );
 
-        lights.setDefaultCommand(new LightsCommand());
+        lights.setDefaultCommand(new Lighting());
 
        //Drivetrain Field Orient command
         joystick.button(2).whileTrue(drivetrain.setGyroscopeZero(0));
@@ -81,23 +80,23 @@ public class IO {
         xboxController.leftBumper().onTrue(new WristToPos(WRIST_REST_POS));
         xboxController.leftTrigger().onTrue(new WristToPos(WRIST_INTAKE_POS));
 
-        xboxController.rightTrigger().whileTrue(new IntakeToVelocity(AMP_SHOOT_SPEED));
-        xboxController.a().whileTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
+        xboxController.rightTrigger().whileTrue(new IntakeToVel(AMP_SHOOT_SPEED));
+        xboxController.a().whileTrue(new IntakeToVel(SHOOTER_SHOOT_SPEED));
         
-        xboxController.x().onTrue(SetArmAndWristPos.amp());
-        xboxController.y().onTrue(SetArmAndWristPos.rest());
-        xboxController.b().onTrue(SetArmAndWristPos.trap());
+        xboxController.x().onTrue(SetArmWristPos.amp());
+        xboxController.y().onTrue(SetArmWristPos.rest());
+        xboxController.b().onTrue(SetArmWristPos.trap());
 
         //ARM TO PRETRAP
-        xboxController.back().onTrue(SetArmAndWristPos.preTrap());
-        xboxController.back().onTrue(new BlowerToVelocity(BLOWER_MOTOR_MAX_SPEED));
+        xboxController.back().onTrue(SetArmWristPos.preTrap());
+        xboxController.back().onTrue(new BlowerToVel(BLOWER_MOTOR_MAX_SPEED));
 
         //floor trap
-        xboxController.povDown().whileTrue(new BlowerToVelocity(BLOWER_MOTOR_MAX_SPEED));
-        xboxController.povDown().whileTrue(SetArmAndWristPos.floorTrap()
+        xboxController.povDown().whileTrue(new BlowerToVel(BLOWER_MOTOR_MAX_SPEED));
+        xboxController.povDown().whileTrue(SetArmWristPos.floorTrap()
             .andThen(new InstantCommand(() -> wrist.setServoPos(TRAP_SERVO_POS))));
 
-        xboxController.povDown().onFalse(new BlowerToVelocity(0));
+        xboxController.povDown().onFalse(new BlowerToVel(0));
         xboxController.povDown().whileFalse(new InstantCommand(() -> wrist.setServoPos(TRAP_SERVO_REST_POS)));
         
         //Climbers up for preclimb
@@ -105,13 +104,13 @@ public class IO {
 
         //TRAP CLIMB
         joystick.button(12).toggleOnTrue(new ClimberToPos(LEFT_CLIMBER_REST_POS, RIGHT_CLIMBER_REST_POS));
-        joystick.button(12).toggleOnTrue(SetArmAndWristPos.trap().andThen(new InstantCommand(() -> wrist.setServoPos(TRAP_SERVO_POS))));
-        joystick.button(11).onTrue(new ClimberToVelocity(0, 0));
+        joystick.button(12).toggleOnTrue(SetArmWristPos.trap().andThen(new InstantCommand(() -> wrist.setServoPos(TRAP_SERVO_POS))));
+        joystick.button(11).onTrue(new ClimberToVel(0, 0));
 
         //MANUAL CLIMBER CONTROL
-        xboxController.povLeft().whileTrue(new ClimberToVelocity(MANUAL_CLIMBER_SPEED, 0));
+        xboxController.povLeft().whileTrue(new ClimberToVel(MANUAL_CLIMBER_SPEED, 0));
         // opposite direction for opposite side
-        xboxController.povRight().whileTrue(new ClimberToVelocity(0, -MANUAL_CLIMBER_SPEED));
+        xboxController.povRight().whileTrue(new ClimberToVel(0, -MANUAL_CLIMBER_SPEED));
     }
 
     public static Boolean isBlue() {

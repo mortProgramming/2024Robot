@@ -1,9 +1,9 @@
-package org.mort11.library.Swerve.SwerveDrives;
+package org.mort11.library.swerve.swervedrives;
 
-import org.mort11.library.Hardware.Encoder.EncoderTypeEnum;
-import org.mort11.library.Hardware.Motor.MotorTypeEnum;
-import org.mort11.library.Swerve.ModuleTypeEnum;
-import org.mort11.library.Swerve.SwerveModule;
+import org.mort11.library.hardware.encoder.EncoderTypeEnum;
+import org.mort11.library.hardware.motor.MotorTypeEnum;
+import org.mort11.library.swerve.ModuleTypeEnum;
+import org.mort11.library.swerve.SwerveModule;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -144,8 +144,8 @@ public class SwerveDrive {
         layout.withSize(2, 4).withPosition(moduleNumber * 2, 0);
         layout.addNumber("Current Velocity RPM", () -> getModule(moduleNumber).getDriveVelocityRPM());
         layout.addNumber("Current Velocity MPerS", () -> getModule(moduleNumber).state.speedMetersPerSecond);
-        layout.addNumber("Current Position", () -> getModule(moduleNumber).getEncoderPosition().getDegrees());
-        layout.addNumber("Wanted Position", () -> getModule(moduleNumber).state.angle.getDegrees());
+        layout.addNumber("Current Position", () -> to360(getModule(moduleNumber).getEncoderPosition().getDegrees()));
+        layout.addNumber("Wanted Position", () -> to360(getModule(moduleNumber).state.angle.getDegrees()));
     }
 
     public void setVelocity(ChassisSpeeds velocity) {
@@ -239,6 +239,20 @@ public class SwerveDrive {
         backRightModule.setOffset(backRightOffset);
     }
 
+    public double to360(double in) {
+        if (in < 360 && in >= 0) {
+            return in;
+        }
+
+        else if (in < 0) {
+            return to360(in += 360);
+        }
+
+        else {
+            return to360(in -= 360);
+        }
+    }
+
 
 
     public SwerveDriveKinematics getKinematics() {
@@ -262,7 +276,7 @@ public class SwerveDrive {
     }
 
     public SwerveModulePosition[] getModulePositions() {
-        return new SwerveModulePosition[]{
+        return new SwerveModulePosition[] {
             frontLeftModule.getPosition(), 
             frontRightModule.getPosition(), 
             backLeftModule.getPosition(), 

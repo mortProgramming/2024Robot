@@ -1,4 +1,4 @@
-package org.mort11.library.Hardware.Motor;
+package org.mort11.library.hardware.motor;
 
 public enum MotorTypeEnum {
     KRAKEN, FALCON, NEO, NEO550
