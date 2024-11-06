@@ -14,7 +14,7 @@ public class Lights extends SubsystemBase{
 
     private double ledsColor;
 
-    public Lights() {
+    private Lights() {
         leds = new Spark(LEDS_PORT);
 
         ledsColor = 0;

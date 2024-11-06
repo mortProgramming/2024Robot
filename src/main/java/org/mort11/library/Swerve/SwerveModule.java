@@ -112,7 +112,7 @@ public class SwerveModule {
         }
 
         steerMotor.setPIDEnableContinuousInput(0, 1);
-        steerMotor.setPIDTolerance(0.001, 10000);
+        steerMotor.setPIDTolerance(3, 10000);
 
         switch (moduleType) {
             case MK4i:
@@ -196,5 +196,4 @@ public class SwerveModule {
     public ModuleTypeEnum getModuleType() {
         return moduleType;
     }
-
 }

@@ -37,7 +37,7 @@ public class DriveNoteLocked extends Command {
             )
         );
 
-        drivetrain.setAngleController(drivetrain.getGyroscopeRotation().getDegrees() + LimelightHelpers.getTX(NOTE_CAMERA));
+        drivetrain.setAngleController(drivetrain.getIMURotation().getDegrees() + LimelightHelpers.getTX(NOTE_CAMERA));
 	}
 
     @Override

@@ -33,7 +33,7 @@ public class DriveAtAngle extends Command {
 			translationXSupplier.getAsDouble(),
 			translationYSupplier.getAsDouble(), 
 			0,
-			drivetrain.getGyroscopeRotation())
+			drivetrain.getIMURotation())
         );
 
         drivetrain.setAngleController(rotationSupplier);

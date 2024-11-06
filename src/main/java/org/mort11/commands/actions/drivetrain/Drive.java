@@ -43,7 +43,7 @@ public class Drive extends Command {
 					translationXSupplier.getAsDouble(),
 					translationYSupplier.getAsDouble(), 
 					rotationSupplier.getAsDouble(),
-					drivetrain.getGyroscopeRotation()));
+					drivetrain.getIMURotation()));
 		} else {
 			drivetrain.setDrive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
 					rotationSupplier.getAsDouble()));

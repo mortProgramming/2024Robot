@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class SwerveDrive {
-
     public SwerveModule frontLeftModule;
     public SwerveModule frontRightModule;
     public SwerveModule backLeftModule;
@@ -114,7 +113,7 @@ public class SwerveDrive {
             this.kinematics = kinematics;
 
         velocity = new ChassisSpeeds(0, 0, 0);
-        
+
         descritizedValue = 0.02;
 
         tangentRateLimiterLimit = 1000000;
@@ -248,13 +247,13 @@ public class SwerveDrive {
 
     public SwerveModule getModule(int num) {
         switch (num) {
-            case 1:
+            case 0:
                 return frontLeftModule;
-            case 2:
+            case 1:
                 return frontRightModule;
-            case 3:
+            case 2:
                 return backLeftModule;
-            case 4:
+            case 3:
                 return backRightModule;
             default:
                 return frontLeftModule;

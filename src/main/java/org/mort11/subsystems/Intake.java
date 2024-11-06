@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
 
     private double intakeSpeed;
 
-    public Intake() {
+    private Intake() {
         masterIntakeMotor = new TalonFX(MASTER_INTAKE_MOTOR);
         followIntakeMotor = new TalonFX(FOLLOW_INTAKE_MOTOR);
 

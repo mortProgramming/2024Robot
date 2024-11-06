@@ -31,7 +31,7 @@ public class Climber extends SubsystemBase {
     private ProfiledPIDController rightClimberPositionController;
     private ProfiledPIDController leftClimberPositionController;
 
-    public Climber() {
+    private Climber() {
         rightClimberMotor = new CANSparkMax(MASTER_CLIMBER_MOTOR, MotorType.kBrushless);
         leftClimberMotor = new CANSparkMax(FOLLOW_CLIMBER_MOTOR, MotorType.kBrushless);
         leftServo = new Servo(LEFT_CLIMBER_SERVO);

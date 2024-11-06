@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Drivetrain extends SubsystemBase {
 	private static Drivetrain drivetrain;
 
-	public SwerveDrive swerveDrive;
+	private SwerveDrive swerveDrive;
 
 	private SwerveModule frontLeftModule;
 	private SwerveModule frontRightModule;
@@ -47,7 +47,7 @@ public class Drivetrain extends SubsystemBase {
 	private ProfiledPIDController yToPosController;
 	private ProfiledPIDController rotateToAngleController;
 
-	public Drivetrain() {
+	private Drivetrain() {
 		imu = new IMU(NAVX2, 0);
 
 		configureSwerve();
@@ -102,10 +102,10 @@ public class Drivetrain extends SubsystemBase {
 			MK4i
 		);
 
-		frontLeftModule.steerMotor.setDirectionFlip(false);
-    	frontRightModule.steerMotor.setDirectionFlip(false);
-    	backLeftModule.steerMotor.setDirectionFlip(false);
-    	backRightModule.steerMotor.setDirectionFlip(false);
+		frontLeftModule.steerMotor.setDirectionFlip(true);
+    	frontRightModule.steerMotor.setDirectionFlip(true);
+    	backLeftModule.steerMotor.setDirectionFlip(true);
+    	backRightModule.steerMotor.setDirectionFlip(true);
 
 		driveKinematics = new SwerveDriveKinematics(
 			// Front left
@@ -133,20 +133,20 @@ public class Drivetrain extends SubsystemBase {
 			speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
 				speeds.vyMetersPerSecond,-speeds.vxMetersPerSecond,
 				speeds.omegaRadiansPerSecond, 
-				drivetrain.getGyroscopeRotation()
+				drivetrain.getIMURotation()
 			);
 		}
 		else {
 			speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
 				-speeds.vyMetersPerSecond,speeds.vxMetersPerSecond,
 				speeds.omegaRadiansPerSecond, 
-				drivetrain.getGyroscopeRotation()
+				drivetrain.getIMURotation()
 			);
 		}
 
 		swerveDrive.setVelocity(speeds);
 
-		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
+		SmartDashboard.putNumber("Angle", getIMURotation().getDegrees());
 		SmartDashboard.putNumber("Other angle", imu.getAngle());
 	}
 
@@ -159,7 +159,7 @@ public class Drivetrain extends SubsystemBase {
 			xToPosController.calculate(Odometer.getPoseX(), wantedX), 
         	yToPosController.calculate(Odometer.getPoseY(), wantedY), 
         	0,
-			drivetrain.getGyroscopeRotation()
+			drivetrain.getIMURotation()
 		);
 	}
 
@@ -167,14 +167,14 @@ public class Drivetrain extends SubsystemBase {
 		speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
 			speeds.vxMetersPerSecond, 
         	speeds.vyMetersPerSecond,
-			rotateToAngleController.calculate(drivetrain.getGyroscopeRotation().getDegrees(), wantedAngle),
-			drivetrain.getGyroscopeRotation()
+			rotateToAngleController.calculate(drivetrain.getIMURotation().getDegrees(), wantedAngle),
+			drivetrain.getIMURotation()
 		);
 	}
 
 	public Command setGyroscopeZero(double angle) {
 		// return new InstantCommand(() -> swerveDrive.zeroIMU(angle));
-		return new InstantCommand(() -> fieldOrientationOffset = getGyroscopeRotation().getDegrees() + angle);
+		return new InstantCommand(() -> fieldOrientationOffset = getIMURotation().getDegrees() + angle);
 	}
 
 
@@ -199,37 +199,24 @@ public class Drivetrain extends SubsystemBase {
 		return frontLeftModule.maxSpeed;
 	}
 	
-	//Each position in a SwerveModulePosition array. In order of FrontLeft, FrontRight, BackLeft, BackRight
-	public SwerveModulePosition[] getModulePositions() {
-		return new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
-				backLeftModule.getPosition(), backRightModule.getPosition()};
+	public SwerveDrive getSwerveDrive() {
+		return swerveDrive;
 	}
 
 	public SwerveDriveKinematics getDriveKinematics() {
 		return driveKinematics;
 	}
 	
-	public Rotation2d getGyroscopeRotation() {
-		return getAbsoluteGyroscopeRotation().minus(Rotation2d.fromDegrees(fieldOrientationOffset));
+	public Rotation2d getIMURotation() {
+		return getAbsoluteIMURotation().minus(Rotation2d.fromDegrees(fieldOrientationOffset));
 	}
 
-	public Rotation2d getAbsoluteGyroscopeRotation() {
+	public Rotation2d getAbsoluteIMURotation() {
 		return Rotation2d.fromDegrees(imu.getAngle());
 	}
 
 	public Rotation2d getRotation2d() {
 		return imu.getRotation2d();
-	}
-
-
-
-	public static double toCircle(double angle){
-		if(angle < 0) {
-			return angle + 360;
-		} else if(angle > 360) {
-			return angle - 360;
-		}
-		return angle;
 	}
 
 	public static Drivetrain getInstance() {

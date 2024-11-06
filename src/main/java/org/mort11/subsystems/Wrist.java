@@ -24,7 +24,7 @@ public class Wrist extends SubsystemBase {
     private ProfiledPIDController wristPositionController;
     private SimpleMotorFeedforward wristPostionFeedForward;
 
-    public Wrist() {
+    private Wrist() {
         wristMotor = new TalonFX(WRIST_MOTOR);
         trapServo = new Servo(TRAP_SERVO_PORT);
 

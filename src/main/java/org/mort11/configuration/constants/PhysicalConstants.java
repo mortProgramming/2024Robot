@@ -57,14 +57,15 @@ public class PhysicalConstants {
 		// to center.
 		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(19);
 
-    public static final double DRIVEBASE_RADIUS_METERS = Math.hypot((DRIVETRAIN_TRACKWIDTH_METERS / 2), (DRIVETRAIN_WHEELBASE_METERS / 2));
+    public static final double DRIVEBASE_RADIUS_METERS = Math.hypot((DRIVETRAIN_TRACKWIDTH_METERS / 2), 
+      (DRIVETRAIN_WHEELBASE_METERS / 2));
 
     public static final double IMU_TO_ROBOT_FRONT_ANGLE = 90;
 
-    public static final double FRONT_LEFT_OFFSET = -Math.toRadians(197);
-		public static final double FRONT_RIGHT_OFFSET = -Math.toRadians(200);
-		public static final double BACK_LEFT_OFFSET = -Math.toRadians(100);
-		public static final double BACK_RIGHT_OFFSET = -Math.toRadians(233);
+    public static final double FRONT_LEFT_OFFSET = 197;
+		public static final double FRONT_RIGHT_OFFSET = 200;
+		public static final double BACK_LEFT_OFFSET = 100;
+		public static final double BACK_RIGHT_OFFSET = 233;
 
     }
 

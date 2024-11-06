@@ -50,7 +50,7 @@ public class TimedDrive extends Command{
   public void execute() {
     drivetrain.setDrive(ChassisSpeeds.fromFieldRelativeSpeeds(
       -y, x, omega,
-		  drivetrain.getGyroscopeRotation()
+		  drivetrain.getIMURotation()
     ));
   }
 
