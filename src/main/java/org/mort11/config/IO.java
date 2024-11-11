@@ -19,7 +19,7 @@ import static org.mort11.config.constants.PortConstants.Vision.*;
 import org.mort11.commands.actions.drivetrain.Drive;
 import org.mort11.commands.actions.drivetrain.DriveAtAngle;
 import org.mort11.commands.actions.drivetrain.DriveNoteLocked;
-import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
+import org.mort11.commands.actions.endeffector.IntakeRest;
 import org.mort11.commands.actions.endeffector.Lighting;
 import org.mort11.commands.actions.endeffector.pos.ClimberToPos;
 import org.mort11.commands.actions.endeffector.pos.SetArmWristPos;
@@ -76,7 +76,7 @@ public class IO {
 
 
         // Basics
-        xboxController.rightBumper().whileTrue(new IntakeBeamBreak(WRIST_REST_POS));
+        xboxController.rightBumper().whileTrue(new IntakeRest());
         xboxController.leftBumper().onTrue(new WristToPos(WRIST_REST_POS));
         xboxController.leftTrigger().onTrue(new WristToPos(WRIST_INTAKE_POS));
 

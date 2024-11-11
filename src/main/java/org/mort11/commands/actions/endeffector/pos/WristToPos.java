@@ -18,7 +18,7 @@ public class WristToPos extends Command {
     }
     
     @Override
-    public void initialize() {
+    public void execute() {
         wrist.setSetpoint(target);
     }
 

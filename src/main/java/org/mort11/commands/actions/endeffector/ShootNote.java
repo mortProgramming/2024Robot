@@ -7,29 +7,21 @@ package org.mort11.commands.actions.endeffector;
 import static org.mort11.config.constants.PhysicalConstants.Intake.*;
 
 import org.mort11.subsystems.Intake;
-import org.mort11.subsystems.Wrist;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class ScoreBeamBreak extends Command {
+public class ShootNote extends Command {
   private Intake intake;
-  private Wrist wrist;
 
   private Timer timer;
 
-  public ScoreBeamBreak() {
+  public ShootNote() {
     intake = Intake.getInstance();
-    wrist = Wrist.getInstance();
     
     timer = new Timer();
 
-    addRequirements(intake, wrist);
-  }
-
-  @Override
-  public void initialize() {
-    intake.setIntakeVelocity(AMP_SHOOT_SPEED);
+    addRequirements(intake);
   }
 
   @Override
@@ -47,6 +39,6 @@ public class ScoreBeamBreak extends Command {
 
   @Override
   public boolean isFinished() {
-    return (!Intake.hasNote()) && timer.get() > 0.25;
+    return (!Intake.hasNote()) && (timer.get() > 0.25);
   }
 }

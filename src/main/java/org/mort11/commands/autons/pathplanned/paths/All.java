@@ -5,7 +5,8 @@ import static org.mort11.config.constants.PhysicalConstants.Intake.*;
 import static org.mort11.config.constants.PhysicalConstants.Wrist.*;
 
 import org.mort11.commands.actions.drivetrain.Orient;
-import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
+import org.mort11.commands.actions.endeffector.IntakeNote;
+import org.mort11.commands.actions.endeffector.IntakeRest;
 import org.mort11.commands.actions.endeffector.SpitNote;
 import org.mort11.commands.actions.endeffector.pos.SetArmWristPos;
 import org.mort11.commands.actions.endeffector.pos.WristToPos;
@@ -37,11 +38,11 @@ public class All {
         NamedCommands.registerCommand("Intake", 
             new ParallelCommandGroup(
                 new PrintCommand("RUNNING INTAKE"),  
-                new IntakeBeamBreak(WRIST_REST_POS))
+                new IntakeRest())
             .withTimeout(2.2));
     
         NamedCommands.registerCommand("IntakeStayOut",
-            new IntakeBeamBreak(WRIST_INTAKE_POS));
+            new IntakeNote());
 
         NamedCommands.registerCommand("Spit", 
             new SpitNote());
