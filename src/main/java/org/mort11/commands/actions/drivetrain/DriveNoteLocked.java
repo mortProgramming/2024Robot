@@ -1,6 +1,6 @@
 package org.mort11.commands.actions.drivetrain;
 
-import static org.mort11.config.constants.PortConstants.Vision.NOTE_CAMERA;
+import static org.mort11.config.constants.PortConstants.Vision.*;
 
 import java.util.function.DoubleSupplier;
 

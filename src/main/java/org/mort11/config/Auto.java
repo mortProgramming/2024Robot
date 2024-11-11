@@ -8,7 +8,7 @@ import org.mort11.commands.autons.odometered.ScoreAmpRed;
 import org.mort11.commands.autons.pathplanned.GetPlanned;
 import org.mort11.commands.autons.timed.blue.TaxiB;
 import org.mort11.commands.autons.timed.red.TaxiR;
-import org.mort11.library.swerve.PathPlanner;
+import org.mort11.mortlib.swerve.PathPlanner;
 import org.mort11.subsystems.Drivetrain;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -42,27 +42,28 @@ public class Auto {
 	public static void configureAutoBuilder() {
 		drivetrain.setGyroscopeZero(0);
 
-		AutoBuilder.configureHolonomic(
-    		() -> Odometer.getOdometry().getEstimatedPosition(),
-    		(Pose2d startPose) -> Odometer.resetOdometry(startPose), //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
-    		() -> drivetrain.getChassisSpeeds(),
-    		(ChassisSpeeds robotRelativeOutput) -> drivetrain.setDrive(robotRelativeOutput),
-    		new HolonomicPathFollowerConfig(
-      			new PIDConstants(AUTON_POS_KP, AUTON_POS_KI, AUTON_POS_KD),
-      			new PIDConstants(AUTON_ROTATION_KP, AUTON_ROTATION_KI, AUTON_ROTATION_KD),
-      			AUTON_MAX_VELOCITY, //max Module Speed in M/s
-      			DRIVEBASE_RADIUS_METERS,
-       			new ReplanningConfig()), 
-       		() -> !IO.isBlue(), //true when flips, default blue
-    		drivetrain
-		);
-
-		// PathPlanner.configure(
-		// 	drivetrain, drivetrain.swerveDrive, 
-		// 	new PIDConstants(AUTON_POS_KP, AUTON_POS_KI, AUTON_POS_KD), 
-		// 	new PIDConstants(AUTON_ROTATION_KP, AUTON_ROTATION_KI, AUTON_ROTATION_KD), 
-		// 	DRIVEBASE_RADIUS_METERS
+		// AutoBuilder.configureHolonomic(
+    	// 	() -> Odometer.getOdometry().getEstimatedPosition(),
+    	// 	(Pose2d startPose) -> Odometer.resetOdometry(startPose), //reset odometry to a given pose. WILL ONLY RUN IF AUTON HAS A SET POSE, DOES NOTHING OTHERWISE. 
+    	// 	() -> drivetrain.getChassisSpeeds(),
+    	// 	(ChassisSpeeds robotRelativeOutput) -> drivetrain.setDrive(robotRelativeOutput),
+    	// 	new HolonomicPathFollowerConfig(
+      	// 		new PIDConstants(AUTON_POS_KP, AUTON_POS_KI, AUTON_POS_KD),
+      	// 		new PIDConstants(AUTON_ROTATION_KP, AUTON_ROTATION_KI, AUTON_ROTATION_KD),
+      	// 		AUTON_MAX_VELOCITY, //max Module Speed in M/s
+      	// 		DRIVEBASE_RADIUS_METERS,
+       	// 		new ReplanningConfig()), 
+       	// 	() -> !IO.isBlue(), //true when flips, default blue
+    	// 	drivetrain
 		// );
+
+		PathPlanner.configure(
+			drivetrain, drivetrain.getSwerveDrive(),
+			() -> Odometer.getOdometry().getEstimatedPosition(), (Pose2d startPose) -> Odometer.resetOdometry(startPose),
+			new PIDConstants(AUTON_POS_KP, AUTON_POS_KI, AUTON_POS_KD), 
+			new PIDConstants(AUTON_ROTATION_KP, AUTON_ROTATION_KI, AUTON_ROTATION_KD), 
+			DRIVEBASE_RADIUS_METERS
+		);
 	}
 	
 	public static void addAutoOptions() {
