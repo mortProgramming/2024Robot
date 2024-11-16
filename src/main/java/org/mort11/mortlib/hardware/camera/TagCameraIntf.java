@@ -5,11 +5,15 @@ import edu.wpi.first.math.geometry.Pose3d;
 
 public interface TagCameraIntf {
 
+    public void setLights(int input);
+
     public void setRobotOrientation ( double yaw, double yawRate);
 
     public boolean hasTag();
 
     public int getId();
+
+    public double[] getPicturePosition();
 
     public Pose2d getRobotPosition();
 

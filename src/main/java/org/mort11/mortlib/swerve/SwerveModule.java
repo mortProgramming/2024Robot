@@ -115,9 +115,29 @@ public class SwerveModule {
         steerMotor.setPIDTolerance(0.5, 10);
 
         switch (moduleType) {
-            case MK4i:
-                maxSpeed = maxSpeed * MK4i.WHEEL_DIAMETER * MK4i.DRIVE_REDUCTION;
-                rotationToMeters = rotationToMeters * MK4i.WHEEL_DIAMETER * MK4i.DRIVE_REDUCTION;
+            case CUSTOM:
+                System.out.println("DON'T FORGET TO CONFIGURE MODULE DIMENTIONS");
+            case MK4_L1:
+                maxSpeed = maxSpeed * MK4_L1.WHEEL_DIAMETER * MK4_L1.DRIVE_REDUCTION;
+                rotationToMeters = rotationToMeters * MK4_L1.WHEEL_DIAMETER * MK4_L1.DRIVE_REDUCTION;
+            case MK4_L2:
+                maxSpeed = maxSpeed * MK4_L2.WHEEL_DIAMETER * MK4_L2.DRIVE_REDUCTION;
+                rotationToMeters = rotationToMeters * MK4_L2.WHEEL_DIAMETER * MK4_L2.DRIVE_REDUCTION;
+            case MK4_L3:
+                maxSpeed = maxSpeed * MK4_L3.WHEEL_DIAMETER * MK4_L3.DRIVE_REDUCTION;
+                rotationToMeters = rotationToMeters * MK4_L3.WHEEL_DIAMETER * MK4_L3.DRIVE_REDUCTION;
+            case MK4_L4:
+                maxSpeed = maxSpeed * MK4_L4.WHEEL_DIAMETER * MK4_L4.DRIVE_REDUCTION;
+                rotationToMeters = rotationToMeters * MK4_L4.WHEEL_DIAMETER * MK4_L4.DRIVE_REDUCTION;
+            case MK4i_L1:
+                maxSpeed = maxSpeed * MK4i_L1.WHEEL_DIAMETER * MK4i_L1.DRIVE_REDUCTION;
+                rotationToMeters = rotationToMeters * MK4i_L1.WHEEL_DIAMETER * MK4i_L1.DRIVE_REDUCTION;
+            case MK4i_L2:
+                maxSpeed = maxSpeed * MK4i_L2.WHEEL_DIAMETER * MK4i_L2.DRIVE_REDUCTION;
+                rotationToMeters = rotationToMeters * MK4i_L2.WHEEL_DIAMETER * MK4i_L2.DRIVE_REDUCTION;
+            case MK4i_L3:
+                maxSpeed = maxSpeed * MK4i_L3.WHEEL_DIAMETER * MK4i_L3.DRIVE_REDUCTION;
+                rotationToMeters = rotationToMeters * MK4i_L3.WHEEL_DIAMETER * MK4i_L3.DRIVE_REDUCTION;
         }
     }
 
@@ -145,8 +165,8 @@ public class SwerveModule {
     public void setModuleState(SwerveModuleState state) {
         this.state = SwerveModuleState.optimize(state, getEncoderPosition());
 
-        setDriveSpeedMeters(state.speedMetersPerSecond);
-        setPosition(state.angle);
+        setDriveSpeedMeters(this.state.speedMetersPerSecond);
+        setPosition(this.state.angle);
     }
 
     public void setMaxVoltage(double maxVoltage) {
@@ -155,6 +175,11 @@ public class SwerveModule {
 
     public void setOffset(double offset) {
         this.offset = offset;
+    }
+
+    public void setModuelDimensions(double wheelDiameter, double driveReduction) {
+        maxSpeed = maxSpeed * wheelDiameter * driveReduction;
+        rotationToMeters = rotationToMeters * wheelDiameter * driveReduction;
     }
 
 

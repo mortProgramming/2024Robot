@@ -1,6 +1,6 @@
 package org.mort11.mortlib.hardware.camera;
 
-import org.mort11.mortlib.hardware.brands.limelight.LimeLightTagCamera;
+import org.mort11.mortlib.hardware.brands.limelight.LimelightTagCamera;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -22,10 +22,14 @@ public class TagCamera implements TagCameraIntf {
             //     camera = new PhotonVisionTagCamera(cameraName);
             //     break;
             case LimeLight:
-                camera = new LimeLightTagCamera(cameraName);
+                camera = new LimelightTagCamera(cameraName);
                 break;
         }
     }
+
+    public void setLights(int input) {
+		camera.setLights(input);
+	}
 
     public void setRobotOrientation (double yaw, double yawRate) {
         camera.setRobotOrientation(yaw, yawRate);
@@ -37,6 +41,10 @@ public class TagCamera implements TagCameraIntf {
 
     public int getId() {
         return camera.getId();
+    }
+
+    public double[] getPicturePosition() {
+        return camera.getPicturePosition();
     }
 
     public Pose2d getRobotPosition () {

@@ -1,6 +1,6 @@
 package org.mort11.mortlib.hardware.brands.kauailabs;
 
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 
@@ -8,16 +8,16 @@ import org.mort11.mortlib.hardware.imu.IMUIntf;
 
 import com.kauailabs.navx.frc.AHRS;
 
-public class NavX2IMU implements IMUIntf {
+public class NavXIMU implements IMUIntf {
 
     public AHRS imu;
 
     public int ID;
 
-    public NavX2IMU(int ID) {
+    public NavXIMU(int ID) {
         this.ID = ID;
 
-        imu = new AHRS(SPI.Port.kMXP);
+        imu = new AHRS(SerialPort.Port.kMXP);
     }
 
     public void setCanivore (String canivore) {

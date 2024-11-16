@@ -1,4 +1,4 @@
-package frc.robot.mortlib.Hardware.Brands.PhotonVision;
+package org.mort11.mortlib.Hardware.Brands.PhotonVision;
 
 import edu.wpi.first.math.geometry.Pose2d;
 
@@ -6,7 +6,7 @@ import org.photonvision.PhotonCamera;
 // import org.photonvision.targeting.PhotonPipelineResult;
 // import org.photonvision.targeting.PhotonTrackedTarget;
 
-import frc.robot.mortlib.Hardware.Camera.CameraIntf;
+import org.mort11.mortlib.Hardware.Camera.CameraIntf;
 
 public class PhotonVisionTagCamera implements CameraIntf {
 

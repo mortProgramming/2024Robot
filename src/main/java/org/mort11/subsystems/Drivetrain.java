@@ -78,28 +78,28 @@ public class Drivetrain extends SubsystemBase {
 			KRAKEN, FRONT_LEFT_DRIVE_MOTOR, 
 			KRAKEN, FRONT_LEFT_STEER_MOTOR, 
 			CANCODER, FRONT_LEFT_ENCODER, 
-			MK4i
+			MK4i_L3
 		);
 			
 		frontRightModule = new SwerveModule(
 			KRAKEN, FRONT_RIGHT_DRIVE_MOTOR, 
 			KRAKEN, FRONT_RIGHT_STEER_MOTOR, 
 			CANCODER, FRONT_RIGHT_ENCODER, 
-			MK4i
+			MK4i_L3
 		);
 			
 		backLeftModule = new SwerveModule(
 			KRAKEN, BACK_LEFT_DRIVE_MOTOR, 
 			KRAKEN, BACK_LEFT_STEER_MOTOR, 
 			CANCODER, BACK_LEFT_ENCODER, 
-			MK4i
+			MK4i_L3
 		);
 			
 		backRightModule = new SwerveModule(
 			KRAKEN, BACK_RIGHT_DRIVE_MOTOR, 
 			KRAKEN, BACK_RIGHT_STEER_MOTOR, 
 			CANCODER, BACK_RIGHT_ENCODER, 
-			MK4i
+			MK4i_L3
 		);
 
 		frontLeftModule.steerMotor.setDirectionFlip(true);

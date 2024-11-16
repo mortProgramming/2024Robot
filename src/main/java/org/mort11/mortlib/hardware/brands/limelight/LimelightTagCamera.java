@@ -10,16 +10,25 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-public class LimeLightTagCamera implements TagCameraIntf {
+public class LimelightTagCamera implements TagCameraIntf {
 
     public NetworkTable cameraTable;
 
     public String cameraName;
 
-    public LimeLightTagCamera (String cameraName) {
+    public LimelightTagCamera(String cameraName) {
         this.cameraName = cameraName;
 
         cameraTable = NetworkTableInstance.getDefault().getTable("limelight-" + cameraName);
+    }
+
+    public void setLights(int input) {
+		cameraTable.getEntry("ledMode").setNumber(input);
+	}
+
+    public void setRobotOrientation (double yaw, double yawRate) {
+        double[] positionArray = {yaw, yawRate, 0, 0, 0, 0};
+        cameraTable.getEntry("robot_orientation_set").setDoubleArray(positionArray);
     }
 
     public boolean hasTag () {
@@ -33,6 +42,14 @@ public class LimeLightTagCamera implements TagCameraIntf {
 		return -1;
 		
 	}
+
+    public double[] getPicturePosition() {
+        double[] data = new double[3];
+        data[0] = cameraTable.getEntry("tx").getDouble(0);
+        data[1] = cameraTable.getEntry("ty").getDouble(0);
+        data[2] = cameraTable.getEntry("ta").getDouble(0);
+        return data;
+    }
 
     public Pose2d getRobotPosition() {
 		double[] poseNums = new double[6];
@@ -51,11 +68,6 @@ public class LimeLightTagCamera implements TagCameraIntf {
             new Translation3d(poseNums[0], poseNums[1], poseNums[2]), 
             new Rotation3d(Math.toRadians(poseNums[3]), Math.toRadians(poseNums[4]), Math.toRadians(poseNums[5]))
         );
-    }
-
-    public void setRobotOrientation (double yaw, double yawRate) {
-        double[] positionArray = {yaw, yawRate, 0, 0, 0, 0};
-        cameraTable.getEntry("robot_orientation_set").setDoubleArray(positionArray);
     }
 
     public String getCameraName () {
