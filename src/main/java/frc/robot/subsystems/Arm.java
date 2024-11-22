@@ -72,8 +72,8 @@ public class Arm extends SubsystemBase {
 
         encoder = new DutyCycleEncoder(ENCODER_PORT);
 
-        blowerController = new PIDController(BLOWER_PID_P, BLOWER_PID_I, BLOWER_PID_D);
-        blowerMotor = new CANSparkMax(BLOWER_MOTOR, MotorType.kBrushless);
+        // blowerController = new PIDController(BLOWER_PID_P, BLOWER_PID_I, BLOWER_PID_D);
+        // blowerMotor = new CANSparkMax(BLOWER_MOTOR, MotorType.kBrushless);
 
     }
     public void setBlowerHold(boolean holdVelocity){
@@ -110,10 +110,10 @@ public class Arm extends SubsystemBase {
         // setPosition(setpoint);
 
         
-        currentBlowerOutput += blowerController.calculate(currentBlowerOutput,targetBlowerOutput);
+        // currentBlowerOutput += blowerController.calculate(currentBlowerOutput,targetBlowerOutput);
  
 
-        blowerMotor.set(currentBlowerOutput);
+        // blowerMotor.set(currentBlowerOutput);
 
     }
 
@@ -125,9 +125,9 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
     }
 
-    public void setBlowerTarget(double targetBlowerOutput){
-        this.targetBlowerOutput = targetBlowerOutput;
-    }
+    // public void setBlowerTarget(double targetBlowerOutput){
+    //     this.targetBlowerOutput = targetBlowerOutput;
+    // }
 
     /**
      * 

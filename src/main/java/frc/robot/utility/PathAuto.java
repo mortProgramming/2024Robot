@@ -54,6 +54,7 @@ public class PathAuto extends SubsystemBase {
   private static PathPlannerAuto gackleyAutoPure;
   private static PathPlannerAuto choreoOneNote;
   private static Command twoPieceAmpSide;
+  private static PathPlannerAuto TEST;
 
   public static void init() {
     drivetrain = Drivetrain.getInstance();
@@ -103,6 +104,7 @@ public class PathAuto extends SubsystemBase {
     bieryAuto = new PathPlannerAuto("BieryWildAuto");
     choreoOneNote = new PathPlannerAuto("OneNote");
     twoPieceAmpSide = new PathPlannerAuto("TwoPieceAmpSide");
+    TEST = new PathPlannerAuto("TEST");
   }
   
   public static Command getTwoPiece(){
@@ -125,6 +127,9 @@ public class PathAuto extends SubsystemBase {
   }
   public static Command getTwoPieceAmpSide(){
     return twoPieceAmpSide;
+  }
+  public static Command getTEST(){
+    return TEST;
   }
 
   @Override

@@ -20,7 +20,7 @@ import frc.robot.commands.Actions.EndEffector.ArmWrist.ArmToPosition;
 import frc.robot.commands.Actions.EndEffector.ArmWrist.SetArmAndWristPos;
 import frc.robot.commands.Actions.EndEffector.ArmWrist.WristToPosition;
 import frc.robot.commands.Actions.Drivetrain.MoveToAprilTag;
-import frc.robot.commands.Actions.EndEffector.BlowerToVelocity;
+//import frc.robot.commands.Actions.EndEffector.BlowerToVelocity;
 import frc.robot.commands.Actions.EndEffector.ClimberToPosition;
 import frc.robot.commands.Actions.EndEffector.ClimberToVelocity;
 import frc.robot.commands.Actions.EndEffector.IntakeBeamBreak;
@@ -169,7 +169,7 @@ public class Control {
         xboxController.b().onTrue(new WristToPosition(WRIST_TRAP_POSITION));
 
         //ARM TO PRETRAP
-        xboxController.back().onTrue(new ArmToPosition(ARM_PRETRAP_POSITION).andThen(new BlowerToVelocity(BLOWER_MOTOR_MAX_SPEED)));
+        // xboxController.back().onTrue(new ArmToPosition(ARM_PRETRAP_POSITION).andThen(new BlowerToVelocity(BLOWER_MOTOR_MAX_SPEED)));
 
         //arm and wrist switching with 
         xboxController.start().whileTrue(new InstantCommand(() -> arm.setVelocityMode(true)));
@@ -178,8 +178,8 @@ public class Control {
         xboxController.start().whileFalse(new InstantCommand(() -> wrist.setVelocityMode(false)));
 
         //floor trap
-        xboxController.povDown().whileTrue(new BlowerToVelocity(-BLOWER_MOTOR_MAX_SPEED));
-        xboxController.povDown().onFalse(new BlowerToVelocity(0).andThen(new InstantCommand(() -> wrist.setServoPos(90))));
+        // xboxController.povDown().whileTrue(new BlowerToVelocity(-BLOWER_MOTOR_MAX_SPEED));
+        // xboxController.povDown().onFalse(new BlowerToVelocity(0).andThen(new InstantCommand(() -> wrist.setServoPos(90))));
     
         xboxController.povDown().whileFalse(new InstantCommand(() -> wrist.setServoPos(90)));
         xboxController.povDown().whileTrue(SetArmAndWristPos.floorTrap().andThen(new InstantCommand(() -> {wrist.setServoPos(TRAP_SERVO_POS);})));
