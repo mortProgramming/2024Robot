@@ -27,13 +27,13 @@ public class NavXIMU implements IMUIntf {
     public double getAngle() {
 		if (imu.isMagnetometerCalibrated()) {
 			// We will only get valid fused headings if the magnetometer is calibrated
-			return 360.0 - imu.getFusedHeading();
+			return -imu.getFusedHeading() + 180;
 		}
 
 		// We have to invert the angle of the NavX so that rotating the robot
 		// counter-clockwise
 		// makes the angle increase.
-		return 360.0 - imu.getYaw();
+		return -imu.getYaw();
 	}
 
     public double getRate() {

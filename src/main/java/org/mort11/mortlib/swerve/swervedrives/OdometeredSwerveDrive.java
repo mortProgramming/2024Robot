@@ -1,7 +1,7 @@
 package org.mort11.mortlib.swerve.swervedrives;
 
 import org.mort11.mortlib.hardware.imu.IMU;
-import org.mort11.mortlib.swerve.ModuleTypeEnum;
+import org.mort11.mortlib.swerve.ModuleConfigEnum;
 import org.mort11.mortlib.swerve.Odometer;
 import org.mort11.mortlib.swerve.SwerveModule;
 import org.mort11.mortlib.hardware.encoder.EncoderTypeEnum;
@@ -16,7 +16,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 public class OdometeredSwerveDrive extends OrientedSwerveDrive {
-    
     public Odometer odometer;
 
     public ProfiledPIDController xController, yController, rotationController;
@@ -25,22 +24,22 @@ public class OdometeredSwerveDrive extends OrientedSwerveDrive {
             MotorTypeEnum frontLeftDriveMotorType, int frontLeftDriveMotorID, 
             MotorTypeEnum frontLeftSteerMotorType, int frontLeftSteerMotorID,
             EncoderTypeEnum frontLeftEncoderType, int frontLeftEncoderID,
-            ModuleTypeEnum frontLeftModuleType,
+            ModuleConfigEnum frontLeftModuleType,
 
             MotorTypeEnum frontRightDriveMotorType, int frontRightDriveMotorID, 
             MotorTypeEnum frontRightSteerMotorType, int frontRightSteerMotorID,
             EncoderTypeEnum frontRightEncoderType, int frontRightEncoderID,
-            ModuleTypeEnum frontRightModuleType,
+            ModuleConfigEnum frontRightModuleType,
 
             MotorTypeEnum backLeftDriveMotorType, int backLeftDriveMotorID, 
             MotorTypeEnum backLeftSteerMotorType, int backLeftSteerMotorID,
             EncoderTypeEnum backLeftEncoderType, int backLeftEncoderID,
-            ModuleTypeEnum backLeftModuleType,
+            ModuleConfigEnum backLeftModuleType,
 
             MotorTypeEnum backRightDriveMotorType, int backRightDriveMotorID, 
             MotorTypeEnum backRightSteerMotorType, int backRightSteerMotorID,
             EncoderTypeEnum backRightEncoderType, int backRightEncoderID,
-            ModuleTypeEnum backRightModuleType,
+            ModuleConfigEnum backRightModuleType,
 
             double robotLength,
             double robotWidth,

@@ -21,4 +21,6 @@ public interface MotorIntf {
     public double getPositionRotations();
 
     public double getVelocityRPM();
+
+    public double getOutputVoltage();
 }

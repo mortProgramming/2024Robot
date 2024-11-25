@@ -114,6 +114,7 @@ public class SwerveModule {
             case MK4i:
                 maxSpeed = maxSpeed * MK4i.WHEEL_DIAMETER * MK4i.DRIVE_REDUCTION;
                 rotationToMeters = rotationToMeters * MK4i.WHEEL_DIAMETER * MK4i.DRIVE_REDUCTION;
+                break;
         }
     }
 

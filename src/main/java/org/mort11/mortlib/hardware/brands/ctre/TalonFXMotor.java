@@ -68,6 +68,10 @@ public class TalonFXMotor implements MotorIntf {
         return motor.getVelocity().getValueAsDouble() * 60;
     }
 
+    public double getOutputVoltage() {
+        return motor.getMotorVoltage().getValue();
+    }
+
     public TalonFX getMotor() {
         return motor;
     }

@@ -36,4 +36,27 @@ public class FlipOrFlop {
         lastPress = input.getAsBoolean();
         return defaultCommand;
     }
+
+    public Command FlipFlop(Command defaultCommand, Command otherCommand, boolean input) {
+        boolean pressed = !lastPress && input;
+        if (pressed && currentCommand) {
+            currentCommand = false;
+            lastPress = input;
+            return defaultCommand;
+        }
+
+        else if (pressed) {
+            currentCommand = true;
+            lastPress = input;
+            return otherCommand;
+        }
+
+        else if (currentCommand) {
+            lastPress = input;
+            return otherCommand;
+        }
+
+        lastPress = input;
+        return defaultCommand;
+    }
 }

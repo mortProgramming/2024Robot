@@ -1,26 +1,26 @@
 package org.mort11.mortlib.hardware.brands.rev;
 
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkFlex;
 
 import org.mort11.mortlib.hardware.motor.MotorIntf;
 
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.SparkPIDController;
 
-public class CANSparkMaxMotor implements MotorIntf {
+public class CANSparkFlexMotor implements MotorIntf {
 
     public int ID;
     public CANSparkLowLevel.MotorType brushType;
 
-    public CANSparkMax motor;
+    public CANSparkFlex motor;
     public SparkPIDController controller;
 
     // CANSparkLowLevel.MotorType.kBrushless
-    public CANSparkMaxMotor(int ID, CANSparkLowLevel.MotorType brushType) {
+    public CANSparkFlexMotor(int ID, CANSparkLowLevel.MotorType brushType) {
         this.ID = ID;
         this.brushType = brushType;
 
-        motor = new CANSparkMax(ID, brushType);
+        motor = new CANSparkFlex(ID, brushType);
         controller = motor.getPIDController();
 
         controller.setP(0, 0);
@@ -51,7 +51,7 @@ public class CANSparkMaxMotor implements MotorIntf {
     }
 
     public void setPositionRotations(double setpoint) {
-        controller.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+        controller.setReference(setpoint, CANSparkFlex.ControlType.kSmartMotion);
     }
 
     public void setCanivore(String canivore) {
@@ -72,7 +72,7 @@ public class CANSparkMaxMotor implements MotorIntf {
         return motor.getAppliedOutput();
     }
 
-    public CANSparkMax getMotor() {
+    public CANSparkFlex getMotor() {
         return motor;
     }
 }

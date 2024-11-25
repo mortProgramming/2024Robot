@@ -18,7 +18,7 @@ public class NoteCamera implements NoteCameraIntf {
             // case PhotonVision:
             //     camera = new PhotonVisionTagCamera(cameraName);
             //     break;
-            case LimeLight:
+            case CORALLIMELIGHT:
                 camera = new LimelightNoteCamera(cameraName);
                 break;
         }

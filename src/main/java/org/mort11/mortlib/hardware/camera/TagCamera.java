@@ -21,7 +21,7 @@ public class TagCamera implements TagCameraIntf {
             // case PhotonVision:
             //     camera = new PhotonVisionTagCamera(cameraName);
             //     break;
-            case LimeLight:
+            case LIMELIGHT:
                 camera = new LimelightTagCamera(cameraName);
                 break;
         }

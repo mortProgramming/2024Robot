@@ -25,6 +25,10 @@ public class PIDArm extends HeldArm {
         controller = new ProfiledPIDController(kP, kI, kD, new Constraints(kV, kA));
     }
 
+    public void setPIDConstants (double kP, double kI, double kD, Constraints constraints) {
+        controller = new ProfiledPIDController(kP, kI, kD, constraints);
+    }
+
     public void setPIDEnableContinuousInput(Rotation2d minimum, Rotation2d maximum) {
         controller.enableContinuousInput(minimum.getRotations(), maximum.getRotations());
     }
@@ -45,11 +49,17 @@ public class PIDArm extends HeldArm {
         controller.setTolerance(position, velocity);
     }
 
-    public void setPIDPosition (Rotation2d currentPosition, Rotation2d wantedPosition) {
+    public void setPIDPosition(Rotation2d currentPosition, Rotation2d wantedPosition) {
         setHeldVoltage(controller.calculate(currentPosition.getRotations(), wantedPosition.getRotations()), currentPosition);
     }
 
-    public void setPIDPosition (double currentPosition, double wantedPosition) {
+    public void setPIDPosition(double currentPosition, double wantedPosition) {
         setHeldVoltage(controller.calculate(currentPosition, wantedPosition), currentPosition);
+    }
+
+
+
+    public double getPIDCalculation(double currentPosition, double wantedPosition) {
+        return controller.calculate(currentPosition, wantedPosition);
     }
 }

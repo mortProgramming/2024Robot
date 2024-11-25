@@ -6,7 +6,7 @@ public class MotorGroup implements MotorIntf {
 
     public int motorCount;
 
-    public MotorGroup (MotorIntf... motors) {
+    public MotorGroup(MotorIntf... motors) {
         this.motors = motors; 
         motorCount = motors.length;
     }
@@ -28,7 +28,7 @@ public class MotorGroup implements MotorIntf {
     }
 
     public void setDirectionFlip(boolean direction) {
-        for (int i = 0; i < motorCount; i++) {
+        for(int i = 0; i < motorCount; i++) {
             motors[i].setDirectionFlip(direction);
         }
     }
@@ -115,7 +115,15 @@ public class MotorGroup implements MotorIntf {
         return motors[motorNumber].getVelocityRPM();
     }
 
-    public MotorIntf getMotor (int motorNumber) {
+    public double getOutputVoltage() {
+        return motors[0].getOutputVoltage();
+    }
+
+    public double getOutputVoltage(int motorNumber) {
+        return motors[motorNumber].getOutputVoltage();
+    }
+
+    public MotorIntf getMotor(int motorNumber) {
         return motors[motorNumber];
     }
 

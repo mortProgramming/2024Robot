@@ -1,11 +1,12 @@
 package org.mort11.mortlib.swerve;
 
-import static org.mort11.mortlib.swerve.Constants.*;
+import static org.mort11.mortlib.swerve.ModuleConfig.*;
 
 import org.mort11.mortlib.hardware.brands.ctre.CTREUtility.Falcon500;
 import org.mort11.mortlib.hardware.brands.ctre.CTREUtility.Krakenx60;
 import org.mort11.mortlib.hardware.brands.rev.RevUtility.NEO;
 import org.mort11.mortlib.hardware.brands.rev.RevUtility.NEO550;
+import org.mort11.mortlib.hardware.brands.rev.RevUtility.Vortex;
 import org.mort11.mortlib.hardware.encoder.Encoder;
 import org.mort11.mortlib.hardware.motor.Motor;
 import org.mort11.mortlib.hardware.motor.PIDMotor;
@@ -25,7 +26,6 @@ public class SwerveModule {
     public MotorTypeEnum driveMotorType;
     public MotorTypeEnum steerMotorType;
     public EncoderTypeEnum encoderType;
-    public ModuleTypeEnum moduleType;
 
     public Motor driveMotor;
     public PIDMotor steerMotor;
@@ -39,10 +39,56 @@ public class SwerveModule {
 
     public SwerveModuleState state;
 
+    public ModuleConfigIntf moduleConfig;
+
     public SwerveModule(MotorTypeEnum driveMotorType, int driveMotorID, 
             MotorTypeEnum steerMotorType, int steerMotorID, 
             EncoderTypeEnum encoderType, int encoderID,
-            ModuleTypeEnum moduleType
+            ModuleConfigEnum moduleType
+        ) {
+
+        this(driveMotorType, driveMotorID, 
+            steerMotorType, steerMotorID, 
+            encoderType, encoderID,
+            new MK4_L1()
+        );
+
+        switch (moduleType) {
+            case MK4_L1:
+                moduleConfig = new MK4_L1();
+                break;
+            case MK4_L2:
+                moduleConfig = new MK4_L2();
+                break;
+            case MK4_L3:
+                moduleConfig = new MK4_L3();
+                break;
+            case MK4_L4:
+                moduleConfig = new MK4_L4();
+                break;
+            case MK4i_L1:
+                moduleConfig = new MK4i_L1();
+                break;
+            case MK4i_L2:
+                moduleConfig = new MK4i_L2();
+                break;
+            case MK4i_L3:
+                moduleConfig = new MK4i_L3();
+                break;
+        }
+
+        maxSpeed = maxSpeed * moduleConfig.WHEEL_DIAMETER * moduleConfig.DRIVE_REDUCTION;
+        rotationToMeters = rotationToMeters * moduleConfig.WHEEL_DIAMETER * moduleConfig.DRIVE_REDUCTION;
+        driveMotor.setDirectionFlip(moduleConfig.DRIVE_DIRECTION_FLIP);
+        steerMotor.setDirectionFlip(moduleConfig.STEER_DIRECTION_FLIP);
+    }
+
+
+
+    public SwerveModule(MotorTypeEnum driveMotorType, int driveMotorID, 
+            MotorTypeEnum steerMotorType, int steerMotorID, 
+            EncoderTypeEnum encoderType, int encoderID,
+            ModuleConfigIntf moduleConfig
         ) {
         this.driveMotorID = driveMotorID;
         this.driveMotorID = driveMotorID;
@@ -51,7 +97,7 @@ public class SwerveModule {
         this.driveMotorType = driveMotorType;
         this.steerMotorType = steerMotorType;
         this.encoderType = encoderType;
-        this.moduleType = moduleType;
+        this.moduleConfig = moduleConfig;
 
         driveMotor = new Motor(driveMotorType, driveMotorID);
         steerMotor = new PIDMotor(steerMotorType, steerMotorID);
@@ -71,6 +117,9 @@ public class SwerveModule {
                 break;
             case NEO550:
                 maxSpeed = maxSpeed * NEO550.MAX_RPM;
+                break;
+            case VORTEX:
+                maxSpeed = maxSpeed * Vortex.MAX_RPM;
                 break;
             case FALCON:
                 maxSpeed = maxSpeed * Falcon500.MAX_RPM;
@@ -95,6 +144,13 @@ public class SwerveModule {
                     NEO550.SWERVE_STEER_KD
                 );
                 break;
+            case VORTEX:
+                steerMotor.setPIDValues(
+                    Vortex.SWERVE_STEER_KP, 
+                    Vortex.SWERVE_STEER_KI, 
+                    Vortex.SWERVE_STEER_KD
+                );
+                break;
             case FALCON:
                 steerMotor.setPIDValues(
                     Falcon500.SWERVE_STEER_KP, 
@@ -114,31 +170,10 @@ public class SwerveModule {
         steerMotor.setPIDEnableContinuousInput(0, 1);
         steerMotor.setPIDTolerance(0.5, 10);
 
-        switch (moduleType) {
-            case CUSTOM:
-                System.out.println("DON'T FORGET TO CONFIGURE MODULE DIMENTIONS");
-            case MK4_L1:
-                maxSpeed = maxSpeed * MK4_L1.WHEEL_DIAMETER * MK4_L1.DRIVE_REDUCTION;
-                rotationToMeters = rotationToMeters * MK4_L1.WHEEL_DIAMETER * MK4_L1.DRIVE_REDUCTION;
-            case MK4_L2:
-                maxSpeed = maxSpeed * MK4_L2.WHEEL_DIAMETER * MK4_L2.DRIVE_REDUCTION;
-                rotationToMeters = rotationToMeters * MK4_L2.WHEEL_DIAMETER * MK4_L2.DRIVE_REDUCTION;
-            case MK4_L3:
-                maxSpeed = maxSpeed * MK4_L3.WHEEL_DIAMETER * MK4_L3.DRIVE_REDUCTION;
-                rotationToMeters = rotationToMeters * MK4_L3.WHEEL_DIAMETER * MK4_L3.DRIVE_REDUCTION;
-            case MK4_L4:
-                maxSpeed = maxSpeed * MK4_L4.WHEEL_DIAMETER * MK4_L4.DRIVE_REDUCTION;
-                rotationToMeters = rotationToMeters * MK4_L4.WHEEL_DIAMETER * MK4_L4.DRIVE_REDUCTION;
-            case MK4i_L1:
-                maxSpeed = maxSpeed * MK4i_L1.WHEEL_DIAMETER * MK4i_L1.DRIVE_REDUCTION;
-                rotationToMeters = rotationToMeters * MK4i_L1.WHEEL_DIAMETER * MK4i_L1.DRIVE_REDUCTION;
-            case MK4i_L2:
-                maxSpeed = maxSpeed * MK4i_L2.WHEEL_DIAMETER * MK4i_L2.DRIVE_REDUCTION;
-                rotationToMeters = rotationToMeters * MK4i_L2.WHEEL_DIAMETER * MK4i_L2.DRIVE_REDUCTION;
-            case MK4i_L3:
-                maxSpeed = maxSpeed * MK4i_L3.WHEEL_DIAMETER * MK4i_L3.DRIVE_REDUCTION;
-                rotationToMeters = rotationToMeters * MK4i_L3.WHEEL_DIAMETER * MK4i_L3.DRIVE_REDUCTION;
-        }
+        maxSpeed = maxSpeed * moduleConfig.WHEEL_DIAMETER * moduleConfig.DRIVE_REDUCTION;
+        rotationToMeters = rotationToMeters * moduleConfig.WHEEL_DIAMETER * moduleConfig.DRIVE_REDUCTION;
+        driveMotor.setDirectionFlip(moduleConfig.DRIVE_DIRECTION_FLIP);
+        steerMotor.setDirectionFlip(moduleConfig.STEER_DIRECTION_FLIP);
     }
 
     public void setCurrentLimits(double limit) {
@@ -148,14 +183,6 @@ public class SwerveModule {
 
     public void setPosition(Rotation2d setpoint) {
         steerMotor.setPositionRotations(getEncoderPosition().getRotations(), setpoint.getRotations());
-    }
-
-    public void setDrivePercent(double percent) {
-        driveMotor.setPercent(percent);
-    }
-
-    public void setDriveVoltage(double voltage) {
-        driveMotor.setVoltage(voltage);
     }
 
     public void setDriveSpeedMeters(double speedMeters) {
@@ -175,11 +202,6 @@ public class SwerveModule {
 
     public void setOffset(double offset) {
         this.offset = offset;
-    }
-
-    public void setModuelDimensions(double wheelDiameter, double driveReduction) {
-        maxSpeed = maxSpeed * wheelDiameter * driveReduction;
-        rotationToMeters = rotationToMeters * wheelDiameter * driveReduction;
     }
 
 
@@ -217,7 +239,7 @@ public class SwerveModule {
         return encoderType;
     }
 
-    public ModuleTypeEnum getModuleType() {
-        return moduleType;
+    public ModuleConfigIntf getModuleConfig() {
+        return moduleConfig;
     }
 }
