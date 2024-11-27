@@ -332,7 +332,7 @@ public class Control {
      * @return
      */
 	public static double getJoystickY() {
-		return -(modifyAxis1(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
+		return -(modifyAxis1(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
 	}
 
     /**
