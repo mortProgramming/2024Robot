@@ -1,13 +1,13 @@
 package org.mort11.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static org.mort11.config.constants.PortConstants.Intake.*;
 
-import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.hardware.TalonFX;
+import static org.mort11.mortlib.hardware.motor.MotorTypeEnum.*;
+import static org.mort11.mortlib.logger.LoggerTypeEnum.*;
+import org.mort11.mortlib.hardware.motor.MotorGroup;
+import org.mort11.mortlib.logger.LoggerGroup;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,37 +15,40 @@ public class Intake extends SubsystemBase {
     private static Intake intake;
 
     //left is main motor
-    private TalonFX followIntakeMotor;
-    private TalonFX masterIntakeMotor;
+    private MotorGroup motorGroup;
+
+    private LoggerGroup logger;
 
     private static DigitalInput input = new DigitalInput(INTAKE_SENSOR);
 
     private double intakeSpeed;
 
     private Intake() {
-        masterIntakeMotor = new TalonFX(MASTER_INTAKE_MOTOR);
-        followIntakeMotor = new TalonFX(FOLLOW_INTAKE_MOTOR);
+        motorGroup = new MotorGroup(FALCON, MASTER_INTAKE_MOTOR, FOLLOW_INTAKE_MOTOR);
+        motorGroup.setDirectionFlip(1, true);
 
-        followIntakeMotor.setControl(new Follower(MASTER_INTAKE_MOTOR, true));
+        input = new DigitalInput(INTAKE_SENSOR);
 
-        Shuffleboard.getTab("Intake Sensor").add("Piece In", input.get());
+        intakeSpeed = 0;
+
+        logger = new LoggerGroup("Intake", SMARTDASHBOARD, SHUFFLEBOARD);
+        logger.putBoolean("Piece In", this::hasNote);
     }
 
     @Override
     public void periodic() {
-        masterIntakeMotor.set(intakeSpeed);
-
-        SmartDashboard.putNumber("intake master voltage", masterIntakeMotor.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber("intake follower voltage", followIntakeMotor.getMotorVoltage().getValueAsDouble());
-
-        SmartDashboard.putBoolean("INTAKE BEAMBREAK", hasNote());
+        motorGroup.setVoltage(intakeSpeed);
     }
 
     public void setIntakeVelocity(double intakeSpeed){
         this.intakeSpeed = intakeSpeed;
     }
 
-    public static boolean hasNote() {
+    public boolean hasNote() {
+        return !input.get();
+    }
+
+    public static boolean hasNoteStatic() {
         return !input.get();
     }
 

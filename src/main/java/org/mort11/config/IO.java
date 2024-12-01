@@ -113,7 +113,7 @@ public class IO {
         xboxController.povRight().whileTrue(new ClimberToVel(0, -MANUAL_CLIMBER_SPEED));
     }
 
-    public static Boolean isBlue() {
+    public static Boolean getIsBlue() {
 		return DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == Alliance.Blue : true;
 	}
  

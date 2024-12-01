@@ -29,14 +29,14 @@ public class DriveAtAngle extends Command {
     @Override
 	public void execute() {
 		drivetrain.setDrive(
-			ChassisSpeeds.fromFieldRelativeSpeeds(
-			translationXSupplier.getAsDouble(),
-			translationYSupplier.getAsDouble(), 
-			0,
-			drivetrain.getIMURotation())
+			new ChassisSpeeds (
+				translationXSupplier.getAsDouble(),
+				translationYSupplier.getAsDouble(), 
+				drivetrain.getRotateController().calculate(
+					drivetrain.getIMURotation().getDegrees(), rotationSupplier
+				)
+			)
         );
-
-        drivetrain.setAngleController(rotationSupplier);
 	}
 
     @Override

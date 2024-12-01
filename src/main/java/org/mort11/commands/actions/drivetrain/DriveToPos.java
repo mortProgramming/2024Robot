@@ -1,6 +1,5 @@
 package org.mort11.commands.actions.drivetrain;
 
-import org.mort11.config.Odometer;
 import org.mort11.subsystems.Drivetrain;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -23,7 +22,11 @@ public class DriveToPos extends Command {
 
   @Override
   public void execute() {
-   drivetrain.setPosController(Odometer.getPoseX(), Odometer.getPoseY(), wantedX, wantedY);
+    drivetrain.setDrive(new ChassisSpeeds(
+      drivetrain.getXController().calculate(drivetrain.getPoseX(), wantedX), 
+      drivetrain.getYController().calculate(drivetrain.getPoseY(), wantedY), 
+      drivetrain.getChassisSpeeds().omegaRadiansPerSecond
+    ));
 	}
   
   @Override
@@ -33,8 +36,8 @@ public class DriveToPos extends Command {
 
   @Override
   public boolean isFinished() {
-    return (drivetrain.getXControllerAtSetpoint() && 
-      drivetrain.getYControllerAtSetpoint()
+    return (drivetrain.getXController().atSetpoint() && 
+      drivetrain.getYController().atSetpoint()
     );
   }
 }

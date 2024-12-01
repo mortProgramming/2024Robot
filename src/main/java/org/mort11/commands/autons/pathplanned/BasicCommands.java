@@ -1,4 +1,4 @@
-package org.mort11.commands.autons.pathplanned.paths;
+package org.mort11.commands.autons.pathplanned;
 
 import static org.mort11.config.constants.PhysicalConstants.Arm.*;
 import static org.mort11.config.constants.PhysicalConstants.Intake.*;
@@ -20,12 +20,12 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class All {
+public class BasicCommands {
     
     public static void setCommands () {
         NamedCommands.registerCommand("AutoActive", new SequentialCommandGroup(new InstantCommand(() -> System.out.println("PATH AUTON IS ACTIVE"))));
 
-        NamedCommands.registerCommand("FieldOrient", new Orient(IO.isBlue() ?  270 : 90));
+        NamedCommands.registerCommand("FieldOrient", new Orient(IO.getIsBlue() ?  270 : 90));
 
         NamedCommands.registerCommand("ScoreInAmp", 
             new SequentialCommandGroup(//Bring arm and wrist to score position, eject note, back to rest

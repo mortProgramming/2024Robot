@@ -14,6 +14,10 @@ public class IMU implements IMUIntf {
 
     public IMUIntf imu;
 
+    public IMU(IMUTypeEnum imuType) {
+        this(imuType, 0);
+    }
+
     public IMU(IMUTypeEnum imuType, int ID) {
         this.imuType = imuType;
         this.ID = ID;

@@ -23,7 +23,7 @@ public class IntakeNote extends Command {
 
   @Override
   public void execute() {
-    if(Intake.hasNote()) {
+    if(intake.hasNote()) {
       timer.start();
     }
 
@@ -40,6 +40,6 @@ public class IntakeNote extends Command {
 
   @Override
   public boolean isFinished() {
-   return Intake.hasNote() && (timer.get() > SENSOR_MIN_TIME);
+   return intake.hasNote() && (timer.get() > SENSOR_MIN_TIME);
   }
 }

@@ -26,7 +26,7 @@ public class ShootNote extends Command {
 
   @Override
   public void execute() {
-    if (Intake.hasNote()) {
+    if (intake.hasNote()) {
       intake.setIntakeVelocity(AMP_SHOOT_SPEED);
       timer.start();
     }
@@ -39,6 +39,6 @@ public class ShootNote extends Command {
 
   @Override
   public boolean isFinished() {
-    return (!Intake.hasNote()) && (timer.get() > 0.25);
+    return (!intake.hasNote()) && (timer.get() > 0.25);
   }
 }

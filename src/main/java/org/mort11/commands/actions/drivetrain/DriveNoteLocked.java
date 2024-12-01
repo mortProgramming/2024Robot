@@ -29,15 +29,12 @@ public class DriveNoteLocked extends Command {
     @Override
 	public void execute() {
 		drivetrain.setDrive(
-			ChassisSpeeds.fromFieldRelativeSpeeds(
+			new ChassisSpeeds(
 				translationXSupplier.getAsDouble(),
 				translationYSupplier.getAsDouble(), 
-				0,
-                Rotation2d.fromDegrees(0)
+				drivetrain.calculateChangeRotateController(LimelightHelpers.getTX(NOTE_CAMERA))
             )
         );
-
-        drivetrain.setAngleController(drivetrain.getIMURotation().getDegrees() + LimelightHelpers.getTX(NOTE_CAMERA));
 	}
 
     @Override
