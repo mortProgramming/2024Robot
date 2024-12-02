@@ -4,6 +4,8 @@ import edu.wpi.first.math.util.Units;
 
 public class PhysicalConstants {
 
+  public static final double VOLTAGE = 12;
+
     public static final class Controller {
         public static final int JOYSTICK_X_CHANNEL = 0;
         public static final int JOYSTICK_Y_CHANNEL = 1;

@@ -12,6 +12,11 @@ public class LoggerGroup implements LoggerIntf {
 
     public LoggerIntf[] loggers;
 
+    public LoggerGroup(LoggerIntf... loggers) {
+        this.loggers = loggers;
+        loggerCount = loggers.length;
+    }
+
     public LoggerGroup(LoggerTypeEnum... loggerTypes) {
         this(null, loggerTypes);
     }
@@ -24,17 +29,17 @@ public class LoggerGroup implements LoggerIntf {
         for(int i = 0; i < loggerCount; i++) {
             switch(loggerTypes[i]) {
                 case ADVANTAGEKIT:
-                    loggers[i] = new Logger(ADVANTAGEKIT);
+                    loggers[i] = new Logger(subsystemName, ADVANTAGEKIT);
                     break;
 
                 case ADVANTAGESCOPE:
-                    loggers[i] = new Logger(ADVANTAGESCOPE);
+                    loggers[i] = new Logger(subsystemName, ADVANTAGESCOPE);
                     break;
                 case SMARTDASHBOARD:
-                    loggers[i] = new Logger(SMARTDASHBOARD);
+                    loggers[i] = new Logger(subsystemName, SMARTDASHBOARD);
                     break;
                 case SHUFFLEBOARD:
-                    loggers[i] = new Logger(SHUFFLEBOARD);
+                    loggers[i] = new Logger(subsystemName, SHUFFLEBOARD);
                     break;
             }
         }
@@ -118,5 +123,13 @@ public class LoggerGroup implements LoggerIntf {
 
     public boolean getBoolean(LoggerTypeEnum loggerType, String key, boolean defaultValue) {
         return loggers[getLoggerPosition(loggerType)].getBoolean(key, defaultValue);
+    }
+
+    public LoggerIntf getLogger(LoggerTypeEnum loggerType) {
+        return loggers[getLoggerPosition(loggerType)];
+    }
+
+    public LoggerIntf getLogger(int loggerNumber) {
+        return loggers[loggerNumber];
     }
 }

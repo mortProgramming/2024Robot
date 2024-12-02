@@ -24,7 +24,6 @@ import org.mort11.commands.actions.endeffector.Lighting;
 import org.mort11.commands.actions.endeffector.pos.ClimberToPos;
 import org.mort11.commands.actions.endeffector.pos.SetArmWristPos;
 import org.mort11.commands.actions.endeffector.pos.WristToPos;
-import org.mort11.commands.actions.endeffector.vel.BlowerToVel;
 import org.mort11.commands.actions.endeffector.vel.ClimberToVel;
 import org.mort11.commands.actions.endeffector.vel.IntakeToVel;
 
@@ -89,14 +88,11 @@ public class IO {
 
         //ARM TO PRETRAP
         xboxController.back().onTrue(SetArmWristPos.preTrap());
-        xboxController.back().onTrue(new BlowerToVel(BLOWER_MOTOR_MAX_SPEED));
 
         //floor trap
-        xboxController.povDown().whileTrue(new BlowerToVel(BLOWER_MOTOR_MAX_SPEED));
         xboxController.povDown().whileTrue(SetArmWristPos.floorTrap()
             .andThen(new InstantCommand(() -> wrist.setServoPos(TRAP_SERVO_POS))));
 
-        xboxController.povDown().onFalse(new BlowerToVel(0));
         xboxController.povDown().whileFalse(new InstantCommand(() -> wrist.setServoPos(TRAP_SERVO_REST_POS)));
         
         //Climbers up for preclimb

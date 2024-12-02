@@ -1,10 +1,10 @@
-package org.mort11.mortlib.swerve;
+package org.mort11.mortlib.subsystems.swerve;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import org.mort11.mortlib.swerve.swervedrives.OdometeredSwerveDrive;
-import org.mort11.mortlib.swerve.swervedrives.SwerveDrive;
+import org.mort11.mortlib.subsystems.swerve.swervedrives.OdometeredSwerveDrive;
+import org.mort11.mortlib.subsystems.swerve.swervedrives.SwerveDrive;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;

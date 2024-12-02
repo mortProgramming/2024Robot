@@ -6,10 +6,10 @@ import static org.mort11.config.constants.PortConstants.Drivetrain.*;
 import static org.mort11.mortlib.hardware.encoder.EncoderTypeEnum.*;
 import static org.mort11.mortlib.hardware.imu.IMUTypeEnum.*;
 import static org.mort11.mortlib.hardware.motor.MotorTypeEnum.*;
-import static org.mort11.mortlib.swerve.ModuleConfigEnum.*;
+import static org.mort11.mortlib.subsystems.swerve.ModuleConfigEnum.*;
 
 import org.mort11.config.IO;
-import org.mort11.mortlib.subsystems.SwerveDriveBase;
+import org.mort11.mortlib.subsystems.swerve.SwerveDriveBase;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;

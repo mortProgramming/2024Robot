@@ -15,7 +15,7 @@ public class Intake extends SubsystemBase {
     private static Intake intake;
 
     //left is main motor
-    private MotorGroup motorGroup;
+    private MotorGroup motors;
 
     private LoggerGroup logger;
 
@@ -24,8 +24,8 @@ public class Intake extends SubsystemBase {
     private double intakeSpeed;
 
     private Intake() {
-        motorGroup = new MotorGroup(FALCON, MASTER_INTAKE_MOTOR, FOLLOW_INTAKE_MOTOR);
-        motorGroup.setDirectionFlip(1, true);
+        motors = new MotorGroup(FALCON, MASTER_INTAKE_MOTOR, FOLLOW_INTAKE_MOTOR);
+        motors.setDirectionFlip(1, true);
 
         input = new DigitalInput(INTAKE_SENSOR);
 
@@ -37,7 +37,7 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        motorGroup.setVoltage(intakeSpeed);
+        motors.setVoltage(intakeSpeed);
     }
 
     public void setIntakeVelocity(double intakeSpeed){

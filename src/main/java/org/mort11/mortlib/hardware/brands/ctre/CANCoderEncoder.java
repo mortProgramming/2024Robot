@@ -26,8 +26,11 @@ public class CANCoderEncoder implements EncoderIntf {
         return Rotation2d.fromRotations(encoder.getPosition().getValueAsDouble());
     }
 
+    public double getVelocityRotations() {
+        return encoder.getVelocity().getValueAsDouble();
+    }
+
     public CANcoder getEncoder() {
         return encoder;
     }
- 
 }

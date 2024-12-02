@@ -1,21 +1,20 @@
 package org.mort11.config.constants;
 
-
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import static org.mort11.config.constants.PhysicalConstants.VOLTAGE;
 
 public class PIDConstants {
 
     public final static class Arm{
-
-		public static final double POS_KP = 0.0066;
-		public static final double POS_KI = 0;
-		public static final double POS_KD = 0;
+		public static final double POS_KP = VOLTAGE * 0.0066;
+		public static final double POS_KI = VOLTAGE * 0;
+		public static final double POS_KD = VOLTAGE * 0;
 		public static final Constraints POS_CONSTRAINTS = new Constraints(3000, 3000);
 
-        public static final double POS_KG = -0.02;
-		public static final double POS_KS = 0.03;
-		public static final double POS_KV = 0.00;
-		public static final double POS_KA = 0;
+        public static final double POS_KG = VOLTAGE * -0.02;
+		public static final double POS_KS = VOLTAGE * 0.03;
+		public static final double POS_KV = VOLTAGE * 0.00;
+		public static final double POS_KA = VOLTAGE * 0;
 
 
         public static final double BLOWER_KP = 0.01;

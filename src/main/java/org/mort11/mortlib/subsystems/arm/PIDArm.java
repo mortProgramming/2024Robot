@@ -1,4 +1,4 @@
-package org.mort11.mortlib.arm;
+package org.mort11.mortlib.subsystems.arm;
 
 import org.mort11.mortlib.hardware.motor.MotorIntf;
 import org.mort11.mortlib.hardware.motor.MotorTypeEnum;
@@ -7,7 +7,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
-public class PIDArm extends HeldArm {
+public class PIDArm extends Arm {
 
     public ProfiledPIDController controller;
 
@@ -19,6 +19,8 @@ public class PIDArm extends HeldArm {
     
     public PIDArm (MotorIntf motor) {
         super(motor);
+
+        controller = new ProfiledPIDController(0, 0, 0, new Constraints(0, 0));
     }
 
     public void setPIDConstants (double kP, double kI, double kD, double kV, double kA) {
@@ -50,11 +52,15 @@ public class PIDArm extends HeldArm {
     }
 
     public void setPIDPosition(Rotation2d currentPosition, Rotation2d wantedPosition) {
-        setHeldVoltage(controller.calculate(currentPosition.getRotations(), wantedPosition.getRotations()), currentPosition);
+        setFeededVoltage(controller.calculate(currentPosition.getRotations(), wantedPosition.getRotations()), currentPosition);
     }
 
     public void setPIDPosition(double currentPosition, double wantedPosition) {
-        setHeldVoltage(controller.calculate(currentPosition, wantedPosition), currentPosition);
+        setFeededVoltage(controller.calculate(currentPosition, wantedPosition), currentPosition);
+    }
+
+    public void setPIDPositionDeg(double currentPosition, double wantedPosition) {
+        setFeededVoltage(controller.calculate(currentPosition, wantedPosition), currentPosition / 360);
     }
 
 

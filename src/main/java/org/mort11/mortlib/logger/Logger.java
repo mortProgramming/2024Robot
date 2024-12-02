@@ -12,6 +12,10 @@ public class Logger implements LoggerIntf {
 
     public LoggerIntf logger;
 
+    public Logger(LoggerIntf logger) {
+        this.logger = logger;
+    }
+
     public Logger(LoggerTypeEnum loggerType) {
         this(null, loggerType);
     }
