@@ -14,6 +14,10 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
+
 public class Climber extends SubsystemBase {
     
     private static Climber climber;
@@ -42,6 +46,13 @@ public class Climber extends SubsystemBase {
 
     private ArmFeedforward rightClimberPostionFeedForward;
     private ArmFeedforward leftClimberPostionFeedForward;
+
+    private TalonFXConfiguration rightClimberTalonFXConfigs;
+    private TalonFXConfiguration leftClimberTalonFXConfigs;
+	private Slot0Configs rightClimberslot0Configs;
+    private Slot0Configs leftClimberslot0Configs;
+	private MotionMagicConfigs rightmotionMagicConfigs;
+    private MotionMagicConfigs leftmotionMagicConfigs;
 
     private double tolerance = 1;
 
@@ -76,8 +87,24 @@ public class Climber extends SubsystemBase {
         // leftClimberPostionFeedForward = new ArmFeedforward(POSITION_FF_S, POSITION_FF_G, POSITION_FF_V, POSITION_FF_A);
 
         velocityMode = true;
+
+        rightClimberTalonFXConfigs = new TalonFXConfiguration();
+        leftClimberTalonFXConfigs = new TalonFXConfiguration();
+        rightClimberslot0Configs = rightClimberTalonFXConfigs.Slot0;
+        leftClimberslot0Configs = leftClimberTalonFXConfigs.Slot0;        
+
+        rightmotionMagicConfigs = rightClimberTalonFXConfigs.MotionMagic;
+		rightmotionMagicConfigs.MotionMagicCruiseVelocity = 80; 
+		rightmotionMagicConfigs.MotionMagicAcceleration = 160; 
+		rightmotionMagicConfigs.MotionMagicJerk = 1600;
+
+        leftmotionMagicConfigs = leftClimberTalonFXConfigs.MotionMagic;
+        leftmotionMagicConfigs.MotionMagicCruiseVelocity = 80; 
+		leftmotionMagicConfigs.MotionMagicAcceleration = 160; 
+		leftmotionMagicConfigs.MotionMagicJerk = 1600;
         
-        
+        // rightClimberMotor.getConfigurator().apply(rightClimberslot0Configs);
+        // leftClimberMotor.getConfigurator().apply(leftClimberslot0Configs);
     }
 
     public void init() {

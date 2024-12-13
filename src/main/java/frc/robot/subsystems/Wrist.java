@@ -16,6 +16,10 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
+
 public class Wrist extends SubsystemBase {
     
     private static Wrist wrist;
@@ -31,6 +35,9 @@ public class Wrist extends SubsystemBase {
     private SimpleMotorFeedforward wristPostionFeedForward;
     private Servo trapServo;
     private double servoPos;
+    private TalonFXConfiguration wristtalonFXConfigs;
+    private Slot0Configs slot0Configs;
+    private MotionMagicConfigs motionMagicConfigs;
 
 
     public Wrist() {
@@ -43,6 +50,23 @@ public class Wrist extends SubsystemBase {
         wristPostionFeedForward = new SimpleMotorFeedforward(POSITION_FF_S, POSITION_FF_V, POSITION_FF_A);
         trapServo = new Servo(TRAP_SERVO_PORT);
         servoPos = 90;
+
+        wristtalonFXConfigs = new TalonFXConfiguration();
+		slot0Configs = wristtalonFXConfigs.Slot0;
+		slot0Configs.kS = 0.25; 
+		slot0Configs.kV = 0.12; 
+		slot0Configs.kA = 0.01; 
+		slot0Configs.kP = 4.8; 
+		slot0Configs.kI = 0; 
+		slot0Configs.kD = 0.1;
+
+		motionMagicConfigs = wristtalonFXConfigs.MotionMagic;
+		motionMagicConfigs.MotionMagicCruiseVelocity = 80; 
+		motionMagicConfigs.MotionMagicAcceleration = 160; 
+		motionMagicConfigs.MotionMagicJerk = 1600;
+
+        wristMotor.getConfigurator().apply(slot0Configs);
+
         }
 
 

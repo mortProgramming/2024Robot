@@ -18,6 +18,10 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
+
 
 
 public class Arm extends SubsystemBase {
@@ -40,6 +44,10 @@ public class Arm extends SubsystemBase {
     private double currentBlowerOutput;
 
     private ProfiledPIDController armPositionController;
+
+    private TalonFXConfiguration armtalonFXConfigs;
+	private Slot0Configs slot0Configs;
+	private MotionMagicConfigs motionMagicConfigs;
 
     private PIDController blowerController;
 
@@ -75,7 +83,24 @@ public class Arm extends SubsystemBase {
         // blowerController = new PIDController(BLOWER_PID_P, BLOWER_PID_I, BLOWER_PID_D);
         // blowerMotor = new CANSparkMax(BLOWER_MOTOR, MotorType.kBrushless);
 
+        armtalonFXConfigs = new TalonFXConfiguration();
+		slot0Configs = armtalonFXConfigs.Slot0;
+		slot0Configs.kS = 0.25; 
+		slot0Configs.kV = 0.12; 
+		slot0Configs.kA = 0.01; 
+		slot0Configs.kP = 4.8; 
+		slot0Configs.kI = 0; 
+		slot0Configs.kD = 0.1;
+
+		motionMagicConfigs = armtalonFXConfigs.MotionMagic;
+		motionMagicConfigs.MotionMagicCruiseVelocity = 80; 
+		motionMagicConfigs.MotionMagicAcceleration = 160; 
+		motionMagicConfigs.MotionMagicJerk = 1600;
+
+        masterArmMotor.getConfigurator().apply(slot0Configs);
+
     }
+    
     public void setBlowerHold(boolean holdVelocity){
         this.holdVelocity = holdVelocity;
     }
