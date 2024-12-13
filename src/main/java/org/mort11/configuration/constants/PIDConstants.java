@@ -43,7 +43,7 @@ public class PIDConstants {
 		public final static double TO_ANGLE_KI = 0;
 		public final static double TO_ANGLE_KD = 0.001;
 		public static final Constraints TO_ANGLE_CONSTRAINTS = new Constraints(300, 300);
-		public final static double TO_ANGLE_POS_TOLERANCE = 3;
+		public final static double TO_ANGLE_POS_TOLERANCE = 1;
 		public final static double TO_ANGLE_VEL_TOLERANCE = 30;
 
 
@@ -64,7 +64,8 @@ public class PIDConstants {
 		public static final double POS_KD = 0;
 		public static final Constraints POS_CONSTRAINTS = new Constraints(3000, 3000);
 
-		public static final double POS_KS = 0.00022;
+        public static final double POS_KS = 0;
+		// public static final double POS_KS = 0.00022;
 		public static final double POS_GK = 0;
 		public static final double POS_KV = 0;
 		public static final double POS_KA = 0;

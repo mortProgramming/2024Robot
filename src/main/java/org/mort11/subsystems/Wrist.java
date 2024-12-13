@@ -39,7 +39,7 @@ public class Wrist extends SubsystemBase {
 
     @Override
     public void periodic() {
-        wristMotor.set(wristSpeed);
+        // wristMotor.set(wristSpeed);
         trapServo.setAngle(servoPos);
 
         SmartDashboard.putNumber("Wrist Pos", getWristPos());

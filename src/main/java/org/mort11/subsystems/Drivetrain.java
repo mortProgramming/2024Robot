@@ -56,7 +56,6 @@ public class Drivetrain extends SubsystemBase {
 	public Drivetrain() {
 		navX = new AHRS(SPI.Port.kMXP);
 
-		Shuffleboard.getTab("dt").add(drivetrain);
 		tab = Shuffleboard.getTab("Drivetrain");
 
 		configureSwerve();
@@ -188,6 +187,15 @@ public class Drivetrain extends SubsystemBase {
 		);
 	}
 
+    public void setAngle2Controller(double wantedAngle) {
+        chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                chassisSpeeds.vxMetersPerSecond,
+                chassisSpeeds.vyMetersPerSecond,
+                rotateToAngleController.calculate(
+                        wantedAngle, 0),
+                drivetrain.getGyroscopeRotation());
+    }
+
 	private void setModuleStates(SwerveModuleState[] states) {
 		SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
@@ -266,6 +274,7 @@ public class Drivetrain extends SubsystemBase {
 	public static Drivetrain getInstance() {
 		if (drivetrain == null) {
 			drivetrain = new Drivetrain();
+            Shuffleboard.getTab("dt").add(drivetrain);
 		}
 		return drivetrain;
 	}

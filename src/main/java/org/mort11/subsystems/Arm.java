@@ -53,7 +53,7 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        masterArmMotor.set(armSpeed);
+        // masterArmMotor.set(armSpeed);
 
         currentBlowerOutput += blowerController.calculate(currentBlowerOutput,targetBlowerOutput);
         blowerMotor.set(currentBlowerOutput);

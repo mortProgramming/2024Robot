@@ -19,6 +19,8 @@ import static org.mort11.configuration.constants.PortConstants.Vision.*;
 import org.mort11.commands.actions.drivetrain.Drive;
 import org.mort11.commands.actions.drivetrain.DriveAtAngle;
 import org.mort11.commands.actions.drivetrain.DriveNoteLocked;
+import org.mort11.commands.actions.drivetrain.Angle2AprilTag;
+
 import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
 import org.mort11.commands.actions.endeffector.LightsCommand;
 import org.mort11.commands.actions.endeffector.pos.ClimberToPos;
@@ -27,6 +29,7 @@ import org.mort11.commands.actions.endeffector.pos.WristToPos;
 import org.mort11.commands.actions.endeffector.velocity.BlowerToVelocity;
 import org.mort11.commands.actions.endeffector.velocity.ClimberToVelocity;
 import org.mort11.commands.actions.endeffector.velocity.IntakeToVelocity;
+
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -82,7 +85,7 @@ public class IO {
         xboxController.leftTrigger().onTrue(new WristToPos(WRIST_INTAKE_POS));
 
         xboxController.rightTrigger().whileTrue(new IntakeToVelocity(AMP_SHOOT_SPEED));
-        xboxController.a().whileTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
+        //xboxController.a().whileTrue(new IntakeToVelocity(SHOOTER_SHOOT_SPEED));
         
         xboxController.x().onTrue(SetArmAndWristPos.amp());
         xboxController.y().onTrue(SetArmAndWristPos.rest());
@@ -112,6 +115,8 @@ public class IO {
         xboxController.povLeft().whileTrue(new ClimberToVelocity(MANUAL_CLIMBER_SPEED, 0));
         // opposite direction for opposite side
         xboxController.povRight().whileTrue(new ClimberToVelocity(0, -MANUAL_CLIMBER_SPEED));
+
+        xboxController.a().whileTrue(new Angle2AprilTag(0));
     }
 
     public static Boolean isBlue() {
