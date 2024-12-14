@@ -33,7 +33,7 @@ public class Angle2AprilTag extends Command{
     public void execute(){
         //gets yaw angle tx from the limelight
         // double wantedAngle = limelightTable.getEntry("tx").getDouble(0);
-        double wantedAngle = -LimelightHelpers.getTX("limelight");
+        double wantedAngle = LimelightHelpers.getTX("limelight");
 
         //uses the yaw angle to rotate to wanted angle
         drivetrain.setAngle2Controller(wantedAngle);

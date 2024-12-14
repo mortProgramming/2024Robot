@@ -248,12 +248,12 @@ public class Drivetrain extends SubsystemBase {
 	public Rotation2d getAbsoluteGyroscopeRotation() {
 		if (navX.isMagnetometerCalibrated()) {
 			// We will only get valid fused headings if the magnetometer is calibrated
-			return Rotation2d.fromDegrees(360.0 - navX.getFusedHeading());
+			return Rotation2d.fromDegrees(navX.getFusedHeading());
 		}
 
 		// We have to invert the angle of the NavX so that rotating the robot
 		// counter-clockwise
-		return Rotation2d.fromDegrees(360.0 - toCircle(navX.getYaw()));
+		return Rotation2d.fromDegrees(toCircle(navX.getYaw()));
 	}
 
 	public Rotation2d getRotation2d() {
