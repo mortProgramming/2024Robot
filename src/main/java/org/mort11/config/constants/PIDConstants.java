@@ -57,6 +57,13 @@ public class PIDConstants {
 		public static final double AUTON_MAX_VELOCITY = 4.17;
     }
 
+	public static final class Intake {
+		public static final double VEL_KP = VOLTAGE * 0.000001;
+		public static final double VEL_KI = VOLTAGE * 0;
+		public static final double VEL_KD = VOLTAGE * 0;
+		public static final Constraints VEL_CONSTRAINTS = new Constraints(10000, 10000);
+	}
+
     public final static class Wrist{
 		public static final double POS_KP = 0.0025;
 		public static final double POS_KI = 0;
