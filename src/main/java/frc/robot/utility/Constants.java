@@ -101,7 +101,7 @@ public final class Constants {
 
 		//Max and minimum throttle ports & declarations
         public static final double MAX_THROTTLE = 1;
-        public static final double MIN_THROTTLE = 0.3;
+        public static final double MIN_THROTTLE = 0.15;
 		public static final double MIN_ROTATE = 0.3;
         public static final double DEAD_BAND = 0.025;
 		public static final double TWIST_DEAD_BAND = 0.1;
