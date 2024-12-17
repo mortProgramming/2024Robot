@@ -6,12 +6,7 @@ import static org.mort11.config.constants.PortConstants.Intake.*;
 import static org.mort11.config.constants.PIDConstants.Intake.*;
 
 import static org.mort11.mortlib.hardware.motor.MotorTypeEnum.*;
-import static org.mort11.mortlib.logger.LoggerTypeEnum.*;
-import org.mort11.mortlib.hardware.motor.MotorGroup;
-import org.mort11.mortlib.logger.LoggerGroup;
 import org.mort11.mortlib.subsystems.flywheel.FlywheelBase;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends FlywheelBase {
     private static Intake intake;
@@ -25,13 +20,8 @@ public class Intake extends FlywheelBase {
         );
     }
 
-    @Override
-    public void periodic() {
-        motors.setVoltage(intakeSpeed);
-    }
-
-    public void setIntakeVelocity(double intakeSpeed){
-        this.intakeSpeed = intakeSpeed;
+    public void setIntakeVelocity(double rpm){
+        super.setFlywheelVelocity(rpm);
     }
 
     public boolean hasNote() {
