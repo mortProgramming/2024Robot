@@ -16,7 +16,7 @@ public class Lighting extends Command {
 
   @Override
   public void execute() {
-    if (Intake.hasNoteStatic()) {
+    if (Intake.hasNote()) {
       lights.setLightsGreen();
 
       Lights.setLimelightsBlink();

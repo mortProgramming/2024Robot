@@ -5,7 +5,7 @@ import org.mort11.subsystems.Climber;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Intake;
 import org.mort11.subsystems.Lights;
-import org.mort11.subsystems.LimelightHelpers;
+import org.mort11.subsystems.Vision;
 import org.mort11.subsystems.Wrist;
 
 import static org.mort11.config.Inputs.*;
@@ -36,6 +36,7 @@ public class IO {
 	private static Drivetrain drivetrain;
     private static Arm arm;
     private static Climber climber;
+    private static Vision vision;
     private static Wrist wrist;
     private static Lights lights;
     private static Intake intake;
@@ -67,7 +68,7 @@ public class IO {
         joystick.trigger().whileTrue(new DriveNoteLocked(Inputs::getJoystickY, Inputs::getJoystickX));
 
         //Drivetrain reset odometry command
-        joystick.button(7).whileTrue(Odometer.resetOdometryCommand(LimelightHelpers.getBotPose2d_wpiBlue(TAG_CAMERA)));
+        joystick.button(7).whileTrue(drivetrain.resetPosition(vision.getTagCamera().getRobotPosition()));
 
         //Drivetrain rotate to AMP button
         joystick.button(3).whileTrue(new DriveAtAngle(Inputs::getJoystickY, Inputs::getJoystickX, IMU_TO_ROBOT_FRONT_ANGLE));

@@ -21,14 +21,10 @@ public class Intake extends FlywheelBase {
     }
 
     public void setIntakeVelocity(double rpm){
-        super.setFlywheelVelocity(rpm);
+        setFlywheelVelocity(rpm);
     }
 
-    public boolean hasNote() {
-        return !input.get();
-    }
-
-    public static boolean hasNoteStatic() {
+    public static boolean hasNote() {
         return !input.get();
     }
 

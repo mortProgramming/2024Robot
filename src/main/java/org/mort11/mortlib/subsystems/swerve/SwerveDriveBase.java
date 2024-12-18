@@ -6,6 +6,7 @@ import org.mort11.mortlib.hardware.imu.IMUTypeEnum;
 import org.mort11.mortlib.hardware.motor.MotorTypeEnum;
 import org.mort11.mortlib.logger.LoggerGroup;
 import org.mort11.mortlib.subsystems.swerve.swervedrives.OdometeredSwerveDrive;
+import org.mort11.mortlib.subsystems.swerve.swervedrives.SwerveDrive;
 
 import static org.mort11.mortlib.logger.LoggerTypeEnum.*;
 
@@ -174,6 +175,10 @@ public class SwerveDriveBase extends SubsystemBase {
 
 	public Command setGyroscopeZero(double angle) {
 		return new InstantCommand(() -> swerveDrive.zeroIMU(angle), drivetrain);
+	}
+
+	public void resetPosition(Pose2d pose) {
+		swerveDrive.resetPosition(pose);
 	}
 
 

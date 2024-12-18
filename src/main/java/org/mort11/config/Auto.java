@@ -39,7 +39,7 @@ public class Auto {
 
 		PathPlanner.configure(
 			drivetrain, drivetrain.getSwerveDrive(),
-			() -> Odometer.getOdometry().getEstimatedPosition(), (Pose2d startPose) -> Odometer.resetOdometry(startPose),
+			() -> drivetrain.getEstimatedPosition(), (Pose2d startPose) -> Odometer.resetOdometry(startPose),
 			new PIDConstants(AUTON_POS_KP, AUTON_POS_KI, AUTON_POS_KD), 
 			new PIDConstants(AUTON_ROTATION_KP, AUTON_ROTATION_KI, AUTON_ROTATION_KD), 
 			DRIVEBASE_RADIUS_METERS

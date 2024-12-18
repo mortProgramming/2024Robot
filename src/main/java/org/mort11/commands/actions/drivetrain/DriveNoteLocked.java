@@ -5,7 +5,7 @@ import static org.mort11.config.constants.PortConstants.Vision.*;
 import java.util.function.DoubleSupplier;
 
 import org.mort11.subsystems.Drivetrain;
-import org.mort11.subsystems.LimelightHelpers;
+import org.mort11.subsystems.Vision;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class DriveNoteLocked extends Command {
     private Drivetrain drivetrain;
+	private Vision vision;
 
 	private DoubleSupplier translationXSupplier;
 	private DoubleSupplier translationYSupplier;
@@ -32,7 +33,7 @@ public class DriveNoteLocked extends Command {
 			new ChassisSpeeds(
 				translationXSupplier.getAsDouble(),
 				translationYSupplier.getAsDouble(), 
-				drivetrain.calculateChangeRotateController(LimelightHelpers.getTX(NOTE_CAMERA))
+				drivetrain.calculateChangeRotateController(vision.getTagCamera().getPicturePosition().)
             )
         );
 	}
