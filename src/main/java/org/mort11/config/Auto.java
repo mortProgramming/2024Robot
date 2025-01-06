@@ -8,7 +8,7 @@ import org.mort11.commands.autons.odometered.ScoreAmpRed;
 import org.mort11.commands.autons.pathplanned.GetPlanned;
 import org.mort11.commands.autons.timed.blue.TaxiB;
 import org.mort11.commands.autons.timed.red.TaxiR;
-import org.mort11.mortlib.swerve.PathPlanner;
+import org.mort11.mortlib.subsystems.swerve.PathPlanner;
 import org.mort11.subsystems.Drivetrain;
 
 import com.pathplanner.lib.auto.AutoBuilder;

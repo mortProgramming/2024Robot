@@ -11,9 +11,19 @@ public class MotorGroup implements MotorIntf {
         motorCount = motors.length;
     }
 
-    // public void giveAll (Runnable method) {
+    public MotorGroup(MotorTypeEnum motorType, int... ids) {
+        motorCount = ids.length;
+        motors = new Motor[motorCount];
+
+        for(int i = 0; i < motorCount; i++) {
+            motors[i] = new Motor(motorType, ids[i]);
+        }
+    }
+
+    // public void giveAll(Runnable method) {
     //     for (int i = 0; i < motorCount; i++) {
     //         method(motors[i]);
+    //         motors[i].method();
     //     }
     // }
 

@@ -1,6 +1,7 @@
 package org.mort11.mortlib.hardware.encoder;
 
 import org.mort11.mortlib.hardware.brands.ctre.CANCoderEncoder;
+import org.mort11.mortlib.hardware.brands.rev.ThroughBoreEncoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -19,6 +20,9 @@ public class Encoder implements EncoderIntf {
             case CANCODER:
                 encoder = new CANCoderEncoder(ID);
                 break;
+            case THROUGHBORE:
+                encoder = new ThroughBoreEncoder(ID);
+                break;
         }
     }
 
@@ -28,6 +32,10 @@ public class Encoder implements EncoderIntf {
 
     public Rotation2d getPosition() {
         return encoder.getPosition();
+    }
+
+    public double getVelocityRotations() {
+        return encoder.getVelocityRotations();
     }
 
     public EncoderTypeEnum getEncoderType() {
