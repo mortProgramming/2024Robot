@@ -58,7 +58,8 @@ public class PortConstants {
 
 	public static final class Vision {
 		public static final String TAG_CAMERA = "taglite";
-		public static final String NOTE_CAMERA = "notelite";
+		// public static final String NOTE_CAMERA = "notelite";
+		public static final String NOTE_CAMERA = "limelight";
     }
 
     public final static class Wrist{

@@ -3,6 +3,9 @@ package org.mort11.commands.actions.drivetrain;
 import org.mort11.subsystems.Drivetrain;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.function.DoubleSupplier;
@@ -38,6 +41,7 @@ public class Drive extends Command {
     @Override
 	public void execute() {
 		if (fieldOriented) {
+
 			drivetrain.setDrive(
 				ChassisSpeeds.fromFieldRelativeSpeeds(
 					translationXSupplier.getAsDouble(),
@@ -45,7 +49,10 @@ public class Drive extends Command {
 					rotationSupplier.getAsDouble(),
 					drivetrain.getGyroscopeRotation()));
 		} else {
-			drivetrain.setDrive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
+			drivetrain.setDrive(
+				new ChassisSpeeds(
+					translationXSupplier.getAsDouble(), 
+					translationYSupplier.getAsDouble(),
 					rotationSupplier.getAsDouble()));
 		}
 	}

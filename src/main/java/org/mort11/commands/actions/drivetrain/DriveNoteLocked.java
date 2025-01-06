@@ -9,6 +9,8 @@ import org.mort11.subsystems.LimelightHelpers;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class DriveNoteLocked extends Command {
@@ -28,16 +30,21 @@ public class DriveNoteLocked extends Command {
 
     @Override
 	public void execute() {
+			NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    		double tx = table.getEntry("tx").getDouble(0.0);
+
 		drivetrain.setDrive(
 			ChassisSpeeds.fromFieldRelativeSpeeds(
 				translationXSupplier.getAsDouble(),
 				translationYSupplier.getAsDouble(), 
-				0,
-                Rotation2d.fromDegrees(0)
+				tx * -0.15,
+                drivetrain.getGyroscopeRotation()
             )
         );
 
-        drivetrain.setAngleController(drivetrain.getGyroscopeRotation().getDegrees() + LimelightHelpers.getTX(NOTE_CAMERA));
+        // drivetrain.setAngleController(drivetrain.getGyroscopeRotation().getDegrees() + LimelightHelpers.getTX("limelight"));
+		// drivetrain.setAngleController(tx * 0.005);
+
 	}
 
     @Override

@@ -15,12 +15,16 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -163,10 +167,37 @@ public class Drivetrain extends SubsystemBase {
 
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
 		SmartDashboard.putNumber("Other angle", navX.getYaw());
+		SmartDashboard.putNumber("limelight distance", getLimeLightDistance());
+
 	}
 
 	public void setDrive(ChassisSpeeds chassisSpeeds) {
 		this.chassisSpeeds = chassisSpeeds;
+	}
+	
+	public double getLimeLightDistance() {
+		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+		NetworkTableEntry ty = table.getEntry("ty");
+		double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+
+		// how many degrees back is your limelight rotated from perfectly vertical?
+		double limelightMountAngleDegrees = 29.0; 
+
+		// distance from the center of the Limelight lens to the floor
+		double limelightLensHeightInches = 10.25; 
+
+		// distance from the target to the floor
+		double goalHeightInches = 24.75; 
+
+		double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+		double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+		//calculate distance
+		double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+		return distanceFromLimelightToGoalInches;
+
+		// Pose3d targetOffset = LimelightHelpers.getTargetPose3d_RobotSpace("limelight");
+		// return Math.sqrt(Math.pow(targetOffset.getX(), 2) + Math.pow(targetOffset.getZ(), 2));
 	}
 
 	public void setPosController(double poseX, double poseY, double wantedX, double wantedY) {
