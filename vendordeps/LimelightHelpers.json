@@ -1,0 +1,20 @@
+{
+    "fileName": "LimelightHelpers.json",
+    "name": "LimelightHelpers",
+    "version": "1.9",
+    "frcYear": "2024",
+    "uuid": "9619F7EA-7F96-4236-9D94-02338DFED593",
+    "mavenUrls": [
+        "https://mortprogramming.github.io/LimelightHelpers/LimelightHelpers/repos/releases"
+    ],
+    "jsonUrl": "https://mortprogramming.github.io/LimelightHelpers/LimelightHelpers/LimelightHelpers.json",
+    "javaDependencies": [
+        {
+            "groupId": "com.LimelightHelpers",
+            "artifactId": "LimelightHelpers-java",
+            "version": "1.9"
+        }
+    ],
+    "jniDependencies": [],
+    "cppDependencies": []
+}
