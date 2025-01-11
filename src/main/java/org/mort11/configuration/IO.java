@@ -17,9 +17,11 @@ import static org.mort11.configuration.constants.PhysicalConstants.Wrist.*;
 import static org.mort11.configuration.constants.PortConstants.Vision.*;
 
 import org.mort11.commands.actions.drivetrain.Drive;
+// import org.mort11.commands.actions.drivetrain.Drive2AprilTag;
 import org.mort11.commands.actions.drivetrain.DriveAtAngle;
 import org.mort11.commands.actions.drivetrain.DriveNoteLocked;
 import org.mort11.commands.actions.drivetrain.Angle2AprilTag;
+// import org.mort11.commands.actions.drivetrain.Robot2AprilTag;
 
 import org.mort11.commands.actions.endeffector.IntakeBeamBreak;
 import org.mort11.commands.actions.endeffector.LightsCommand;
@@ -69,13 +71,16 @@ public class IO {
         joystick.button(2).whileTrue(drivetrain.setGyroscopeZero(0));
 
         //Drivetrain note locking command
-        joystick.trigger().whileTrue(new DriveNoteLocked(Inputs::getJoystickY, Inputs::getJoystickX));
+        //joystick.trigger().whileTrue(new DriveNoteLocked(Inputs::getJoystickY, Inputs::getJoystickX));
+        // joystick.trigger().whileTrue(new Drive2AprilTag());
 
         //Drivetrain reset odometry command
         joystick.button(7).whileTrue(Odometer.resetOdometryCommand(LimelightHelpers.getBotPose2d_wpiBlue(TAG_CAMERA)));
 
         //Drivetrain rotate to AMP button
         joystick.button(3).whileTrue(new DriveAtAngle(Inputs::getJoystickY, Inputs::getJoystickX, IMU_TO_ROBOT_FRONT_ANGLE));
+        
+        
 
 
 
@@ -117,6 +122,8 @@ public class IO {
         xboxController.povRight().whileTrue(new ClimberToVelocity(0, -MANUAL_CLIMBER_SPEED));
 
         xboxController.a().whileTrue(new Angle2AprilTag(0));
+        //Drivetrain move to April Tag
+        // joystick.button(4).whileTrue(new Robot2AprilTag(null, null));
     }
 
     public static Boolean isBlue() {

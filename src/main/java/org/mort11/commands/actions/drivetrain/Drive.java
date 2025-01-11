@@ -66,5 +66,15 @@ public class Drive extends Command {
 	public void end(boolean interrupted) {
 		drivetrain.setDrive(new ChassisSpeeds(0.0, 0.0, 0.0));
 	}
+
+    public void stop() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'stop'");
+    }
+
+    public void drive(ChassisSpeeds fromFieldRelativeSpeeds) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'drive'");
+    }
 }
 

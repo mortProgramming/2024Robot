@@ -1,0 +1,71 @@
+package org.mort11.commands.actions.drivetrain;
+
+import org.mort11.subsystems.Drivetrain;
+import org.mort11.subsystems.LimelightHelpers;
+import org.mort11.subsystems.LimelightHelpers.LimelightResults;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+
+public class Drive2AprilTag extends Command {
+    private final Drivetrain drivetrain;
+    private final Distance2AprilTag distanceCalculator;
+    private final double kPAngle = 0.1; // Proportional gain for angle control
+    private final double kPDistance = 0.1; // Proportional gain for distance control
+
+    public Drive2AprilTag() {
+        drivetrain = Drivetrain.getInstance();
+        distanceCalculator = new Distance2AprilTag();
+        addRequirements(drivetrain);
+    }
+
+    @Override
+    public void execute() {
+        // Get the results of what the limelight is currently seeing
+        LimelightResults results = LimelightHelpers.getLatestResults("limelight");
+        
+        // Check to see if there are any targets detected
+        // If there are no targets, then return from the function and do not drive the drivetrain
+        if (results.targets_Fiducials.length == 0) {
+            return;
+        }
+
+        // If there is a target detected, then the function will continue past the above if statement
+        // Get the horizontal rotation value (tx) from the first april tag that is detected
+        // Get the angle to the AprilTag
+        double wantedAngle = LimelightHelpers.getTX("limelight");
+        // double wantedAngle = results.targets_Fiducials[0].tx;
+        SmartDashboard.putNumber("test value april tag", wantedAngle);
+        // Get the distance to the AprilTag
+        double distance = distanceCalculator.getLimeLightDistance();
+
+        // Calculate the rotation speed based on the angle error
+        double angleError = wantedAngle; // Assuming the desired angle is 0
+        double rotationSpeed = kPAngle * angleError;
+
+        // Calculate the forward speed based on the distance
+        double forwardSpeed = Math.min(kPDistance * distance, 0.5);
+
+        // Set the drivetrain speeds
+        drivetrain.setDrive(
+			ChassisSpeeds.fromFieldRelativeSpeeds(
+                0,
+				-forwardSpeed, 
+				rotationSpeed,
+                drivetrain.getGyroscopeRotation()
+            )
+        );
+    }
+
+    @Override
+    public boolean isFinished() {
+        // You can define a condition to finish the command, e.g., when close enough to the target
+        return distanceCalculator.getLimeLightDistance() < 12.0; // Example: stop when within 12 inches
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        drivetrain.setDrive(new ChassisSpeeds(0, 0, 0)); // Stop the robot
+    }
+}

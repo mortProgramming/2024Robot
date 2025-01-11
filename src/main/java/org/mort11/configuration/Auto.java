@@ -73,6 +73,7 @@ public class Auto {
 		autoChooser.addOption("Gackley Auto", GetPlanned.getGackleyAuto());
 		autoChooser.addOption("TwoPieceAmpSide", GetPlanned.getTwoPieceAmpSide());
 		autoChooser.addOption("BieryTestAuto", GetPlanned.getBieryAuto());
+		
 	}
 
 	public static Command getAutonomousCommand() {

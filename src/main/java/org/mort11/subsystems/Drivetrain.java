@@ -167,37 +167,12 @@ public class Drivetrain extends SubsystemBase {
 
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
 		SmartDashboard.putNumber("Other angle", navX.getYaw());
-		SmartDashboard.putNumber("limelight distance", getLimeLightDistance());
+		// SmartDashboard.putNumber("limelight distance", getLimeLightDistanceInches());
 
 	}
 
 	public void setDrive(ChassisSpeeds chassisSpeeds) {
 		this.chassisSpeeds = chassisSpeeds;
-	}
-	
-	public double getLimeLightDistance() {
-		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-		NetworkTableEntry ty = table.getEntry("ty");
-		double targetOffsetAngle_Vertical = ty.getDouble(0.0);
-
-		// how many degrees back is your limelight rotated from perfectly vertical?
-		double limelightMountAngleDegrees = 29.0; 
-
-		// distance from the center of the Limelight lens to the floor
-		double limelightLensHeightInches = 10.25; 
-
-		// distance from the target to the floor
-		double goalHeightInches = 24.75; 
-
-		double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-		double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-
-		//calculate distance
-		double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
-		return distanceFromLimelightToGoalInches;
-
-		// Pose3d targetOffset = LimelightHelpers.getTargetPose3d_RobotSpace("limelight");
-		// return Math.sqrt(Math.pow(targetOffset.getX(), 2) + Math.pow(targetOffset.getZ(), 2));
 	}
 
 	public void setPosController(double poseX, double poseY, double wantedX, double wantedY) {

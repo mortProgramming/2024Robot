@@ -12,33 +12,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Distance2AprilTag {
-    public double getLimeLightDistance() {
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry ty = table.getEntry("ty");
-    double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+	public double getLimeLightDistance() {
+		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+		NetworkTableEntry ty = table.getEntry("ty");
+		double targetOffsetAngle_Vertical = ty.getDouble(0.0);
 
-    // how many degrees back is your limelight rotated from perfectly vertical?
-    double limelightMountAngleDegrees = 35.0; 
+		// how many degrees back is your limelight rotated from perfectly vertical?
+		double limelightMountAngleDegrees = 29.0; 
 
-    // distance from the center of the Limelight lens to the floor
-    double limelightLensHeightInches = 10.5; 
+		// distance from the center of the Limelight lens to the floor
+		double limelightLensHeightInches = 10.25; 
 
-    // distance from the target to the floor
-    double goalHeightInches = 19.0; 
+		// distance from the target to the floor
+		double goalHeightInches = 24.75; 
 
-    double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+		double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+		double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
-    //calculate distance
+		//calculate distance
+		double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+		return distanceFromLimelightToGoalInches;
 
-    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
-        
-    // SmartDashboard.putNumber("limelight distance", distanceFromLimelightToGoalInches);
-
-    return distanceFromLimelightToGoalInches;
-
-
-}
+		// Pose3d targetOffset = LimelightHelpers.getTargetPose3d_RobotSpace("limelight");
+		// return Math.sqrt(Math.pow(targetOffset.getX(), 2) + Math.pow(targetOffset.getZ(), 2));
+	}
 
 
    

@@ -1,0 +1,136 @@
+package org.mort11.commands.actions.drivetrain;
+
+
+import java.util.function.Supplier;
+
+import org.mort11.subsystems.LimelightHelpers;
+
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+
+
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj2.command.Command;
+
+public class Robot2AprilTag extends Command {
+
+    private static final TrapezoidProfile.Constraints X_CONSTRAINTS = new TrapezoidProfile.Constraints(3, 2);
+    private static final TrapezoidProfile.Constraints Y_CONSTRAINTS = new TrapezoidProfile.Constraints(3, 2);
+    private static final TrapezoidProfile.Constraints OMEGA_CONSTRAINTS = new TrapezoidProfile.Constraints(8, 8);
+    
+  
+    private static final Transform3d TAG_TO_GOAL =
+        new Transform3d(
+            new Translation3d(1.5, 0.0, 0.0),
+            new Rotation3d(0.0, 0.0, Math.PI));
+    
+    private final Drive drive;
+    private final Supplier<Pose2d> poseProvider;
+    
+    private final ProfiledPIDController xController = new ProfiledPIDController(3, 0, 0, X_CONSTRAINTS);
+    private final ProfiledPIDController yController = new ProfiledPIDController(3, 0, 0, Y_CONSTRAINTS);
+    private final ProfiledPIDController omegaController = new ProfiledPIDController(2, 0, 0, OMEGA_CONSTRAINTS);
+    
+    private Pose3d lastTargetPose;
+    
+    public Robot2AprilTag(
+        Drive drive,
+        Supplier<Pose2d> poseProvider) {
+        this.drive = drive;
+        this.poseProvider = poseProvider;
+        
+         NetworkTableInstance.getDefault().getTable("limelight");
+        
+        xController.setTolerance(0.2);
+        yController.setTolerance(0.2);
+        omegaController.setTolerance(Units.degreesToRadians(3));
+        omegaController.enableContinuousInput(-Math.PI, Math.PI);
+        
+        addRequirements(drive);
+    }
+
+    private void addRequirements(Drive drive) {
+        //auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addRequirements'");
+    }
+
+    @Override
+    public void initialize() {
+        lastTargetPose = null;
+        var robotPose = poseProvider.get();
+        omegaController.reset(((Pose2d) robotPose).getRotation().getRadians());
+        xController.reset(robotPose.getX());
+        yController.reset(robotPose.getY());
+    }
+
+    @Override
+    public void execute() {
+        var robotPose2d = poseProvider.get();
+        var robotPose =
+            new Pose3d(
+                ((Pose2d) robotPose2d).getX(),
+                ((Pose2d) robotPose2d).getY(),
+                0.0,
+                new Rotation3d(0.0, 0.0, ((Pose2d) robotPose2d).getRotation().getRadians()));
+
+        //limelight data
+        double targetX = LimelightHelpers.getTX("tx");
+        double targetY = LimelightHelpers.getTY("ty"); 
+        double targetArea = LimelightHelpers.getTA("ta"); 
+        
+        //target is visible
+        if (targetArea > 0) {
+            //calculates the target's 3D pose from limelight data
+            var cameraToTarget = new Transform3d(
+                new Translation3d(targetX, targetY, 0),
+                new Rotation3d(0, 0, 0)
+            );
+
+            //robot and camera are aligned,computes the target's pose
+            var cameraPose = robotPose.transformBy(new Transform3d(new Translation3d(0, 0, 0), new Rotation3d()));
+            var targetPose = cameraPose.transformBy(cameraToTarget);
+            var goalPose = targetPose.transformBy(TAG_TO_GOAL).toPose2d();
+
+            // Set PID goals based on the target's pose
+            xController.setGoal(goalPose.getX());
+            yController.setGoal(goalPose.getY());
+            omegaController.setGoal(goalPose.getRotation().getRadians());
+        }
+
+        if (lastTargetPose == null) {
+            //target not visible, stop the robot
+            drive.stop();
+        } else {
+            //robot to move to target
+            var xSpeed = xController.calculate(robotPose.getX());
+            if (xController.atGoal()) {
+                xSpeed = 0;
+            }
+
+            var ySpeed = yController.calculate(robotPose.getY());
+            if (yController.atGoal()) {
+                ySpeed = 0;
+            }
+
+            var omegaSpeed = omegaController.calculate(((Pose2d) robotPose2d).getRotation().getRadians());
+            if (omegaController.atGoal()) {
+                omegaSpeed = 0;
+            }
+
+            drive.drive(
+                ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, omegaSpeed, ((Pose2d) robotPose2d).getRotation()));
+        }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        drive.stop();
+    }
+}
