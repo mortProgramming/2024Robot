@@ -28,22 +28,21 @@ public class AutoGenerator extends SequentialCommandGroup{
         for (int i = 0; i < greaterLength; i++){
         
             if(otherCommand.length < i && paths.size() >= i) {
-                gimmeMyAuton.andThen(
-                    AutoBuilder.followPath(paths.get(i))
-                );
+                gimmeMyAuton = new SequentialCommandGroup(gimmeMyAuton,
+                 AutoBuilder.followPath(paths.get(i)));
             }
 
             else if(otherCommand.length >= i && paths.size() < i) {
-                gimmeMyAuton.andThen(
-                    otherCommand[i]
-                );
+                gimmeMyAuton = new SequentialCommandGroup(gimmeMyAuton, 
+                otherCommand[i]);
+
             }
 
             else {
-                gimmeMyAuton.andThen(
-                    otherCommand[i],
-                    AutoBuilder.followPath(paths.get(i))
-                );
+                gimmeMyAuton = new 
+                SequentialCommandGroup(gimmeMyAuton,otherCommand[i], 
+                AutoBuilder.followPath(paths.get(i)));
+              
             }
         }
 
