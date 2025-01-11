@@ -8,33 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class GetPlanned {
 
-    public static Command getTwoPiece() {
+    public static Command getTest(){
         All.setCommands();
-
-        return new PathPlannerAuto("PathPlanner2Piece");
-    }
-
-    public static Command getGackleyAuto() {
-        All.setCommands();
-
-        return new PathPlannerAuto("GackleyAuto1");
-    }
-
-    public static Command getBieryAuto() {
-        All.setCommands();
-
-        return new PathPlannerAuto("BieryWildAuto");
-    }
-
-    public static Command getChoreoOneNote() {
-        All.setCommands();
-
-        return new PathPlannerAuto("OneNote");
-    }
-
-    public static Command getTwoPieceAmpSide() {
-        All.setCommands();
-
-        return new PathPlannerAuto("TwoPieceAmpSide");
+        return new PathPlannerAuto("Test");
     }
 }

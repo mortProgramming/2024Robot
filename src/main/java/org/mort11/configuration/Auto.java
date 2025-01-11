@@ -3,6 +3,7 @@ package org.mort11.configuration;
 import org.mort11.commands.autons.odometered.ScoreAmpBlue;
 import org.mort11.commands.autons.odometered.ScoreAmpRed;
 import org.mort11.commands.autons.pathplanned.GetPlanned;
+import org.mort11.commands.autons.pathplanned.autoPieces.Test;
 import org.mort11.commands.autons.timed.blue.TaxiB;
 import org.mort11.commands.autons.timed.red.TaxiR;
 import org.mort11.subsystems.Drivetrain;
@@ -20,6 +21,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import org.mort11.commands.autons.Integrated.AutoGenerator;
+
 
 public class Auto {
 
@@ -33,6 +36,7 @@ public class Auto {
 
 		autoChooser = new SendableChooser<Command>();
 		configureAutoBuilder();
+
 		addAutoOptions();
 
 		SmartDashboard.putData(autoChooser);
@@ -68,11 +72,10 @@ public class Auto {
 		autoChooser.addOption("Odometer Thing Blue", new ScoreAmpBlue());
 		autoChooser.addOption("Odometer Thing Red", new ScoreAmpRed());
 
-		autoChooser.addOption("PathPlanner TwoPiece", GetPlanned.getTwoPiece());
-		autoChooser.addOption("OneNote", GetPlanned.getChoreoOneNote());
-		autoChooser.addOption("Gackley Auto", GetPlanned.getGackleyAuto());
-		autoChooser.addOption("TwoPieceAmpSide", GetPlanned.getTwoPieceAmpSide());
-		autoChooser.addOption("BieryTestAuto", GetPlanned.getBieryAuto());
+
+		autoChooser.addOption("Test", new Test());
+		
+		
 	}
 
 	public static Command getAutonomousCommand() {
