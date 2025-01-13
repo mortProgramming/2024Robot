@@ -225,4 +225,9 @@ public class Drivetrain extends SubsystemBase {
 		}
 		return drivetrain;
 	}
+
+    public Object getRotateToAngleController() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRotateToAngleController'");
+    }
 }
