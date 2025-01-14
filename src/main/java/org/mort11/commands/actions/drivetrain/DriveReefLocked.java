@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.function.DoubleSupplier;
 
+import org.mort11.config.Odometer;
 import org.mort11.subsystems.Drivetrain;
+import static org.mort11.config.constants.FieldConstants.Reef.*;
 
 public class DriveReefLocked extends Command {
     private Drivetrain drivetrain;
@@ -32,7 +34,7 @@ public class DriveReefLocked extends Command {
 			drivetrain.getIMURotation())
         );
 
-        drivetrain.setAngleController(0);
+        drivetrain.setAngleController(90-angleToReef(Odometer.getPoseX(), Odometer.getPoseY()));
 	}
 
     @Override

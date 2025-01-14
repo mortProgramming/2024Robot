@@ -47,6 +47,27 @@ public final class FieldConstants {
         public static final boolean greaterThanNegativeReefLine(double xPos, double yPos) {
             return yPos > (xPos * REEF_LINE_NEGATIVE_SLOPE + REEF_LINE_NEGATIVE_Y_INTERCEPT);
         }
+
+        public static final double angleToReef(double xPos, double yPos) {
+            if(greaterThanVerticalReefLine(xPos) && greaterThanPositiveReefLine(xPos, yPos) && greaterThanNegativeReefLine(xPos, yPos)) {
+                return 60;
+            }
+            else if(!greaterThanVerticalReefLine(xPos) && greaterThanPositiveReefLine(xPos, yPos) && greaterThanNegativeReefLine(xPos, yPos)) {
+                return 120;
+            }
+            else if(!greaterThanVerticalReefLine(xPos) && greaterThanPositiveReefLine(xPos, yPos) && !greaterThanNegativeReefLine(xPos, yPos)) {
+                return 180;
+            }
+            else if(!greaterThanVerticalReefLine(xPos) && !greaterThanPositiveReefLine(xPos, yPos) && !greaterThanNegativeReefLine(xPos, yPos)) {
+                return 240;
+            }
+            else if(greaterThanVerticalReefLine(xPos) && !greaterThanPositiveReefLine(xPos, yPos) && !greaterThanNegativeReefLine(xPos, yPos)) {
+                return 300;
+            }
+            else {
+                return 360;
+            }
+        }
     }
 
     public static final List<AprilTag> APRIL_TAGS = List.of(

@@ -19,6 +19,7 @@ import static org.mort11.config.constants.PortConstants.Vision.*;
 import org.mort11.commands.actions.drivetrain.Drive;
 import org.mort11.commands.actions.drivetrain.DriveAtAngle;
 import org.mort11.commands.actions.drivetrain.DriveNoteLocked;
+import org.mort11.commands.actions.drivetrain.DriveReefLocked;
 import org.mort11.commands.actions.endeffector.IntakeRest;
 import org.mort11.commands.actions.endeffector.Lighting;
 import org.mort11.commands.actions.endeffector.pos.ClimberToPos;
@@ -72,6 +73,8 @@ public class IO {
 
         //Drivetrain rotate to AMP button
         joystick.button(3).whileTrue(new DriveAtAngle(Inputs::getJoystickY, Inputs::getJoystickX, IMU_TO_ROBOT_FRONT_ANGLE));
+
+        joystick.button(0).whileTrue(new DriveReefLocked(Inputs::getJoystickX, Inputs::getJoystickY));
 
 
 
