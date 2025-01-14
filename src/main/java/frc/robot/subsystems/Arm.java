@@ -50,6 +50,11 @@ public class Arm extends SubsystemBase {
 
         private DutyCycleEncoder encoder;
 
+        private double armOutput;
+        private double feedForwardOutput;
+        private double pidOutput;
+        private double output;
+
     public Arm() {
         velocityMode = true;
         targetBlowerOutput = 0;
@@ -94,7 +99,10 @@ public class Arm extends SubsystemBase {
         
         SmartDashboard.putNumber("Encoder Arm Position Degrees", encoderToDegrees());
         SmartDashboard.putNumber("Arm Setpoint", setpoint);
-        SmartDashboard.putNumber("arm output", setPosition(setpoint));
+
+        armOutput = setPosition(setpoint);
+
+        SmartDashboard.putNumber("arm output", armOutput);
         SmartDashboard.putNumber("ActualArmMotorOutput", masterArmMotor.get());
         SmartDashboard.putNumber("Blower Value", currentBlowerOutput);
 
@@ -103,7 +111,7 @@ public class Arm extends SubsystemBase {
         }
 
         else {
-            masterArmMotor.set(setPosition(setpoint));
+            masterArmMotor.set(armOutput);
             // masterArmMotor.set(0);
         }
         //masterArmMotor.set(0);
@@ -242,17 +250,11 @@ public class Arm extends SubsystemBase {
     }
 
     private double setPosition(double setpoint) {
-		double output = (POSITION_FF_G * Math.cos(Math.toRadians(encoderToDegrees())))
-        - armPositionController.calculate(encoderToDegrees(), setpoint);
-		// if (output >= 1){
-		// 	output = 0.1;
-		// } else if (output <= -1) {
-		// 	output = -0.1;
-		// }
-		// double output = 0.1 * sin(getPositionDegrees()) +
-		// armController.calculate(getPosition(), setpoint);
-		// masterArmMotor.set(output);
+		feedForwardOutput = armPostionFeedForward.calculate(setpoint, getVelocity());
+        pidOutput = armPositionController.calculate(encoderToDegrees(), setpoint);
 
+        output = feedForwardOutput + pidOutput;
         return output;
 	}
+    
 }
