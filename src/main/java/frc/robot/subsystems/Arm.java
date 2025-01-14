@@ -87,16 +87,15 @@ public class Arm extends SubsystemBase {
 		slot0Configs = armtalonFXConfigs.Slot0;
 		slot0Configs.kS = 0.25; 
 		slot0Configs.kV = 0.12; 
-		slot0Configs.kA = 0.01; 
+		slot0Configs.kA = 0.01;  
 		slot0Configs.kP = 4.8; 
 		slot0Configs.kI = 0; 
-		slot0Configs.kD = 0.1;
+		slot0Configs.kD = 0.1; 
 
 		motionMagicConfigs = armtalonFXConfigs.MotionMagic;
 		motionMagicConfigs.MotionMagicCruiseVelocity = 80; 
-		motionMagicConfigs.MotionMagicAcceleration = 160; 
+		motionMagicConfigs.MotionMagicAcceleration = 160;
 		motionMagicConfigs.MotionMagicJerk = 1600;
-
         masterArmMotor.getConfigurator().apply(slot0Configs);
 
     }

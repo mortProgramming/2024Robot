@@ -51,21 +51,21 @@ public class Wrist extends SubsystemBase {
         trapServo = new Servo(TRAP_SERVO_PORT);
         servoPos = 90;
 
-        wristtalonFXConfigs = new TalonFXConfiguration();
-		slot0Configs = wristtalonFXConfigs.Slot0;
-		slot0Configs.kS = 0.25; 
-		slot0Configs.kV = 0.12; 
-		slot0Configs.kA = 0.01; 
-		slot0Configs.kP = 4.8; 
+        wristtalonFXConfigs = new TalonFXConfiguration(); 
+		slot0Configs = wristtalonFXConfigs.Slot0; 
+		slot0Configs.kS = 0.25;  
+		slot0Configs.kV = 0.12;  
+		slot0Configs.kA = 0.01;
+		slot0Configs.kP = 4.8;
 		slot0Configs.kI = 0; 
-		slot0Configs.kD = 0.1;
+		slot0Configs.kD = 0.1; 
 
-		motionMagicConfigs = wristtalonFXConfigs.MotionMagic;
-		motionMagicConfigs.MotionMagicCruiseVelocity = 80; 
-		motionMagicConfigs.MotionMagicAcceleration = 160; 
-		motionMagicConfigs.MotionMagicJerk = 1600;
+		motionMagicConfigs = wristtalonFXConfigs.MotionMagic; 
+		motionMagicConfigs.MotionMagicCruiseVelocity = 80;  
+		motionMagicConfigs.MotionMagicAcceleration = 160;  
+		motionMagicConfigs.MotionMagicJerk = 1600; 
 
-        wristMotor.getConfigurator().apply(slot0Configs);
+        wristMotor.getConfigurator().apply(slot0Configs); 
 
         }
 
