@@ -39,14 +39,19 @@ public class Drive extends Command {
 	public void execute() {
 		if (fieldOriented) {
 			drivetrain.setDrive(
-				ChassisSpeeds.fromFieldRelativeSpeeds(
+				new ChassisSpeeds(
 					translationXSupplier.getAsDouble(),
 					translationYSupplier.getAsDouble(), 
-					rotationSupplier.getAsDouble(),
-					drivetrain.getIMURotation()));
+					rotationSupplier.getAsDouble()
+				)
+			);
 		} else {
-			drivetrain.setDrive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
-					rotationSupplier.getAsDouble()));
+			drivetrain.setUnorientedDrive(
+				new ChassisSpeeds(
+					translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
+					rotationSupplier.getAsDouble()
+				)
+			);
 		}
 	}
 

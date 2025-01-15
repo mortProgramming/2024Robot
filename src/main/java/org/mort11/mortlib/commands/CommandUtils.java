@@ -7,11 +7,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class CommandUtils {
 
-    public Command toCommand(Runnable runnable, Subsystem subsystem) {
+    public static Command toCommand(Runnable runnable, Subsystem subsystem) {
         return new InstantCommand(runnable, subsystem);
     }
 
-    public Trigger doubleInput (Trigger trigger1, Trigger trigger2) {
+    // public static Command toCommand(Runnable runnable, Subsystem subsystem) {
+    //     return new InstantCommand(() -> runnable, subsystem);
+    // }
+
+    public static Trigger doubleInput (Trigger trigger1, Trigger trigger2) {
         return trigger1.and(trigger2);
     }
 }

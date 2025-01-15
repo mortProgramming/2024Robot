@@ -29,11 +29,10 @@ public class DriveNoteLocked extends Command {
     @Override
 	public void execute() {
 		drivetrain.setDrive(
-			ChassisSpeeds.fromFieldRelativeSpeeds(
+			new ChassisSpeeds(
 				translationXSupplier.getAsDouble(),
 				translationYSupplier.getAsDouble(), 
-				0,
-                Rotation2d.fromDegrees(0)
+				0
             )
         );
 

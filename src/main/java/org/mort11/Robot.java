@@ -11,7 +11,6 @@ import static org.mort11.config.constants.PhysicalConstants.Wrist.*;
 
 import org.mort11.config.Auto;
 import org.mort11.config.IO;
-import org.mort11.config.Odometer;
 import org.mort11.subsystems.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -49,8 +48,6 @@ public class Robot extends TimedRobot {
 
 		IO.configure();
 		Auto.configure();
-
-		Odometer.odometerInit();
 
 		System.out.println("RobotInit");
 	}
@@ -104,11 +101,7 @@ public class Robot extends TimedRobot {
 
 	/** This function is called periodically during autonomous. */
 	@Override
-	public void autonomousPeriodic() {
-		Odometer.updateOdometry();
-		// Odometer.updateOdometryIgnoreLimelight();
-
-	}
+	public void autonomousPeriodic() {}
 
 	@Override
 	public void teleopInit() {
@@ -122,9 +115,7 @@ public class Robot extends TimedRobot {
 
 	/** This function is called periodically during operator control. */
 	@Override
-	public void teleopPeriodic() {
-		Odometer.updateOdometry();
-	}
+	public void teleopPeriodic() {}
 
 	@Override
 	public void testInit() {

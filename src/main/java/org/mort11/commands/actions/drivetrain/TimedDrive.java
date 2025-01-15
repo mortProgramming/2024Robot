@@ -48,10 +48,11 @@ public class TimedDrive extends Command{
 
   @Override
   public void execute() {
-    drivetrain.setDrive(ChassisSpeeds.fromFieldRelativeSpeeds(
-      -y, x, omega,
-		  drivetrain.getIMURotation()
-    ));
+    drivetrain.setDrive(
+      new ChassisSpeeds(
+      -y, x, omega
+      )
+    );
   }
 
   @Override

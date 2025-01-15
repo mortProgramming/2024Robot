@@ -11,7 +11,7 @@ public class ScoreAmpBlue extends SequentialCommandGroup{
         addCommands( 
             new SequentialCommandGroup(
                 new Orient(270),
-                Odometer.resetOdometryCommand(0.4, 7.4, 270),
+                drivtrain.(0.4, 7.4, 270),
                 new DriveToPos(1.5, 7.9)
             )
         );

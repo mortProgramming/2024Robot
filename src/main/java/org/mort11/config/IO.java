@@ -28,6 +28,7 @@ import org.mort11.commands.actions.endeffector.pos.WristToPos;
 import org.mort11.commands.actions.endeffector.vel.BlowerToVel;
 import org.mort11.commands.actions.endeffector.vel.ClimberToVel;
 import org.mort11.commands.actions.endeffector.vel.IntakeToVel;
+import org.mort11.mortlib.commands.CommandUtils;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -69,7 +70,7 @@ public class IO {
         joystick.trigger().whileTrue(new DriveNoteLocked(Inputs::getJoystickY, Inputs::getJoystickX));
 
         //Drivetrain reset odometry command
-        joystick.button(7).whileTrue(Odometer.resetOdometryCommand(LimelightHelpers.getBotPose2d_wpiBlue(TAG_CAMERA)));
+        joystick.button(7).whileTrue(CommandUtils.toCommand(() -> drivetrain.resetPosition(LimelightHelpers.getBotPose2d_wpiBlue(TAG_CAMERA)), drivetrain));
 
         //Drivetrain rotate to AMP button
         joystick.button(3).whileTrue(new DriveAtAngle(Inputs::getJoystickY, Inputs::getJoystickX, IMU_TO_ROBOT_FRONT_ANGLE));
