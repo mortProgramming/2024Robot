@@ -199,12 +199,8 @@ public class SwerveDriveBase extends SubsystemBase {
 		return driveKinematics;
 	}
 
-	public double getPoseX() {
-		return swerveDrive.getPosition().getX();
-	}
-
-	public double getPoseY() {
-		return swerveDrive.getPosition().getY();
+	public Pose2d getPose() {
+		return swerveDrive.getPosition();
 	}
 	
 	public Rotation2d getIMURotation() {

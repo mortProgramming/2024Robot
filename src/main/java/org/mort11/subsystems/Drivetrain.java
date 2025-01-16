@@ -77,6 +77,10 @@ public class Drivetrain extends SwerveDriveBase {
     	getSwerveDrive().update();
 	}
 
+	public double calculateRotateController(double wantedDegrees) {
+		return rotateToAngleController.calculate(getIMURotation().getDegrees(), wantedDegrees);
+	}
+
 	public double calculateChangeRotateController(double wantedPosition) {
 		return rotateToAngleController.calculate(getIMURotation().getDegrees(), getIMURotation().getDegrees() + wantedPosition);
 	}

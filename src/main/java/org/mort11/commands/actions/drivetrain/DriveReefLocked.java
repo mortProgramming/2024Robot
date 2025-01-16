@@ -1,12 +1,10 @@
 package org.mort11.commands.actions.drivetrain;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.function.DoubleSupplier;
 
-import org.mort11.config.Odometer;
 import org.mort11.subsystems.Drivetrain;
 import static org.mort11.config.constants.FieldConstants.Reef.*;
 
@@ -31,11 +29,13 @@ public class DriveReefLocked extends Command {
 			new ChassisSpeeds(
 				translationXSupplier.getAsDouble(),
 				translationYSupplier.getAsDouble(), 
-				0
+				drivetrain.calculateRotateController(
+					90 - angleToReef(
+						drivetrain.getPose().getX(), drivetrain.getPose().getY()
+					)
+				)
 			)
         );
-
-        drivetrain.setAngleController(90-angleToReef(Odometer.getPoseX(), Odometer.getPoseY()));
 	}
 
     @Override

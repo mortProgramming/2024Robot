@@ -13,15 +13,15 @@ public class DriveAtAngle extends Command {
 
 	private DoubleSupplier translationXSupplier;
 	private DoubleSupplier translationYSupplier;
-	private double rotationSupplier;
+	private double rotationInDegreesSupplier;
 
 	public DriveAtAngle(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
-			double rotationSupplier) {
+			double rotationInDegreesSupplier) {
 		drivetrain = Drivetrain.getInstance();
 
 		this.translationXSupplier = translationXSupplier;
 		this.translationYSupplier = translationYSupplier;
-		this.rotationSupplier = rotationSupplier;
+		this.rotationInDegreesSupplier = rotationInDegreesSupplier;
 		
 
 		addRequirements(drivetrain);
@@ -33,11 +33,9 @@ public class DriveAtAngle extends Command {
 			new ChassisSpeeds(
 				translationXSupplier.getAsDouble(),
 				translationYSupplier.getAsDouble(), 
-			0
+				drivetrain.calculateRotateController(rotationInDegreesSupplier)
 			)
         );
-
-        drivetrain.setAngleController(rotationSupplier);
 	}
 
     @Override

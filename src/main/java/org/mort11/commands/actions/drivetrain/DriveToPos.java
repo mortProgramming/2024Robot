@@ -1,8 +1,9 @@
 package org.mort11.commands.actions.drivetrain;
 
-import org.mort11.config.Odometer;
 import org.mort11.subsystems.Drivetrain;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -23,7 +24,7 @@ public class DriveToPos extends Command {
 
   @Override
   public void execute() {
-   drivetrain.setPosController(Odometer.getPoseX(), Odometer.getPoseY(), wantedX, wantedY);
+   drivetrain.getSwerveDrive().moveToPosition(new Pose2d(wantedX, wantedY, drivetrain.getIMURotation()));
 	}
   
   @Override
@@ -33,8 +34,8 @@ public class DriveToPos extends Command {
 
   @Override
   public boolean isFinished() {
-    return (drivetrain.getXControllerAtSetpoint() && 
-      drivetrain.getYControllerAtSetpoint()
+    return (drivetrain.getXController().atSetpoint() && 
+      drivetrain.getYController().atSetpoint()
     );
   }
 }
