@@ -20,6 +20,7 @@ import org.mort11.commands.actions.drivetrain.Drive;
 // import org.mort11.commands.actions.drivetrain.Drive2AprilTag;
 import org.mort11.commands.actions.drivetrain.DriveAtAngle;
 import org.mort11.commands.actions.drivetrain.DriveNoteLocked;
+import org.mort11.commands.actions.drivetrain.Robot2AprilTag;
 import org.mort11.commands.actions.drivetrain.Angle2AprilTag;
 // import org.mort11.commands.actions.drivetrain.Robot2AprilTag;
 
@@ -123,7 +124,7 @@ public class IO {
 
         xboxController.a().whileTrue(new Angle2AprilTag(0));
         //Drivetrain move to April Tag
-        // joystick.button(4).whileTrue(new Robot2AprilTag(null, null));
+        joystick.button(4).whileTrue(new Robot2AprilTag());
     }
 
     public static Boolean isBlue() {

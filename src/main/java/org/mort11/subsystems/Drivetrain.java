@@ -221,8 +221,8 @@ public class Drivetrain extends SubsystemBase {
 
 
 
-	public boolean getXControllerAtSetpoint() {
-		return xToPosController.atSetpoint();
+	public ProfiledPIDController getXController() {
+		return xToPosController;
 	}
 
 	public boolean getYControllerAtSetpoint() {

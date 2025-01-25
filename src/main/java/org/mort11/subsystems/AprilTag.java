@@ -1,6 +1,5 @@
 package org.mort11.subsystems;
 
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -24,6 +23,9 @@ public class AprilTag {
 
     //calculate distance
     double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
-    
+
+    // SmartDashboard.putNumber("distance to tag", Distance2AprilTag());
+
+
     
 }

@@ -2,6 +2,9 @@ package org.mort11.configuration.constants;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 
 public class PhysicalConstants {
@@ -108,5 +111,10 @@ public class PhysicalConstants {
 
     public final static class Vision {
       public static final double MAX_POSE_ERROR_METERS = 1;
+
+  //     public static final Transform3d CAMERA_TO_ROBOT = 
+  //     new Transform3d(new Translation3d(0.0, 10.25, 0.0), new Rotation3d(29.0, 0.0, 0.0));
+  // public static final Transform3d ROBOT_TO_CAMERA = CAMERA_TO_ROBOT.inverse();
+
     } 
 }

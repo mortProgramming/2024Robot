@@ -1260,4 +1260,29 @@ public class LimelightHelpers {
 
         return results;
     }
+
+    public static Object getCameraPose_TargetSpace2D() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCameraPose_TargetSpace2D'");
+    }
+
+    public static Object getTargetPose_RobotSpace2D(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTargetPose_RobotSpace2D'");
+    }
+
+    public static Object getTargetPose_FieldSpace() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTargetPose_FieldSpace'");
+    }
+
+    public static Object getRobotPose_TargetSpace2D(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRobotPose_TargetSpace2D'");
+    }
+
+    public static Object getCameraPose_TargetSpace2D(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCameraPose_TargetSpace2D'");
+    }
 }
