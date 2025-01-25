@@ -256,6 +256,7 @@ public final class Constants {
 		public static final double GREEN_COLOR = 0.77;
 		public static final double RED_COLOR = 0.61; //0.61
 		public static final double BLUE_COLOR = 0.87;
+		public static final double ORANGE_COLOR = 0.5;
 	}
 
 	public final static class Vision {

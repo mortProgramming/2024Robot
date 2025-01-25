@@ -1,22 +1,39 @@
 package frc.robot.subsystems;
 
+import static frc.robot.utility.Constants.Arm.ARM_DEGREES_TO_0;
+import static frc.robot.utility.Constants.Arm.ARM_ENCODER_DEGREES_TO_0;
+import static frc.robot.utility.Constants.Arm.ARM_GEAR_RATIO;
+import static frc.robot.utility.Constants.Arm.ARM_NEAR_SETPOINT_ERROR;
+import static frc.robot.utility.Constants.Arm.ARM_NEVER_POSITION;
+import static frc.robot.utility.Constants.Arm.BLOWER_MOTOR;
+import static frc.robot.utility.Constants.Arm.BLOWER_PID_D;
+import static frc.robot.utility.Constants.Arm.BLOWER_PID_I;
+import static frc.robot.utility.Constants.Arm.BLOWER_PID_P;
+import static frc.robot.utility.Constants.Arm.ENCODER_PORT;
+import static frc.robot.utility.Constants.Arm.FOLLOW_ARM_MOTOR;
+import static frc.robot.utility.Constants.Arm.MASTER_ARM_MOTOR;
+import static frc.robot.utility.Constants.Arm.POSITION_FF_A;
+import static frc.robot.utility.Constants.Arm.POSITION_FF_G;
+import static frc.robot.utility.Constants.Arm.POSITION_FF_S;
+import static frc.robot.utility.Constants.Arm.POSITION_FF_V;
+import static frc.robot.utility.Constants.Arm.POSITION_PID_A;
+import static frc.robot.utility.Constants.Arm.POSITION_PID_D;
+import static frc.robot.utility.Constants.Arm.POSITION_PID_I;
+import static frc.robot.utility.Constants.Arm.POSITION_PID_P;
+import static frc.robot.utility.Constants.Arm.POSITION_PID_V;
+
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
-import static frc.robot.utility.Constants.Arm.*;
-import static frc.robot.utility.Constants.RobotSpecs.*;
-
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.utility.Constants.RobotSpecs;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 
@@ -83,6 +100,17 @@ public class Arm extends SubsystemBase {
     public void init() {
     //add motor initialization
     }
+
+    public boolean ArmPositionColor(){
+        if (nearSetpoint() == true){
+            boolean trueThing = true;
+            return trueThing;
+        }
+        else{
+            boolean trueThing = false;
+            return trueThing;
+        }
+    } 
 
     /**
      * 

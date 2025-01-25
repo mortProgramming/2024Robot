@@ -25,9 +25,16 @@ public class Lights extends SubsystemBase{
         leds.set(BLUE_COLOR);
     }
 
+    //Orange color for intake up
+    public void setLightsOrange(){
+        leds.set(ORANGE_COLOR);
+    }
+
     public void setLights(double color) {
         leds.set(color);
     }
+
+    
 
     public static Lights getInstance() {
         if (lights == null) {
