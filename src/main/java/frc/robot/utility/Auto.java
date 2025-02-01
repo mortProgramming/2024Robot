@@ -69,6 +69,7 @@ public class Auto {
 		autoChooser.addOption("OneNote", PathAuto.getChoreoOneNote());
 		autoChooser.addOption("Gackley Auto", PathAuto.getGackleyAuto());
 		autoChooser.addOption("TwoPieceAmpSide", PathAuto.getTwoPieceAmpSide());
+		autoChooser.addOption("straightPath", PathAuto.getStraightPath());
 
 		//things
 		// autoChooser.addOption("BlueOnePiece", new ScoreAmpB());

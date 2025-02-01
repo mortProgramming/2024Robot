@@ -53,6 +53,7 @@ public class PathAuto extends SubsystemBase {
   private static PathPlannerAuto pureTwoPiece;
   private static PathPlannerAuto gackleyAutoPure;
   private static PathPlannerAuto choreoOneNote;
+  private static PathPlannerAuto straightPath;
   private static Command twoPieceAmpSide;
 
   public static void init() {
@@ -103,6 +104,7 @@ public class PathAuto extends SubsystemBase {
     bieryAuto = new PathPlannerAuto("BieryWildAuto");
     choreoOneNote = new PathPlannerAuto("OneNote");
     twoPieceAmpSide = new PathPlannerAuto("TwoPieceAmpSide");
+    straightPath = new PathPlannerAuto("straightPath");
   }
   
   public static Command getTwoPiece(){
@@ -125,6 +127,9 @@ public class PathAuto extends SubsystemBase {
   }
   public static Command getTwoPieceAmpSide(){
     return twoPieceAmpSide;
+  }
+  public static Command getStraightPath(){
+    return straightPath;
   }
 
   @Override
