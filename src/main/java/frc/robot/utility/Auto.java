@@ -66,9 +66,9 @@ public class Auto {
 		autoChooser.addOption("PathPlanner TwoPiece", PathAuto.getTwoPiece());
 		autoChooser.addOption("Odometer Thing Blue", new ScoreAmpOB());
 		autoChooser.addOption("Odometer Thing Red", new ScoreAmpOR());
-		autoChooser.addOption("OneNote", PathAuto.getChoreoOneNote());
-		autoChooser.addOption("Gackley Auto", PathAuto.getGackleyAuto());
-		autoChooser.addOption("TwoPieceAmpSide", PathAuto.getTwoPieceAmpSide());
+		//autoChooser.addOption("OneNote", PathAuto.getChoreoOneNote());
+		autoChooser.addOption("Gackley Auto", PathAuto.getGackleyAuto());as
+		//autoChooser.addOption("TwoPieceAmpSide", PathAuto.getTwoPieceAmpSide());
 
 		//things
 		// autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
@@ -78,6 +78,7 @@ public class Auto {
 		// autoChooser.addOption("BlueOneAndTaxi", new ScoreAmpTaxiB());
 		// autoChooser.addOption("RedOneAndTaxi", new ScoreAmpTaxiR());
 		autoChooser.addOption("BieryTestAuto", PathAuto.getBieryAuto());
+		autoChooser.addOption("auto1", PathAuto.getStraight());
 	}
 
 	/**
