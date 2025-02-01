@@ -16,6 +16,7 @@ import frc.robot.commands.Auton.Timed.Red.ScoreAmpTaxiR;
 import frc.robot.commands.Auton.Timed.Red.ScoreAmpTwiceR;
 import frc.robot.commands.Auton.Timed.Red.TaxiR;
 
+
 public class Auto {
 	private static SendableChooser<Command> autoChooser;
 	private static SendableChooser<Boolean> isBlue;
@@ -42,43 +43,27 @@ public class Auto {
 	public static void addAutoOptions() {
 		// By default, the nothing option is selected
 		autoChooser.setDefaultOption("nothing", null);
-    	// autoChooser.addOption("Auton name", new autoncommand1, new autoncommand2);
-		// if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Blue) {
-		// 	autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
-		// 	autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
-		// }
-
-		// else if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red){
-		// 	autoChooser.addOption("RedOnePiece", new ScoreAmpR());
-		// 	autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
-		// }
-
-		// else {
-		// 	autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
-		// 	autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
-		// 	autoChooser.addOption("RedOnePiece", new ScoreAmpR());
-		// 	autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
-		// }
-		//team irrelevant autons
+		
+		// Add other autonomous commands
 		autoChooser.addOption("TaxiB", new TaxiB());
 		autoChooser.addOption("TaxiR", new TaxiR());
-
+	
+		// Add PathPlanner commands
+		autoChooser.addOption("PathPlanner ExamplePath", PathAuto.getExamplePath());
 		autoChooser.addOption("PathPlanner TwoPiece", PathAuto.getTwoPiece());
+		autoChooser.addOption("PathPlanner CustomPath", PathAuto.getCustomPath());
+	
 		autoChooser.addOption("Odometer Thing Blue", new ScoreAmpOB());
 		autoChooser.addOption("Odometer Thing Red", new ScoreAmpOR());
 		autoChooser.addOption("OneNote", PathAuto.getChoreoOneNote());
 		autoChooser.addOption("Gackley Auto", PathAuto.getGackleyAuto());
 		autoChooser.addOption("TwoPieceAmpSide", PathAuto.getTwoPieceAmpSide());
-
-		//things
-		// autoChooser.addOption("BlueOnePiece", new ScoreAmpB());
-		// autoChooser.addOption("BlueTwoPiece", new ScoreAmpTwiceB());
-		// autoChooser.addOption("RedOnePiece", new ScoreAmpR());
-		// autoChooser.addOption("RedTwoPiece", new ScoreAmpTwiceR());
-		// autoChooser.addOption("BlueOneAndTaxi", new ScoreAmpTaxiB());
-		// autoChooser.addOption("RedOneAndTaxi", new ScoreAmpTaxiR());
 		autoChooser.addOption("BieryTestAuto", PathAuto.getBieryAuto());
+	
+		// Put the auto chooser onto SmartDashboard
+		SmartDashboard.putData(autoChooser);
 	}
+	
 
 	/**
 	 * 
